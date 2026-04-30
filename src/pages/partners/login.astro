@@ -1,6 +1,6 @@
 ---
-// src/pages/partner/login.astro
-import Layout from "../../layouts/PartnerLayout.astro";
+// src/pages/partners/login.astro
+import Layout from "../../layouts/PartnersLayout.astro";
 ---
 
 <Layout title="AVYNA Saltillo | Partner Login">
@@ -122,7 +122,7 @@ function validSession(){
 
 /* revisar sesión */
 if(validSession()){
-  window.location.pathname = "/partner";
+  window.location.pathname = "/partners";
 }else{
   hideLoader();
 }
@@ -148,7 +148,7 @@ function login(){
   localStorage.setItem(KEY, "true");
   localStorage.setItem(EXP, expire.toString());
 
-  window.location.pathname = "/partner";
+  window.location.pathname = "/partners";
 }
 
 btn.onclick = login;

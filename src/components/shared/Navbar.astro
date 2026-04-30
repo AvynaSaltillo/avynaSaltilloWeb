@@ -10,9 +10,9 @@ const path = Astro.url.pathname;
 ========================= */
 
 const isPartner =
-  path === "/partner" ||
-  path === "/partner/" ||
-  path.startsWith("/partner/");
+  path === "/partners" ||
+  path === "/partners/" ||
+  path.startsWith("/partners/");
 
 const isCatalog =
   path === "/catalogo" ||
@@ -32,13 +32,10 @@ const isInnerPage =
 
 const linkTo = (id: string) => {
 
-  /* PROFESIONAL */
-  if (isPartner) return `/partner#${id}`;
+  if (isPartner) return `/partners#${id}`;
 
-  /* páginas internas públicas */
   if (isInnerPage) return `/#${id}`;
 
-  /* home pública */
   return `#${id}`;
 };
 
@@ -51,8 +48,8 @@ const navItems = isPartner
       { label: "Nosotros", href: linkTo("nosotros") },
       { label: "Crédito", href: linkTo("credito") },
       { label: "Club Preferred", href: linkTo("clubPreferred") },
-      { label: "Catálogo", href: "/partner/catalogo" },
-      { label: "Diagnóstico Pro", href: "/partner/diagnostico" },
+      { label: "Catálogo", href: "/partners/catalogo" },
+      { label: "Diagnóstico Pro", href: "/partners/diagnostico" },
     ]
   : [
       { label: "Marca", href: linkTo("nosotros") },
@@ -68,7 +65,7 @@ const navItems = isPartner
   <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
     <!-- LOGO -->
-    <a href={isPartner ? "/partner" : "/"} class="flex items-center gap-3">
+    <a href={isPartner ? "/partners" : "/"} class="flex items-center gap-3">
       <div>
         <img
           src="/images/logo-avyna-white.png"
@@ -76,7 +73,7 @@ const navItems = isPartner
           class="h-4 w-auto"
         />
 
-        <p class="text-16px text-white/55">
+        <p class="text-[13px] text-white/55">
           {isPartner ? "Avyna Partner" : "Saltillo, Coahuila"}
         </p>
       </div>
@@ -86,10 +83,7 @@ const navItems = isPartner
     <nav class="hidden items-center gap-8 text-sm font-medium text-white/75 lg:flex">
       {
         navItems.map(item => (
-          <a
-            href={item.href}
-            class="transition hover:text-white"
-          >
+          <a href={item.href} class="transition hover:text-white">
             {item.label}
           </a>
         ))
@@ -112,13 +106,22 @@ const navItems = isPartner
 
         ) : (
 
-          <a
-            href={linkTo("contacto")}
-            class="hidden h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black shadow-xl transition hover:scale-105 md:inline-flex"
-          >
-            <FaWhatsapp size={20} />
-            Solicitar Info
-          </a>
+          <>
+            <a
+              href="/partnerss/login"
+              class="hidden h-11 items-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-black md:inline-flex"
+            >
+              Tengo salón
+            </a>
+
+            <a
+              href={linkTo("contacto")}
+              class="hidden h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black shadow-xl transition hover:scale-105 md:inline-flex"
+            >
+              <FaWhatsapp size={20} />
+              Solicitar Info
+            </a>
+          </>
 
         )
       }
@@ -163,12 +166,21 @@ const navItems = isPartner
 
         ) : (
 
-          <a
-            href={linkTo("contacto")}
-            class="mt-3 flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
-          >
-            Solicitar Información
-          </a>
+          <>
+            <a
+              href="/partnerss/login"
+              class="mt-3 flex h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 font-semibold text-white"
+            >
+              Tengo salón
+            </a>
+
+            <a
+              href={linkTo("contacto")}
+              class="flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
+            >
+              Solicitar Información
+            </a>
+          </>
 
         )
       }
@@ -187,12 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let open = false;
 
-  /* =========================
-     VALIDAR SESIÓN PRO
-  ========================= */
-
   const isPartnerRoute =
-    window.location.pathname.startsWith("/partner");
+    window.location.pathname.startsWith("/partners");
 
   if (isPartnerRoute) {
 
@@ -212,15 +220,10 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem("avyna_partner_access");
       localStorage.removeItem("avyna_partner_expire");
 
-      window.location.pathname = "/partner/login";
+      window.location.pathname = "/partners/login";
       return;
     }
-
   }
-
-  /* =========================
-     MENU MOBILE
-  ========================= */
 
   btn.addEventListener("click", () => {
 
@@ -261,16 +264,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-  /* =========================
-     LOGOUT
-  ========================= */
-
   function logout() {
 
     localStorage.removeItem("avyna_partner_access");
     localStorage.removeItem("avyna_partner_expire");
 
-    window.location.pathname = "/partner/login";
+    window.location.pathname = "/partners/login";
   }
 
   document.getElementById("logoutBtn")

@@ -14,7 +14,7 @@ import DiagnosticBasic from "../components/public/DiagnosticBasic.astro";
 import SalonMap from "../components/public/SalonMap.astro";
 import FAQ from "../components/public/FAQ.astro";
 
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Store } from "lucide-react";
 ---
 
 <Layout
@@ -51,78 +51,87 @@ import { ArrowRight, Sparkles } from "lucide-react";
       <FAQ />
     </section>
 
-    <!-- FINAL CTA -->
-    <section class="relative px-6 py-28">
+    <!-- PARTNERS CARD -->
+    <section id="partners" class="relative px-6 pb-10">
 
-      <!-- glow -->
-      <div class="absolute inset-0 -z-10">
-        <div class="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/5 blur-3xl glow-pulse"></div>
-      </div>
+      <div class="mx-auto max-w-6xl">
 
-      <div class="reveal mx-auto max-w-6xl overflow-hidden rounded-[2.75rem] border border-white/10 bg-white/3 p-8 backdrop-blur-2xl md:p-16">
+        <div class="reveal relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/3 p-8 backdrop-blur-2xl md:p-12">
 
-        <!-- BADGE -->
-        <div class="reveal delay-1 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/75">
-          <Sparkles size={15} />
-          Rutina premium AVYNA
-        </div>
-
-        <!-- TITLE -->
-        <h2 class="reveal delay-2 mx-auto mt-6 max-w-4xl text-center text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-          Tu mejor versión comienza
-          <span class="block text-zinc-400">
-            con una rutina correcta
-          </span>
-        </h2>
-
-        <!-- TEXT -->
-        <p class="reveal delay-3 mx-auto mt-6 max-w-2xl text-center text-lg leading-relaxed text-white/60">
-          Descubre productos premium diseñados para transformar
-          brillo, fuerza, suavidad y salud capilar con resultados visibles.
-        </p>
-
-        <!-- CTA -->
-        <div class="reveal delay-4 mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-
-          <a
-            href="/diagnostico"
-            class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black transition duration-300 hover:scale-105"
-          >
-            Hacer diagnóstico
-            <ArrowRight size={18} />
-          </a>
-
-          <a
-            href="/catalogo"
-            class="press inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 transition duration-300 hover:bg-white hover:text-black"
-          >
-            Ver catálogo
-          </a>
-
-        </div>
-
-        <!-- TRUST -->
-        <div class="mt-10 grid gap-4 text-center sm:grid-cols-3">
-
-          <div class="reveal delay-2 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
-            <p class="text-2xl font-bold">Premium</p>
-            <p class="mt-1 text-sm text-white/45">
-              Fórmulas profesionales
-            </p>
+          <!-- glow -->
+          <div class="absolute inset-0 -z-10">
+            <div class="absolute right-0 top-0 h-60 w-60 rounded-full bg-white/5 blur-3xl"></div>
           </div>
 
-          <div class="reveal delay-3 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
-            <p class="text-2xl font-bold">Glow</p>
-            <p class="mt-1 text-sm text-white/45">
-              Brillo visible
-            </p>
-          </div>
+          <div class="grid items-center gap-10 lg:grid-cols-2">
 
-          <div class="reveal delay-4 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
-            <p class="text-2xl font-bold">Smart</p>
-            <p class="mt-1 text-sm text-white/45">
-              Rutina personalizada
-            </p>
+            <!-- LEFT -->
+            <div>
+
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/75">
+                <Store size={15} />
+                Partners AVYNA
+              </div>
+
+              <h2 class="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+                ¿Tienes salón o negocio?
+                <span class="block text-zinc-400">
+                  Vende AVYNA con nosotros
+                </span>
+              </h2>
+
+              <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/60">
+                Obtén acceso a precios especiales, productos premium y atención personalizada
+                para impulsar tus ventas en Saltillo.
+              </p>
+
+              <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+
+                <a
+                  href="/partnerss/login"
+                  class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black transition duration-300 hover:scale-105"
+                >
+                  Tengo salón
+                  <ArrowRight size={18} />
+                </a>
+
+                <a
+                  href="/partnerss/login"
+                  class="press inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 transition duration-300 hover:bg-white hover:text-black"
+                >
+                  Quiero vender AVYNA
+                </a>
+
+              </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+
+              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
+                <p class="text-2xl font-bold">Mayorista</p>
+                <p class="mt-1 text-sm text-white/45">
+                  Precios exclusivos
+                </p>
+              </div>
+
+              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
+                <p class="text-2xl font-bold">Top</p>
+                <p class="mt-1 text-sm text-white/45">
+                  Productos en tendencia
+                </p>
+              </div>
+
+              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
+                <p class="text-2xl font-bold">Local</p>
+                <p class="mt-1 text-sm text-white/45">
+                  Soporte rápido Saltillo
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
         </div>

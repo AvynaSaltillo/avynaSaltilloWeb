@@ -1,15 +1,15 @@
 ---
-// src/pages/partner/index.astro
+// src/pages/partners/index.astro
 
-import Layout from "../../layouts/PartnerLayout.astro";
+import Layout from "../../layouts/PartnersLayout.astro";
 
 import Navbar from "../../components/shared/Navbar.astro";
-import Hero from "../../components/partner/PartnerHero.astro";
-import About from "../../components/partner/PartnerAbout.astro";
-import CreditInfo from "../../components/partner/PartnerCredit.astro";
-import ClubPreferred from "../../components/partner/PartnerClubPreferred.astro";
-import Experiences from "../../components/partner/PartnerExperiences.astro";
-import Contact from "../../components/partner/PartnerContact.astro";
+import Hero from "../../components/partners/PartnersHero.astro";
+import About from "../../components/partners/PartnersAbout.astro";
+import CreditInfo from "../../components/partners/PartnersCredit.astro";
+import ClubPreferred from "../../components/partners/PartnersClubPreferred.astro";
+import Experiences from "../../components/partners/PartnersExperiences.astro";
+import Contact from "../../components/partners/PartnersContact.astro";
 import Footer from "../../components/shared/Footer.astro";
 ---
 
@@ -19,8 +19,8 @@ import Footer from "../../components/shared/Footer.astro";
 
 <!-- PROTECT -->
 <script is:inline>
-if(sessionStorage.getItem("avyna_pro_access") !== "true"){
-window.location.pathname="/partner/login";
+if(sessionStorage.getItem("avyna_partner_access") !== "true"){
+window.location.pathname="/partners/login";
 }
 </script>
 
