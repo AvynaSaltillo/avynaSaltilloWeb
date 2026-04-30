@@ -19,8 +19,19 @@ import Footer from "../../components/shared/Footer.astro";
 
 <!-- PROTECT -->
 <script is:inline>
-if(sessionStorage.getItem("avyna_partner_access") !== "true"){
-window.location.pathname="/partners/login";
+const access = localStorage.getItem("avyna_partner_access");
+const expire = Number(
+  localStorage.getItem("avyna_partner_expire") || 0
+);
+
+if (
+  access !== "true" ||
+  Date.now() > expire
+) {
+  localStorage.removeItem("avyna_partner_access");
+  localStorage.removeItem("avyna_partner_expire");
+
+  window.location.pathname = "/partners/login";
 }
 </script>
 
