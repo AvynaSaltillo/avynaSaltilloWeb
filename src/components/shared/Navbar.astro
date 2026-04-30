@@ -1,0 +1,283 @@
+---
+// src/components/shared/Navbar.astro
+import { Menu, LogOut } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
+
+const path = Astro.url.pathname;
+
+/* =========================
+   DETECTAR RUTA
+========================= */
+
+const isPartner =
+  path === "/partner" ||
+  path === "/partner/" ||
+  path.startsWith("/partner/");
+
+const isCatalog =
+  path === "/catalogo" ||
+  path === "/catalogo/";
+
+const isDiagnostico =
+  path === "/diagnostico" ||
+  path === "/diagnostico/";
+
+/* internas públicas */
+const isInnerPage =
+  isCatalog || isDiagnostico;
+
+/* =========================
+   LINKS DINÁMICOS
+========================= */
+
+const linkTo = (id: string) => {
+
+  /* PROFESIONAL */
+  if (isPartner) return `/partner#${id}`;
+
+  /* páginas internas públicas */
+  if (isInnerPage) return `/#${id}`;
+
+  /* home pública */
+  return `#${id}`;
+};
+
+/* =========================
+   NAV ITEMS
+========================= */
+
+const navItems = isPartner
+  ? [
+      { label: "Nosotros", href: linkTo("nosotros") },
+      { label: "Crédito", href: linkTo("credito") },
+      { label: "Club Preferred", href: linkTo("clubPreferred") },
+      { label: "Catálogo", href: "/partner/catalogo" },
+      { label: "Diagnóstico Pro", href: "/partner/diagnostico" },
+    ]
+  : [
+      { label: "Marca", href: linkTo("nosotros") },
+      { label: "Beneficios", href: linkTo("beneficios") },
+      { label: "Catálogo", href: "/catalogo" },
+      { label: "Diagnóstico", href: "/diagnostico" },
+      { label: "Salones", href: linkTo("salones") },
+      { label: "FAQ", href: linkTo("faq") },
+    ];
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-2xl">
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+
+    <!-- LOGO -->
+    <a href={isPartner ? "/partner" : "/"} class="flex items-center gap-3">
+      <div>
+        <img
+          src="/images/logo-avyna-white.png"
+          alt="AVYNA"
+          class="h-4 w-auto"
+        />
+
+        <p class="text-16px text-white/55">
+          {isPartner ? "Avyna Partner" : "Saltillo, Coahuila"}
+        </p>
+      </div>
+    </a>
+
+    <!-- DESKTOP -->
+    <nav class="hidden items-center gap-8 text-sm font-medium text-white/75 lg:flex">
+      {
+        navItems.map(item => (
+          <a
+            href={item.href}
+            class="transition hover:text-white"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- ACTIONS -->
+    <div class="flex items-center gap-3">
+
+      {
+        isPartner ? (
+
+          <button
+            id="logoutBtn"
+            class="hidden h-11 items-center gap-2 rounded-full border border-white/10 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-black md:inline-flex"
+          >
+            <LogOut size={16} />
+            Salir
+          </button>
+
+        ) : (
+
+          <a
+            href={linkTo("contacto")}
+            class="hidden h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black shadow-xl transition hover:scale-105 md:inline-flex"
+          >
+            <FaWhatsapp size={20} />
+            Solicitar Info
+          </a>
+
+        )
+      }
+
+      <!-- MOBILE BTN -->
+      <button
+        id="menuBtn"
+        class="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black lg:hidden"
+        aria-label="Menú"
+      >
+        <Menu size={18} />
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div
+    id="mobileMenu"
+    class="hidden border-t border-white/10 bg-black/95 px-6 py-6 lg:hidden"
+  >
+    <nav class="flex flex-col gap-5 font-medium text-white/80">
+
+      {
+        navItems.map(item => (
+          <a href={item.href} class="mobile-link">
+            {item.label}
+          </a>
+        ))
+      }
+
+      {
+        isPartner ? (
+
+          <button
+            id="logoutBtnMobile"
+            class="mt-3 flex h-12 items-center justify-center rounded-2xl border border-white/10 text-white transition hover:bg-white hover:text-black"
+          >
+            Cerrar sesión
+          </button>
+
+        ) : (
+
+          <a
+            href={linkTo("contacto")}
+            class="mt-3 flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
+          >
+            Solicitar Información
+          </a>
+
+        )
+      }
+
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("mobileMenu");
+
+  if (!btn || !menu) return;
+
+  let open = false;
+
+  /* =========================
+     VALIDAR SESIÓN PRO
+  ========================= */
+
+  const isPartnerRoute =
+    window.location.pathname.startsWith("/partner");
+
+  if (isPartnerRoute) {
+
+    const access =
+      localStorage.getItem("avyna_partner_access");
+
+    const expire =
+      Number(
+        localStorage.getItem("avyna_partner_expire") || 0
+      );
+
+    if (
+      access !== "true" ||
+      Date.now() > expire
+    ) {
+
+      localStorage.removeItem("avyna_partner_access");
+      localStorage.removeItem("avyna_partner_expire");
+
+      window.location.pathname = "/partner/login";
+      return;
+    }
+
+  }
+
+  /* =========================
+     MENU MOBILE
+  ========================= */
+
+  btn.addEventListener("click", () => {
+
+    open = !open;
+
+    menu.classList.toggle("hidden");
+
+    btn.innerHTML = open
+      ? `
+      <svg xmlns="http://www.w3.org/2000/svg"
+      width="18" height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+      `
+      : `
+      <svg xmlns="http://www.w3.org/2000/svg"
+      width="18" height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24">
+        <path d="M4 12h16M4 6h16M4 18h16"/>
+      </svg>
+      `;
+  });
+
+  document.querySelectorAll(".mobile-link")
+    .forEach(link => {
+
+      link.addEventListener("click", () => {
+        menu.classList.add("hidden");
+        open = false;
+      });
+
+    });
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  function logout() {
+
+    localStorage.removeItem("avyna_partner_access");
+    localStorage.removeItem("avyna_partner_expire");
+
+    window.location.pathname = "/partner/login";
+  }
+
+  document.getElementById("logoutBtn")
+    ?.addEventListener("click", logout);
+
+  document.getElementById("logoutBtnMobile")
+    ?.addEventListener("click", logout);
+
+});
+</script>

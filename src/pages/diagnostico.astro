@@ -1,0 +1,67 @@
+---
+// src/pages/diagnostic.astro
+
+import Layout from "../layouts/PublicLayout.astro";
+import Navbar from "../components/shared/Navbar.astro";
+import Diagnostic from "../components/public/DiagnosticBasic.astro";
+---
+
+<Layout
+  title="Diagnóstico Capilar AVYNA | Recomendación Inteligente"
+  description="Descubre la rutina ideal AVYNA según tipo de cabello, daño, frizz, hidratación y objetivos. Diagnóstico premium para salón o cliente final."
+>
+
+  <!-- NAVBAR -->
+  <Navbar />
+
+  <!-- PAGE -->
+  <main class="min-h-screen bg-black text-white">
+
+
+    <!-- DIAGNOSTIC COMPONENT -->
+    <Diagnostic />
+
+    <!-- CTA FOOTER -->
+    <section class="px-6 pb-24">
+
+      <div class="mx-auto max-w-6xl rounded-4xl border border-white/10 bg-white/3 p-8 text-center md:p-14">
+
+        <p class="text-sm uppercase tracking-[0.35em] text-white/35">
+          Asesoría personalizada
+        </p>
+
+        <h2 class="mt-4 text-4xl font-bold md:text-6xl">
+          ¿Quieres ayuda directa?
+        </h2>
+
+        <p class="mx-auto mt-5 max-w-2xl text-white/60">
+          Nuestro equipo puede ayudarte a elegir la línea correcta
+          según historial químico, tipo de cabello y objetivos reales.
+        </p>
+
+        <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+
+          <a
+            href="https://wa.me/528445069238"
+            target="_blank"
+            class="inline-flex h-14 items-center justify-center rounded-2xl bg-white px-8 font-semibold text-black transition hover:scale-105"
+          >
+            WhatsApp
+          </a>
+
+          <a
+            href="/catalogo"
+            class="inline-flex h-14 items-center justify-center rounded-2xl border border-white/10 px-8 transition hover:bg-white hover:text-black"
+          >
+            Ver Catálogo
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</Layout>

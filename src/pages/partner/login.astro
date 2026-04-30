@@ -1,0 +1,168 @@
+---
+// src/pages/partner/login.astro
+import Layout from "../../layouts/PartnerLayout.astro";
+---
+
+<Layout title="AVYNA Saltillo | Partner Login">
+
+<meta name="robots" content="noindex,nofollow" />
+
+<section class="relative min-h-screen overflow-hidden bg-black text-white">
+
+  <!-- BG -->
+  <div class="absolute inset-0">
+    <div class="absolute -left-40 top-0 h-128 w-lg rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute -right-40 bottom-0 h-128 w-lg rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_45%)]"></div>
+  </div>
+
+  <!-- LOADER -->
+  <div
+    id="sessionLoader"
+    class="absolute inset-0 z-50 flex items-center justify-center bg-black"
+  >
+    <div class="text-center">
+      <div class="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-white"></div>
+      <p class="mt-4 text-sm text-white/55">
+        Validando sesión...
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="relative z-10 flex min-h-screen items-center justify-center px-6">
+
+    <div class="w-full max-w-md">
+
+      <!-- LOGO -->
+      <div class="mb-8 text-center">
+        <p class="text-xs uppercase tracking-[0.45em] text-white/35">
+          Portal Privado
+        </p>
+
+        <h1 class="mt-4 text-5xl font-bold tracking-tight">
+          AVYNA PRO
+        </h1>
+
+        <p class="mt-4 text-white/55">
+          Acceso exclusivo para profesionales y salones afiliados.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-2xl shadow-2xl">
+
+        <label class="text-sm text-white/45">
+          Contraseña
+        </label>
+
+        <div class="mt-3 relative">
+          <input
+            id="pass"
+            type="password"
+            placeholder="Ingresa tu acceso"
+            class="w-full h-14 rounded-2xl border border-white/10 bg-black/50 px-5 outline-none transition focus:border-white/40"
+          />
+
+          <button
+            type="button"
+            id="togglePass"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-white/45 hover:text-white"
+          >
+            Ver
+          </button>
+        </div>
+
+        <button
+          id="loginBtn"
+          class="mt-5 flex h-14 w-full items-center justify-center rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.015]"
+        >
+          Entrar al portal
+        </button>
+
+        <p
+          id="errorMsg"
+          class="mt-4 hidden text-sm text-red-400"
+        >
+          Contraseña incorrecta.
+        </p>
+
+        <div class="mt-6 border-t border-white/10 pt-5 text-sm text-white/45">
+          Acceso protegido · sesión temporal segura
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script is:inline>
+const KEY = "avyna_partner_access";
+const EXP = "avyna_partner_expire";
+const PASS = "avyna2026";
+
+const loader = document.getElementById("sessionLoader");
+const input = document.getElementById("pass");
+const btn = document.getElementById("loginBtn");
+const err = document.getElementById("errorMsg");
+
+function hideLoader(){
+  loader.style.display = "none";
+}
+
+function validSession(){
+  const access = localStorage.getItem(KEY);
+  const expire = Number(localStorage.getItem(EXP) || 0);
+
+  return access === "true" && Date.now() < expire;
+}
+
+/* revisar sesión */
+if(validSession()){
+  window.location.pathname = "/partner";
+}else{
+  hideLoader();
+}
+
+function login(){
+
+  err.classList.add("hidden");
+
+  const val = input.value.trim();
+
+  if(val !== PASS){
+    err.classList.remove("hidden");
+    input.focus();
+    return;
+  }
+
+  btn.innerHTML = "Entrando...";
+  btn.disabled = true;
+
+  const expire =
+    Date.now() + (1000 * 60 * 60 * 8); // 8 horas
+
+  localStorage.setItem(KEY, "true");
+  localStorage.setItem(EXP, expire.toString());
+
+  window.location.pathname = "/partner";
+}
+
+btn.onclick = login;
+
+input.addEventListener("keydown", e=>{
+  if(e.key === "Enter") login();
+});
+
+document.getElementById("togglePass").onclick = ()=>{
+  input.type =
+    input.type === "password"
+      ? "text"
+      : "password";
+};
+</script>
+
+</Layout>

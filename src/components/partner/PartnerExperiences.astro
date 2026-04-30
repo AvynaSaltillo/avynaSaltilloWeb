@@ -1,0 +1,181 @@
+---
+// src/components/Experiences.astro
+import {
+  Plane,
+  Sparkles,
+  Heart,
+  GraduationCap,
+  MapPin,
+  CalendarDays,
+  Star
+} from "lucide-react";
+---
+
+<section id="experiences" class="bg-black px-6 py-24 text-white">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- HEADER -->
+    <div class="mx-auto mb-16 max-w-4xl text-center">
+
+      <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+        <Sparkles size={15} />
+        Experiencias AVYNA
+      </div>
+
+      <h2 class="text-4xl font-bold tracking-tight md:text-6xl">
+        Eventos, viajes y crecimiento profesional
+      </h2>
+
+      <p class="mt-6 text-lg leading-relaxed text-white/65">
+        Más que productos: formamos comunidad, reconocemos resultados
+        y creamos experiencias únicas para nuestros clientes.
+      </p>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+
+      <!-- PLAYA -->
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Plane size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Viajes a la Playa
+        </h3>
+
+        <p class="mb-5 leading-relaxed text-white/65">
+          Incentivos exclusivos para clientes destacados
+          con experiencias inolvidables en destinos premium.
+        </p>
+
+        <div class="space-y-2 text-sm text-white/70">
+          <p>• Cancún</p>
+          <p>• Punta de Mita</p>
+          <p>• Puerto Vallarta</p>
+          <p>• Próximos destinos sorpresa</p>
+        </div>
+      </article>
+
+      <!-- TOTAL LOOK -->
+      <article class="rounded-[2.5rem] bg-white p-8 text-black shadow-2xl transition hover:-translate-y-1">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
+          <Sparkles size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Total Look
+        </h3>
+
+        <p class="mb-5 leading-relaxed text-zinc-600">
+          Eventos de imagen, tendencias y transformación profesional
+          en ciudades clave del país.
+        </p>
+
+        <div class="space-y-2 text-sm text-zinc-700">
+          <p>• Guadalajara</p>
+          <p>• Monterrey</p>
+          <p>• Lanzamientos y tendencias</p>
+          <p>• Networking profesional</p>
+        </div>
+      </article>
+
+      <!-- LOCALES -->
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Heart size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Eventos Locales
+        </h3>
+
+        <p class="mb-5 leading-relaxed text-white/65">
+          Convivencias y experiencias especiales
+          pensadas para nuestra comunidad.
+        </p>
+
+        <div class="space-y-2 text-sm text-white/70">
+          <p>• Posada AVYNA</p>
+          <p>• 14 de Febrero</p>
+          <p>• Una Noche Para Ti AVYNA</p>
+          <p>• Dinámicas exclusivas</p>
+        </div>
+      </article>
+
+      <!-- ONLINE -->
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <GraduationCap size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Capacitaciones Online
+        </h3>
+
+        <p class="mb-5 leading-relaxed text-white/65">
+          Aprende desde cualquier lugar con sesiones digitales
+          enfocadas en ventas, técnica y producto.
+        </p>
+
+        <div class="space-y-2 text-sm text-white/70">
+          <p>• Zoom / Streaming</p>
+          <p>• Técnicas actuales</p>
+          <p>• Ventas inteligentes</p>
+          <p>• Tendencias</p>
+        </div>
+      </article>
+
+      <!-- PRESENCIAL -->
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <MapPin size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Capacitaciones Presenciales
+        </h3>
+
+        <p class="mb-5 leading-relaxed text-white/65">
+          Formación práctica con demostraciones reales
+          y atención personalizada.
+        </p>
+
+        <div class="space-y-2 text-sm text-white/70">
+          <p>• Saltillo</p>
+          <p>• Monterrey</p>
+          <p>• Técnicas en vivo</p>
+          <p>• Resolución de dudas</p>
+        </div>
+      </article>
+
+      <!-- VIP -->
+      <article class="rounded-[2.5rem] border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Star size={22} />
+        </div>
+
+        <h3 class="mb-3 text-2xl font-bold">
+          Próximos Eventos VIP
+        </h3>
+
+        <p class="mb-6 leading-relaxed text-white/65">
+          Mantente cerca de AVYNA para enterarte primero
+          de experiencias, lanzamientos y oportunidades exclusivas.
+        </p>
+
+        <a
+          href="#contacto"
+          class="inline-flex h-12 items-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition hover:scale-105"
+        >
+          <CalendarDays size={18} />
+          Quiero enterarme
+        </a>
+      </article>
+
+    </div>
+
+  </div>
+</section>

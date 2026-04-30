@@ -1,0 +1,218 @@
+---
+import {
+  ArrowRight,
+  Sparkles,
+  Star,
+  ShieldCheck,
+  Droplets,
+  BadgeCheck
+} from "lucide-react";
+---
+
+<section class="relative overflow-hidden bg-black text-white">
+
+  <!-- BACKGROUND -->
+  <div class="absolute inset-0">
+
+    <img
+      src="/images/avyna/avyna-banner.jpg"
+      class="h-full w-full object-cover opacity-30 scale-105"
+      alt="AVYNA Beauty"
+    />
+
+    <div class="absolute inset-0 bg-black/65"></div>
+
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.09),transparent_30%)] glow-pulse"></div>
+
+    <div class="absolute -top-24 left-0 h-128 w-lg rounded-full bg-white/10 blur-3xl"></div>
+
+    <div class="absolute bottom-0 right-0 h-120 w-120 rounded-full bg-zinc-300/10 blur-3xl"></div>
+
+  </div>
+
+  <!-- CONTENT -->
+  <div class="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-20 px-6 pt-32 pb-24 lg:grid-cols-2">
+
+    <!-- LEFT -->
+    <div>
+
+      <!-- BADGE -->
+      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+        <Sparkles size={15} className="text-white/80" />
+        Fórmulas premium AVYNA
+      </div>
+
+      <!-- TITLE -->
+      <h1 class="reveal delay-1 mt-7 max-w-3xl text-5xl font-bold leading-[0.9] tracking-tight md:text-7xl">
+
+        El cabello que sueñas,
+
+        <span class="mt-2 block text-zinc-400">
+          empieza hoy.
+        </span>
+
+      </h1>
+
+      <!-- DESCRIPTION -->
+      <p class="reveal delay-2 mt-8 max-w-2xl text-lg leading-relaxed text-white/65 md:text-xl">
+        Rutinas inteligentes, brillo espectacular y reparación visible.
+        Descubre productos profesionales AVYNA diseñados para elevar
+        tu imagen desde la primera aplicación.
+      </p>
+
+      <!-- CTA -->
+      <div class="reveal delay-3 mt-10 flex flex-wrap gap-4">
+
+        <a
+          href="/diagnostico"
+          class="press inline-flex h-14 items-center gap-2 rounded-full bg-white px-8 font-semibold text-black shadow-2xl transition duration-300 hover:scale-105"
+        >
+          Descubrir rutina
+          <ArrowRight size={18} />
+        </a>
+
+        <a
+          href="/catalogo"
+          class="press inline-flex h-14 items-center rounded-full border border-white/15 bg-white/5 px-8 font-medium transition hover:bg-white hover:text-black"
+        >
+          Ver catálogo
+        </a>
+
+      </div>
+
+      <!-- TRUST -->
+      <div class="reveal delay-4 mt-8 flex flex-wrap gap-5 text-sm text-white/55">
+
+        <div class="flex items-center gap-2">
+          <BadgeCheck size={16} />
+          Uso profesional
+        </div>
+
+        <div class="flex items-center gap-2">
+          <BadgeCheck size={16} />
+          Resultados visibles
+        </div>
+
+        <div class="flex items-center gap-2">
+          <BadgeCheck size={16} />
+          Calidad premium
+        </div>
+
+      </div>
+
+      <!-- STATS -->
+      <div class="reveal-left delay-4 mt-14 grid max-w-xl grid-cols-3 gap-6">
+
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-3xl font-bold">+30k</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Cabellos transformados con AVYNA
+          </p>
+        </div>
+
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-3xl font-bold">Italia</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Fórmulas de origen italiano, calidad inigualable
+          </p>
+        </div>
+
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-3xl font-bold">Cruelty Free</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Sin pruebas en animales
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="reveal-right delay-2 relative">
+
+      <!-- MAIN CARD -->
+      <div class="relative overflow-hidden rounded-[2.7rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,.6)] backdrop-blur-2xl">
+
+        <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
+
+        <img
+          src="/images/avyna/avyna-women-1.jpg"
+          class="relative z-10 mx-auto h-168 object-contain float-soft"
+          alt="Producto AVYNA"
+        />
+
+      </div>
+
+      <!-- FLOAT TOP -->
+      <div class="reveal-scale delay-4 absolute -top-6 -left-6 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl md:block">
+
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+            <Star size={22} />
+          </div>
+
+          <div>
+            <p class="text-xs text-white/45">
+              Tus productos
+            </p>
+
+            <p class="font-semibold">
+              Favoritos AVYNA
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FLOAT RIGHT -->
+      <div class="reveal-scale delay-5 absolute top-1/2 -right-6 hidden -translate-y-1/2 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl md:block">
+
+        <div class="flex items-center gap-3">
+
+          <Droplets size={22} />
+
+          <div>
+            <p class="text-xs text-zinc-500">
+              Resultado
+            </p>
+
+            <p class="font-semibold">
+              Brillo intenso
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FLOAT BOTTOM -->
+      <div class="reveal-scale delay-6 absolute -bottom-6 left-8 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl md:block">
+
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+            <ShieldCheck size={22} />
+          </div>
+
+          <div>
+            <p class="text-xs text-white/45">
+              Calidad
+            </p>
+
+            <p class="font-semibold">
+              Uso profesional
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

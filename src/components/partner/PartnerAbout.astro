@@ -1,0 +1,159 @@
+---
+// src/components/About.astro
+import {
+  Users,
+  ShieldCheck,
+  Sparkles,
+  MapPin,
+  Scissors,
+  BadgeCheck
+} from "lucide-react";
+---
+
+<section id="nosotros" class="bg-black px-6 py-24 text-white">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- TOP -->
+    <div class="mb-16 grid items-center gap-14 lg:grid-cols-2">
+
+      <!-- LEFT -->
+      <div>
+
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+          <Sparkles size={16} className="shrink-0" />
+          Quiénes Somos
+        </div>
+
+        <h2 class="max-w-3xl text-4xl font-bold tracking-tight leading-tight md:text-6xl">
+          Distribución profesional enfocada en resultados reales
+        </h2>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div>
+
+        <p class="text-lg leading-relaxed text-white/65">
+          Somos distribuidores especializados en productos profesionales
+          AVYNA exclusivamente para salones de belleza y negocios afines
+          dentro de Saltillo, Coahuila.
+        </p>
+
+        <p class="mt-5 text-lg leading-relaxed text-white/65">
+          Trabajamos con establecimientos que cuentan con espacio de trabajo
+          para realizar diagnóstico capilar y ofrecer la mejor recomendación
+          al cliente final.
+        </p>
+
+        <p class="mt-5 text-lg leading-relaxed text-white/65">
+          Nuestro enfoque es brindar atención personalizada, seguimiento cercano
+          y crecimiento comercial responsable.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <MapPin size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Cobertura Local
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Venta autorizada exclusivamente en Saltillo, Coahuila,
+          con atención rápida y seguimiento directo.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Scissors size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Clientes Profesionales
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Atendemos salones de belleza, estilistas,
+          barberías y negocios relacionados.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Users size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Atención Personalizada
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Recomendaciones según necesidades reales del negocio
+          y perfil de cliente final.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <ShieldCheck size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Sin Manejo de Stock Local
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Operamos bajo lineamientos oficiales de marca,
+          priorizando pedido directo y rotación saludable.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <BadgeCheck size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Diagnóstico Profesional
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Buscamos que cada venta incluya valoración capilar
+          para recomendar correctamente.
+        </p>
+      </div>
+
+      <!-- CARD -->
+      <div class="rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 transition hover:-translate-y-1">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+          <Sparkles size={22} />
+        </div>
+
+        <h3 class="mb-3 text-xl font-semibold">
+          Relación a Largo Plazo
+        </h3>
+
+        <p class="leading-relaxed text-white/65">
+          Más que vender productos, buscamos ser aliados
+          estratégicos para cada salón.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>

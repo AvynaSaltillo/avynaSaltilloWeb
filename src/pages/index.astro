@@ -1,11 +1,139 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/PublicLayout.astro";
+
+/* SHARED */
+import Navbar from "../components/shared/Navbar.astro";
+import Footer from "../components/shared/Footer.astro";
+
+/* PUBLIC */
+import Hero from "../components/public/Hero.astro";
+import Benefits from "../components/public/Benefits.astro";
+import DiagnosticBasic from "../components/public/DiagnosticBasic.astro";
+import SalonMap from "../components/public/SalonMap.astro";
+import FAQ from "../components/public/FAQ.astro";
+
+import { ArrowRight, Sparkles } from "lucide-react";
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="AVYNA Saltillo | Belleza Profesional para tu Cabello"
+  description="Descubre productos profesionales AVYNA, diagnóstico capilar, catálogo premium y salones autorizados."
+>
+
+  <!-- NAVBAR -->
+  <Navbar />
+
+  <!-- PAGE -->
+  <main class="overflow-hidden bg-black text-white">
+
+    <!-- HERO -->
+    <Hero />
+
+    <!-- BENEFITS -->
+    <section id="beneficios" class="relative reveal">
+      <Benefits />
+    </section>
+
+    <!-- DIAGNÓSTICO -->
+    <section id="diagnostico" class="relative reveal">
+      <DiagnosticBasic />
+    </section>
+
+    <!-- MAPA -->
+    <section id="salones" class="relative reveal">
+      <SalonMap />
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative reveal">
+      <FAQ />
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="relative px-6 py-28">
+
+      <!-- glow -->
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/5 blur-3xl glow-pulse"></div>
+      </div>
+
+      <div class="reveal mx-auto max-w-6xl overflow-hidden rounded-[2.75rem] border border-white/10 bg-white/3 p-8 backdrop-blur-2xl md:p-16">
+
+        <!-- BADGE -->
+        <div class="reveal delay-1 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/75">
+          <Sparkles size={15} />
+          Rutina premium AVYNA
+        </div>
+
+        <!-- TITLE -->
+        <h2 class="reveal delay-2 mx-auto mt-6 max-w-4xl text-center text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+          Tu mejor versión comienza
+          <span class="block text-zinc-400">
+            con una rutina correcta
+          </span>
+        </h2>
+
+        <!-- TEXT -->
+        <p class="reveal delay-3 mx-auto mt-6 max-w-2xl text-center text-lg leading-relaxed text-white/60">
+          Descubre productos premium diseñados para transformar
+          brillo, fuerza, suavidad y salud capilar con resultados visibles.
+        </p>
+
+        <!-- CTA -->
+        <div class="reveal delay-4 mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+
+          <a
+            href="/diagnostico"
+            class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black transition duration-300 hover:scale-105"
+          >
+            Hacer diagnóstico
+            <ArrowRight size={18} />
+          </a>
+
+          <a
+            href="/catalogo"
+            class="press inline-flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 transition duration-300 hover:bg-white hover:text-black"
+          >
+            Ver catálogo
+          </a>
+
+        </div>
+
+        <!-- TRUST -->
+        <div class="mt-10 grid gap-4 text-center sm:grid-cols-3">
+
+          <div class="reveal delay-2 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
+            <p class="text-2xl font-bold">Premium</p>
+            <p class="mt-1 text-sm text-white/45">
+              Fórmulas profesionales
+            </p>
+          </div>
+
+          <div class="reveal delay-3 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
+            <p class="text-2xl font-bold">Glow</p>
+            <p class="mt-1 text-sm text-white/45">
+              Brillo visible
+            </p>
+          </div>
+
+          <div class="reveal delay-4 hover-lift rounded-3xl border border-white/10 bg-white/3 px-5 py-5">
+            <p class="text-2xl font-bold">Smart</p>
+            <p class="mt-1 text-sm text-white/45">
+              Rutina personalizada
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <Footer />
+
 </Layout>

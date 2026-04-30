@@ -1,0 +1,142 @@
+---
+// src/components/Contact.astro
+import {
+  Phone,
+  Mail,
+  MessageCircle,
+  MapPin,
+  Send,
+  ArrowUpRight
+} from "lucide-react";
+---
+
+<section id="contacto" class="py-24 px-6 bg-black text-white">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="text-center max-w-4xl mx-auto mb-16">
+      <p class="text-sm uppercase tracking-[0.35em] text-white/40 mb-4">
+        Contacto Directo
+      </p>
+
+      <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
+        Estamos listos para ayudarte
+      </h2>
+
+      <p class="mt-6 text-lg text-white/65 leading-relaxed">
+        Solicita catálogo, asesoría comercial, crédito o información
+        sobre productos AVYNA para tu salón o negocio.
+      </p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid lg:grid-cols-2 gap-8">
+
+      <!-- LEFT -->
+      <div class="rounded-4xl border border-white/10 bg-white/3 p-8 md:p-10">
+
+        <h3 class="text-2xl font-bold mb-8">
+          Canales de atención
+        </h3>
+
+        <div class="space-y-5">
+
+          <a
+            href="https://wa.me/528445069238"
+            target="_blank"
+            class="flex items-center gap-4 p-5 rounded-2xl border border-white/10 hover:bg-white hover:text-black transition"
+          >
+            <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+              <MessageCircle size={20} />
+            </div>
+
+            <div>
+              <p class="text-sm opacity-60">WhatsApp</p>
+              <p class="font-semibold">844 506 9238</p>
+            </div>
+          </a>
+
+          <a
+            href="tel:+528445069238"
+            class="flex items-center gap-4 p-5 rounded-2xl border border-white/10 hover:bg-white hover:text-black transition"
+          >
+            <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+              <Phone size={20} />
+            </div>
+
+            <div>
+              <p class="text-sm opacity-60">Llamadas</p>
+              <p class="font-semibold">844 506 9238</p>
+            </div>
+          </a>
+
+          <a
+            href="mailto:ayna.saltillo@gmail.com"
+            class="flex items-center gap-4 p-5 rounded-2xl border border-white/10 hover:bg-white hover:text-black transition"
+          >
+            <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+              <Mail size={20} />
+            </div>
+
+            <div>
+              <p class="text-sm opacity-60">Correo</p>
+              <p class="font-semibold">avyna.saltillo@gmail.com</p>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="rounded-4xl border border-white/10 bg-white/3 p-8 md:p-10">
+
+        <h3 class="text-2xl font-bold mb-8">
+          Atención comercial
+        </h3>
+
+        <div class="space-y-5 text-white/70 leading-relaxed">
+
+          <div class="flex gap-4">
+            <MapPin className="mt-1 shrink-0" size={18} />
+            <p>
+              Saltillo, Coahuila. Atención local y seguimiento regional.
+            </p>
+          </div>
+
+          <div class="flex gap-4">
+            <Send className="mt-1 shrink-0" size={18} />
+            <p>
+              Solicita precios salón, esquema de crédito, eventos y catálogo completo.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-2 gap-4">
+
+          <a
+            href="https://wa.me/528445069238?text=Hola,%20quiero%20informaci%C3%B3n%20de%20AVYNA"
+            target="_blank"
+            class="h-12 rounded-2xl bg-white text-black font-semibold flex items-center justify-center gap-2 hover:scale-[1.02] transition"
+          >
+            Solicitar Info
+            <ArrowUpRight size={16} />
+          </a>
+
+          <a
+            href="/catalogos/catálogo_avyna_2025.pdf"
+            download
+            class="h-12 rounded-2xl border border-white/10 bg-white/3 font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-black transition"
+          >
+            Descargar PDF
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

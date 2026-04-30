@@ -1,0 +1,246 @@
+---
+// src/components/ClubPreferred.astro
+import {
+  Star,
+  ShieldCheck,
+  Crown,
+  Gem,
+  ArrowUpRight,
+  Sparkles
+} from "lucide-react";
+---
+
+<section id="clubPreferred" class="bg-black px-6 py-24 text-white">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- HEADER -->
+    <div class="mx-auto mb-16 max-w-4xl text-center">
+
+      <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+        <Sparkles size={15} />
+        Club Preferred AVYNA
+      </div>
+
+      <h2 class="text-4xl font-bold tracking-tight md:text-6xl">
+        Sube de Nivel
+      </h2>
+
+      <p class="mt-6 text-lg leading-relaxed text-white/65">
+        Programa diseñado para reconocer la constancia de compra,
+        impulsar recomendaciones de mantenimiento en casa y premiar
+        el crecimiento profesional de cada salón.
+      </p>
+
+    </div>
+
+    <!-- LEVELS -->
+    <div class="grid gap-8">
+
+      <!-- LEVEL 1 -->
+      <div class="rounded-[2.5rem] border border-white/10 bg-white p-8 text-black shadow-2xl">
+        <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
+
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-zinc-100">
+            <Star size={32} />
+          </div>
+
+          <div>
+
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+              <h3 class="text-3xl font-bold">
+                Nivel 1 · Salón Preferred
+              </h3>
+
+              <span class="rounded-full bg-zinc-100 px-3 py-1 text-sm">
+                Entrada
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 text-zinc-700">
+
+              <div>
+                <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
+                <p>1 compra desde <strong>$2,000 MXN</strong>.</p>
+
+                <p class="mb-2 mt-5 font-semibold">¿Cómo mantenerlo?</p>
+                <p>1 compra mensual mínima de <strong>$2,000 MXN</strong>.</p>
+              </div>
+
+              <div>
+                <p class="mb-2 font-semibold">Beneficios</p>
+                <ul class="space-y-2">
+                  <li>• Inscripción al club</li>
+                  <li>• Precio salón</li>
+                  <li>• Atención prioritaria</li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 2 -->
+      <div class="rounded-[2.5rem] bg-red-600 p-8 text-white shadow-2xl">
+        <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
+
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-red-600">
+            <ShieldCheck size={32} />
+          </div>
+
+          <div>
+
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+              <h3 class="text-3xl font-bold">
+                Nivel 2 · Salón Red
+              </h3>
+
+              <span class="rounded-full bg-white/20 px-3 py-1 text-sm">
+                Crecimiento
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 text-white/90">
+
+              <div>
+                <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
+                <p>
+                  1 compra de <strong>$15,000</strong> o
+                  2 compras de <strong>$10,000</strong>.
+                </p>
+
+                <p class="mb-2 mt-5 font-semibold">¿Cómo mantenerlo?</p>
+                <p>1 compra mensual mínima de <strong>$5,000</strong>.</p>
+              </div>
+
+              <div>
+                <p class="mb-2 font-semibold">Beneficios</p>
+                <ul class="space-y-2">
+                  <li>• Pase preparación Punto AVYNA</li>
+                  <li>• Activaciones AVYNA</li>
+                  <li>• Exhibidor comercial</li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 3 -->
+      <div class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl">
+        <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
+
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-black">
+            <Crown size={32} />
+          </div>
+
+          <div>
+
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+              <h3 class="text-3xl font-bold">
+                Nivel 3 · Salón Black
+              </h3>
+
+              <span class="rounded-full bg-white/10 px-3 py-1 text-sm">
+                Premium
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 text-white/85">
+
+              <div>
+                <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
+                <p>
+                  1 compra de <strong>$30,000</strong> o
+                  2 compras de <strong>$20,000</strong>.
+                </p>
+
+                <p class="mb-2 mt-5 font-semibold">¿Cómo mantenerlo?</p>
+                <p>1 compra mensual mínima de <strong>$15,000</strong>.</p>
+              </div>
+
+              <div>
+                <p class="mb-2 font-semibold">Beneficios</p>
+                <ul class="space-y-2">
+                  <li>• Publicación como salón Black</li>
+                  <li>• Activaciones AVYNA</li>
+                  <li>• Exhibidores en salón</li>
+                  <li>• Punto AVYNA</li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 4 -->
+      <div class="rounded-[2.5rem] bg-zinc-200 p-8 text-black shadow-2xl">
+        <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
+
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white">
+            <Gem size={32} />
+          </div>
+
+          <div>
+
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+              <h3 class="text-3xl font-bold">
+                Nivel 4 · Salón Silver
+              </h3>
+
+              <span class="rounded-full bg-white px-3 py-1 text-sm">
+                Elite
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 text-zinc-700">
+
+              <div>
+                <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
+                <p>
+                  Por invitación anual AVYNA y mantener requisitos Black.
+                </p>
+
+                <p class="mb-2 mt-5 font-semibold">¿Cómo mantenerlo?</p>
+                <p>
+                  Compra mínima mensual de <strong>$15,000</strong> +
+                  20 tubos de tinte al mes.
+                </p>
+              </div>
+
+              <div>
+                <p class="mb-2 font-semibold">Beneficios</p>
+                <ul class="space-y-2">
+                  <li>• Publicación Silver exclusiva</li>
+                  <li>• Activaciones premium</li>
+                  <li>• Exhibidores comerciales</li>
+                  <li>• Punto AVYNA</li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-14 text-center">
+      <a
+        href="#contacto"
+        class="inline-flex h-14 items-center gap-2 rounded-full bg-white px-7 font-semibold text-black shadow-xl transition hover:scale-105"
+      >
+        Quiero subir de nivel
+        <ArrowUpRight size={18} />
+      </a>
+    </div>
+
+  </div>
+</section>
