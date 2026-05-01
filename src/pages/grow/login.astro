@@ -1,6 +1,6 @@
 ---
-// src/pages/partners/login.astro
-import Layout from "../../layouts/PartnersLayout.astro";
+// src/pages/grow/login.astro
+import Layout from "../../layouts/GrowLayout.astro";
 import {
   ShieldCheck,
   ArrowRight,
@@ -14,7 +14,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 
 ---
 
-<Layout title="AVYNA ACCESS | Oportunidad Comercial">
+<Layout title="AVYNA Grow | Oportunidad Comercial En Saltillo">
 
 <meta name="robots" content="noindex,nofollow" />
 
@@ -37,7 +37,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 
 <a
   href="/"
-  class="mb-20 inline-flex h-11 w-fit items-center gap-2 rounded-full border border-white/10 bg-white/4 px-4 text-sm font-medium text-white/65 backdrop-blur-xl transition duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+  class="mb-12 inline-flex h-11 w-fit items-center gap-2 rounded-full border border-white/7 bg-white/2 px-4 text-sm font-medium text-white/75 backdrop-blur-xl transition duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
 >
 
     <BsArrowUpLeftSquareFill size={22} opacity={0.9}/>
@@ -218,8 +218,8 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 </section>
 
 <script is:inline>
-const KEY = "avyna_partner_access";
-const EXP = "avyna_partner_expire";
+const KEY = "avyna_grow_access";
+const EXP = "avyna_grow_expire";
 const PASS = "Avyna#2026";
 
 const input = document.getElementById("pass");
@@ -239,7 +239,7 @@ const access = localStorage.getItem(KEY);
 const expire = Number(localStorage.getItem(EXP) || 0);
 
 if (access === "true" && Date.now() < expire) {
-  window.location.pathname = "/partners";
+  window.location.pathname = "/grow";
 }
 
 /* login */
@@ -272,7 +272,7 @@ function login() {
   localStorage.setItem(KEY, "true");
   localStorage.setItem(EXP, newExpire.toString());
 
-  window.location.pathname = "/partners";
+  window.location.pathname = "/grow";
 }
 
 btn.onclick = login;

@@ -1,0 +1,212 @@
+---
+// src/components/partners/PartnersHero.astro
+import {
+  ArrowRight,
+  BadgeCheck,
+  Sparkles,
+  Truck,
+  CreditCard,
+  Clock3,
+  TrendingUp
+} from "lucide-react";
+---
+
+<section class="relative overflow-hidden bg-black px-6 pt-36 pb-24 text-white">
+
+  <!-- BG IMAGE -->
+  <img
+    src="/images/banner.png"
+    class="absolute inset-0 h-full w-full object-contain opacity-70"
+    alt="AVYNA Grow"
+  />
+
+  <div class="absolute inset-0 bg-black/55"></div>
+
+  <!-- LIGHTS -->
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute top-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.08),transparent_35%)]"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+
+    <!-- LEFT -->
+    <div>
+
+      <!-- BADGE -->
+      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+        <TrendingUp size={16} className="shrink-0" />
+        AVYNA GROW • Oportunidad Comercial
+      </div>
+
+      <!-- TITLE -->
+      <h1 class="max-w-3xl text-5xl font-bold tracking-tight md:text-7xl">
+        Haz crecer tu salón con una marca premium
+      </h1>
+
+      <!-- TEXT -->
+      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-white/65 md:text-xl">
+        Más de 200 salones activos en Saltillo, Coahuila ya trabajan con el equipo liderado por
+        Ángeles Encinas López. Atención rápida, productos italianos y
+        condiciones diseñadas para crecer contigo.
+      </p>
+
+      <!-- CTA -->
+      <div class="mt-10 flex flex-wrap gap-4">
+
+        <a
+          href="/grow/catalogo"
+          class="inline-flex h-14 items-center gap-2 rounded-full bg-white px-7 font-semibold text-black shadow-2xl transition hover:scale-105"
+        >
+          Ver precios salón
+          <ArrowRight size={18} />
+        </a>
+
+        <a
+          href="#contacto"
+          class="inline-flex h-14 items-center rounded-full border border-white/15 bg-white/5 px-7 font-medium transition hover:bg-white hover:text-black"
+        >
+          Solicitar acceso
+        </a>
+
+      </div>
+
+      <!-- STATS -->
+      <div class="mt-14 grid max-w-2xl grid-cols-3 gap-6">
+
+        <div>
+          <h3 class="text-3xl font-bold md:text-4xl">+200</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Salones activos
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-bold md:text-4xl">&lt;30 min</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Respuesta promedio
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-bold md:text-4xl">15 días</h3>
+          <p class="mt-2 text-sm text-white/45">
+            Crédito inicial
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="relative">
+
+      <!-- MAIN PANEL -->
+      <div class="relative flex min-h-155 flex-col justify-end overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl">
+
+        <!-- IMAGE -->
+        <img
+          src="/images/avyna/avyna-women-2.jpg"
+          alt="AVYNA Beauty"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <!-- CARDS -->
+        <div class="relative z-10 p-7">
+
+          <div class="grid gap-5">
+
+            <div class="flex items-center gap-4 rounded-3xl bg-white p-5 text-black shadow-xl">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-black text-white">
+                <Truck size={20} />
+              </div>
+
+              <div>
+                <p class="text-sm text-zinc-500">
+                  Entrega local
+                </p>
+
+                <h3 class="font-semibold">
+                  Rápida y confiable
+                </h3>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 rounded-3xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+                <CreditCard size={20} />
+              </div>
+
+              <div>
+                <p class="text-sm text-white/60">
+                  Crédito disponible
+                </p>
+
+                <h3 class="font-semibold">
+                  Flujo inteligente
+                </h3>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 rounded-3xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+                <BadgeCheck size={20} />
+              </div>
+
+              <div>
+                <p class="text-sm text-white/60">
+                  Marca premium
+                </p>
+
+                <h3 class="font-semibold">
+                  Calidad italiana real
+                </h3>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FLOAT TOP -->
+      <div class="absolute -top-5 -right-5 hidden items-center gap-3 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl md:flex">
+        <Clock3 size={18} />
+
+        <div>
+          <p class="text-xs text-zinc-500">
+            Atención
+          </p>
+
+          <p class="font-semibold">
+            Menos de 30 min.
+          </p>
+        </div>
+      </div>
+
+      <!-- FLOAT BOTTOM -->
+      <div class="absolute bottom-145 left-7 z-20 hidden items-center gap-3 rounded-3xl border border-white/10 bg-black/55 px-5 py-4 text-white shadow-2xl backdrop-blur-xl md:flex">
+        <Sparkles size={18} />
+
+        <div>
+          <p class="text-xs text-white/45">
+            Programa exclusivo
+          </p>
+
+          <p class="font-semibold leading-tight">
+            AVYNA GROW
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

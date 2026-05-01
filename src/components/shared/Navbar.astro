@@ -1,7 +1,9 @@
 ---
 // src/components/shared/Navbar.astro
 import { Menu, LogOut } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa6";
+
+import { BiSolidBadgeDollar } from "react-icons/bi";
+
 
 const path = Astro.url.pathname;
 
@@ -9,10 +11,10 @@ const path = Astro.url.pathname;
    DETECTAR RUTA
 ========================= */
 
-const isPartner =
-  path === "/partners" ||
-  path === "/partners/" ||
-  path.startsWith("/partners/");
+const isGrow =
+  path === "/grow" ||
+  path === "/grow/" ||
+  path.startsWith("/grow/");
 
 const isCatalog =
   path === "/catalogo" ||
@@ -32,7 +34,7 @@ const isInnerPage =
 
 const linkTo = (id: string) => {
 
-  if (isPartner) return `/partners#${id}`;
+  if (isGrow) return `/grow#${id}`;
 
   if (isInnerPage) return `/#${id}`;
 
@@ -43,13 +45,12 @@ const linkTo = (id: string) => {
    NAV ITEMS
 ========================= */
 
-const navItems = isPartner
+const navItems = isGrow
   ? [
       { label: "Nosotros", href: linkTo("nosotros") },
       { label: "Crédito", href: linkTo("credito") },
       { label: "Club Preferred", href: linkTo("clubPreferred") },
-      { label: "Catálogo", href: "/partners/catalogo" },
-      { label: "Diagnóstico Pro", href: "/partners/diagnostico" },
+      { label: "Catálogo", href: "/grow/catalogo" },
     ]
   : [
       { label: "Marca", href: linkTo("nosotros") },
@@ -65,16 +66,16 @@ const navItems = isPartner
   <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
     <!-- LOGO -->
-    <a href={isPartner ? "/partners" : "/"} class="flex items-center gap-3">
+    <a href={isGrow ? "/grow" : "/"} class="flex items-center gap-3">
       <div>
         <img
           src="/images/logo-avyna-white.png"
           alt="AVYNA"
-          class="h-4 w-auto"
+          class="mt-2 h-5 w-auto"
         />
 
-        <p class="text-[13px] text-white/55">
-          {isPartner ? "Avyna Partner" : "Saltillo, Coahuila"}
+        <p class="mt-1 text-[14px] text-white/55">
+          {isGrow ? "Crece con AVYNA" : "Saltillo, Coahuila"}
         </p>
       </div>
     </a>
@@ -94,7 +95,7 @@ const navItems = isPartner
     <div class="flex items-center gap-3">
 
       {
-        isPartner ? (
+        isGrow ? (
 
           <button
             id="logoutBtn"
@@ -107,20 +108,13 @@ const navItems = isPartner
         ) : (
 
           <>
-            <a
-              href="/partners/login"
-              class="hidden h-11 items-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-black md:inline-flex"
-            >
-              Tengo salón
-            </a>
-
-            <a
-              href={linkTo("contacto")}
-              class="hidden h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black shadow-xl transition hover:scale-105 md:inline-flex"
-            >
-              <FaWhatsapp size={20} />
-              Solicitar Info
-            </a>
+           <a
+  href="/grow/login"
+  class="hidden md:inline-flex h-12 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
+>
+  <BiSolidBadgeDollar size={20} />
+  Quiero vender AVYNA
+</a>
           </>
 
         )
@@ -155,7 +149,7 @@ const navItems = isPartner
       }
 
       {
-        isPartner ? (
+        isGrow ? (
 
           <button
             id="logoutBtnMobile"
@@ -167,19 +161,14 @@ const navItems = isPartner
         ) : (
 
           <>
-            <a
-              href="/partners/login"
-              class="mt-3 flex h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 font-semibold text-white"
-            >
-              Tengo salón
-            </a>
+<a
+  href="/grow/login"
+  class="mt-3 flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 font-semibold text-white"
+>
+  <BiSolidBadgeDollar size={18} />
+  Quiero vender AVYNA
+</a>
 
-            <a
-              href={linkTo("contacto")}
-              class="flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
-            >
-              Solicitar Información
-            </a>
           </>
 
         )
@@ -199,17 +188,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let open = false;
 
-  const isPartnerRoute =
-    window.location.pathname.startsWith("/partners");
+  const isGrowRoute =
+    window.location.pathname.startsWith("/grow");
 
-  if (isPartnerRoute) {
+  if (isGrowRoute) {
 
     const access =
-      localStorage.getItem("avyna_partner_access");
+      localStorage.getItem("avyna_grow_access");
 
     const expire =
       Number(
-        localStorage.getItem("avyna_partner_expire") || 0
+        localStorage.getItem("avyna_grow_expire") || 0
       );
 
     if (
@@ -217,10 +206,10 @@ document.addEventListener("DOMContentLoaded", () => {
       Date.now() > expire
     ) {
 
-      localStorage.removeItem("avyna_partner_access");
-      localStorage.removeItem("avyna_partner_expire");
+      localStorage.removeItem("avyna_grow_access");
+      localStorage.removeItem("avyna_grow_expire");
 
-      window.location.pathname = "/partners/login";
+      window.location.pathname = "/grow/login";
       return;
     }
   }
@@ -266,10 +255,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function logout() {
 
-    localStorage.removeItem("avyna_partner_access");
-    localStorage.removeItem("avyna_partner_expire");
+    localStorage.removeItem("avyna_grow_access");
+    localStorage.removeItem("avyna_grow_expire");
 
-    window.location.pathname = "/partners/login";
+    window.location.pathname = "/grow/login";
   }
 
   document.getElementById("logoutBtn")

@@ -9,12 +9,17 @@ import {
   Store
 } from "lucide-react";
 
+import { FaInstagram } from "react-icons/fa";
+
+import { TbLayoutDashboard } from "react-icons/tb";
+
+
 const path = Astro.url.pathname;
 
-const isPartner =
-  path === "/partners" ||
-  path === "/partners/" ||
-  path.startsWith("/partners/");
+const isGrow =
+  path === "/grow" ||
+  path === "/grow/" ||
+  path.startsWith("/grow/");
 
 const isCatalog =
   path === "/catalogo" ||
@@ -27,18 +32,17 @@ const isDiagnostico =
 const isInnerPage = isCatalog || isDiagnostico;
 
 const linkTo = (id: string) => {
-  if (isPartner) return `/partners#${id}`;
+  if (isGrow) return `/grow#${id}`;
   if (isInnerPage) return `/#${id}`;
   return `#${id}`;
 };
 
-const navItems = isPartner
+const navItems = isGrow
   ? [
       { label: "Nosotros", href: linkTo("nosotros") },
       { label: "Crédito", href: linkTo("credito") },
       { label: "Club Preferred", href: linkTo("clubPreferred") },
-      { label: "Catálogo", href: "/partners/catalogo" },
-      { label: "Contacto", href: linkTo("contacto") },
+      { label: "Catálogo", href: "/grow/catalogo" },
     ]
   : [
       { label: "Marca", href: linkTo("nosotros") },
@@ -54,7 +58,7 @@ const navItems = isPartner
   <div class="mx-auto max-w-7xl">
 
     <!-- TOP -->
-    <div class="grid gap-10 pb-14 md:grid-cols-2 xl:grid-cols-4">
+    <div class="grid gap-10 pb-14 md:grid-cols-2 xl:grid-cols-5">
 
       <!-- BRAND -->
       <div class="xl:col-span-2">
@@ -72,14 +76,14 @@ const navItems = isPartner
             </h3>
 
             <p class="text-sm text-white/45">
-              {isPartner ? "Portal Profesional" : "Distribuidor Profesional"}
+              {isGrow ? "Portal Profesional" : "Distribuidor Profesional"}
             </p>
           </div>
         </div>
 
         <p class="max-w-xl leading-relaxed text-white/65">
           {
-            isPartner
+            isGrow
               ? "Portal exclusivo para socios, salones y profesionales AVYNA."
               : "Distribución profesional de productos de belleza para salones, estilistas y emprendedores en Saltillo."
           }
@@ -89,9 +93,9 @@ const navItems = isPartner
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
 
           {
-            !isPartner && (
+            !isGrow && (
               <a
-                href="/partners/login"
+                href="/grow/login"
                 class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white px-5 font-semibold text-black transition hover:scale-[1.02]"
               >
                 <Store size={22} />
@@ -141,29 +145,53 @@ const navItems = isPartner
         <ul class="space-y-4 text-white/60">
 
           <li class="flex items-start gap-3">
-            <MapPin size={16} className="mt-1 shrink-0" />
+            <MapPin size={20} className="mt-1 shrink-0" />
             <span>Saltillo, Coahuila</span>
           </li>
 
           <li>
-            <a
-              href="tel:+528445069238"
-              class="flex items-center gap-3 transition hover:text-white"
-            >
-              <Phone size={16} />
-              844 506 9238
-            </a>
-          </li>
+            <a 
+            href="https://instagram.com/avyna_distribucionsaltillo"
+            class="flex items-center gap-3 break-all transition hover:text-white">
+              <FaInstagram size={20} className="mt-1 shrink-0" />
+              Avyna Distribución Saltillo
+          </a> 
+          </li> 
 
           <li>
             <a
               href="mailto:avyna.saltillo@gmail.com"
               class="flex items-center gap-3 break-all transition hover:text-white"
             >
-              <Mail size={16} />
+              <Mail size={20} />
               avyna.saltillo@gmail.com
             </a>
           </li>
+
+        </ul>
+      </div>
+
+            <!-- Socios -->
+      <div>
+        <h4 class="mb-5 text-lg font-semibold">
+          Ya soy cliente
+        </h4>
+
+        <ul class="space-y-4 text-white/60">
+
+          <li class="flex items-start gap-3">
+
+            <a href="/portal/login"
+            class="flex items-center gap-3 break-all transition hover:text-white">
+              <TbLayoutDashboard size={20} className="mt-1 shrink-0" />
+            <span>Ingresar al portal</span>
+            
+            </a>
+            
+            
+          </li>
+      
+      </p>
 
         </ul>
       </div>
@@ -202,9 +230,9 @@ const navItems = isPartner
 
   <!-- RIGHT -->
   {
-    !isPartner && (
+    !isGrow && (
       <a
-        href="/partners/login"
+        href="/grow/login"
         class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-white transition hover:bg-white hover:text-black"
       >
         Quiero vender AVYNA

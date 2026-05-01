@@ -1,15 +1,14 @@
 ---
-// src/pages/partners/index.astro
+// src/pages/grow/index.astro
 
-import Layout from "../../layouts/PartnersLayout.astro";
+import Layout from "../../layouts/GrowLayout.astro";
 
 import Navbar from "../../components/shared/Navbar.astro";
-import Hero from "../../components/partners/PartnersHero.astro";
-import About from "../../components/partners/PartnersAbout.astro";
-import CreditInfo from "../../components/partners/PartnersCredit.astro";
-import ClubPreferred from "../../components/partners/PartnersClubPreferred.astro";
-import Experiences from "../../components/partners/PartnersExperiences.astro";
-import Contact from "../../components/partners/PartnersContact.astro";
+import Hero from "../../components/grow/GrowHero.astro";
+import About from "../../components/grow/GrowAbout.astro";
+import CreditInfo from "../../components/grow/GrowCredit.astro";
+import ClubPreferred from "../../components/grow/GrowClubPreferred.astro";
+import Experiences from "../../components/grow/GrowExperiences.astro";
 import Footer from "../../components/shared/Footer.astro";
 
 import {
@@ -73,7 +72,7 @@ import {
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
 
           <a
-            href="/partners/catalogo"
+            href="/grow/catalogo"
             class="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black"
           >
             <Package size={22} />
@@ -144,7 +143,6 @@ import {
     <CreditInfo />
     <ClubPreferred />
     <Experiences />
-    <Contact />
 
   </main>
 
@@ -153,8 +151,8 @@ import {
 </div>
 
 <script is:inline>
-const KEY = "avyna_partner_access";
-const EXP = "avyna_partner_expire";
+const KEY = "avyna_grow_access";
+const EXP = "avyna_grow_expire";
 
 const loader = document.getElementById("gateLoader");
 const loaderText = document.getElementById("loaderText");
@@ -167,7 +165,7 @@ function redirectLogin() {
   loaderText.textContent = "Redirigiendo...";
 
   setTimeout(() => {
-    window.location.pathname = "/partners/login";
+    window.location.pathname = "/grow/login";
   }, 900);
 }
 
