@@ -31,7 +31,7 @@ import {
   </div>
 
   <!-- CONTENT -->
-  <div class="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-20 px-6 pt-32 pb-24 lg:grid-cols-2">
+  <div class="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 pt-28 pb-20 lg:grid-cols-2 lg:gap-20 lg:pt-32 lg:pb-24">
 
     <!-- LEFT -->
     <div>
@@ -44,13 +44,10 @@ import {
 
       <!-- TITLE -->
       <h1 class="reveal delay-1 mt-7 max-w-3xl text-5xl font-bold leading-[0.9] tracking-tight md:text-7xl">
-
         El cabello que sueñas,
-
         <span class="mt-2 block text-zinc-400">
           empieza hoy.
         </span>
-
       </h1>
 
       <!-- DESCRIPTION -->
@@ -61,11 +58,11 @@ import {
       </p>
 
       <!-- CTA -->
-      <div class="reveal delay-3 mt-10 flex flex-wrap gap-4">
+      <div class="reveal delay-3 mt-10 flex flex-col gap-4 sm:flex-row">
 
         <a
           href="/diagnostico"
-          class="press inline-flex h-14 items-center gap-2 rounded-full bg-white px-8 font-semibold text-black shadow-2xl transition duration-300 hover:scale-105"
+          class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black shadow-2xl transition duration-300 hover:scale-105"
         >
           Descubrir rutina
           <ArrowRight size={18} />
@@ -73,7 +70,7 @@ import {
 
         <a
           href="/catalogo"
-          class="press inline-flex h-14 items-center rounded-full border border-white/15 bg-white/5 px-8 font-medium transition hover:bg-white hover:text-black"
+          class="press inline-flex h-14 items-center justify-center rounded-full border border-white/15 bg-white/5 px-8 font-medium transition hover:bg-white hover:text-black"
         >
           Ver catálogo
         </a>
@@ -100,27 +97,47 @@ import {
 
       </div>
 
-      <!-- STATS -->
-      <div class="reveal-left delay-4 mt-14 grid max-w-xl grid-cols-3 gap-6">
+      <!-- MOBILE IMAGE -->
+      <div class="reveal-right delay-2 mt-12 block lg:hidden">
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-3xl font-bold">+30k</h3>
-          <p class="mt-2 text-sm text-white/45">
+        <div class="relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(0,0,0,.55)] backdrop-blur-2xl">
+
+          <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
+
+          <img
+            src="/images/avyna/avyna-women-1.jpg"
+            class="relative z-10 mx-auto h-105 w-full object-cover object-top"
+            alt="AVYNA Beauty"
+          />
+
+        </div>
+
+      </div>
+
+      <!-- STATS -->
+      <div class="reveal-left delay-4 mt-12 grid max-w-xl grid-cols-3 gap-3 sm:gap-6">
+
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-2xl font-bold sm:text-3xl">+30k</h3>
+          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
             Cabellos transformados con AVYNA
           </p>
         </div>
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-3xl font-bold">Italia</h3>
-          <p class="mt-2 text-sm text-white/45">
-            Fórmulas de origen italiano, calidad inigualable
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-2xl font-bold sm:text-3xl">Italia</h3>
+          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
+            Fórmulas de origen italiano
           </p>
         </div>
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-3xl font-bold">Cruelty Free</h3>
-          <p class="mt-2 text-sm text-white/45">
-            Sin pruebas en animales
+        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+          <h3 class="text-lg font-bold leading-tight sm:text-3xl">
+            Cruelty
+            <span class="block">Free</span>
+          </h3>
+          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
+            Sin pruebas animales
           </p>
         </div>
 
@@ -128,8 +145,8 @@ import {
 
     </div>
 
-    <!-- RIGHT -->
-    <div class="reveal-right delay-2 relative">
+    <!-- RIGHT DESKTOP -->
+    <div class="reveal-right delay-2 relative hidden lg:block">
 
       <!-- MAIN CARD -->
       <div class="relative overflow-hidden rounded-[2.7rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,.6)] backdrop-blur-2xl">
@@ -138,14 +155,14 @@ import {
 
         <img
           src="/images/avyna/avyna-women-1.jpg"
-          class="relative z-10 mx-auto h-168 object-contain float-soft"
+          class="relative z-10 mx-auto h-170 object-contain float-soft"
           alt="Producto AVYNA"
         />
 
       </div>
 
       <!-- FLOAT TOP -->
-      <div class="reveal-scale delay-4 absolute -top-6 -left-6 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl md:block">
+      <div class="reveal-scale delay-4 absolute -top-6 -left-6 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl xl:block">
 
         <div class="flex items-center gap-3">
 
@@ -168,7 +185,7 @@ import {
       </div>
 
       <!-- FLOAT RIGHT -->
-      <div class="reveal-scale delay-5 absolute top-1/2 -right-6 hidden -translate-y-1/2 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl md:block">
+      <div class="reveal-scale delay-5 absolute top-1/2 -right-6 hidden -translate-y-1/2 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl xl:block">
 
         <div class="flex items-center gap-3">
 
@@ -189,7 +206,7 @@ import {
       </div>
 
       <!-- FLOAT BOTTOM -->
-      <div class="reveal-scale delay-6 absolute -bottom-6 left-8 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl md:block">
+      <div class="reveal-scale delay-6 absolute -bottom-6 left-8 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl xl:block">
 
         <div class="flex items-center gap-3">
 

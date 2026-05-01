@@ -11,43 +11,204 @@ import ClubPreferred from "../../components/partners/PartnersClubPreferred.astro
 import Experiences from "../../components/partners/PartnersExperiences.astro";
 import Contact from "../../components/partners/PartnersContact.astro";
 import Footer from "../../components/shared/Footer.astro";
+
+import {
+  Sparkles,
+  CreditCard,
+  Package,
+  MessageCircle,
+  ShieldCheck
+} from "lucide-react";
 ---
 
-<meta name="robots" content="noindex,nofollow">
+<Layout
+  title="AVYNA PRO | Conviértete en socio AVYNA"
+  description="Beneficios exclusivos para socios, salones y profesionales afiliados."
+>
 
-<Layout title="AVYNA Saltillo | Únete a nuestro programa de socios" description="Descubre los beneficios exclusivos para salones profesionales con AVYNA Saltillo. Únete a nuestro programa de socios y accede a crédito, promociones especiales y asesoría personalizada para impulsar tu negocio.">
+<meta name="robots" content="noindex,nofollow" />
 
-<!-- PROTECT -->
+<!-- LOADER SIEMPRE -->
+<div
+  id="gateLoader"
+  class="fixed inset-0 z-9999 flex items-center justify-center bg-black text-white"
+>
+  <div class="text-center">
+
+        <div class="mx-auto mb-1 flex h-25 w-90 items-center justify-center rounded-3xl p-4 backdrop-blur-xl">
+  <img
+    src="/images/logo-avyna-white.png"
+    alt="AVYNA"
+    class="h-50 w-auto object-contain"
+  />
+</div>
+
+    <div class="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-white"></div>
+
+    <p
+      id="loaderText"
+      class="mt-5 text-sm text-white/55"
+    >
+      Validando acceso...
+    </p>
+
+  </div>
+</div>
+
+<!-- PAGE -->
+<div id="protectedPage" class="opacity-0 pointer-events-none">
+
+  <Navbar />
+
+  <main class="overflow-hidden bg-black text-white">
+
+    <!-- HERO -->
+    <Hero />
+
+    <!-- QUICK ACCESS -->
+    <section class="px-6 pb-10">
+
+      <div class="mx-auto max-w-7xl">
+
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+
+          <a
+            href="/partners/catalogo"
+            class="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black"
+          >
+            <Package size={22} />
+
+            <h3 class="mt-4 text-xl font-bold">
+              Catálogo Pro
+            </h3>
+
+            <p class="mt-2 text-sm text-white/55 hover:text-black">
+              Productos y líneas exclusivas.
+            </p>
+          </a>
+
+          <a
+            href="#credito"
+            class="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black"
+          >
+            <CreditCard size={22} />
+
+            <h3 class="mt-4 text-xl font-bold">
+              Crédito
+            </h3>
+
+            <p class="mt-2 text-sm text-white/55 hover:text-black">
+              Facilidades para crecer tu negocio.
+            </p>
+          </a>
+
+          <a
+            href="#clubPreferred"
+            class="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black"
+          >
+            <Sparkles size={22} />
+
+            <h3 class="mt-4 text-xl font-bold">
+              Club Preferred
+            </h3>
+
+            <p class="mt-2 text-sm text-white/55 hover:text-black">
+              Beneficios y recompensas.
+            </p>
+          </a>
+
+          <a
+            href="https://wa.me/528445069238"
+            target="_blank"
+            class="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black"
+          >
+            <MessageCircle size={22} />
+
+            <h3 class="mt-4 text-xl font-bold">
+              Soporte Directo
+            </h3>
+
+            <p class="mt-2 text-sm text-white/55 hover:text-black">
+              Atención rápida por WhatsApp.
+            </p>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CONTENT -->
+    <About />
+    <CreditInfo />
+    <ClubPreferred />
+    <Experiences />
+    <Contact />
+
+  </main>
+
+  <Footer />
+
+</div>
+
 <script is:inline>
-const access = localStorage.getItem("avyna_partner_access");
+const KEY = "avyna_partner_access";
+const EXP = "avyna_partner_expire";
+
+const loader = document.getElementById("gateLoader");
+const loaderText = document.getElementById("loaderText");
+const page = document.getElementById("protectedPage");
+
+function redirectLogin() {
+  localStorage.removeItem(KEY);
+  localStorage.removeItem(EXP);
+
+  loaderText.textContent = "Redirigiendo...";
+
+  setTimeout(() => {
+    window.location.pathname = "/partners/login";
+  }, 900);
+}
+
+function showPage() {
+
+  loaderText.textContent = "Acceso válido";
+
+  setTimeout(() => {
+
+    loader.style.opacity = "0";
+    loader.style.transition = "opacity .35s ease";
+
+    page.classList.remove("opacity-0");
+    page.classList.remove("pointer-events-none");
+    page.classList.add("opacity-100");
+
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 350);
+
+  }, 700);
+}
+
+/* VALIDAR */
+const access = localStorage.getItem(KEY);
 const expire = Number(
-  localStorage.getItem("avyna_partner_expire") || 0
+  localStorage.getItem(EXP) || 0
 );
 
-if (
-  access !== "true" ||
-  Date.now() > expire
-) {
-  localStorage.removeItem("avyna_partner_access");
-  localStorage.removeItem("avyna_partner_expire");
+setTimeout(() => {
 
-  window.location.pathname = "/partners/login";
-}
+  if (
+    access !== "true" ||
+    Date.now() > expire
+  ) {
+    redirectLogin();
+  } else {
+    showPage();
+  }
+
+}, 900);
 </script>
-
-<Navbar />
-
-<main class="bg-black text-white overflow-hidden">
-
-  <Hero />
-  <About />
-  <CreditInfo />
-  <ClubPreferred />
-  <Experiences />
-  <Contact />
-
-</main>
-
-<Footer />
 
 </Layout>
