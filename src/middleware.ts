@@ -7,7 +7,7 @@ export const onRequest = defineMiddleware(
     const { url, cookies, redirect } = context;
     const path = url.pathname;
 
-    /* IGNORAR ARCHIVOS Y ASTRO INTERNOS */
+    /* assets */
     if (
       path.startsWith("/_astro") ||
       path.startsWith("/favicon") ||
@@ -16,7 +16,7 @@ export const onRequest = defineMiddleware(
       return next();
     }
 
-    /* SOLO RUTAS PRIVADAS */
+    /* privadas */
     const protectedRoutes = [
       "/portal",
       "/admin"
@@ -42,11 +42,18 @@ export const onRequest = defineMiddleware(
               return cookies.get(name)?.value;
             },
 
-            set(name: string, value: string, options: any) {
+            set(
+              name: string,
+              value: string,
+              options: any
+            ) {
               cookies.set(name, value, options);
             },
 
-            remove(name: string, options: any) {
+            remove(
+              name: string,
+              options: any
+            ) {
               cookies.delete(name, options);
             }
           }
@@ -58,7 +65,7 @@ export const onRequest = defineMiddleware(
       } = await supabase.auth.getUser();
 
       if (!user) {
-        return redirect("/login");
+        return redirect("/auth/login");
       }
 
       const { data: profile } = await supabase
@@ -68,7 +75,7 @@ export const onRequest = defineMiddleware(
         .maybeSingle();
 
       if (!profile) {
-        return redirect("/signup");
+        return redirect("/auth/signup");
       }
 
       if (profile.approved !== true) {
@@ -79,7 +86,7 @@ export const onRequest = defineMiddleware(
         path.startsWith("/admin") &&
         profile.role !== "admin"
       ) {
-        return redirect("/portal");
+        return redirect("/portal/dashboard");
       }
 
       return next();
@@ -87,8 +94,7 @@ export const onRequest = defineMiddleware(
     } catch (error) {
 
       console.error(error);
-
-      return redirect("/login");
+      return redirect("/auth/login");
     }
   }
 );

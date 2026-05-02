@@ -32,6 +32,7 @@ import {
       placeholder="Correo electrónico"
       class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
       required
+      autocomplete="email"
     />
 
   </div>
@@ -50,12 +51,13 @@ import {
       placeholder="Contraseña"
       class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none transition focus:border-white/30"
       required
+      autocomplete="current-password"
     />
 
     <button
       type="button"
       id="togglePassword"
-      class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition hover:text-white"
+      class="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-white/40 transition hover:text-white"
       aria-label="Mostrar contraseña"
     >
       <Eye size={18} />
@@ -86,9 +88,10 @@ import {
   <!-- BUTTON -->
   <button
     id="submitBtn"
-    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black transition hover:scale-[1.01]"
+    type="submit"
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black transition active:scale-[0.98]"
   >
-    Entrar
+    <span id="btnText">Entrar</span>
     <ArrowRight size={16} />
   </button>
 
@@ -118,6 +121,7 @@ import { supabase } from "/src/lib/supabase.ts";
 const form = document.getElementById("loginForm");
 const msg = document.getElementById("msg");
 const submitBtn = document.getElementById("submitBtn");
+const btnText = document.getElementById("btnText");
 
 const emailInput = document.getElementById("email");
 const password = document.getElementById("password");
@@ -133,21 +137,31 @@ togglePassword.addEventListener("click", () => {
 
 /* LOADING */
 function setLoading(state) {
+
   submitBtn.disabled = state;
-  submitBtn.textContent =
+
+  btnText.textContent =
     state ? "Entrando..." : "Entrar";
+
+  submitBtn.classList.toggle(
+    "opacity-70",
+    state
+  );
 }
 
 /* LOGIN */
 form.addEventListener("submit", async (e) => {
+
   e.preventDefault();
+  e.stopPropagation();
 
   msg.textContent = "";
 
   const email =
     emailInput.value.trim().toLowerCase();
 
-  const pass = password.value;
+  const pass =
+    password.value.trim();
 
   if (!email || !pass) {
     msg.textContent =
@@ -160,90 +174,62 @@ form.addEventListener("submit", async (e) => {
   try {
 
     /* LOGIN */
-    const { error: loginError } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password: pass
-      });
+    const {
+      data,
+      error
+    } = await supabase.auth.signInWithPassword({
+      email,
+      password: pass
+    });
 
-    if (loginError) {
+    if (error || !data.user) {
       msg.textContent =
         "Credenciales inválidas.";
       setLoading(false);
       return;
     }
 
-    /* USER */
+    /* PERFIL */
     const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      msg.textContent =
-        "No se pudo iniciar sesión.";
-      setLoading(false);
-      return;
-    }
-
-    /* PROFILE */
-    const {
-      data: profile,
-      error: profileError
+      data: profile
     } = await supabase
       .from("profiles")
-      .select("*")
-      .eq("id", user.id)
+      .select("approved, role")
+      .eq("id", data.user.id)
       .maybeSingle();
-
-    if (profileError) {
-      msg.textContent =
-        "Error al cargar perfil.";
-      setLoading(false);
-      return;
-    }
 
     if (!profile) {
       msg.textContent =
         "No se encontró perfil.";
+      await supabase.auth.signOut();
       setLoading(false);
       return;
     }
 
-    /* APPROVED */
     if (profile.approved !== true) {
 
-      msg.textContent =
-        "Tu cuenta aún no ha sido aprobada.";
-
-      await supabase.auth.signOut();
-
-      setLoading(false);
-      return;
-    }
-
-    /* REDIRECTS */
-    if (profile.role === "admin") {
-      window.location.href = "/admin";
-      return;
-    }
-
-    if (profile.role === "grow") {
       window.location.href =
-        "/grow/dashboard";
+        "/auth/pending";
+
       return;
     }
 
-    window.location.href =
-      "/portal/dashboard";
+/* REDIRECT */
+if (profile.role === "admin") {
+  window.location.href = "/admin";
+  return;
+}
+
+/* TODOS LOS DEMÁS = CLIENTE */
+window.location.href = "/portal/dashboard";
 
   } catch (error) {
 
     msg.textContent =
       "Ocurrió un error inesperado.";
 
+    setLoading(false);
   }
-
-  setLoading(false);
 
 });
 </script>

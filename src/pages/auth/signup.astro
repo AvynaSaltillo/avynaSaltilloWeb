@@ -334,99 +334,51 @@ form?.addEventListener("submit", async (e) => {
 
   msg.textContent = "";
 
-  const firstName =
-    document.getElementById("firstName").value.trim();
-
-  const lastName =
-    document.getElementById("lastName").value.trim();
-
-  const business =
-    document.getElementById("business").value.trim();
-
-  const email =
-    document.getElementById("email")
-      .value.trim()
-      .toLowerCase();
-
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const business = document.getElementById("business").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const phoneVal = phone.value.trim();
   const advisorVal = advisor.value.trim();
   const pass = password.value;
 
-  if (
-    !firstName ||
-    !lastName ||
-    !business ||
-    !email ||
-    !phoneVal ||
-    !advisorVal ||
-    !pass
-  ) {
+  if (!firstName || !lastName || !business || !email || !phoneVal || !advisorVal || !pass) {
     msg.textContent = "Completa todos los campos.";
-    return;
-  }
-
-  if (phoneVal.length !== 10) {
-    msg.textContent = "Número inválido.";
-    return;
-  }
-
-  if (pass.length < 8) {
-    msg.textContent = "La contraseña debe tener mínimo 8 caracteres.";
     return;
   }
 
   setLoading(true);
 
   try {
-    /* CREATE AUTH */
-    const {
-      data: authData,
-      error: authError
-    } = await supabase.auth.signUp({
+    await supabase.auth.signOut(); // limpia sesión previa
+
+    const { data, error } = await supabase.auth.signUp({
       email,
       password: pass
     });
 
-    if (authError) {
-      msg.textContent = authError.message;
+    if (error) {
+      msg.textContent = error.message;
       setLoading(false);
       return;
     }
 
-    let uid = authData?.user?.id;
-
-    /* FALLBACK */
-    if (!uid) {
-      const {
-        data: userData
-      } = await supabase.auth.getUser();
-
-      uid = userData?.user?.id;
-    }
+    const uid = data?.user?.id;
 
     if (!uid) {
-      msg.textContent =
-        "No se pudo crear usuario.";
+      msg.textContent = "No se pudo crear usuario.";
       setLoading(false);
       return;
     }
 
-    /* FOLIO */
     const { count } = await supabase
       .from("profiles")
-      .select("*", {
-        count: "exact",
-        head: true
-      });
+      .select("*", { count: "exact", head: true });
 
     const localId =
-      "AVY-" +
-      String((count || 0) + 1).padStart(4, "0");
+      "AVY-" + String((count || 0) + 1).padStart(4, "0");
 
-    /* PROFILE INSERT */
-    const {
-      error: profileError
-    } = await supabase
+    const { error: profileError } = await supabase
       .from("profiles")
       .insert({
         id: uid,
@@ -444,29 +396,17 @@ form?.addEventListener("submit", async (e) => {
       });
 
     if (profileError) {
-      msg.textContent =
-        "Cuenta creada, pero faltó guardar perfil.";
+      msg.textContent = profileError.message;
       setLoading(false);
       return;
     }
 
-    msg.textContent =
-      `Cuenta creada correctamente. Folio ${localId}. Espera aprobación.`;
+    window.location.href = "/auth/pending";
 
-    form.reset();
-
-    advisor.value = "";
-    advisorLabel.textContent =
-      "Selecciona tu asesor AVYNA";
-    advisorLabel.classList.remove("text-white");
-    advisorLabel.classList.add("text-white/40");
-
-  } catch (error) {
-    msg.textContent =
-      "Ocurrió un error inesperado.";
+  } catch (err) {
+    msg.textContent = "Error inesperado.";
+    setLoading(false);
   }
-
-  setLoading(false);
 });
 </script>
 
