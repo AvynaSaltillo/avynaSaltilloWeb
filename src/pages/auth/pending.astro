@@ -1,0 +1,96 @@
+---
+import PortalLayout from "../../layouts/PortalLayout.astro";
+---
+
+<PortalLayout title="Pendiente de aprobación | AVYNA">
+
+<section class="min-h-[80vh] grid place-items-center px-4">
+
+  <div class="w-full max-w-2xl rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-8 sm:p-10 text-center">
+
+    <!-- ICON -->
+    <div class="mx-auto grid h-20 w-20 place-items-center rounded-full border border-amber-400/20 bg-amber-400/10">
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-10 w-10 text-amber-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="1.7"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+
+    </div>
+
+    <!-- TEXT -->
+    <p class="mt-8 text-xs uppercase tracking-[0.45em] text-white/35">
+      Portal Privado
+    </p>
+
+    <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+      Cuenta en revisión
+    </h1>
+
+    <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/55 sm:text-base">
+      Tu registro fue recibido correctamente.
+      Nuestro equipo validará tus datos comerciales antes de activar el acceso completo al portal.
+    </p>
+
+    <!-- STATUS -->
+    <div class="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-left">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <span class="text-sm text-white/55">
+          Estado actual
+        </span>
+
+        <span class="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
+          Pendiente
+        </span>
+
+      </div>
+
+      <p class="mt-4 text-sm text-white/45 leading-7">
+        Normalmente la aprobación se realiza en horario laboral.
+        Si ya eres cliente activo, tu acceso puede habilitarse más rápido.
+      </p>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="mt-8 grid gap-3 sm:grid-cols-2">
+
+      <a
+        href="/login"
+        class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-sm font-medium text-white/80 transition hover:bg-white/[0.06]"
+      >
+        Ir a login
+      </a>
+
+      <a
+        href="https://wa.me/528441234567"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex h-12 items-center justify-center rounded-2xl bg-white text-sm font-semibold text-black transition hover:scale-[1.02]"
+      >
+        Contactar soporte
+      </a>
+
+    </div>
+
+    <p class="mt-6 text-xs text-white/30">
+      AVYNA Saltillo · Distribuidor autorizado
+    </p>
+
+  </div>
+
+</section>
+
+</PortalLayout>
