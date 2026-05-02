@@ -1,5 +1,5 @@
 ---
-// src/components/Experiences.astro
+// src/components/partners/Experiences.astro
 import {
   Plane,
   Sparkles,
@@ -11,8 +11,15 @@ import {
 } from "lucide-react";
 ---
 
-<section id="experiences" class="bg-black px-6 py-24 text-white">
-  <div class="mx-auto max-w-7xl">
+<section id="experiences" class="relative overflow-hidden bg-black px-6 py-24 text-white">
+
+  <!-- BG -->
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute top-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl">
 
     <!-- HEADER -->
     <div class="mx-auto mb-16 max-w-4xl text-center">
@@ -37,8 +44,8 @@ import {
     <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
 
       <!-- PLAYA -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
           <Plane size={22} />
         </div>
 
@@ -60,8 +67,8 @@ import {
       </article>
 
       <!-- TOTAL LOOK -->
-      <article class="rounded-[2.5rem] bg-white p-8 text-black shadow-2xl transition hover:-translate-y-1">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
+      <article class="rounded-[2.5rem] bg-white p-8 text-black shadow-2xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,255,255,.08)]">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white shadow-xl">
           <Sparkles size={22} />
         </div>
 
@@ -83,8 +90,8 @@ import {
       </article>
 
       <!-- LOCALES -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
           <Heart size={22} />
         </div>
 
@@ -106,8 +113,8 @@ import {
       </article>
 
       <!-- ONLINE -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
           <GraduationCap size={22} />
         </div>
 
@@ -129,8 +136,8 @@ import {
       </article>
 
       <!-- PRESENCIAL -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
           <MapPin size={22} />
         </div>
 
@@ -152,8 +159,8 @@ import {
       </article>
 
       <!-- VIP -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <article class="rounded-[2.5rem] border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 shadow-2xl backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,255,255,.06)]">
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
           <Star size={22} />
         </div>
 
@@ -168,7 +175,7 @@ import {
 
         <a
           href="#contacto"
-          class="inline-flex h-12 items-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition hover:scale-105"
+          class="inline-flex h-12 items-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition duration-300 hover:scale-105"
         >
           <CalendarDays size={18} />
           Quiero enterarme

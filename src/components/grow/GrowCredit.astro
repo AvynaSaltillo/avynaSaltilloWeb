@@ -1,5 +1,5 @@
 ---
-// src/components/CreditInfo.astro
+// src/components/partners/CreditInfo.astro
 import {
   CreditCard,
   CalendarClock,
@@ -35,7 +35,7 @@ import {
       <div>
 
         <p class="text-lg leading-relaxed text-white/65">
-          Nuestro esquema comercial está pensado para salones y negocios
+          Nuestro esquema comercial está diseñado para salones y negocios
           profesionales que buscan surtirse sin descapitalizarse.
         </p>
 
@@ -45,7 +45,7 @@ import {
         </p>
 
         <p class="mt-5 text-lg leading-relaxed text-white/45">
-          Crédito sujeto a continuidad comercial y cumplimiento.
+          Crédito sujeto a continuidad comercial y buen cumplimiento.
         </p>
 
       </div>
@@ -69,7 +69,7 @@ import {
         <div class="grid gap-6 md:grid-cols-2">
 
           <!-- CARD -->
-          <div class="rounded-4xl border border-white/10 bg-white p-6 text-black shadow-xl">
+          <div class="rounded-4xl border border-white/10 bg-white p-6 text-black shadow-xl transition hover:-translate-y-1">
             <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-black text-white">
               <Wallet size={20} />
             </div>
@@ -79,12 +79,12 @@ import {
             </h4>
 
             <p class="text-zinc-600 leading-relaxed">
-              Se abona al momento de entrega para confirmar operación.
+              Se abona al momento de entrega para confirmar la operación.
             </p>
           </div>
 
           <!-- CARD -->
-          <div class="rounded-4xl border border-white/10 bg-white/5 p-6">
+          <div class="rounded-4xl border border-white/10 bg-white/5 p-6 transition hover:bg-white hover:text-black">
             <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
               <CalendarClock size={20} />
             </div>
@@ -93,8 +93,8 @@ import {
               15 Días Crédito
             </h4>
 
-            <p class="leading-relaxed text-white/65">
-              El restante 50% se cubre 15 días después de recibir el pedido.
+            <p class="leading-relaxed text-white/65 hover:text-black/70">
+              El 50% restante se cubre 15 días después de recibir el pedido.
             </p>
           </div>
 
@@ -106,7 +106,7 @@ import {
       <div class="grid gap-6">
 
         <!-- CARD -->
-        <div class="rounded-4xl border border-white/10 bg-white/5 p-7 transition hover:bg-white/10">
+        <div class="rounded-4xl border border-white/10 bg-white/5 p-7 transition hover:bg-white hover:text-black">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
             <CircleDollarSign size={20} />
           </div>
@@ -115,14 +115,14 @@ import {
             Pedido mínimo
           </h4>
 
-          <p class="leading-relaxed text-white/65">
-            Desde <strong class="text-white">$1,500 MXN</strong>
+          <p class="leading-relaxed text-white/65 hover:text-black/70">
+            Desde <strong class="text-white hover:text-black">$1,500 MXN</strong>
             por solicitud.
           </p>
         </div>
 
         <!-- CARD -->
-        <div class="rounded-4xl border border-white/10 bg-white/5 p-7 transition hover:bg-white/10">
+        <div class="rounded-4xl border border-white/10 bg-white/5 p-7 transition hover:bg-white hover:text-black">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
             <BadgePercent size={20} />
           </div>
@@ -131,14 +131,14 @@ import {
             Beneficios Plus
           </h4>
 
-          <p class="leading-relaxed text-white/65">
+          <p class="leading-relaxed text-white/65 hover:text-black/70">
             Ventajas comerciales desde compras de
-            <strong class="text-white"> $10,000 MXN</strong>.
+            <strong class="text-white hover:text-black"> $10,000 MXN</strong>.
           </p>
         </div>
 
         <!-- CARD -->
-        <div class="rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-7">
+        <div class="rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-7 transition hover:bg-white hover:text-black">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
             <ShieldCheck size={20} />
           </div>
@@ -147,11 +147,11 @@ import {
             Confianza Mutua
           </h4>
 
-          <p class="leading-relaxed text-white/65">
+          <p class="leading-relaxed text-white/65 hover:text-black/70">
             Relación basada en cumplimiento, frecuencia y crecimiento conjunto.
           </p>
 
-          <div class="mt-5 inline-flex items-center gap-2 text-sm text-white/45">
+          <div class="mt-5 inline-flex items-center gap-2 text-sm text-white/45 hover:text-black/60">
             <Sparkles size={15} />
             Atención personalizada
           </div>

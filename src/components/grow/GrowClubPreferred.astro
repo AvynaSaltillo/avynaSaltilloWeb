@@ -1,5 +1,5 @@
 ---
-// src/components/ClubPreferred.astro
+// src/components/partners/ClubPreferred.astro
 import {
   Star,
   ShieldCheck,
@@ -10,11 +10,16 @@ import {
 } from "lucide-react";
 ---
 
-<section id="clubPreferred" class="bg-black px-6 py-24 text-white">
-  <div class="mx-auto max-w-7xl">
+<section id="clubPreferred" class="relative overflow-hidden bg-black px-6 py-24 text-white">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl">
 
     <!-- HEADER -->
-    <div class="mx-auto mb-16 max-w-4xl text-center">
+    <div class="mx-auto mb-18 max-w-4xl text-center">
 
       <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
         <Sparkles size={15} />
@@ -37,28 +42,28 @@ import {
     <div class="grid gap-8">
 
       <!-- LEVEL 1 -->
-      <div class="rounded-[2.5rem] border border-white/10 bg-white p-8 text-black shadow-2xl">
+      <div class="group rounded-[2.5rem] border border-white/10 bg-white p-8 text-black shadow-2xl transition duration-300 hover:-translate-y-1">
         <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
 
-          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-zinc-100">
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-zinc-100 shadow-inner">
             <Star size={32} />
           </div>
 
           <div>
 
-            <div class="mb-5 flex flex-wrap items-center gap-3">
+            <div class="mb-6 flex flex-wrap items-center gap-3">
               <h3 class="text-3xl font-bold">
                 Nivel 1 · Salón Preferred
               </h3>
 
-              <span class="rounded-full bg-zinc-100 px-3 py-1 text-sm">
+              <span class="rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium">
                 Entrada
               </span>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 text-zinc-700">
 
-              <div>
+              <div class="rounded-3xl bg-zinc-50 p-5">
                 <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
                 <p>1 compra desde <strong>$2,000 MXN</strong>.</p>
 
@@ -66,8 +71,8 @@ import {
                 <p>1 compra mensual mínima de <strong>$2,000 MXN</strong>.</p>
               </div>
 
-              <div>
-                <p class="mb-2 font-semibold">Beneficios</p>
+              <div class="rounded-3xl bg-zinc-50 p-5">
+                <p class="mb-3 font-semibold">Beneficios</p>
                 <ul class="space-y-2">
                   <li>• Inscripción al club</li>
                   <li>• Precio salón</li>
@@ -82,28 +87,28 @@ import {
       </div>
 
       <!-- LEVEL 2 -->
-      <div class="rounded-[2.5rem] bg-red-600 p-8 text-white shadow-2xl">
+      <div class="group rounded-[2.5rem] bg-red-600 p-8 text-white shadow-2xl transition duration-300 hover:-translate-y-1">
         <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
 
-          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-red-600">
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-red-600 shadow-xl">
             <ShieldCheck size={32} />
           </div>
 
           <div>
 
-            <div class="mb-5 flex flex-wrap items-center gap-3">
+            <div class="mb-6 flex flex-wrap items-center gap-3">
               <h3 class="text-3xl font-bold">
                 Nivel 2 · Salón Red
               </h3>
 
-              <span class="rounded-full bg-white/20 px-3 py-1 text-sm">
+              <span class="rounded-full bg-white/20 px-3 py-1 text-sm font-medium">
                 Crecimiento
               </span>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 text-white/90">
 
-              <div>
+              <div class="rounded-3xl bg-white/10 p-5 backdrop-blur-xl">
                 <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
                 <p>
                   1 compra de <strong>$15,000</strong> o
@@ -114,8 +119,8 @@ import {
                 <p>1 compra mensual mínima de <strong>$5,000</strong>.</p>
               </div>
 
-              <div>
-                <p class="mb-2 font-semibold">Beneficios</p>
+              <div class="rounded-3xl bg-white/10 p-5 backdrop-blur-xl">
+                <p class="mb-3 font-semibold">Beneficios</p>
                 <ul class="space-y-2">
                   <li>• Pase preparación Punto AVYNA</li>
                   <li>• Activaciones AVYNA</li>
@@ -130,28 +135,28 @@ import {
       </div>
 
       <!-- LEVEL 3 -->
-      <div class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl">
+      <div class="group rounded-[2.5rem] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/8">
         <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
 
-          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-black">
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white text-black shadow-xl">
             <Crown size={32} />
           </div>
 
           <div>
 
-            <div class="mb-5 flex flex-wrap items-center gap-3">
+            <div class="mb-6 flex flex-wrap items-center gap-3">
               <h3 class="text-3xl font-bold">
                 Nivel 3 · Salón Black
               </h3>
 
-              <span class="rounded-full bg-white/10 px-3 py-1 text-sm">
+              <span class="rounded-full bg-white/10 px-3 py-1 text-sm font-medium">
                 Premium
               </span>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 text-white/85">
 
-              <div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
                 <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
                 <p>
                   1 compra de <strong>$30,000</strong> o
@@ -162,8 +167,8 @@ import {
                 <p>1 compra mensual mínima de <strong>$15,000</strong>.</p>
               </div>
 
-              <div>
-                <p class="mb-2 font-semibold">Beneficios</p>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <p class="mb-3 font-semibold">Beneficios</p>
                 <ul class="space-y-2">
                   <li>• Publicación como salón Black</li>
                   <li>• Activaciones AVYNA</li>
@@ -179,28 +184,28 @@ import {
       </div>
 
       <!-- LEVEL 4 -->
-      <div class="rounded-[2.5rem] bg-zinc-200 p-8 text-black shadow-2xl">
+      <div class="group rounded-[2.5rem] bg-zinc-200 p-8 text-black shadow-2xl transition duration-300 hover:-translate-y-1">
         <div class="grid gap-8 lg:grid-cols-[110px_1fr]">
 
-          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white">
+          <div class="flex h-24 w-24 items-center justify-center rounded-3xl bg-white shadow-xl">
             <Gem size={32} />
           </div>
 
           <div>
 
-            <div class="mb-5 flex flex-wrap items-center gap-3">
+            <div class="mb-6 flex flex-wrap items-center gap-3">
               <h3 class="text-3xl font-bold">
                 Nivel 4 · Salón Silver
               </h3>
 
-              <span class="rounded-full bg-white px-3 py-1 text-sm">
+              <span class="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">
                 Elite
               </span>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 text-zinc-700">
 
-              <div>
+              <div class="rounded-3xl bg-white p-5">
                 <p class="mb-2 font-semibold">¿Cómo obtenerlo?</p>
                 <p>
                   Por invitación anual AVYNA y mantener requisitos Black.
@@ -213,8 +218,8 @@ import {
                 </p>
               </div>
 
-              <div>
-                <p class="mb-2 font-semibold">Beneficios</p>
+              <div class="rounded-3xl bg-white p-5">
+                <p class="mb-3 font-semibold">Beneficios</p>
                 <ul class="space-y-2">
                   <li>• Publicación Silver exclusiva</li>
                   <li>• Activaciones premium</li>
@@ -229,17 +234,6 @@ import {
         </div>
       </div>
 
-    </div>
-
-    <!-- CTA -->
-    <div class="mt-14 text-center">
-      <a
-        href="#contacto"
-        class="inline-flex h-14 items-center gap-2 rounded-full bg-white px-7 font-semibold text-black shadow-xl transition hover:scale-105"
-      >
-        Quiero subir de nivel
-        <ArrowUpRight size={18} />
-      </a>
     </div>
 
   </div>

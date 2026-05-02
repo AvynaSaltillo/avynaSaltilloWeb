@@ -1,265 +1,364 @@
+export type Product = {
+  id: number;
+  name: string;
+  family: string;
+  type: string;
+  description: string;
+  extra?: string;
+  tag?: string;
+  image: string;
+  pricePublic?: number;
+  priceSalon?: number;
+  saving?: number;
+};
+
 export const products = [
 
   // ==================================================
   // DI ARGAN
   // ==================================================
 
-  {
-    id: 1,
-    name: "Shampoo Di Argan 250ml",
-    family: "Argan",
-    type: "Shampoo",
-    description:
-      "Tratamiento de nutrición intensa que lava eficaz y suavemente. Indicado para cabellos más deshidratados por su acción reconstructora y protectora.",
-    tag: "",
-    image: "/images/products/argan/argan-shampoo-250ml.png"
-  },
+{
+  id: 1,
+  name: "Shampoo Di Argan 250ml",
+  family: "Argan",
+  type: "Shampoo",
+  description:
+    "Tratamiento de nutrición intensa que lava eficaz y suavemente. Indicado para cabellos más deshidratados por su acción reconstructora y protectora.",
+  tag: "",
+  priceSalon: 171.5,
+  pricePublic: 245,
+  saving: 73.5,
+  image: "/images/products/argan/argan-shampoo-250ml.png",
+},
 
-  {
-    id: 2,
-    name: "Shampoo Di Argan 500ml",
-    family: "Argan",
-    type: "Shampoo",
-    description:
-      "Limpieza nutritiva con brillo superior. Ideal para mantenimiento frecuente en cabello seco y opaco.",
-    tag: "",
-    image: "/images/products/argan/argan-shampoo-500ml.png"
-  },
+{
+  id: 2,
+  name: "Shampoo Di Argan 500ml",
+  family: "Argan",
+  type: "Shampoo",
+  description:
+    "Limpieza nutritiva con brillo superior. Ideal para mantenimiento frecuente en cabello seco y opaco.",
+  tag: "",
+  priceSalon: 227.5,
+  pricePublic: 325,
+  saving: 97.5,
+  image: "/images/products/argan/argan-shampoo-500ml.png",
+},
 
-  {
-    id: 3,
-    name: "Shampoo Di Argan 1000ml",
-    family: "Argan",
-    type: "Shampoo Profesional",
-    description:
-      "Formato profesional de alto rendimiento para salón. Nutre, limpia y protege la fibra capilar.",
-    tag: "Pro",
-    image: "/images/products/argan/argan-shampoo-1000ml.png"
-  },
+{
+  id: 3,
+  name: "Shampoo Di Argan 1000ml",
+  family: "Argan",
+  type: "Shampoo",
+  description:
+    "Formato profesional de alto rendimiento para salón. Nutre, limpia y protege la fibra capilar.",
+  tag: "Pro",
+  priceSalon: 357,
+  pricePublic: 510,
+  saving: 153,
+  image: "/images/products/argan/argan-shampoo-1000ml.png",
+},
 
-  {
-    id: 4,
-    name: "Maschera Di Argan 250ml",
-    family: "Argan",
-    type: "Mascarilla",
-    description:
-      "Tratamiento reparador intensivo ideal para cabellos opacos y deshidratados. Neutraliza radicales libres y aporta suavidad.",
-    tag: "",
-    image: "/images/products/argan/argan-maschera-250ml.png"
-  },
+{
+  id: 4,
+  name: "Maschera Di Argan 250ml",
+  family: "Argan",
+  type: "Mascarilla",
+  description:
+    "Tratamiento reparador intensivo ideal para cabellos opacos y deshidratados. Neutraliza radicales libres y aporta suavidad.",
+  tag: "",
+  priceSalon: 171.5,
+  pricePublic: 245,
+  saving: 73.5,
+  image: "/images/products/argan/argan-maschera-250ml.png",
+},
 
-  {
-    id: 5,
-    name: "Maschera Di Argan 500ml",
-    family: "Argan",
-    type: "Mascarilla",
-    description:
-      "Nutrición profunda con mayor rendimiento. Sella cutícula y mejora brillo inmediato.",
-    tag: "",
-    image: "/images/products/argan/argan-maschera-500ml.png"
-  },
+{
+  id: 5,
+  name: "Maschera Di Argan 500ml",
+  family: "Argan",
+  type: "Mascarilla",
+  description:
+    "Nutrición profunda con mayor rendimiento. Sella cutícula y mejora brillo inmediato.",
+  tag: "",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
+  image: "/images/products/argan/argan-maschera-500ml.png",
+},
 
-  {
-    id: 6,
-    name: "Maschera Di Argan 1000ml",
-    family: "Argan",
-    type: "Mascarilla Profesional",
-    description:
-      "Formato salón para protocolos intensivos de hidratación y reparación.",
-    tag: "Pro",
-    image: "/images/products/argan/argan-maschera-1000ml.png"
-  },
+{
+  id: 6,
+  name: "Maschera Di Argan 1000ml",
+  family: "Argan",
+  type: "Mascarilla",
+  description:
+    "Formato salón para protocolos intensivos de hidratación y reparación.",
+  tag: "Pro",
+  priceSalon: 343,
+  pricePublic: 490,
+  saving: 147,
+  image: "/images/products/argan/argan-maschera-1000ml.png",
+},
 
-  {
-    id: 7,
-    name: "Bifasico Di Argan 200ml",
-    family: "Argan",
-    type: "Leave In",
-    description:
-      "Tratamiento acondicionador instantáneo con acción hidratante y nutritiva. Enriquece el cabello con beneficios del Argán sin agregar peso.",
-    tag: "Top",
-    image: "/images/products/argan/argan-bifasico.png"
-  },
+{
+  id: 7,
+  name: "Bifasico Di Argan 200ml",
+  family: "Argan",
+  type: "Leave In",
+  description:
+    "Tratamiento acondicionador instantáneo con acción hidratante y nutritiva. Enriquece el cabello con beneficios del Argán sin agregar peso.",
+  tag: "Top",
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
+  image: "/images/products/argan/argan-bifasico.png",
+},
 
-  {
-    id: 8,
-    name: "Ricostruttore Di Argan 250ml",
-    family: "Argan",
-    type: "Reconstructor",
-    description:
-      "Tratamiento reparador instantáneo sin enjuague para cabellos muy secos y deshidratados. Nutre y repara la hebra capilar.",
-    tag: "",
-    image: "/images/products/argan/argan-ricostruttore.png"
-  },
+{
+  id: 8,
+  name: "Ricostruttore Di Argan 250ml",
+  family: "Argan",
+  type: "Reconstructor",
+  description:
+    "Tratamiento reparador instantáneo sin enjuague para cabellos muy secos y deshidratados. Nutre y repara la hebra capilar.",
+  tag: "",
+  priceSalon: 231,
+  pricePublic: 330,
+  saving: 99,
+  image: "/images/products/argan/argan-ricostruttore.png",
+},
 
-  {
-    id: 9,
-    name: "Fluido Di Argan 100ml",
-    family: "Argan",
-    type: "Sérum",
-    description:
-      "Tratamiento concentrado que previene puntas abiertas y envejecimiento capilar. Aporta brillo inmediato.",
-    tag: "",
-    image: "/images/products/argan/argan-fluido.png"
-  },
+{
+  id: 9,
+  name: "Fluido Di Argan 100ml",
+  family: "Argan",
+  type: "Sérum",
+  description:
+    "Tratamiento concentrado que previene puntas abiertas y envejecimiento capilar. Aporta brillo inmediato.",
+  tag: "",
+  priceSalon: 374.5,
+  pricePublic: 535,
+  saving: 160.5,
+  image: "/images/products/argan/argan-fluido.png",
+},
 
-  {
-    id: 10,
-    name: "Lisciante Di Argan 250ml",
-    family: "Argan",
-    type: "Protector Térmico",
-    description:
-      "Crema alisadora intensa para cabello rizado. Protege del calor de herramientas térmicas y controla humedad.",
-    tag: "",
-    image: "/images/products/argan/argan-lisciante-250ml.png"
-  },
+{
+  id: 10,
+  name: "Lisciante Di Argan 250ml",
+  family: "Argan",
+  type: "Protector Térmico",
+  description:
+    "Crema alisadora intensa para cabello rizado. Protege del calor de herramientas térmicas y controla humedad.",
+  tag: "",
+  priceSalon: 266,
+  pricePublic: 380,
+  saving: 114,
+  image: "/images/products/argan/argan-lisciante-250ml.png",
+},
 
-  {
-    id: 11,
-    name: "Lisciante Di Argan 1000ml",
-    family: "Argan",
-    type: "Alisador Profesional",
-    description:
-      "Formato salón para brushing y secado profesional con protección térmica y brillo.",
-    tag: "Pro",
-    image: "/images/products/argan/argan-lisciante-1000ml.png"
-  },
+{
+  id: 11,
+  name: "Lisciante Di Argan 1000ml",
+  family: "Argan",
+  type: "Protector Térmico",
+  description:
+    "Formato salón para brushing y secado profesional con protección térmica y brillo.",
+  tag: "Pro",
+  priceSalon: 721,
+  pricePublic: 1030,
+  saving: 309,
+  image: "/images/products/argan/argan-lisciante-1000ml.png",
+},
 
   // ==================================================
   // DI GOJI
   // ==================================================
 
-  {
-    id: 12,
-    name: "Shampoo Di Goji 250ml",
-    family: "Goji",
-    type: "Shampoo",
-    description:
-      "Especial para cabellos coloreados y decolorados. Lava suavemente mientras protege el color y aporta brillo.",
-    tag: "",
-    image: "/images/products/goji/goji-shampoo-250ml.png"
-  },
+{
+  id: 12,
+  name: "Shampoo Di Goji 250ml",
+  family: "Goji",
+  type: "Shampoo",
+  description:
+    "Especial para cabellos coloreados y decolorados. Lava suavemente mientras protege el color y aporta brillo.",
+  tag: "",
+  priceSalon: 161,
+  pricePublic: 230,
+  saving: 69,
+  image: "/images/products/goji/goji-shampoo-250ml.png"
+},
 
-  {
-    id: 13,
-    name: "Shampoo Di Goji 500ml",
-    family: "Goji",
-    type: "Shampoo",
-    description:
-      "Protección de color con mayor rendimiento para mantenimiento frecuente.",
-    tag: "",
-    image: "/images/products/goji/goji-shampoo-500ml.png"
-  },
+{
+  id: 13,
+  name: "Shampoo Di Goji 500ml",
+  family: "Goji",
+  type: "Shampoo",
+  description:
+    "Protección de color con mayor rendimiento para mantenimiento frecuente.",
+  tag: "",
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
+  image: "/images/products/goji/goji-shampoo-500ml.png"
+},
 
-  {
-    id: 14,
-    name: "Shampoo Di Goji 1000ml",
-    family: "Goji",
-    type: "Shampoo Profesional",
-    description:
-      "Formato profesional para salón con protección intensa del color.",
-    tag: "Pro",
-    image: "/images/products/goji/goji-shampoo-1000ml.png"
-  },
+{
+  id: 14,
+  name: "Shampoo Di Goji 1000ml",
+  family: "Goji",
+  type: "Shampoo",
+  description:
+    "Formato profesional para salón con protección intensa del color.",
+  tag: "Pro",
+  priceSalon: 364,
+  pricePublic: 520,
+  saving: 156,
+  image: "/images/products/goji/goji-shampoo-1000ml.png"
+},
 
-  {
-    id: 15,
-    name: "Maschera Di Goji 250ml",
-    family: "Goji",
-    type: "Mascarilla",
-    description:
-      "Tratamiento con enjuague que perfecciona procesos de coloración y sella la cutícula.",
-    tag: "",
-    image: "/images/products/goji/goji-maschera-250ml.png"
-  },
+{
+  id: 15,
+  name: "Maschera Di Goji 250ml",
+  family: "Goji",
+  type: "Mascarilla",
+  description:
+    "Tratamiento con enjuague que perfecciona procesos de coloración y sella la cutícula.",
+  tag: "",
+  priceSalon: 161,
+  pricePublic: 230,
+  saving: 69,
+  image: "/images/products/goji/goji-maschera-250ml.png"
+},
 
-  {
-    id: 16,
-    name: "Maschera Di Goji 500ml",
-    family: "Goji",
-    type: "Mascarilla",
-    description:
-      "Nutrición y brillo intenso para cabello teñido o decolorado.",
-    tag: "",
-    image: "/images/products/goji/goji-maschera-500ml.png"
-  },
+{
+  id: 16,
+  name: "Maschera Di Goji 500ml",
+  family: "Goji",
+  type: "Mascarilla",
+  description:
+    "Nutrición y brillo intenso para cabello teñido o decolorado.",
+  tag: "",
+  priceSalon: 238,
+  pricePublic: 340,
+  saving: 102,
+  image: "/images/products/goji/goji-maschera-500ml.png"
+},
 
-  {
-    id: 17,
-    name: "Maschera Di Goji 1000ml",
-    family: "Goji",
-    type: "Mascarilla Profesional",
-    description:
-      "Formato salón para tratamientos post-color y mantenimiento técnico.",
-    tag: "Pro",
-    image: "/images/products/goji/goji-maschera-1000ml.png"
-  },
+{
+  id: 17,
+  name: "Maschera Di Goji 1000ml",
+  family: "Goji",
+  type: "Mascarilla",
+  description:
+    "Formato salón para tratamientos post-color y mantenimiento técnico.",
+  tag: "Pro",
+  priceSalon: 395.5,
+  pricePublic: 565,
+  saving: 169.5,
+  image: "/images/products/goji/goji-maschera-1000ml.png"
+},
 
-  {
-    id: 18,
-    name: "Bifasico Di Goji 200ml",
-    family: "Goji",
-    type: "Leave In",
-    description:
-      "Tratamiento ligero sin enjuague ideal para cabellos teñidos, tratados y delgados.",
-    tag: "Top",
-    image: "/images/products/goji/goji-bifasico.png"
-  },
+{
+  id: 18,
+  name: "Bifasico Di Goji 200ml",
+  family: "Goji",
+  type: "Leave In",
+  description:
+    "Tratamiento ligero sin enjuague ideal para cabellos teñidos, tratados y delgados.",
+  tag: "Top",
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
+  image: "/images/products/goji/goji-bifasico.png"
+},
 
-  {
-    id: 19,
-    name: "Ricostruttore Di Goji 250ml",
-    family: "Goji",
-    type: "Reconstructor",
-    description:
-      "Reparación instantánea sin enjuague para cabellos coloreados y estropeados.",
-    tag: "",
-    image: "/images/products/goji/goji-ricostruttore.png"
-  },
+{
+  id: 19,
+  name: "Ricostruttore Di Goji 250ml",
+  family: "Goji",
+  type: "Reconstructor",
+  description:
+    "Reparación instantánea sin enjuague para cabellos coloreados y estropeados.",
+  tag: "",
+  priceSalon: 231,
+  pricePublic: 330,
+  saving: 99,
+  image: "/images/products/goji/goji-ricostruttore.png"
+},
 
-  {
-    id: 20,
-    name: "Fluido Di Goji 100ml",
-    family: "Goji",
-    type: "Sérum",
-    description:
-      "Concentrado con propiedades del Goji. Suaviza, da brillo y mejora manejabilidad.",
-    tag: "",
-    image: "/images/products/goji/goji-fluido.png"
-  },
+{
+  id: 20,
+  name: "Fluido Di Goji 100ml",
+  family: "Goji",
+  type: "Sérum",
+  description:
+    "Concentrado con propiedades del Goji. Suaviza, da brillo y mejora manejabilidad.",
+  tag: "",
+  priceSalon: 374.5,
+  pricePublic: 535,
+  saving: 160.5,
+  image: "/images/products/goji/goji-fluido.png"
+},
 
-  {
-    id: 21,
-    name: "Finale-X Di Goji 200ml",
-    family: "Goji",
-    type: "Protector Térmico",
-    description:
-      "Spray alisador anti-crespo con protección térmica. Ayuda a prolongar peinados lisos.",
-    tag: "",
-    image: "/images/products/goji/goji-finalex.png"
-  },
+{
+  id: 21,
+  name: "Finale-X Di Goji 200ml",
+  family: "Goji",
+  type: "Protector Térmico",
+  description:
+    "Spray alisador anti-crespo con protección térmica. Ayuda a prolongar peinados lisos.",
+  tag: "",
+  priceSalon: 325.5,
+  pricePublic: 465,
+  saving: 139.5,
+  image: "/images/products/goji/goji-finalex.png"
+},
 
-  {
-    id: 22,
-    name: "Lozione Di Goji 12x10ml",
-    family: "Goji",
-    type: "Loción Estabilizadora",
-    description:
-      "Ideal después de procesos químicos. Regula pH, elimina residuos alcalinos y calma sensibilidad.",
-    tag: "Pro",
-    image: "/images/products/goji/goji-lozione.png"
-  },
+{
+  id: 22,
+  name: "Lozione Di Goji 12x10ml",
+  family: "Goji",
+  type: "Loción Estabilizadora",
+  description:
+    "Ideal después de procesos químicos. Regula pH, elimina residuos alcalinos y calma sensibilidad.",
+  tag: "Pro",
+  priceSalon: 427,
+  pricePublic: 610,
+  saving: 183,
+  image: "/images/products/goji/goji-lozione.png"
+},
 
-  {
-    id: 23,
-    name: "Stabilizzatore Di Goji 500ml",
-    family: "Goji",
-    type: "Sellador pH",
-    description:
-      "Tratamiento ácido equilibrante del pH con acción estabilizadora y selladora.",
-    tag: "Pro",
-    image: "/images/products/goji/goji-stabilizzatore.png"
-  },
+{
+  id: 23,
+  name: "Stabilizzatore Di Goji 500ml",
+  family: "Goji",
+  type: "Sellador pH",
+  description:
+    "Tratamiento ácido equilibrante del pH con acción estabilizadora y selladora.",
+  tag: "Pro",
+  priceSalon: 189,
+  pricePublic: 270,
+  saving: 81,
+  image: "/images/products/goji/goji-stabilizzatore.png"
+},
+
+{
+  id: 108,
+  name: "Additivex Zero",
+  family: "Goji",
+  type: "Tratamiento Profesional de limpieza profunda",
+  description:
+    "",
+  extra:
+    "",
+  tag: "Pro",
+  priceSalon: 301,
+  pricePublic: 430,
+  saving: 129,
+  image: "/images/products/goji/goji-additivex-zero.png"
+},
 
   // =========================
 // PLATINO
@@ -273,6 +372,9 @@ export const products = [
   description:
     "Lava el cabello y atenúa reflejos amarillos de cabellos canosos, rubios claros o decolorados. Deja el cabello suave e hidratado.",
   tag: "",
+  priceSalon: 182,
+  pricePublic: 260,
+  saving: 78,
   image: "/images/products/platino/platino-shampoo-250ml.png"
 },
 
@@ -284,6 +386,9 @@ export const products = [
   description:
     "Neutraliza tonos amarillos no deseados y mantiene rubios fríos con mayor rendimiento.",
   tag: "",
+  priceSalon: 238,
+  pricePublic: 340,
+  saving: 102,
   image: "/images/products/platino/platino-shampoo-500ml.png"
 },
 
@@ -291,10 +396,13 @@ export const products = [
   id: 26,
   name: "Shampoo Platino 1000ml",
   family: "Platino",
-  type: "Shampoo Profesional",
+  type: "Shampoo Matizador",
   description:
     "Formato profesional para salón. Ideal para mantenimiento continuo de rubios y platinados.",
   tag: "Pro",
+  priceSalon: 392,
+  pricePublic: 560,
+  saving: 168,
   image: "/images/products/platino/platino-shampoo-1000ml.png"
 },
 
@@ -306,6 +414,9 @@ export const products = [
   description:
     "Complemento ideal del Shampoo Platino. Refuerza el efecto matizador dejando cabello suave e hidratado.",
   tag: "",
+  priceSalon: 182,
+  pricePublic: 260,
+  saving: 78,
   image: "/images/products/platino/platino-maschera-250ml.png"
 },
 
@@ -317,53 +428,67 @@ export const products = [
   description:
     "Nutrición intensa con pigmento matizador para neutralizar reflejos cálidos.",
   tag: "",
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
   image: "/images/products/platino/platino-maschera-500ml.png"
 },
 
 {
-  id: 28,
+  id: 29,
   name: "Maschera Platino 1000ml",
   family: "Platino",
   type: "Mascarilla Matizadora",
   description:
     "Formato de salon para protocolos intensivos post decoloración.",
   tag: "",
+  priceSalon: 364,
+  pricePublic: 520,
+  saving: 156,
   image: "/images/products/platino/platino-maschera-1000ml.png"
 },
 
 {
-  id: 29,
+  id: 30,
   name: "Bifasico Platino 200ml",
   family: "Platino",
   type: "Leave In Matizador",
   description:
     "Acondicionador instantáneo de dos fases con acción hidratante, nutritiva y reparadora para cabellos decolorados, rubios cenizos y canos.",
   tag: "Top",
+  priceSalon: 280.5,
+  pricePublic: 400,
+  saving: 119.5,
   image: "/images/products/platino/platino-bifasico.png"
 },
 
 {
-  id: 30,
+  id: 31,
   name: "Ricostruttore Platino 250ml",
   family: "Platino",
   type: "Reconstructor",
   description:
     "Tratamiento reparador instantáneo con nutrición intensa para cabellos decolorados, rubios o platinados.",
   tag: "",
+  priceSalon: 231,
+  pricePublic: 330,
+  saving: 99,
   image: "/images/products/platino/platino-ricostruttore.png"
 },
 
 {
-  id: 31,
+  id: 32,
   name: "Fluido Platino 100ml",
   family: "Platino",
   type: "Sérum Matizador",
   description:
     "Tratamiento concentrado de Queratina Vegetal. Protege el cabello de factores externos y aporta brillo.",
   tag: "",
+  priceSalon: 451.5,
+  pricePublic: 645,
+  saving: 193.5,
   image: "/images/products/platino/platino-fluido.png"
 },
-
 // =========================
 // IALURONICO
 // =========================
@@ -376,6 +501,9 @@ export const products = [
   description:
     "Lava eficazmente y suavemente reestructurando la hebra capilar. Ideal para cabellos castigados.",
   tag: "",
+  priceSalon: 171.5,
+  pricePublic: 245,
+  saving: 73.5,
   image: "/images/products/ialuronico/ialu-shampoo-250ml.png"
 },
 
@@ -387,6 +515,9 @@ export const products = [
   description:
     "Limpieza nutritiva con ácido hialurónico para cabello maltratado o decolorado.",
   tag: "",
+  priceSalon: 220.5,
+  pricePublic: 315,
+  saving: 94.5,
   image: "/images/products/ialuronico/ialu-shampoo-500ml.png"
 },
 
@@ -394,10 +525,13 @@ export const products = [
   id: 34,
   name: "Shampoo Ialuronico 1000ml",
   family: "Ialuronico",
-  type: "Shampoo Profesional",
+  type: "Shampoo Reparador",
   description:
     "Formato profesional de alto rendimiento para protocolos reconstructivos.",
   tag: "Pro",
+  priceSalon: 360.5,
+  pricePublic: 515,
+  saving: 154.5,
   image: "/images/products/ialuronico/ialu-shampoo-1000ml.png"
 },
 
@@ -409,6 +543,9 @@ export const products = [
   description:
     "Tratamiento enriquecido con colágeno, ácido hialurónico y queratina. Nutre, hidrata y reconstruye.",
   tag: "",
+  priceSalon: 171.5,
+  pricePublic: 245,
+  saving: 73.5,
   image: "/images/products/ialuronico/ialu-maschera-250ml.png"
 },
 
@@ -420,6 +557,9 @@ export const products = [
   description:
     "Nutrición profunda para cabello sensibilizado con mayor rendimiento.",
   tag: "",
+  priceSalon: 245,
+  pricePublic: 350,
+  saving: 105,
   image: "/images/products/ialuronico/ialu-maschera-500ml.png"
 },
 
@@ -427,10 +567,13 @@ export const products = [
   id: 37,
   name: "Maschera Ialuronico 1000ml",
   family: "Ialuronico",
-  type: "Mascarilla Profesional",
+  type: "Mascarilla Reparadora",
   description:
     "Formato salón ideal para protocolos intensivos post decoloración.",
   tag: "Pro",
+  priceSalon: 364,
+  pricePublic: 520,
+  saving: 156,
   image: "/images/products/ialuronico/ialu-maschera-1000ml.png"
 },
 
@@ -442,6 +585,9 @@ export const products = [
   description:
     "Tratamiento ligero sin enjuague ideal para cabellos muy procesados y decolorados.",
   tag: "Top",
+  priceSalon: 280,
+  pricePublic: 400,
+  saving: 120,
   image: "/images/products/ialuronico/ialu-bifasico.png"
 },
 
@@ -453,6 +599,9 @@ export const products = [
   description:
     "Reparación instantánea con ácido hialurónico que nutre, hidrata y devuelve brillo.",
   tag: "",
+  priceSalon: 231,
+  pricePublic: 330,
+  saving: 99,
   image: "/images/products/ialuronico/ialu-ricostruttore.png"
 },
 
@@ -464,6 +613,9 @@ export const products = [
   description:
     "Concentra propiedades del ácido hialurónico y queratina hidrolizada. Facilita peinado y controla deshidratación.",
   tag: "",
+  priceSalon: 374.5,
+  pricePublic: 535,
+  saving: 160.5,
   image: "/images/products/ialuronico/ialu-fluido.png"
 },
 
@@ -475,8 +627,12 @@ export const products = [
   description:
     "Spray reparador extremo con colágeno, ácido hialurónico y proteínas. Ideal con plancha o tenaza.",
   tag: "",
+  priceSalon: 182,
+  pricePublic: 260,
+  saving: 78,
   image: "/images/products/ialuronico/ialu-finale.png"
 },
+
 
 // =========================
 // ABBONDANZA
@@ -490,6 +646,9 @@ export const products = [
   description:
     "Tratamiento especial para cabellos escasos. Fortalece el cabello y ayuda a prevenir la caída.",
   tag: "",
+  priceSalon: 171.5,
+  pricePublic: 245,
+  saving: 73.5,
   image: "/images/products/abbondanza/shampoo-abbondanza-250ml.png"
 },
 
@@ -497,10 +656,13 @@ export const products = [
   id: 44,
   name: "Shampoo Abbondanza 1000ml",
   family: "Abbondanza",
-  type: "Shampoo Profesional",
+  type: "Shampoo Anticaída",
   description:
     "Formato profesional de alto rendimiento para cabellos débiles, con caída o poca densidad.",
   tag: "Pro",
+  priceSalon: 357,
+  pricePublic: 510,
+  saving: 153,
   image: "/images/products/abbondanza/shampoo-abbondanza-1000ml.png"
 },
 
@@ -514,6 +676,9 @@ export const products = [
   extra:
     "Modo de uso: aplicar sobre cuero cabelludo limpio, masajear y usar 3 veces por semana.",
   tag: "Top",
+  priceSalon: 483,
+  pricePublic: 690,
+  saving: 207,
   image: "/images/products/abbondanza/lozione-abbondanza.png"
 },
 
@@ -529,6 +694,9 @@ export const products = [
   description:
     "Libre de parabenos, sulfatos y alcohol. Ideal para cuero cabelludo sensible o graso.",
   tag: "",
+  priceSalon: 227.5,
+  pricePublic: 325,
+  saving: 97.5,
   image: "/images/products/agave/agave-shampoo-500ml.png"
 },
 
@@ -536,10 +704,13 @@ export const products = [
   id: 47,
   name: "Shampoo Di Agave 1000ml",
   family: "Agave",
-  type: "Shampoo Profesional",
+  type: "Shampoo Purificante",
   description:
     "Formato salón con extracto de agave y aceites esenciales. Limpieza profunda y balanceada.",
   tag: "Pro",
+  priceSalon: 357,
+  pricePublic: 510,
+  saving: 153,
   image: "/images/products/agave/agave-shampoo-1000ml.png"
 },
 
@@ -551,6 +722,9 @@ export const products = [
   description:
     "Nutrición ligera para cuero cabelludo sensible. Mantiene pureza sin saturar el cabello.",
   tag: "",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
   image: "/images/products/agave/agave-maschera-500ml.png"
 },
 
@@ -558,10 +732,13 @@ export const products = [
   id: 49,
   name: "Maschera Di Agave 1000ml",
   family: "Agave",
-  type: "Mascarilla Profesional",
+  type: "Mascarilla Purificante",
   description:
     "Formato profesional con extracto de agave, menta y lavanda para uso continuo.",
   tag: "Pro",
+  priceSalon: 343,
+  pricePublic: 490,
+  saving: 147,
   image: "/images/products/agave/agave-maschera-1000ml.png"
 },
 
@@ -573,6 +750,9 @@ export const products = [
   description:
     "Sin enjuague. Hidrata, desenreda y refresca cuero cabelludo sensible.",
   tag: "Top",
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
   image: "/images/products/agave/agave-bifasico.png"
 },
 
@@ -586,6 +766,9 @@ export const products = [
   extra:
     "Modo de uso: aplicar en cuero cabelludo limpio y masajear. No enjuagar. 3 veces por semana.",
   tag: "",
+  priceSalon: 420,
+  pricePublic: 600,
+  saving: 180,
   image: "/images/products/agave/agave-lozione.png"
 },
 
@@ -603,6 +786,9 @@ export const products = [
   extra:
     "Uso: aplicar en cabello húmedo de 5 a 7 rocíos. Incluye protección térmica.",
   tag: "Top",
+  priceSalon: 280,
+  pricePublic: 400,
+  saving: 120,
   image: "/images/products/tratamientos/tratamientos-pozione10.png"
 },
 
@@ -616,6 +802,9 @@ export const products = [
   extra:
     "Para cabellos muy dañados se recomienda dejar de medios a puntas sin enjuagar.",
   tag: "Pro",
+  priceSalon: 343,
+  pricePublic: 490,
+  saving: 147,
   image: "/images/products/tratamientos/tratamientos-pozionebooster.png"
 },
 
@@ -629,6 +818,9 @@ export const products = [
   extra:
     "Frecuencia recomendada: 2 veces por semana.",
   tag: "",
+  priceSalon: 427,
+  pricePublic: 610,
+  saving: 183,
   image: "/images/products/tratamientos/tratamientos-lozione.png"
 },
 
@@ -642,6 +834,9 @@ export const products = [
   extra:
     "Ingrediente activo: Ácido Hialurónico. Recomendado para cabello decolorado o maltratado.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-ialuronico-shampoo.png"
 },
 
@@ -655,6 +850,9 @@ export const products = [
   extra:
     "Ingrediente activo: Ácido Hialurónico y proteína de trigo.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-ialuronico-maschera.png"
 },
 
@@ -668,6 +866,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Litchi. Ideal para cabellos teñidos.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-litchi-shampoo.png"
 },
 
@@ -681,6 +882,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Litchi.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-litchi-maschera.png"
 },
 
@@ -694,6 +898,9 @@ export const products = [
   extra:
     "Ingrediente activo: Aceite de Argán.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-argan-shampoo.png"
 },
 
@@ -707,6 +914,9 @@ export const products = [
   extra:
     "Ingrediente activo: Aceite de Argán.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-argan-maschera.png"
 },
 
@@ -720,6 +930,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Ginseng y aminoácidos.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-freschezza-shampoo.png"
 },
 
@@ -733,25 +946,15 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Ginseng y aminoácidos.",
   tag: "Eco",
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/solidos/solido-freschezza-maschera.png"
 },
 
 // =========================
 // PROFESIONAL
 // =========================
-
-{
-  id: 42,
-  name: "Refill Ialuronico 125ml",
-  family: "Profesional",
-  type: "Botox Capilar Profesional",
-  description:
-    "Uso Profesional - Inyección de nutrientes que rellenan la hebra capilar. Reestructura cabello muy maltratado, decolorado o deshidratado.",
-  extra:
-    "Modo de uso sugerido: Deshidratado 1 aplicación mensual. Dañado 4 aplicaciones seguidas y luego cada 2 semanas. Muy dañado 4 aplicaciones seguidas y luego semanal.",
-  tag: "Pro",
-  image: "/images/products/profesional/tratamientos/ialu-refill.png"
-},
 
 {
   id: 63,
@@ -763,6 +966,9 @@ export const products = [
   extra:
     "Incluye reflejos naturales, intensos, blancos y luminosos. Mezcla 1:1.5.",
   tag: "Pro",
+  priceSalon: 91,
+  pricePublic: 130,
+  saving: 39,
   image: "/images/products/profesional/color/colore-zenzero.png"
 },
 
@@ -776,6 +982,9 @@ export const products = [
   extra:
     "Mezcla 1:1.5 efecto intenso / 1:2 efecto pastel.",
   tag: "Trend",
+  priceSalon: 119,
+  pricePublic: 170,
+  saving: 51,
   image: "/images/products/profesional/color/pastel-colors.png"
 },
 
@@ -789,6 +998,9 @@ export const products = [
   extra:
     "Colores disponibles: blanco, beige, amarillo, naranja, rojo, violeta, fucsia, azul, lavanda, gris y café.",
   tag: "Top",
+  priceSalon: 280,
+  pricePublic: 400,
+  saving: 120,
   image: "/images/products/color/pigmento-zenzero.png"
 },
 
@@ -802,6 +1014,9 @@ export const products = [
   extra:
     "Volúmenes disponibles: 6, 10, 20, 30 y 40 vol.",
   tag: "Pro",
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
   image: "/images/products/profesional/color/oxycream.png"
 },
 
@@ -815,6 +1030,9 @@ export const products = [
   extra:
     "Especial para rubios fríos y tonos cenizos.",
   tag: "Pro",
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
   image: "/images/products/profesional/color/oxycream-platino.png"
 },
 
@@ -828,6 +1046,9 @@ export const products = [
   extra:
     "Ideal para técnicas controladas y trabajos de precisión.",
   tag: "Pro",
+  priceSalon: 245,
+  pricePublic: 350,
+  saving: 105,
   image: "/images/products/profesional/color/decolorato-crema.png"
 },
 
@@ -841,6 +1062,9 @@ export const products = [
   extra:
     "Aclara de forma uniforme y controlada.",
   tag: "Salon",
+  priceSalon: 343,
+  pricePublic: 490,
+  saving: 147,
   image: "/images/products/profesional/color/decolorato-polvo.png"
 },
 
@@ -854,6 +1078,9 @@ export const products = [
   extra:
     "Ayuda a neutralizar amarillos no deseados.",
   tag: "Top",
+  priceSalon: 413,
+  pricePublic: 590,
+  saving: 177,
   image: "/images/products/profesional/color/decolorato-plus9.png"
 },
 
@@ -867,7 +1094,74 @@ export const products = [
   extra:
     "35% menos rotura. Tecnología Plex. Vegano y sin aroma.",
   tag: "Nuevo",
+  priceSalon: 490,
+  pricePublic: 700,
+  saving: 210,
   image: "/images/products/profesional/color/decolorato-plex9.png"
+},
+
+{
+  id: 42,
+  name: "Refill Ialuronico 125ml",
+  family: "Profesional",
+  type: "Botox Capilar Profesional",
+  description:
+    "Uso Profesional - Inyección de nutrientes que rellenan la hebra capilar. Reestructura cabello muy maltratado, decolorado o deshidratado.",
+  extra:
+    "Modo de uso sugerido: Deshidratado 1 aplicación mensual. Dañado 4 aplicaciones seguidas y luego cada 2 semanas. Muy dañado 4 aplicaciones seguidas y luego semanal.",
+  tag: "Pro",
+  priceSalon: 1018.5,
+  pricePublic: 0,
+  saving: 0,
+  image: "/images/products/profesional/tratamientos/ialu-refill.png"
+},
+
+{
+  id: 109,
+  name: "Additivex Uno",
+  family: "Profesional",
+  type: "Tratamiento Profesional",
+  description:
+    "",
+  extra:
+    "",
+  tag: "Pro",
+  priceSalon: 0,
+  pricePublic: 0,
+  saving: 0,
+  image: "/images/products/profesional/tratamientos/additivex-uno.png"
+},
+
+{
+  id: 110,
+  name: "Additivex Due",
+  family: "Profesional",
+  type: "Tratamiento Profesional",
+  description:
+    "",
+  extra:
+    "",
+  tag: "Pro",
+  priceSalon: 0,
+  pricePublic: 0,
+  saving: 0,
+  image: "/images/products/profesional/tratamientos/additivex-due.png"
+},
+
+{
+  id: 111,
+  name: "Additivex Tre",
+  family: "Profesional",
+  type: "Tratamiento Profesional",
+  description:
+    "",
+  extra:
+    "",
+  tag: "Pro",
+  priceSalon: 0,
+  pricePublic: 0,
+  saving: 0,
+  image: "/images/products/profesional/tratamientos/additivex-tre.png"
 },
 
 {
@@ -880,6 +1174,9 @@ export const products = [
   extra:
     "Con queratina y semillas de lino. Protector térmico.",
   tag: "Top",
+  priceSalon: 266,
+  pricePublic: 380,
+  saving: 114,
   image: "/images/products/xtyling/xtyling-liquidsilk.png"
 },
 
@@ -893,6 +1190,9 @@ export const products = [
   extra:
     "Efecto anti-humedad hasta 24 horas.",
   tag: "Pro",
+  priceSalon: 245,
+  pricePublic: 350,
+  saving: 105,
   image: "/images/products/xtyling/xtyling-lissdilino.png"
 },
 
@@ -906,6 +1206,9 @@ export const products = [
   extra:
     "Con Pantenol y proteína de seda.",
   tag: "Trend",
+  priceSalon: 210,
+  pricePublic: 300,
+  saving: 90,
   image: "/images/products/xtyling/xtyling-wetlook.png"
 },
 
@@ -919,6 +1222,9 @@ export const products = [
   extra:
     "Ideal para estilos estructurados.",
   tag: "Barber",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
   image: "/images/products/xtyling/xtyling-fiberpaste.png"
 },
 
@@ -932,6 +1238,9 @@ export const products = [
   extra:
     "Ideal para rizos y ondas.",
   tag: "Top",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
   image: "/images/products/xtyling/xtyling-curly.png"
 },
 
@@ -945,6 +1254,9 @@ export const products = [
   extra:
     "Ideal para volumen y styling diario.",
   tag: "Salon",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
   image: "/images/products/xtyling/xtyling-mousse.png"
 },
 
@@ -958,6 +1270,9 @@ export const products = [
   extra:
     "Disponible también en 500 ml.",
   tag: "Strong",
+  priceSalon: 140,
+  pricePublic: 200,
+  saving: 60,
   image: "/images/products/xtyling/xtyling-gel-100.png"
 },
 
@@ -971,6 +1286,9 @@ export const products = [
   extra:
     "Control prolongado sin resecar.",
   tag: "Pro",
+  priceSalon: 224,
+  pricePublic: 320,
+  saving: 96,
   image: "/images/products/xtyling/xtyling-gel-500.png"
 },
 
@@ -984,6 +1302,9 @@ export const products = [
   extra:
     "Aplicación ligera y secado rápido.",
   tag: "Salon",
+  priceSalon: 252,
+  pricePublic: 360,
+  saving: 108,
   image: "/images/products/xtyling/xtyling-lacca.png"
 },
 
@@ -1001,6 +1322,9 @@ export const products = [
   extra:
     "Ideal para rostro, frente y cuello.",
   tag: "Skin",
+  priceSalon: 245,
+  pricePublic: 350,
+  saving: 105,
   image: "/images/products/skin/facciale-argan.png"
 },
 
@@ -1014,6 +1338,9 @@ export const products = [
   extra:
     "Uso normal o intensivo.",
   tag: "Skin",
+  priceSalon: 315,
+  pricePublic: 450,
+  saving: 135,
   image: "/images/products/skin/siero-ialuronico.png"
 },
 
@@ -1027,6 +1354,9 @@ export const products = [
   extra:
     "Versiones: Argan, Goji, Ialuronico, Agave, Menta y Zenzero.",
   tag: "Skin",
+  priceSalon: 98,
+  pricePublic: 140,
+  saving: 42,
   image: "/images/products/skin/sapone.png"
 },
 
@@ -1040,8 +1370,15 @@ export const products = [
   extra:
     "Prácticas para uso diario.",
   tag: "Skin",
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
   image: "/images/products/skin/cleansing-wipes.png"
 },
+
+// =========================
+// MAKEUP (ID 85+)
+// =========================
 
 {
   id: 85,
@@ -1053,7 +1390,10 @@ export const products = [
   extra:
     "Tonos disponibles: Ivory, Nude, Sand, Toffee, Almond y Chestnut.",
   tag: "Top",
-  image: "/images/products/makeup/foundation.png"
+  priceSalon: 189,
+  pricePublic: 270,
+  saving: 81,
+  image: "/images/products/makeup/makeup-foundation.png"
 },
 
 {
@@ -1066,7 +1406,10 @@ export const products = [
   extra:
     "Tonos disponibles: Light, Medium, Dark y Deep.",
   tag: "Pro",
-  image: "/images/products/makeup/powder-foundation.png"
+  priceSalon: 196,
+  pricePublic: 280,
+  saving: 84,
+  image: "/images/products/makeup/makeup-powder-foundation.png"
 },
 
 {
@@ -1079,7 +1422,10 @@ export const products = [
   extra:
     "Tonos disponibles: Light y Medium.",
   tag: "Top",
-  image: "/images/products/makeup/concealer.png"
+  priceSalon: 133,
+  pricePublic: 190,
+  saving: 57,
+  image: "/images/products/makeup/makeup-concealer.png"
 },
 
 {
@@ -1092,7 +1438,10 @@ export const products = [
   extra:
     "Incluye tono Contour + Highlight.",
   tag: "Trend",
-  image: "/images/products/makeup/contour-stick.png"
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
+  image: "/images/products/makeup/makeup-contourstick.png"
 },
 
 {
@@ -1105,7 +1454,10 @@ export const products = [
   extra:
     "Cobertura natural para todo tipo de piel.",
   tag: "Glow",
-  image: "/images/products/makeup/blush.png"
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
+  image: "/images/products/makeup/makeup-blush-goldenpeach.png"
 },
 
 {
@@ -1118,7 +1470,10 @@ export const products = [
   extra:
     "Textura ligera y sedosa.",
   tag: "Pro",
-  image: "/images/products/makeup/camouflage.png"
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
+  image: "/images/products/makeup/makeup-camouflage.png"
 },
 
 {
@@ -1131,7 +1486,10 @@ export const products = [
   extra:
     "Incluye sombras, lip fluid y eye shadow.",
   tag: "Kit",
-  image: "/images/products/makeup/natural-glam-kit.png"
+  priceSalon: 350,
+  pricePublic: 2500,
+  saving: 1,
+  image: "/images/products/makeup/makeup-naturalglamkit.png"
 },
 
 {
@@ -1144,7 +1502,10 @@ export const products = [
   extra:
     "Ideal para contorno suave o efecto sun kissed.",
   tag: "Glow",
-  image: "/images/products/makeup/bronzer.png"
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
+  image: "/images/products/makeup/makeup-bronzer.png"
 },
 
 {
@@ -1157,7 +1518,10 @@ export const products = [
   extra:
     "Ayuda a evitar pliegues.",
   tag: "Pro",
-  image: "/images/products/makeup/eye-primer.png"
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
+  image: "/images/products/makeup/makeup-eye-primer.png"
 },
 
 {
@@ -1170,7 +1534,10 @@ export const products = [
   extra:
     "Versiones: Green y Apricot.",
   tag: "Top",
-  image: "/images/products/makeup/primer.png"
+  priceSalon: 147,
+  pricePublic: 210,
+  saving: 63,
+  image: "/images/products/makeup/makeup-primer-green.png"
 },
 
 {
@@ -1183,7 +1550,10 @@ export const products = [
   extra:
     "Ideal para uso diario.",
   tag: "Care",
-  image: "/images/products/makeup/argan-oil-gloss.png"
+  priceSalon: 119,
+  pricePublic: 170,
+  saving: 51,
+  image: "/images/products/makeup/makeup-argan-oil-gloss.png"
 },
 
 {
@@ -1196,7 +1566,10 @@ export const products = [
   extra:
     "Tonos: Pink, Orange, Purple y Cherry.",
   tag: "Trend",
-  image: "/images/products/makeup/lip-gloss.png"
+  priceSalon: 119,
+  pricePublic: 170,
+  saving: 51,
+  image: "/images/products/makeup/makeup-lip-loss.png"
 },
 
 {
@@ -1209,7 +1582,10 @@ export const products = [
   extra:
     "Tonos: Medium y Dark.",
   tag: "Brow",
-  image: "/images/products/makeup/eyebrow-powder.png"
+  priceSalon: 140,
+  pricePublic: 200,
+  saving: 60,
+  image: "/images/products/makeup/makeup-eyebrow-powder.png"
 },
 
 {
@@ -1222,7 +1598,10 @@ export const products = [
   extra:
     "Acabado natural.",
   tag: "Brow",
-  image: "/images/products/makeup/eyebrow-pencil.png"
+  priceSalon: 105,
+  pricePublic: 150,
+  saving: 45,
+  image: "/images/products/makeup/makeup-eyebrow-pencil.png"
 },
 
 {
@@ -1235,7 +1614,10 @@ export const products = [
   extra:
     "Tonos: Electric Pink, Red y Raspberry.",
   tag: "Lip",
-  image: "/images/products/makeup/matte-lipstick.png"
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
+  image: "/images/products/makeup/makeup-matte-lipstick.png"
 },
 
 {
@@ -1248,7 +1630,10 @@ export const products = [
   extra:
     "Tonos: Frost Orange y Frost Pink.",
   tag: "Lip",
-  image: "/images/products/makeup/frost-lipstick.png"
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
+  image: "/images/products/makeup/makeup-frost-lipstick.png"
 },
 
 {
@@ -1261,7 +1646,10 @@ export const products = [
   extra:
     "Tonos: Red y Brown.",
   tag: "Lip",
-  image: "/images/products/makeup/lip-pencil.png"
+  priceSalon: 105,
+  pricePublic: 150,
+  saving: 45,
+  image: "/images/products/makeup/makeup-lip-pencil.png"
 },
 
 {
@@ -1274,7 +1662,10 @@ export const products = [
   extra:
     "Tonos: Nude y Rose.",
   tag: "Top",
-  image: "/images/products/makeup/lip-fluid.png"
+  priceSalon: 133,
+  pricePublic: 190,
+  saving: 57,
+  image: "/images/products/makeup/makeup-lipfluid.png"
 },
 
 {
@@ -1287,7 +1678,10 @@ export const products = [
   extra:
     "Larga duración.",
   tag: "Eyes",
-  image: "/images/products/makeup/mascara.png"
+  priceSalon: 140,
+  pricePublic: 200,
+  saving: 60,
+  image: "/images/products/makeup/makeup-mascara.png"
 },
 
 {
@@ -1300,7 +1694,10 @@ export const products = [
   extra:
     "Efecto extensión.",
   tag: "Eyes",
-  image: "/images/products/makeup/fiber-lash.png"
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
+  image: "/images/products/makeup/makeup-fiberlash.png"
 },
 
 {
@@ -1313,7 +1710,10 @@ export const products = [
   extra:
     "Acabado mate.",
   tag: "Eyes",
-  image: "/images/products/makeup/eye-marker.png"
+  priceSalon: 119,
+  pricePublic: 170,
+  saving: 51,
+  image: "/images/products/makeup/makeup-eye-marker.png"
 },
 
 {
@@ -1326,7 +1726,10 @@ export const products = [
   extra:
     "Tonos: Pearl y Copper.",
   tag: "Eyes",
-  image: "/images/products/makeup/shadow-stick.png"
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
+  image: "/images/products/makeup/makeup-shadowstick-copper.png"
 },
 
 {
@@ -1339,7 +1742,153 @@ export const products = [
   extra:
     "Amplia gama de tonos disponibles.",
   tag: "Eyes",
-  image: "/images/products/makeup/eye-shadow.png"
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
+  image: "/images/products/makeup/makeup-eye-shadownude .png"
 },
 
+{
+  id: 112,
+  name: "Beauty Blender",
+  family: "Accessories",
+  type: "Esponja de Maquillaje",
+  description:
+    "Esponja de alta suavidad para aplicar base, corrector y productos líquidos con acabado uniforme.",
+  extra:
+    "Uso húmedo o seco.",
+  tag: "Top",
+  priceSalon: 84,
+  pricePublic: 120,
+  saving: 36,
+  image: "/images/products/accessories/beauty-blender.png"
+},
+
+{
+  id: 113,
+  name: "Brocha Kabuki",
+  family: "Accessories",
+  type: "Brocha Facial",
+  description:
+    "Brocha densa ideal para base líquida, polvo o bronceador con acabado profesional.",
+  extra:
+    "Cerdas suaves de alta densidad.",
+  tag: "Pro",
+  priceSalon: 140,
+  pricePublic: 200,
+  saving: 60,
+  image: "/images/products/accessories/brocha-kabuki.png"
+},
+
+{
+  id: 114,
+  name: "Set de Brochas x5",
+  family: "Accessories",
+  type: "Kit de Brochas",
+  description:
+    "Set básico para rostro y ojos. Ideal para uso diario o para iniciar kit profesional.",
+  extra:
+    "Incluye brochas faciales y precisión.",
+  tag: "Kit",
+  priceSalon: 245,
+  pricePublic: 350,
+  saving: 105,
+  image: "/images/products/accessories/set-brochas-5.png"
+},
+
+{
+  id: 115,
+  name: "Pestañas Postizas Natural",
+  family: "Accessories",
+  type: "Pestañas",
+  description:
+    "Diseño ligero y natural para dar longitud y volumen sutil.",
+  extra:
+    "Reutilizables.",
+  tag: "Trend",
+  priceSalon: 77,
+  pricePublic: 110,
+  saving: 33,
+  image: "/images/products/accessories/pestanas-natural.png"
+},
+
+{
+  id: 116,
+  name: "Pestañas Postizas Glam",
+  family: "Accessories",
+  type: "Pestañas",
+  description:
+    "Mayor volumen y definición para looks intensos o de noche.",
+  extra:
+    "Reutilizables.",
+  tag: "Glow",
+  priceSalon: 91,
+  pricePublic: 130,
+  saving: 39,
+  image: "/images/products/accessories/pestanas-glam.png"
+},
+
+{
+  id: 117,
+  name: "Pegamento para Pestañas",
+  family: "Accessories",
+  type: "Adhesivo",
+  description:
+    "Adhesivo de larga duración para pestañas postizas con secado rápido.",
+  extra:
+    "Transparente.",
+  tag: "Top",
+  priceSalon: 84,
+  pricePublic: 120,
+  saving: 36,
+  image: "/images/products/accessories/glue-lashes.png"
+},
+
+{
+  id: 118,
+  name: "Sacapuntas Duo",
+  family: "Accessories",
+  type: "Herramienta",
+  description:
+    "Sacapuntas doble para lápices cosméticos estándar y jumbo.",
+  extra:
+    "Con depósito.",
+  tag: "",
+  priceSalon: 56,
+  pricePublic: 80,
+  saving: 24,
+  image: "/images/products/accessories/sacapuntas-duo.png"
+},
+
+{
+  id: 119,
+  name: "Rizador de Pestañas",
+  family: "Accessories",
+  type: "Herramienta",
+  description:
+    "Rizador metálico ergonómico para curvatura definida y natural.",
+  extra:
+    "Incluye goma de repuesto.",
+  tag: "",
+  priceSalon: 105,
+  pricePublic: 150,
+  saving: 45,
+  image: "/images/products/accessories/rizador.png"
+},
+
+{
+  id: 120,
+  name: "Cosmetic Bag",
+  family: "Accessories",
+  type: "Neceser",
+  description:
+    "Bolsa cosmetiquera ideal para organizar maquillaje y esenciales.",
+  extra:
+    "Compacta y resistente.",
+  tag: "Top",
+  priceSalon: 126,
+  pricePublic: 180,
+  saving: 54,
+  image: "/images/products/accessories/cosmetic-bag.png"
+},
 ];

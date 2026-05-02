@@ -1,335 +1,407 @@
 ---
-// src/components/Catalog.astro
 import { products } from "../../data/products";
 import {
   Search,
-  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  Package2,
+  Leaf,
+  Gem,
+  Droplets,
+  Sprout,
+  Flower2,
+  Palette,
+  Scissors,
+  ScanFace,
+  Briefcase,
+  BadgeCheck,
   Sparkles,
-  MessageCircle,
-  Download,
-  X,
-  BadgeInfo,
-  Package,
-  Layers3,
-  ShieldCheck,
-  Star
+  Shield,
+  Star,
+  Wand2,
+  Download
 } from "lucide-react";
 
-const families = [
-  "Todos",
-  ...new Set(products.map((item) => item.family))
-];
+const grouped = products.reduce((acc: Record<string, any[]>, item) => {
+  if (!acc[item.family]) acc[item.family] = [];
+  acc[item.family].push(item);
+  return acc;
+}, {});
+
+const families = Object.keys(grouped);
+
+const familyIcons: Record<string, typeof Package2> = {
+  Argan: Leaf,
+  Goji: Sparkles,
+  Platino: Gem,
+  Ialuronico: Droplets,
+  Abbondanza: Sprout,
+  Agave: Flower2,
+  Profesional: BadgeCheck,
+  Color: Palette,
+  Xtyling: Scissors,
+  Skin: ScanFace,
+  Makeup: Wand2,
+  Accessories: Briefcase,
+  Especiales: Star,
+  Solidos: Shield
+};
+
+const familyColors: Record<string, string> = {
+  Argan: "#8C5827",
+  Goji: "#D94C37",
+  Ialuronico: "#EF5A9D",
+  Agave: "#006F7B",
+  Especiales: "#BB2332",
+  Platino: "#9FA0A0",
+  Abbondanza: "#388A41",
+  Xtyling: "#6BA236",
+  Profesional: "#4075BB"
+};
 ---
 
-<section
-  id="catalogo"
-  class="min-h-screen overflow-hidden bg-black px-4 sm:px-6 pt-32 pb-24 text-white"
->
+<section class="bg-black px-4 py-28 text-white sm:px-6">
+
   <div class="mx-auto max-w-7xl">
 
-    <!-- HERO -->
-    <div class="mb-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <!-- TOP -->
+    <div class="mb-10">
 
-      <!-- LEFT -->
-      <div>
+      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
+        Catálogo Profesional
+      </h1>
 
-        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
-          <Sparkles size={15} className="shrink-0" />
-          Catálogo Profesional
-        </div>
+      <p class="mt-4 max-w-2xl text-white/60 text-lg">
+        Explora líneas profesionales, maquillaje, skin care y productos
+        premium AVYNA.
+      </p>
 
-        <h1 class="max-w-2xl text-4xl font-bold tracking-tight leading-[0.92] sm:text-5xl md:text-7xl">
-          Línea completa
-          <span class="block text-zinc-500">
-            AVYNA
-          </span>
-        </h1>
+      <div class="mt-6 inline-flex flex-wrap items-center gap-3">
 
-        <p class="mt-6 max-w-xl text-base leading-relaxed text-white/65 md:text-lg">
-          Productos italianos profesionales para salón, coloración,
-          tratamientos premium y líneas especializadas.
-        </p>
+  <div class="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300">
+    Ganancia estimada del 30%
+  </div>
 
-        <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/45">
-          <span>✓ Distribuidor Saltillo</span>
-          <span>✓ Atención directa</span>
-          <span>✓ Pedido rápido</span>
-        </div>
+  <p class="text-sm text-white/45">
+    Calculada sobre precio público sugerido.
+  </p>
 
-      </div>
-
-      <!-- RIGHT -->
-      <div class="space-y-4">
-
-        <!-- SEARCH -->
-        <div class="relative">
-
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Buscar producto..."
-            class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 pl-14 pr-5 outline-none transition placeholder:text-white/30 focus:border-white/25"
-          />
-
-          <Search
-            size={18}
-            className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white/35"
-          />
-
-        </div>
-
-        <!-- ACTIONS -->
-        <div class="grid grid-cols-2 gap-4">
-
-          <a
-            href="/catalogos/catalogo_avyna_2025.pdf"
-            download
-            class="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 font-semibold transition hover:bg-white hover:text-black"
-          >
-            <Download size={16} />
-            PDF
-          </a>
-
-          <a
-            href="https://wa.me/528445069238"
-            target="_blank"
-            class="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 font-semibold transition hover:bg-white hover:text-black"
-          >
-            <MessageCircle size={16} />
-            WhatsApp
-          </a>
-
-        </div>
-
-      </div>
+</div>
 
     </div>
 
-    <!-- FILTERS -->
-    <div class="sticky top-20 z-20 mb-10">
-      <div class="overflow-x-auto rounded-4xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl no-scrollbar">
-        <div class="flex min-w-max gap-3">
+<!-- SEARCH -->
+<div class="sticky top-18 z-30 mb-5">
 
-          {families.map((family, i) => (
-            <button
-              data-family={family}
-              class={`family-btn h-11 whitespace-nowrap rounded-2xl px-6 text-sm font-semibold transition ${
-                i === 0
-                  ? "bg-white text-black"
-                  : "border border-white/10 bg-white/5 hover:bg-white hover:text-black"
-              }`}
-            >
-              {family}
-            </button>
-          ))}
+  <div class="rounded-3xl border border-white/10 bg-black/80 p-3 backdrop-blur-2xl">
 
-        </div>
-      </div>
-    </div>
+    <div class="grid gap-3 md:grid-cols-[1fr_auto]">
 
-    <!-- GRID -->
-    <!-- MOBILE = 2 CARDS -->
-    <div
-      id="catalogGrid"
-      class="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4"
-    >
+      <!-- INPUT -->
+      <div class="relative">
 
-      {products.map((item) => (
-        <article
-          class="product-card group relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
-          data-family={item.family}
-          data-name={item.name.toLowerCase()}
-          data-product={JSON.stringify(item)}
-        >
+  <Search
+    size={18}
+    className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white/35"
+  />
 
-          <!-- IMAGE -->
-          <div class="relative aspect-square overflow-hidden bg-linear-to-br from-zinc-800 via-zinc-900 to-black">
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Buscar producto..."
+    class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 pl-14 pr-14 outline-none transition focus:border-white/30"
+  />
 
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.10),transparent_55%)]"></div>
+  <!-- BOTÓN LIMPIAR -->
+  <button
+    id="clearSearch"
+    type="button"
+    class="absolute right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-white/5 text-white/50 transition hover:bg-white hover:text-black"
+    aria-label="Limpiar búsqueda"
+  >
+    ✕
+  </button>
 
-            <div class="absolute left-1/2 top-[46%] h-36 w-36 sm:h-52 sm:w-52 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-3xl"></div>
+</div>
 
-            <div class="absolute bottom-5 left-1/2 h-6 w-28 sm:w-36 -translate-x-1/2 rounded-full bg-black/70 blur-xl"></div>
-
-            <img
-              src={item.image}
-              alt={item.name}
-              loading="lazy"
-              class="relative z-10 mx-auto mt-6 h-[72%] w-auto object-contain drop-shadow-[0_30px_35px_rgba(0,0,0,.60)] transition duration-700 group-hover:-translate-y-2 group-hover:scale-110"
-            />
-
-            {item.tag && (
-              <span class="absolute top-3 left-3 z-20 rounded-full bg-white px-3 py-1 text-[10px] sm:text-xs font-semibold text-black shadow-xl">
-                {item.tag}
-              </span>
-            )}
-
-          </div>
-
-          <!-- CONTENT -->
-          <div class="p-4 sm:p-6">
-
-            <p class="mb-2 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-white/35">
-              {item.family}
-            </p>
-
-            <h3 class="text-sm sm:text-xl font-semibold leading-snug line-clamp-2">
-              {item.name}
-            </h3>
-
-            <p class="mt-1 text-xs sm:text-sm text-white/45 line-clamp-1">
-              {item.type}
-            </p>
-
-            <div class="mt-3 flex items-center gap-2 text-[11px] sm:text-xs text-white/35">
-              <BadgeInfo size={13} />
-              Ver detalles
-            </div>
-
-            <button
-              class="mt-4 sm:mt-6 flex h-10 sm:h-11 w-full items-center justify-center gap-2 rounded-2xl bg-white text-sm font-semibold text-black transition hover:scale-[1.02]"
-            >
-              Ver
-              <ArrowUpRight size={15} />
-            </button>
-
-          </div>
-
-        </article>
-      ))}
+      <!-- DOWNLOAD BUTTON -->
+      <a
+        href="/catalogos/catalogo_avyna_2025.pdf"
+        download
+        class="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition hover:scale-[1.02]"
+      >
+        <Download size={18} />
+        Descargar catálogo
+      </a>
 
     </div>
 
   </div>
 
-  <!-- FLOAT WHATSAPP -->
-  <a
-    href="https://wa.me/528445069238"
-    target="_blank"
-    class="fixed right-4 bottom-4 z-50 hidden h-14 items-center gap-3 rounded-full bg-white px-6 font-semibold text-black shadow-2xl transition hover:scale-105 md:flex"
-  >
-    <MessageCircle size={18} />
-    WhatsApp
-  </a>
+</div>
 
-  <!-- MODAL -->
+        <!-- DEBAJO DEL BLOQUE DEL BUSCADOR -->
+<div class="mt-4 mb-6 flex flex-wrap items-center gap-3 px-1">
+
   <div
-    id="productModal"
-    class="fixed inset-0 z-999 hidden items-end justify-center bg-black/75 p-2 sm:p-4 backdrop-blur-md md:items-center overflow-y-auto"
+    id="searchResults"
+    class="text-sm font-medium tracking-wide text-white/55 transition-all duration-300"
   >
+    Mostrando catálogo completo
+  </div>
 
-    <div
-      id="modalBox"
-      class="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-black text-white shadow-2xl max-h-[92vh] flex flex-col"
-    >
+  <div
+    id="searchFamilies"
+    class="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-white/40"
+  >
+    Todas las líneas
+  </div>
 
-      <div class="overflow-y-auto">
+</div>
 
-        <!-- IMAGE -->
-        <div class="bg-zinc-900">
-          <img
-            id="modalImage"
-            src=""
-            alt=""
-            class="h-52 sm:h-64 w-full object-contain"
-          />
-        </div>
+    <!-- FAMILIES -->
+    <div class="space-y-6">
 
-        <!-- CONTENT -->
-        <div class="relative p-5 sm:p-8">
+      {families.map((family, i) => {
+        const Icon = familyIcons[family] || Package2;
+        const items = grouped[family];
+        const color = familyColors[family] || "#ffffff";
 
-          <button
-            id="closeModal"
-            class="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition hover:bg-white hover:text-black"
-          >
-            <X size={18} />
-          </button>
-
-          <p
-            id="modalFamily"
-            class="mb-3 text-xs uppercase tracking-[0.35em] text-white/35"
-          ></p>
-
-          <h3
-            id="modalTitle"
-            class="text-3xl sm:text-4xl font-bold leading-tight"
-          ></h3>
-
-          <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
-            <Layers3 size={15} />
-            <span id="modalType"></span>
-          </div>
-
-          <!-- DESC -->
-          <div class="mt-6 rounded-3xl border border-white/10 bg-white/5 p-5">
-            <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
-              <Package size={16} />
-              Descripción
-            </div>
-
-            <p
-              id="modalDesc"
-              class="text-sm leading-relaxed text-white/70"
-            ></p>
-          </div>
-
-          <!-- EXTRA -->
+        return (
           <div
-            id="extraWrap"
-            class="mt-4 rounded-3xl border border-white/10 bg-white/5 p-5 hidden"
-          >
-            <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
-              <ShieldCheck size={16} />
-              Información Extra
-            </div>
+  class="rounded-4xl border overflow-hidden"
+  style={`border-color:${color}30;background:linear-gradient(180deg,${color}08,rgba(255,255,255,.02));`}
+>
 
-            <p
-              id="modalExtra"
-              class="text-sm leading-relaxed text-white/70"
-            ></p>
-          </div>
-
-          <!-- BENEFITS -->
-          <div class="mt-4 grid grid-cols-2 gap-3">
-
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm">
-              <div class="mb-2 flex items-center gap-2 font-semibold">
-                <Star size={15} />
-                Calidad
-              </div>
-              Profesional
-            </div>
-
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm">
-              <div class="mb-2 flex items-center gap-2 font-semibold">
-                <Sparkles size={15} />
-                Línea
-              </div>
-              Premium
-            </div>
-
-          </div>
-
-          <div class="mt-6 grid gap-3">
-
-            <a
-              id="modalWhatsapp"
-              href="#"
-              target="_blank"
-              class="flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
-            >
-              Solicitar por WhatsApp
-            </a>
-
+            <!-- HEADER -->
             <button
-              id="closeBottom"
-              class="h-12 rounded-2xl border border-white/10 transition hover:bg-white hover:text-black"
+              class={`family-toggle flex w-full items-center justify-between px-6 py-5 text-left transition hover:bg-white/5 ${
+                i === 0 ? "active" : ""
+              }`}
+              data-target={`family-${i}`}
             >
-              Cerrar
+
+              <div class="flex items-center gap-4">
+
+                <div
+  class="flex h-12 w-12 items-center justify-center rounded-2xl text-black shadow-xl"
+  style={`background:${color};`}
+>
+  <Icon size={20} />
+</div>
+
+                <div>
+                  <h2
+  class="text-xl font-bold sm:text-2xl"
+  style={`color:${color};`}
+>
+  {family}
+</h2>
+
+                  <p class="text-sm text-white/45">
+                    {items.length} productos disponibles
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="toggle-icon text-white/55">
+                {i === 0 ? <ChevronUp size={22} /> : <ChevronDown size={22} />}
+              </div>
+
             </button>
 
-          </div>
+            <!-- PRODUCTS -->
+            <div
+              id={`family-${i}`}
+              class={`${i === 0 ? "block" : "hidden"} px-4 pb-5 sm:px-6`}
+            >
 
+              <div class="grid grid-cols-2 gap-3 pt-2 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+
+                {items.map((item) => (
+                  <article
+  class="product-card group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+  style={`border-color:${color}25;background:linear-gradient(145deg,rgba(255,255,255,.04),${color}10);`}
+  data-name={item.name}
+  data-family={item.family}
+  data-type={item.type}
+  data-description={item.description}
+  data-extra={item.extra || ""}
+  data-image={item.image}
+  data-public={item.pricePublic || 0}
+  data-salon={item.priceSalon || 0}
+  data-saving={item.saving || 0}
+>
+
+  <!-- IMG -->
+  <div class="relative aspect-square overflow-hidden bg-linear-to-br from-zinc-900 via-black to-zinc-900">
+
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_55%)]"></div>
+
+    <img
+      src={item.image}
+      alt={item.name}
+      loading="lazy"
+      class="relative z-10 mx-auto mt-6 h-[72%] w-auto object-contain drop-shadow-[0_30px_35px_rgba(0,0,0,.6)] transition duration-700 group-hover:scale-110 group-hover:-translate-y-2"
+    />
+
+    {item.tag && (
+      <span class="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black shadow-xl sm:text-xs">
+        {item.tag}
+      </span>
+    )}
+
+  </div>
+
+  <!-- BODY -->
+
+<div class="flex flex-1 flex-col p-4 sm:p-6">
+
+  <p class="mb-2 text-[10px] uppercase tracking-[0.25em] text-white/30 sm:text-[11px]">
+    {item.type}
+  </p>
+
+  <h3 class="line-clamp-2 min-h-12 text-sm font-semibold leading-snug sm:min-h-14 sm:text-xl">
+    {item.name}
+  </h3>
+
+<div
+  class="rounded-2xl border p-3"
+  style={`border-color:${color}25;background:${color}10;`}
+>
+
+  {item.pricePublic > 0 ? (
+    <p class="text-xs text-white/40 line-through">
+      Precio Público ${item.pricePublic}
+    </p>
+  ) : (
+    <p class="text-xs text-white/30">
+      Uso Profesional
+    </p>
+  )}
+
+  <p class="mt-1 text-xl font-bold">
+    ${item.priceSalon || 0}
+  </p>
+
+  <p class="text-[11px] uppercase text-white/40">
+    Precio Salón
+  </p>
+
+  <p
+    class="mt-2 text-xs font-medium"
+    style={`color:${color};`}
+  >
+    Ganancia ${item.saving || 0}
+  </p>
+
+</div>
+
+  <!-- EMPUJA BOTÓN HASTA ABAJO -->
+  <div class="mt-auto pt-4">
+
+    <button
+  class="h-11 w-full rounded-2xl font-semibold text-black transition hover:scale-[1.02]"
+  style={`background:${color};`}
+>
+  Ver detalles
+</button>
+
+  </div>
+
+</div>
+
+</article>
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+        );
+      })}
+
+    </div>
+
+  </div>
+
+<div
+  id="productModal"
+  class="fixed inset-0 z-999 hidden items-center justify-center bg-black/80 p-3 backdrop-blur-md"
+>
+
+  <div
+    class="relative my-auto w-full max-w-xl overflow-hidden rounded-4xl border border-white/10 bg-black text-white shadow-2xl"
+  >
+
+    <button
+      id="closeModal"
+      class="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-xl transition hover:bg-white hover:text-black"
+    >
+      ✕
+    </button>
+
+    <div class="bg-zinc-900">
+      <img
+        id="modalImage"
+        src=""
+        alt=""
+        class="h-72 w-full object-contain"
+      />
+    </div>
+
+    <div class="p-6">
+
+      <p
+        id="modalFamily"
+        class="text-xs uppercase tracking-[0.25em] text-white/35"
+      ></p>
+
+      <h3
+        id="modalTitle"
+        class="mt-2 text-3xl font-bold"
+      ></h3>
+
+      <p
+        id="modalType"
+        class="mt-2 text-white/60"
+      ></p>
+
+      <p
+        id="modalDesc"
+        class="mt-5 text-sm leading-relaxed text-white/75"
+      ></p>
+
+      <p
+        id="modalExtra"
+        class="mt-3 text-sm leading-relaxed text-white/45"
+      ></p>
+
+      <div class="mt-6 grid grid-cols-3 gap-3">
+
+<div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+  <p class="text-xs text-white/40">Público</p>
+
+  <p id="pricePublic" class="mt-1 font-semibold"></p>
+
+  <p
+    id="noPublicPrice"
+    class="mt-1 hidden text-xs text-white/35"
+  >
+    Profesional
+  </p>
+</div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+          <p class="text-xs text-white/40">Salón</p>
+          <p id="priceSalon" class="mt-1 font-semibold text-emerald-400"></p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+          <p class="text-xs text-white/40">Ganancia</p>
+          <p id="priceSaving" class="mt-1 font-semibold"></p>
         </div>
 
       </div>
@@ -337,132 +409,230 @@ const families = [
     </div>
 
   </div>
+
+</div>
+
 
 </section>
 
 <script is:inline>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const buttons = document.querySelectorAll(".family-btn");
-  const cards = document.querySelectorAll(".product-card");
+  const toggles = document.querySelectorAll(".family-toggle");
+  const wrappers = document.querySelectorAll('[id^="family-"]');
   const input = document.getElementById("searchInput");
+
+  const clearSearch = document.getElementById("clearSearch");
+
+  const results = document.getElementById("searchResults");
+  const families = document.getElementById("searchFamilies");
+
   const modal = document.getElementById("productModal");
+  const closeModal = document.getElementById("closeModal");
 
-  let currentFamily = "Todos";
+  /* =========================
+     TOGGLE FAMILIES
+  ========================= */
 
-  function filterProducts() {
-    const term = input?.value.toLowerCase().trim() || "";
+  function closeAll() {
+    wrappers.forEach((wrap) => wrap.classList.add("hidden"));
 
-    cards.forEach((card) => {
-      const family = (card.dataset.family || "").toLowerCase();
-      const name = (card.dataset.name || "").toLowerCase();
-
-      const raw = card.dataset.product;
-      let desc = "";
-      let type = "";
-      let extra = "";
-
-      if (raw) {
-        const data = JSON.parse(raw);
-        desc = (data.description || "").toLowerCase();
-        type = (data.type || "").toLowerCase();
-        extra = (data.extra || "").toLowerCase();
-      }
-
-      const familyMatch =
-        currentFamily === "Todos" ||
-        card.dataset.family === currentFamily;
-
-      const searchMatch =
-        name.includes(term) ||
-        family.includes(term) ||
-        desc.includes(term) ||
-        type.includes(term) ||
-        extra.includes(term);
-
-      card.style.display =
-        familyMatch && searchMatch ? "block" : "none";
+    document.querySelectorAll(".toggle-icon").forEach((icon) => {
+      icon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      `;
     });
   }
 
-  buttons.forEach((btn) => {
+  function openFamilyById(id) {
+    const wrap = document.getElementById(id);
+    if (!wrap) return;
+
+    wrap.classList.remove("hidden");
+
+    const btn = document.querySelector(`[data-target="${id}"]`);
+    const icon = btn?.querySelector(".toggle-icon");
+
+    if (icon) {
+      icon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m18 15-6-6-6 6"/>
+        </svg>
+      `;
+    }
+  }
+
+  function updateDefaultState() {
+    results.textContent = "Mostrando catálogo completo";
+    families.textContent = "Todas las líneas";
+  }
+
+  toggles.forEach((btn) => {
     btn.addEventListener("click", () => {
-      currentFamily = btn.dataset.family || "Todos";
+      const id = btn.dataset.target;
+      const wrap = document.getElementById(id);
+      const isOpen = !wrap.classList.contains("hidden");
 
-      buttons.forEach((b) =>
-        b.classList.remove("bg-white", "text-black")
-      );
+      closeAll();
 
-      btn.classList.add("bg-white", "text-black");
-
-      filterProducts();
+      if (!isOpen) openFamilyById(id);
     });
   });
 
-  input?.addEventListener("input", filterProducts);
+  /* =========================
+     PRODUCT MODAL
+  ========================= */
 
-  const title = document.getElementById("modalTitle");
-  const familyText = document.getElementById("modalFamily");
-  const type = document.getElementById("modalType");
-  const desc = document.getElementById("modalDesc");
-  const extra = document.getElementById("modalExtra");
-  const extraWrap = document.getElementById("extraWrap");
-  const image = document.getElementById("modalImage");
-  const wa = document.getElementById("modalWhatsapp");
+  document.querySelectorAll(".product-card").forEach((card) => {
 
-  cards.forEach((card) => {
     card.addEventListener("click", () => {
 
-      const raw = card.dataset.product;
-      if (!raw) return;
+      document.getElementById("modalImage").src = card.dataset.image || "";
+      document.getElementById("modalTitle").textContent = card.dataset.name || "";
+      document.getElementById("modalFamily").textContent = card.dataset.family || "";
+      document.getElementById("modalType").textContent = card.dataset.type || "";
+      document.getElementById("modalDesc").textContent = card.dataset.description || "";
+      document.getElementById("modalExtra").textContent = card.dataset.extra || "";
 
-      const data = JSON.parse(raw);
+      const publicPrice = Number(card.dataset.public || 0);
 
-      title.textContent = data.name || "";
-      familyText.textContent = data.family || "";
-      type.textContent = data.type || "";
-      desc.textContent = data.description || "";
+if (publicPrice > 0) {
+  document.getElementById("pricePublic").textContent = "$" + publicPrice;
+  document.getElementById("pricePublic").classList.remove("hidden");
+  document.getElementById("noPublicPrice").classList.add("hidden");
+} else {
+  document.getElementById("pricePublic").classList.add("hidden");
+  document.getElementById("noPublicPrice").classList.remove("hidden");
+}
 
-      if (data.extra?.trim()) {
-        extra.textContent = data.extra;
-        extraWrap.classList.remove("hidden");
-      } else {
-        extraWrap.classList.add("hidden");
-      }
+document.getElementById("priceSalon").textContent =
+  "$" + (card.dataset.salon || 0);
 
-      image.src = data.image || "";
-      image.alt = data.name || "";
-
-      wa.href =
-        "https://wa.me/528445069238?text=Hola,%20me%20interesa%20" +
-        encodeURIComponent(data.name || "producto");
-
+document.getElementById("priceSaving").textContent =
+  "$" + (card.dataset.saving || 0);
       modal.classList.remove("hidden");
       modal.classList.add("flex");
 
       document.body.style.overflow = "hidden";
+
     });
+
   });
 
-  function closeModal() {
+  closeModal?.addEventListener("click", closeModalFn);
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeModalFn();
+  });
+
+  function closeModalFn() {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
     document.body.style.overflow = "";
   }
 
-  document.getElementById("closeModal")
-    ?.addEventListener("click", closeModal);
+/* =========================
+   SEARCH
+========================= */
 
-  document.getElementById("closeBottom")
-    ?.addEventListener("click", closeModal);
+input?.addEventListener("input", () => {
 
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
+  const term = input.value.toLowerCase().trim();
+
+  /* botón limpiar */
+  if (term.length > 0) {
+    clearSearch?.classList.remove("hidden");
+    clearSearch?.classList.add("flex");
+  } else {
+    clearSearch?.classList.add("hidden");
+    clearSearch?.classList.remove("flex");
+  }
+
+  /* sin texto = reset */
+  if (!term) {
+
+    closeAll();
+    openFamilyById("family-0");
+
+    document.querySelectorAll(".product-card").forEach((card) => {
+      card.style.display = "flex";
+    });
+
+    updateDefaultState();
+    return;
+  }
+
+  closeAll();
+
+  let totalResults = 0;
+  let matchedFamilies = [];
+
+  wrappers.forEach((familyWrap) => {
+
+    const cards = familyWrap.querySelectorAll(".product-card");
+    let hasMatch = false;
+
+    cards.forEach((card) => {
+
+      const text = card.innerText.toLowerCase();
+      const match = text.includes(term);
+
+      card.style.display = match ? "flex" : "none";
+
+      if (match) {
+        hasMatch = true;
+        totalResults++;
+      }
+
+    });
+
+    if (hasMatch) {
+
+      openFamilyById(familyWrap.id);
+
+      const title = document.querySelector(
+        `[data-target="${familyWrap.id}"] h2`
+      );
+
+      if (title) matchedFamilies.push(title.textContent.trim());
+
+    }
+
   });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
-  });
+  if (totalResults === 0) {
+    results.textContent = "Sin coincidencias";
+    families.textContent = "0 líneas";
+    return;
+  }
+
+  results.textContent =
+    totalResults === 1
+      ? "1 producto encontrado"
+      : `${totalResults} productos encontrados`;
+
+  families.textContent =
+    matchedFamilies.length === 1
+      ? matchedFamilies[0]
+      : `${matchedFamilies.length} líneas`;
+
+});
+
+
+/* =========================
+   CLEAR SEARCH
+========================= */
+
+clearSearch?.addEventListener("click", () => {
+
+  input.value = "";
+  input.dispatchEvent(new Event("input"));
+  input.focus();
+
+});
+
+  updateDefaultState();
 
 });
 </script>

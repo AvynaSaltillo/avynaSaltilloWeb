@@ -1,0 +1,687 @@
+---
+import PortalLayout from "../../layouts/PortalLayout.astro";
+import { products } from "../../data/products";
+---
+
+<PortalLayout title="Pedidos | AVYNA">
+
+<section class="space-y-8">
+
+  <!-- HERO -->
+  <section class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-6 lg:p-8">
+
+    <div class="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+
+      <div>
+        <p class="text-xs uppercase tracking-[0.45em] text-white/35">
+          Portal Privado
+        </p>
+
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight lg:text-5xl">
+          Nuevo pedido
+        </h1>
+
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-white/55">
+          Catálogo profesional con precio distribuidor.
+          Agrega productos al carrito y envía pedido directo.
+        </p>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.3em] text-white/35">
+            Productos
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            {products.length}
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.3em] text-white/35">
+            Pedido mínimo
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            $1,500
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.3em] text-white/35">
+            Canal
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            WhatsApp
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MAIN -->
+  <section class="grid gap-6 xl:grid-cols-[1fr_390px]">
+
+    <!-- LEFT -->
+    <div class="space-y-6">
+
+      <!-- FILTERS -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-5">
+
+        <div class="grid gap-3 lg:grid-cols-[1fr_220px_220px]">
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar producto..."
+            class="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none placeholder:text-white/30"
+          />
+
+          <select
+            id="familyFilter"
+            class="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none"
+          >
+            <option value="">Todas las líneas</option>
+          </select>
+
+          <select
+            id="typeFilter"
+            class="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none"
+          >
+            <option value="">Todos los tipos</option>
+          </select>
+
+        </div>
+
+      </section>
+
+      <!-- PRODUCTS TABLE -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4">
+
+        <div class="grid grid-cols-[1.8fr_.8fr_.7fr_.8fr_150px] gap-3 border-b border-white/10 px-3 pb-3 text-[11px] uppercase tracking-[0.25em] text-white/35">
+          <div>Producto</div>
+          <div>Línea</div>
+          <div>Público</div>
+          <div>Salón</div>
+          <div>Cantidad</div>
+        </div>
+
+        <div
+          id="productsGrid"
+          class="mt-2 max-h-[72vh] overflow-y-auto pr-1 space-y-2"
+        ></div>
+
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="xl:sticky xl:top-6 h-fit">
+
+      <section class="rounded-[2rem] border border-white/10 bg-zinc-950/90 p-6">
+
+        <div class="flex items-center justify-between">
+
+          <h2 class="text-2xl font-semibold">
+            Carrito
+          </h2>
+
+          <span
+            id="cartCount"
+            class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/60"
+          >
+            0 items
+          </span>
+
+        </div>
+
+        <div
+          id="cartItems"
+          class="mt-6 space-y-3 max-h-[45vh] overflow-y-auto pr-1"
+        ></div>
+
+        <!-- TOTALS -->
+        <div class="mt-6 border-t border-white/10 pt-6 space-y-3">
+
+          <div class="flex justify-between text-sm text-white/50">
+            <span>Subtotal público</span>
+            <span id="publicTotal">$0</span>
+          </div>
+
+          <div class="flex justify-between text-sm text-white/50">
+            <span>Tu ganancia</span>
+            <span id="savingTotal">$0</span>
+          </div>
+
+          <div class="flex justify-between text-lg font-semibold">
+            <span>Total salón</span>
+            <span id="finalTotal">$0</span>
+          </div>
+
+        </div>
+
+        <!-- TERMS -->
+        <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+          <p class="text-xs uppercase tracking-[0.3em] text-white/35">
+            Condición
+          </p>
+
+          <p id="termsTitle" class="mt-3 font-semibold">
+            Contado total
+          </p>
+
+          <p id="termsText" class="mt-2 text-sm text-white/50">
+            Pedido menor al mínimo.
+          </p>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="mt-6 grid gap-3">
+
+          <button
+            id="clearBtn"
+            class="h-12 rounded-2xl border border-white/10 bg-white/[0.04] text-sm font-medium hover:bg-white/[0.08]"
+          >
+            Vaciar carrito
+          </button>
+
+          <button
+            id="waBtn"
+            class="h-12 rounded-2xl bg-white text-sm font-semibold text-black hover:scale-[1.01] transition"
+          >
+            Enviar por WhatsApp
+          </button>
+
+        </div>
+
+      </section>
+
+    </aside>
+
+  </section>
+
+</section>
+
+<!-- MODAL -->
+<div
+  id="detailModal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-6"
+>
+
+  <button
+    onclick="closeModal()"
+    class="absolute right-6 top-6 h-10 w-10 rounded-full border border-white/10 text-xl"
+  >
+    ×
+  </button>
+
+  <div class="max-w-xl w-full rounded-[2rem] border border-white/10 bg-zinc-950 p-6">
+
+    <p
+      id="modalFamily"
+      class="text-xs uppercase tracking-[0.35em] text-white/35"
+    ></p>
+
+    <h3
+      id="modalName"
+      class="mt-4 text-3xl font-semibold"
+    ></h3>
+
+    <p
+      id="modalType"
+      class="mt-3 text-white/50"
+    ></p>
+
+    <div class="mt-6 grid grid-cols-2 gap-3">
+
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+        <p class="text-xs text-white/35">Público</p>
+        <p id="modalPublic" class="mt-2 font-semibold"></p>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+        <p class="text-xs text-white/35">Salón</p>
+        <p id="modalSalon" class="mt-2 font-semibold"></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module" define:vars={{ products }}>
+import { supabase } from "/src/lib/supabase.ts";
+
+const WA_NUMBER = "528442564688";
+
+let list = [...products];
+let cart = [];
+
+const productsGrid = document.getElementById("productsGrid");
+const cartItems = document.getElementById("cartItems");
+
+const searchInput = document.getElementById("searchInput");
+const familyFilter = document.getElementById("familyFilter");
+const typeFilter = document.getElementById("typeFilter");
+
+function money(v = 0) {
+  return new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+    maximumFractionDigits: 0
+  }).format(v);
+}
+
+/* FILTERS */
+function loadFilters() {
+
+  const families =
+    [...new Set(products.map(x => x.family).filter(Boolean))];
+
+  const types =
+    [...new Set(products.map(x => x.type).filter(Boolean))];
+
+  familyFilter.innerHTML =
+    `<option value="">Todas las líneas</option>` +
+    families.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join("");
+
+  typeFilter.innerHTML =
+    `<option value="">Todos los tipos</option>` +
+    types.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join("");
+}
+
+function applyFilters() {
+
+  const text = searchInput.value.toLowerCase();
+  const fam = familyFilter.value;
+  const type = typeFilter.value;
+
+  list = products.filter(item => {
+
+    const byText =
+      item.name.toLowerCase().includes(text);
+
+    const byFam =
+      !fam || item.family === fam;
+
+    const byType =
+      !type || item.type === type;
+
+    return byText && byFam && byType;
+  });
+
+  renderProducts();
+}
+
+searchInput.oninput = applyFilters;
+familyFilter.onchange = applyFilters;
+typeFilter.onchange = applyFilters;
+
+/* PRODUCTS */
+function renderProducts() {
+
+  if (!list.length) {
+    productsGrid.innerHTML = `
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/45">
+        Sin resultados.
+      </div>
+    `;
+    return;
+  }
+
+  productsGrid.innerHTML = list.map(item => {
+
+    const found =
+      cart.find(x => x.id === item.id);
+
+    const qty =
+      found?.qty || 0;
+
+    return `
+
+      <div class="rounded-2xl border border-white/10 bg-black/30 px-3 py-3 hover:bg-white/[0.03] transition">
+
+        <div class="grid grid-cols-[1.8fr_.8fr_.7fr_.8fr_150px] gap-3 items-center">
+
+          <button
+            onclick="openDetails(${item.id})"
+            class="text-left min-w-0"
+          >
+            <p class="truncate font-medium">
+              ${item.name}
+            </p>
+
+            <p class="mt-1 truncate text-xs text-white/40">
+              ${item.type || ""}
+            </p>
+          </button>
+
+          <div class="text-sm text-white/70">
+            ${item.family || "-"}
+          </div>
+
+          <div class="text-sm text-white/45">
+            ${money(item.pricePublic || 0)}
+          </div>
+
+          <div>
+            <p class="font-semibold">
+              ${money(item.priceSalon || 0)}
+            </p>
+
+          </div>
+
+          <div class="flex items-center justify-end gap-2">
+
+            <button
+              onclick="qtyFromTable(${item.id},-1)"
+              class="h-9 w-9 rounded-xl border border-white/10"
+            >-</button>
+
+            <span class="w-7 text-center text-sm">
+              ${qty}
+            </span>
+
+            <button
+              onclick="qtyFromTable(${item.id},1)"
+              class="h-9 w-9 rounded-xl border border-white/10"
+            >+</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+  }).join("");
+}
+
+/* CART */
+window.qtyFromTable = function(id, n) {
+
+  const found =
+    cart.find(x => x.id === id);
+
+  if (!found && n > 0) {
+
+    const item =
+      products.find(x => x.id === id);
+
+    if (!item) return;
+
+    cart.push({
+      ...item,
+      qty: 1
+    });
+
+    renderCart();
+    renderProducts();
+    return;
+  }
+
+  if (!found) return;
+
+  found.qty += n;
+
+  if (found.qty <= 0) {
+    cart = cart.filter(x => x.id !== id);
+  }
+
+  renderCart();
+  renderProducts();
+};
+
+window.qty = function(id, n) {
+
+  const item =
+    cart.find(x => x.id === id);
+
+  if (!item) return;
+
+  item.qty += n;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(x => x.id !== id);
+  }
+
+  renderCart();
+  renderProducts();
+};
+
+function renderCart() {
+
+  const totalUnits =
+    cart.reduce((a,b) => a + b.qty, 0);
+
+  document.getElementById("cartCount").textContent =
+    `${totalUnits} items`;
+
+  if (!cart.length) {
+
+    cartItems.innerHTML = `
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/45">
+        Sin productos agregados.
+      </div>
+    `;
+
+    totals();
+    return;
+  }
+
+  cartItems.innerHTML = cart.map(item => `
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+      <div class="flex justify-between gap-3">
+
+        <div class="min-w-0">
+          <p class="truncate font-medium">
+            ${item.name}
+          </p>
+
+          <p class="mt-1 text-sm text-white/45">
+            ${money(item.priceSalon || 0)}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+
+          <button
+            onclick="qty(${item.id},-1)"
+            class="h-8 w-8 rounded-xl border border-white/10"
+          >-</button>
+
+          <span class="w-5 text-center text-sm">
+            ${item.qty}
+          </span>
+
+          <button
+            onclick="qty(${item.id},1)"
+            class="h-8 w-8 rounded-xl border border-white/10"
+          >+</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+  totals();
+}
+
+/* TOTALS */
+function totals() {
+
+  let pub = 0;
+  let cli = 0;
+  let sav = 0;
+
+  cart.forEach(item => {
+
+    pub += (item.pricePublic || 0) * item.qty;
+    cli += (item.priceSalon || 0) * item.qty;
+    sav += (item.saving || 0) * item.qty;
+  });
+
+  document.getElementById("publicTotal").textContent =
+    money(pub);
+
+  document.getElementById("savingTotal").textContent =
+    money(sav);
+
+  document.getElementById("finalTotal").textContent =
+    money(cli);
+
+  const title =
+    document.getElementById("termsTitle");
+
+  const text =
+    document.getElementById("termsText");
+
+  if (cli < 1500) {
+    title.textContent = "Contado total";
+    text.textContent = "Pedido menor a $1,500.";
+  }
+
+  else if (cli < 10000) {
+    title.textContent =
+      "50% hoy + 50% a 15 días";
+
+    text.textContent =
+      `${money(cli/2)} hoy y ${money(cli/2)} después.`;
+  }
+
+  else {
+    title.textContent =
+      "50% hoy + 50% a 30 días";
+
+    text.textContent =
+      `${money(cli/2)} hoy y ${money(cli/2)} después.`;
+  }
+
+}
+
+/* BUTTONS */
+document.getElementById("clearBtn").onclick =
+() => {
+  cart = [];
+  renderCart();
+  renderProducts();
+};
+
+document.getElementById("waBtn").onclick =
+async () => {
+
+  if (!cart.length) {
+    alert("Agrega productos.");
+    return;
+  }
+
+  let total = 0;
+
+  const today = new Date().toLocaleDateString("es-MX");
+
+  let clientName = "Cliente";
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (user) {
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    clientName =
+      profile?.name ||
+      profile?.first_name ||
+      user.email;
+  }
+
+  let msg =
+`*PEDIDO AVYNA*%0A%0A`;
+
+  msg += `Fecha: ${today}%0A`;
+  msg += `Cliente: ${clientName}%0A%0A`;
+
+  msg += `*DETALLE*%0A`;
+
+  cart.forEach(item => {
+
+    total +=
+      (item.priceSalon || 0) * item.qty;
+
+    msg +=
+`${item.qty} x ${item.name} | ${money(item.priceSalon)}%0A`;
+  });
+
+  msg += `%0A*TOTAL:* ${money(total)}`;
+
+  window.open(
+    `https://wa.me/${WA_NUMBER}?text=${msg}`,
+    "_blank"
+  );
+};
+
+/* MODAL */
+window.openDetails = function(id) {
+
+  const item =
+    products.find(x => x.id === id);
+
+  if (!item) return;
+
+  document.getElementById("modalFamily").textContent =
+    item.family || "";
+
+  document.getElementById("modalName").textContent =
+    item.name;
+
+  document.getElementById("modalType").textContent =
+    item.type || "";
+
+  document.getElementById("modalPublic").textContent =
+    money(item.pricePublic || 0);
+
+  document.getElementById("modalSalon").textContent =
+    money(item.priceSalon || 0);
+
+  const modal =
+    document.getElementById("detailModal");
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+};
+
+window.closeModal = function() {
+
+  const modal =
+    document.getElementById("detailModal");
+
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+};
+
+loadFilters();
+renderProducts();
+renderCart();
+
+</script>
+
+</PortalLayout>

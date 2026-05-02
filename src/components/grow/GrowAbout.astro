@@ -1,12 +1,13 @@
 ---
-// src/components/About.astro
+// src/components/partners/About.astro
 import {
   Users,
   ShieldCheck,
   Sparkles,
   MapPin,
   Scissors,
-  BadgeCheck
+  BadgeCheck,
+  TrendingUp
 } from "lucide-react";
 ---
 
@@ -14,18 +15,18 @@ import {
   <div class="mx-auto max-w-7xl">
 
     <!-- TOP -->
-    <div class="mb-16 grid items-center gap-14 lg:grid-cols-2">
+    <div class="mb-18 grid items-center gap-14 lg:grid-cols-2">
 
       <!-- LEFT -->
       <div>
 
         <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
-          <Sparkles size={16} className="shrink-0" />
-          Quiénes Somos
+          <TrendingUp size={16} className="shrink-0" />
+          Sobre AVYNA Grow
         </div>
 
         <h2 class="max-w-3xl text-4xl font-bold tracking-tight leading-tight md:text-6xl">
-          Distribución profesional enfocada en resultados reales
+          Impulsamos negocios de belleza con estructura real
         </h2>
 
       </div>
@@ -34,20 +35,19 @@ import {
       <div>
 
         <p class="text-lg leading-relaxed text-white/65">
-          Somos distribuidores especializados en productos profesionales
-          AVYNA exclusivamente para salones de belleza y negocios afines
-          dentro de Saltillo, Coahuila.
+          AVYNA Grow es la oportunidad comercial para salones,
+          estilistas y negocios que desean trabajar una marca premium
+          con acompañamiento cercano en Saltillo, Coahuila.
         </p>
 
         <p class="mt-5 text-lg leading-relaxed text-white/65">
-          Trabajamos con establecimientos que cuentan con espacio de trabajo
-          para realizar diagnóstico capilar y ofrecer la mejor recomendación
-          al cliente final.
+          No buscamos vender por vender. Priorizamos relaciones sanas,
+          crecimiento progresivo y clientes que quieran construir algo sólido.
         </p>
 
         <p class="mt-5 text-lg leading-relaxed text-white/65">
-          Nuestro enfoque es brindar atención personalizada, seguimiento cercano
-          y crecimiento comercial responsable.
+          Nuestro enfoque combina atención humana, respuesta rápida
+          y herramientas para ayudarte a crecer con orden.
         </p>
 
       </div>
@@ -58,8 +58,9 @@ import {
     <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
 
       <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <MapPin size={22} />
         </div>
 
@@ -67,90 +68,101 @@ import {
           Cobertura Local
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Venta autorizada exclusivamente en Saltillo, Coahuila,
-          con atención rápida y seguimiento directo.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Atención enfocada en Saltillo, Coahuila,
+          con seguimiento directo y entregas ágiles.
         </p>
+
       </div>
 
       <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <Scissors size={22} />
         </div>
 
         <h3 class="mb-3 text-xl font-semibold">
-          Clientes Profesionales
+          Perfil Profesional
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Atendemos salones de belleza, estilistas,
-          barberías y negocios relacionados.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Ideal para salones, estilistas, barberías
+          y negocios enfocados en imagen.
         </p>
+
       </div>
 
       <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <Users size={22} />
         </div>
 
         <h3 class="mb-3 text-xl font-semibold">
-          Atención Personalizada
+          Atención Cercana
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Recomendaciones según necesidades reales del negocio
-          y perfil de cliente final.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Recomendaciones según tu negocio,
+          nivel de compra y tipo de cliente.
         </p>
+
       </div>
 
       <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <ShieldCheck size={22} />
         </div>
 
         <h3 class="mb-3 text-xl font-semibold">
-          Sin Manejo de Stock Local
+          Operación Formal
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Operamos bajo lineamientos oficiales de marca,
-          priorizando pedido directo y rotación saludable.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Pedidos ordenados, seguimiento claro
+          y crecimiento comercial responsable.
         </p>
+
       </div>
 
       <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-white/5 p-8 transition hover:-translate-y-1 hover:bg-white/10">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <BadgeCheck size={22} />
         </div>
 
         <h3 class="mb-3 text-xl font-semibold">
-          Diagnóstico Profesional
+          Venta Inteligente
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Buscamos que cada venta incluya valoración capilar
-          para recomendar correctamente.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Impulsamos recompra, recomendación
+          y relaciones duraderas con clientes.
         </p>
+
       </div>
 
-      <!-- CARD -->
-      <div class="rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 transition hover:-translate-y-1">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black">
+      <!-- CARD PREMIUM -->
+      <div class="group rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
+
+        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
           <Sparkles size={22} />
         </div>
 
         <h3 class="mb-3 text-xl font-semibold">
-          Relación a Largo Plazo
+          Escalable Contigo
         </h3>
 
-        <p class="leading-relaxed text-white/65">
-          Más que vender productos, buscamos ser aliados
-          estratégicos para cada salón.
+        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
+          Desde tus primeras compras hasta niveles superiores,
+          AVYNA Grow evoluciona contigo.
         </p>
+
       </div>
 
     </div>

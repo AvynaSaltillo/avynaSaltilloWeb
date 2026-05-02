@@ -1,0 +1,251 @@
+---
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import {
+  Mail,
+  Lock,
+  Eye,
+  ArrowRight
+} from "lucide-react";
+---
+
+<AuthLayout
+  title="Bienvenido de nuevo"
+  subtitle="Acceso exclusivo para clientes activos AVYNA Saltillo."
+>
+
+<form
+  id="loginForm"
+  class="space-y-3"
+>
+
+  <!-- EMAIL -->
+  <div class="relative">
+
+    <Mail
+      size={18}
+      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
+    />
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Correo electrónico"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
+      required
+    />
+
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="relative">
+
+    <Lock
+      size={18}
+      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
+    />
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Contraseña"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none transition focus:border-white/30"
+      required
+    />
+
+    <button
+      type="button"
+      id="togglePassword"
+      class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition hover:text-white"
+      aria-label="Mostrar contraseña"
+    >
+      <Eye size={18} />
+    </button>
+
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="flex items-center justify-between gap-3 pt-1">
+
+    <label class="flex items-center gap-2 text-sm text-white/55">
+      <input
+        type="checkbox"
+        class="rounded border-white/20 bg-black"
+      />
+      <span>Recordarme</span>
+    </label>
+
+    <a
+      href="/auth/forgot-password"
+      class="text-sm text-white/55 transition hover:text-white"
+    >
+      ¿Olvidaste tu contraseña?
+    </a>
+
+  </div>
+
+  <!-- BUTTON -->
+  <button
+    id="submitBtn"
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black transition hover:scale-[1.01]"
+  >
+    Entrar
+    <ArrowRight size={16} />
+  </button>
+
+  <!-- MESSAGE -->
+  <p
+    id="msg"
+    class="min-h-5 text-center text-sm text-white/55"
+  ></p>
+
+</form>
+
+<!-- EXTRA -->
+<div class="mt-5 border-t border-white/10 pt-5 space-y-3">
+
+  <a
+    href="/auth/signup"
+    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+  >
+    Solicitar acceso
+  </a>
+
+</div>
+
+<script type="module">
+import { supabase } from "/src/lib/supabase.ts";
+
+const form = document.getElementById("loginForm");
+const msg = document.getElementById("msg");
+const submitBtn = document.getElementById("submitBtn");
+
+const emailInput = document.getElementById("email");
+const password = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
+
+/* PASSWORD */
+togglePassword.addEventListener("click", () => {
+  password.type =
+    password.type === "password"
+      ? "text"
+      : "password";
+});
+
+/* LOADING */
+function setLoading(state) {
+  submitBtn.disabled = state;
+  submitBtn.textContent =
+    state ? "Entrando..." : "Entrar";
+}
+
+/* LOGIN */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  msg.textContent = "";
+
+  const email =
+    emailInput.value.trim().toLowerCase();
+
+  const pass = password.value;
+
+  if (!email || !pass) {
+    msg.textContent =
+      "Completa correo y contraseña.";
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+
+    /* LOGIN */
+    const { error: loginError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password: pass
+      });
+
+    if (loginError) {
+      msg.textContent =
+        "Credenciales inválidas.";
+      setLoading(false);
+      return;
+    }
+
+    /* USER */
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      msg.textContent =
+        "No se pudo iniciar sesión.";
+      setLoading(false);
+      return;
+    }
+
+    /* PROFILE */
+    const {
+      data: profile,
+      error: profileError
+    } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      msg.textContent =
+        "Error al cargar perfil.";
+      setLoading(false);
+      return;
+    }
+
+    if (!profile) {
+      msg.textContent =
+        "No se encontró perfil.";
+      setLoading(false);
+      return;
+    }
+
+    /* APPROVED */
+    if (profile.approved !== true) {
+
+      msg.textContent =
+        "Tu cuenta aún no ha sido aprobada.";
+
+      await supabase.auth.signOut();
+
+      setLoading(false);
+      return;
+    }
+
+    /* REDIRECTS */
+    if (profile.role === "admin") {
+      window.location.href = "/admin";
+      return;
+    }
+
+    if (profile.role === "grow") {
+      window.location.href =
+        "/grow/dashboard";
+      return;
+    }
+
+    window.location.href =
+      "/portal/dashboard";
+
+  } catch (error) {
+
+    msg.textContent =
+      "Ocurrió un error inesperado.";
+
+  }
+
+  setLoading(false);
+
+});
+</script>
+
+</AuthLayout>
