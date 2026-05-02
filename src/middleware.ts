@@ -4,16 +4,21 @@ import { createServerClient } from "@supabase/ssr";
 export const onRequest = defineMiddleware(
   async (context, next) => {
 
-    const { cookies, redirect, url } = context;
+    const { url, cookies, redirect } = context;
     const path = url.pathname;
 
-    /* =========================
-       RUTAS PROTEGIDAS
-    ========================= */
+    /* IGNORAR ARCHIVOS Y ASTRO INTERNOS */
+    if (
+      path.startsWith("/_astro") ||
+      path.startsWith("/favicon") ||
+      path.includes(".")
+    ) {
+      return next();
+    }
 
+    /* SOLO RUTAS PRIVADAS */
     const protectedRoutes = [
       "/portal",
-      "/grow",
       "/admin"
     ];
 
@@ -22,92 +27,68 @@ export const onRequest = defineMiddleware(
         path.startsWith(route)
       );
 
-    /* públicas */
     if (!needsAuth) {
       return next();
     }
 
-    /* =========================
-       SUPABASE SSR
-    ========================= */
+    try {
 
-    const supabase = createServerClient(
-      import.meta.env.PUBLIC_SUPABASE_URL,
-      import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
-      {
-        cookies: {
-          get(name: string) {
-            return cookies.get(name)?.value;
-          },
+      const supabase = createServerClient(
+        import.meta.env.PUBLIC_SUPABASE_URL,
+        import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+        {
+          cookies: {
+            get(name: string) {
+              return cookies.get(name)?.value;
+            },
 
-          set(
-            name: string,
-            value: string,
-            options: any
-          ) {
-            cookies.set(name, value, options);
-          },
+            set(name: string, value: string, options: any) {
+              cookies.set(name, value, options);
+            },
 
-          remove(
-            name: string,
-            options: any
-          ) {
-            cookies.delete(name, options);
+            remove(name: string, options: any) {
+              cookies.delete(name, options);
+            }
           }
         }
+      );
+
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return redirect("/login");
       }
-    );
 
-    /* =========================
-       USUARIO LOGUEADO
-    ========================= */
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("approved, role")
+        .eq("id", user.id)
+        .maybeSingle();
 
-    const {
-      data: { user },
-      error
-    } = await supabase.auth.getUser();
+      if (!profile) {
+        return redirect("/signup");
+      }
 
-    if (error || !user) {
+      if (profile.approved !== true) {
+        return redirect("/auth/pending");
+      }
+
+      if (
+        path.startsWith("/admin") &&
+        profile.role !== "admin"
+      ) {
+        return redirect("/portal");
+      }
+
+      return next();
+
+    } catch (error) {
+
+      console.error(error);
+
       return redirect("/login");
     }
-
-    /* =========================
-       PERFIL
-    ========================= */
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("approved, role")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    /* si no existe perfil */
-    if (!profile) {
-      await supabase.auth.signOut();
-      return redirect("/signup");
-    }
-
-    /* =========================
-       APROBACIÓN
-    ========================= */
-
-    if (profile.approved !== true) {
-      return redirect("/auth/pending");
-    }
-
-    /* =========================
-       ADMIN
-    ========================= */
-
-    if (
-      path.startsWith("/admin") &&
-      profile.role !== "admin"
-    ) {
-      return redirect("/portal");
-    }
-
-    /* ========================= */
-
-    return next();
   }
 );
