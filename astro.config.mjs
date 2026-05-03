@@ -8,6 +8,7 @@ import vercel from "@astrojs/vercel";
 
 export default defineConfig({
   output: "server",
+  site: "https://avynasaltillo.beauty",
 
   adapter: vercel(),
 

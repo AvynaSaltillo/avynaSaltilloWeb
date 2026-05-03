@@ -84,6 +84,7 @@ import {
       placeholder="Correo electrónico"
       class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
       required
+      autocomplete="email"
     />
 
   </div>
@@ -103,6 +104,7 @@ import {
       placeholder="Número de teléfono"
       class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
       required
+      autocomplete="tel"
     />
 
   </div>
@@ -190,6 +192,7 @@ import {
       placeholder="Contraseña (mínimo 8 caracteres)"
       class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none"
       required
+      autocomplete="new-password"
     />
 
     <button
@@ -206,9 +209,13 @@ import {
   </div>
 
   <!-- TERMS -->
-  <label class="flex gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-white/60">
+  <label class="flex gap-3 rounded-2xl border border-white/10 bg-white/3 p-3 text-[13px] text-white/60">
 
-    <input id="terms" type="checkbox" required />
+    <input
+      id="terms"
+      type="checkbox"
+      required
+    />
 
     <span>
       Confirmo que soy cliente AVYNA Saltillo.
@@ -243,6 +250,7 @@ import {
 
 </div>
 
+<!-- ✅ IMPORT DENTRO DEL LAYOUT -->
 <script type="module">
   import "../../scripts/signup.ts";
 </script>
