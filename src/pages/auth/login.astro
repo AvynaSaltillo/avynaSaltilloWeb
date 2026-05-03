@@ -115,130 +115,54 @@ import {
 <script type="module">
 import { supabase } from "/src/lib/supabase.ts";
 
-const form = document.getElementById("loginForm");
-const msg = document.getElementById("msg");
-const submitBtn = document.getElementById("submitBtn");
+window.addEventListener("load", () => {
 
-const emailInput = document.getElementById("email");
-const password = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("msg");
+  const btn = document.getElementById("submitBtn");
 
-/* PASSWORD */
-togglePassword.addEventListener("click", () => {
-  password.type =
-    password.type === "password"
-      ? "text"
-      : "password";
-});
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const eye = document.getElementById("togglePassword");
 
-/* LOADING */
-function setLoading(state) {
-  submitBtn.disabled = state;
-  submitBtn.textContent =
-    state ? "Entrando..." : "Entrar";
-}
+  /* OJO */
+  eye?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-/* LOGIN */
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    password.type =
+      password.type === "password"
+        ? "text"
+        : "password";
+  });
 
-  msg.textContent = "";
+  /* LOGIN */
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const email =
-    emailInput.value.trim().toLowerCase();
+    msg.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "Entrando...";
 
-  const pass = password.value;
+    const mail = email.value.trim().toLowerCase();
+    const pass = password.value;
 
-  if (!email || !pass) {
-    msg.textContent =
-      "Completa correo y contraseña.";
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-
-    /* LOGIN */
-    const { error: loginError } =
+    const { data, error } =
       await supabase.auth.signInWithPassword({
-        email,
+        email: mail,
         password: pass
       });
 
-    if (loginError) {
-      msg.textContent =
-        "Credenciales inválidas.";
-      setLoading(false);
+    if (error || !data.user) {
+      msg.textContent = "Credenciales inválidas.";
+      btn.disabled = false;
+      btn.textContent = "Entrar";
       return;
     }
-
-    /* USER */
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      msg.textContent =
-        "No se pudo iniciar sesión.";
-      setLoading(false);
-      return;
-    }
-
-    /* PROFILE */
-    const {
-      data: profile,
-      error: profileError
-    } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if (profileError) {
-      msg.textContent =
-        "Error al cargar perfil.";
-      setLoading(false);
-      return;
-    }
-
-    if (!profile) {
-      msg.textContent =
-        "No se encontró perfil.";
-      setLoading(false);
-      return;
-    }
-
-    /* APPROVED */
-    if (profile.approved !== true) {
-
-      msg.textContent =
-        "Tu cuenta aún no ha sido aprobada.";
-
-      await supabase.auth.signOut();
-
-      setLoading(false);
-      return;
-    }
-
-    /* REDIRECTS */
-    if (profile.role === "admin") {
-      window.location.href = "/admin";
-      return;
-    }
-
 
     window.location.href =
       "/portal/dashboard";
-
-  } catch (error) {
-
-    msg.textContent =
-      "Ocurrió un error inesperado.";
-
-  }
-
-  setLoading(false);
+  });
 
 });
 </script>
