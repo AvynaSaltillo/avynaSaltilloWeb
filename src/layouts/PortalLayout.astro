@@ -1,6 +1,17 @@
 ---
 import "../styles/global.css";
 
+import {
+  RiDashboardLine,
+  RiUserLine,
+  RiShoppingBag3Line,
+  RiSparklingLine,
+  RiCustomerService2Line,
+  RiLogoutBoxRLine,
+  RiMenuFoldLine,
+  RiMenuUnfoldLine
+} from "react-icons/ri";
+
 const { title = "Portal AVYNA" } = Astro.props;
 ---
 
@@ -13,245 +24,303 @@ const { title = "Portal AVYNA" } = Astro.props;
 
 <body class="min-h-screen bg-black text-white antialiased">
 
-  <!-- BACKGROUND -->
-  <div class="fixed inset-0 -z-10 overflow-hidden">
+<!-- BG -->
+<div class="fixed inset-0 -z-10 overflow-hidden">
+  <div class="absolute inset-0 bg-black"></div>
+  <div class="absolute left-[-10%] top-[-10%] h-[36rem] w-[36rem] rounded-full bg-white/[0.03] blur-3xl"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] h-[40rem] w-[40rem] rounded-full bg-white/[0.02] blur-3xl"></div>
+</div>
 
-    <div class="absolute inset-0 bg-black"></div>
+<div class="flex min-h-screen">
 
-    <div class="absolute left-[-10%] top-[-10%] h-[34rem] w-[34rem] rounded-full bg-white/[0.03] blur-3xl"></div>
+  <!-- SIDEBAR -->
+  <aside
+    id="sidebar"
+    class="hidden lg:flex h-screen sticky top-0 shrink-0 flex-col border-r border-white/10 bg-white/[0.025] backdrop-blur-2xl transition-all duration-300 w-[300px] min-w-[300px] overflow-hidden"
+  >
 
-    <div class="absolute bottom-[-10%] right-[-10%] h-[38rem] w-[38rem] rounded-full bg-white/[0.025] blur-3xl"></div>
+    <!-- TOP -->
+    <div class="px-5 pt-5 pb-4 border-b border-white/10">
 
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.04),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.03),transparent_30%)]"></div>
+      <div class="flex items-center justify-between gap-3">
 
-  </div>
-
-  <div class="flex min-h-screen">
-
-    <!-- SIDEBAR -->
-    <aside class="hidden w-76 shrink-0 border-r border-white/10 bg-white/[0.02] lg:block">
-
-      <!-- sticky container -->
-      <div class="sticky top-0 flex h-screen flex-col">
-
-        <!-- TOP -->
-        <div class="border-b border-white/10 px-6 pt-7 pb-6">
-
-          <p class="text-[11px] uppercase tracking-[0.45em] text-white/30">
+        <div class="label-wrap min-w-0">
+          <p class="text-[10px] uppercase tracking-[0.42em] text-white/28">
             AVYNA SALTILLO
           </p>
 
-          <h1 class="mt-3 text-3xl font-semibold tracking-tight">
-            Portal Privado
+          <h1 class="mt-3 text-[30px] leading-[1.05] font-semibold tracking-tight">
+            Portal
+            <br />
+            Privado
           </h1>
-
-          <p class="mt-2 text-sm leading-6 text-white/45">
-            Clientes activos, pedidos y atención comercial premium.
-          </p>
-
         </div>
 
-        <!-- NAV -->
-        <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-2 premium-scroll">
-
-          <a
-            href="/portal/dashboard"
-            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-          >
-            Dashboard
-          </a>
-
-          <a
-            href="/portal/profile"
-            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-          >
-            Mi perfil
-          </a>
-
-          <a
-            href="/portal/orders"
-            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-          >
-            Pedidos
-          </a>
-
-          <a
-            href="/grow"
-            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-          >
-            Catálogo Grow
-          </a>
-
-          <a
-            href="/portal/support"
-            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-          >
-            Soporte
-          </a>
-
-        </nav>
-
-        <!-- ALWAYS BOTTOM -->
-        <div class="mt-auto border-t border-white/10 p-4">
-
-          <div class="rounded-3xl border border-white/10 bg-black/50 p-4 backdrop-blur-xl">
-
-            <p
-              id="sidebarName"
-              class="font-semibold"
-            >
-              Cliente
-            </p>
-
-            <p
-              id="sidebarEmail"
-              class="mt-1 break-all text-xs text-white/45"
-            >
-              cargando...
-            </p>
-
-            <button
-              id="logoutBtn"
-              class="mt-4 flex h-11 w-full items-center justify-center rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.015]"
-            >
-              Cerrar sesión
-            </button>
-
-          </div>
-
-        </div>
+        <button
+          id="toggleSidebar"
+          class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.03] text-white/70 transition hover:bg-white/10 hover:text-white"
+        >
+          <RiMenuFoldLine id="iconOpen" size={19}/>
+          <RiMenuUnfoldLine id="iconClose" size={19} className="hidden"/>
+        </button>
 
       </div>
 
-    </aside>
+    </div>
 
-    <!-- MAIN -->
-    <div class="flex min-h-screen flex-1 flex-col">
+    <!-- NAV -->
+    <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-2">
 
-      <!-- MOBILE TOPBAR -->
-      <header class="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl lg:hidden">
+      <a href="/portal/dashboard" class="nav-link">
+        <RiDashboardLine size={20}/>
+        <span class="label-wrap">Dashboard</span>
+      </a>
 
-        <div class="flex items-center justify-between px-4 py-4">
+      <a href="/portal/profile" class="nav-link">
+        <RiUserLine size={20}/>
+        <span class="label-wrap">Mi perfil</span>
+      </a>
 
-          <div>
-            <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
-              AVYNA
+      <a href="/portal/orders" class="nav-link">
+        <RiShoppingBag3Line size={20}/>
+        <span class="label-wrap">Pedidos</span>
+      </a>
+
+      <a href="/grow" class="nav-link">
+        <RiSparklingLine size={20}/>
+        <span class="label-wrap">Catálogo Grow</span>
+      </a>
+
+      <a href="/portal/support" class="nav-link">
+        <RiCustomerService2Line size={20}/>
+        <span class="label-wrap">Soporte</span>
+      </a>
+
+    </nav>
+
+    <!-- FOOT -->
+    <div class="mt-auto border-t border-white/10 p-4 shrink-0">
+
+      <div class="rounded-[28px] border border-white/10 bg-black/45 p-4">
+
+        <div class="flex items-start gap-3">
+
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white text-black font-semibold">
+            A
+          </div>
+
+          <div class="min-w-0 label-wrap">
+            <p id="sidebarName" class="truncate font-semibold">
+              Cliente
             </p>
 
-            <p class="text-sm font-semibold">
-              Portal Privado
+            <p id="sidebarEmail" class="mt-1 truncate text-xs text-white/42">
+              cargando...
             </p>
           </div>
 
-          <button
-            id="mobileLogout"
-            class="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/80"
-          >
-            Salir
-          </button>
-
         </div>
 
-      </header>
+        <button
+          id="logoutBtn"
+          class="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.015]"
+        >
+          <RiLogoutBoxRLine size={18}/>
+          <span class="label-wrap">Cerrar sesión</span>
+        </button>
 
-      <!-- CONTENT -->
-      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+      </div>
 
-        <div class="mx-auto max-w-7xl">
-          <slot />
-        </div>
-
-      </main>
-
-      <!-- FOOTER -->
-      <footer class="border-t border-white/10 px-6 py-4 text-center text-xs text-white/25">
-        © AVYNA Saltillo · Distribuidor autorizado
-      </footer>
+      <div class="pt-4 text-center text-[11px] leading-5 text-white/22 label-wrap">
+        © AVYNA Saltillo<br />
+        Distribuidor autorizado
+      </div>
 
     </div>
 
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex min-h-screen flex-1 flex-col">
+
+    <header class="lg:hidden sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+
+      <div class="flex items-center justify-between px-4 py-4">
+
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
+            AVYNA
+          </p>
+
+          <p class="text-sm font-semibold">
+            Portal Privado
+          </p>
+        </div>
+
+        <button
+          id="mobileLogout"
+          class="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/80"
+        >
+          Salir
+        </button>
+
+      </div>
+
+    </header>
+
+    <main class="flex-1 p-4 sm:p-6 lg:p-8">
+      <div class="mx-auto max-w-7xl">
+        <slot />
+      </div>
+    </main>
+
   </div>
 
-<script type="module">
-import { supabase } from "/src/lib/supabase.ts";
+</div>
 
-async function boot() {
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    location.href = "/auth/login";
-    return;
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("approved, role, first_name")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (!profile) {
-    location.href = "/auth/signup";
-    return;
-  }
-
-  if (profile.approved !== true) {
-    location.href = "/auth/pending";
-    return;
-  }
-
-  document.getElementById("sidebarName").textContent =
-    profile.first_name || "Cliente";
-
-  document.getElementById("sidebarEmail").textContent =
-    user.email || "";
-
-  markActive();
+<style>
+.nav-link{
+display:flex;
+align-items:center;
+gap:14px;
+height:56px;
+padding:0 16px;
+border-radius:18px;
+color:rgba(255,255,255,.72);
+transition:.22s ease;
+white-space:nowrap;
 }
 
-function markActive() {
-
-  const path = window.location.pathname;
-
-  document.querySelectorAll("aside nav a").forEach((link) => {
-
-    const href = link.getAttribute("href");
-
-    if (href && path.startsWith(href)) {
-
-      link.classList.remove(
-  "text-white/75",
-  "hover:text-white"
-);
-
-link.classList.add(
-  "bg-white",
-  "!text-black",
-  "font-semibold"
-);
-
-    }
-
-  });
+.nav-link svg{
+width:20px;
+height:20px;
+display:block;
+flex-shrink:0;
 }
 
-async function logout() {
-  await supabase.auth.signOut();
-  location.href = "/auth/login";
+.nav-link:hover:not(.active-link){
+background:rgba(255,255,255,.06);
+color:#fff;
+transform:translateX(3px);
 }
 
-document
-  .getElementById("logoutBtn")
-  ?.addEventListener("click", logout);
+.active-link{
+background:#fff;
+color:#000 !important;
+font-weight:700;
+pointer-events:none;
+box-shadow:0 10px 30px rgba(255,255,255,.06);
+}
 
-document
-  .getElementById("mobileLogout")
-  ?.addEventListener("click", logout);
+.active-link svg{
+color:#000 !important;
+}
 
-boot();
-</script>
+.label-wrap{
+transition:.2s ease;
+white-space:nowrap;
+overflow:hidden;
+}
+
+/* COLLAPSED */
+.sidebar-collapsed{
+width:96px !important;
+min-width:96px !important;
+}
+
+.sidebar-collapsed .label-wrap{
+display:none !important;
+}
+
+.sidebar-collapsed .border-b{
+padding:16px 0 !important;
+display:flex;
+justify-content:center;
+}
+
+.sidebar-collapsed #toggleSidebar{
+margin:0 !important;
+display:grid !important;
+place-items:center !important;
+}
+
+.sidebar-collapsed nav{
+flex:1 !important;
+overflow:hidden !important;
+display:flex !important;
+flex-direction:column !important;
+align-items:center !important;
+justify-content:center !important;
+gap:16px !important;
+padding:0 !important;
+margin:0 !important;
+}
+
+.sidebar-collapsed .nav-link{
+width:58px !important;
+height:58px !important;
+padding:0 !important;
+margin:0 !important;
+display:grid !important;
+place-items:center !important;
+gap:0 !important;
+border-radius:20px !important;
+line-height:0 !important;
+}
+
+.sidebar-collapsed .nav-link svg{
+margin:0 !important;
+padding:0 !important;
+display:block !important;
+width:21px !important;
+height:21px !important;
+}
+
+.sidebar-collapsed .mt-auto{
+flex:none !important;
+padding:14px 0 18px !important;
+margin:0 !important;
+display:flex !important;
+justify-content:center !important;
+align-items:center !important;
+}
+
+.sidebar-collapsed .rounded-\[28px\]{
+width:74px !important;
+padding:12px 0 !important;
+margin:0 !important;
+display:flex !important;
+flex-direction:column !important;
+align-items:center !important;
+justify-content:center !important;
+gap:12px !important;
+}
+
+.sidebar-collapsed .rounded-\[28px\] > div:first-child{
+display:flex !important;
+justify-content:center !important;
+align-items:center !important;
+gap:0 !important;
+margin:0 !important;
+}
+
+.sidebar-collapsed #logoutBtn{
+width:52px !important;
+height:52px !important;
+padding:0 !important;
+margin:0 !important;
+display:grid !important;
+place-items:center !important;
+border-radius:18px !important;
+}
+
+.sidebar-collapsed .text-center{
+display:none !important;
+}
+</style>
+
+  
+<script type="module" src="/src/scripts/portal.ts"></script>
 
 </body>
 </html>
