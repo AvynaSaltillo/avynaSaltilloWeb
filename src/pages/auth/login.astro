@@ -1,5 +1,6 @@
 ---
 import AuthLayout from "../../layouts/AuthLayout.astro";
+
 import {
   Mail,
   Lock,
@@ -109,6 +110,8 @@ import {
 
 </div>
 
-<script type="module" src="/src/scripts/login.ts"></script>
+<script type="module" is:inline>
+import "/scripts/login.js";
+</script>
 
 </AuthLayout>
