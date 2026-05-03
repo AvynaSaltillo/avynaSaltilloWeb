@@ -1,0 +1,276 @@
+---
+import PortalLayout from "../../layouts/PortalLayout.astro";
+import { products } from "../../data/products";
+---
+
+<PortalLayout title="Nuevo Pedido | AVYNA">
+
+<section class="space-y-8">
+
+  <!-- HERO -->
+  <section class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-6 lg:p-8">
+
+    <div class="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+
+      <div>
+        <p class="text-xs uppercase tracking-[0.45em] text-white/35">
+          Private Client Portal
+        </p>
+
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight lg:text-5xl">
+          Nuevo pedido
+        </h1>
+
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-white/55">
+          Compra profesional con precios distribuidor.
+          Agrega productos rápido y envía pedido directo.
+        </p>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Productos
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            {products.length}
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Pedido mínimo
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            $1,500
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Canal
+          </p>
+          <p class="mt-2 text-xl font-semibold">
+            WhatsApp
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MAIN -->
+  <section class="grid gap-6 xl:grid-cols-[1fr_430px]">
+
+    <!-- LEFT -->
+    <div class="space-y-6">
+
+      <!-- FILTERS -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-5">
+
+        <div class="grid gap-3 lg:grid-cols-[1fr_220px]">
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar producto..."
+            class="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none placeholder:text-white/30"
+          />
+
+          <select
+            id="familyFilter"
+            class="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none"
+          >
+            <option value="">
+              Todas las líneas
+            </option>
+          </select>
+
+        </div>
+
+      </section>
+
+      <!-- TABLE -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] overflow-hidden">
+
+        <!-- HEAD -->
+        <div class="grid grid-cols-[2fr_1fr_1fr_180px] gap-3 border-b border-white/10 px-5 py-4 text-[11px] uppercase tracking-[0.25em] text-white/35">
+          <div>Producto</div>
+          <div>Línea</div>
+          <div>Precio salón</div>
+          <div class="text-center">Cantidad</div>
+        </div>
+
+        <!-- BODY -->
+        <div
+          id="productsGrid"
+          class="divide-y divide-white/5"
+        ></div>
+
+        <!-- FOOT / PAGINATION -->
+        <div class="border-t border-white/10 px-5 py-4">
+
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+
+            <!-- LIMIT -->
+            <div class="flex items-center gap-3">
+
+              <span class="text-sm text-white/45">
+                Mostrar
+              </span>
+
+              <select
+                id="limitSelect"
+                class="h-10 rounded-xl border border-white/10 bg-black/40 px-4 text-sm outline-none"
+              >
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+
+            </div>
+
+            <!-- PAGER -->
+            <div class="flex items-center gap-3">
+
+              <button
+                id="prevPage"
+                class="h-10 rounded-xl border border-white/10 px-4 text-sm hover:bg-white/[0.05]"
+              >
+                ←
+              </button>
+
+              <div
+                id="pageInfo"
+                class="grid h-10 min-w-[84px] place-items-center rounded-xl border border-white/10 px-4 text-sm text-white/70"
+              >
+                1 / 1
+              </div>
+
+              <button
+                id="nextPage"
+                class="h-10 rounded-xl border border-white/10 px-4 text-sm hover:bg-white/[0.05]"
+              >
+                →
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="xl:sticky xl:top-6 h-fit">
+
+      <section class="rounded-[2rem] border border-white/10 bg-zinc-950/90 p-6">
+
+        <!-- TITLE -->
+        <div class="flex items-center justify-between">
+
+          <h2 class="text-2xl font-semibold">
+            Carrito
+          </h2>
+
+          <span
+            id="cartCount"
+            class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/60"
+          >
+            0 items
+          </span>
+
+        </div>
+
+        <!-- ITEMS -->
+        <div
+          id="cartItems"
+          class="mt-6 space-y-3 max-h-[42vh] overflow-y-auto pr-1"
+        ></div>
+
+        <!-- TOTALS -->
+        <div class="mt-6 border-t border-white/10 pt-6 space-y-3">
+
+          <div class="flex justify-between text-sm text-white/50">
+            <span>Subtotal público</span>
+            <span id="publicTotal">$0</span>
+          </div>
+
+          <div class="flex justify-between text-sm text-white/50">
+            <span>Tu ganancia</span>
+            <span id="savingTotal">$0</span>
+          </div>
+
+          <div class="flex justify-between text-lg font-semibold">
+            <span>Total salón</span>
+            <span id="finalTotal">$0</span>
+          </div>
+
+        </div>
+
+        <!-- CREDIT -->
+        <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Condición de crédito
+          </p>
+
+          <p
+            id="creditTitle"
+            class="mt-3 font-semibold"
+          >
+            Contado total
+          </p>
+
+          <p
+            id="creditText"
+            class="mt-2 text-sm text-white/50"
+          >
+            Pedido menor a $1,500
+          </p>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="mt-6 grid gap-3">
+
+          <button
+            id="clearBtn"
+            class="h-12 rounded-2xl border border-white/10 bg-white/[0.04] text-sm font-medium hover:bg-white/[0.08]"
+          >
+            Vaciar carrito
+          </button>
+
+          <button
+            id="sendBtn"
+            class="h-12 rounded-2xl bg-white text-sm font-semibold text-black hover:scale-[1.01] transition"
+          >
+            Enviar pedido
+          </button>
+
+        </div>
+
+      </section>
+
+    </aside>
+
+  </section>
+
+</section>
+
+<script define:vars={{ products }}>
+  window.__PRODUCTS__ = products;
+</script>
+
+<script>
+  import "../../scripts/new-order.ts";
+</script>
+
+</PortalLayout>
