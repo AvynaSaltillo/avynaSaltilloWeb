@@ -1,12 +1,14 @@
-<!-- signup.astro CORREGIDO COMPLETO -->
 ---
 import AuthLayout from "../../layouts/AuthLayout.astro";
+
 import {
   User,
   Building2,
   Mail,
   Phone,
   Lock,
+  Eye,
+  EyeOff,
   Users,
   ChevronDown
 } from "lucide-react";
@@ -17,7 +19,10 @@ import {
   subtitle="Registro premium para clientes activos y socios comerciales AVYNA Saltillo."
 >
 
-<form id="signupForm" class="space-y-3">
+<form
+  id="signupForm"
+  class="space-y-3"
+>
 
   <!-- NOMBRE -->
   <div class="grid grid-cols-2 gap-3">
@@ -31,7 +36,7 @@ import {
       <input
         id="firstName"
         placeholder="Nombres"
-        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4"
+        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
         required
       />
     </div>
@@ -45,7 +50,7 @@ import {
       <input
         id="lastName"
         placeholder="Apellidos"
-        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4"
+        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
         required
       />
     </div>
@@ -54,6 +59,7 @@ import {
 
   <!-- NEGOCIO -->
   <div class="relative">
+
     <Building2
       size={18}
       className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
@@ -62,13 +68,15 @@ import {
     <input
       id="business"
       placeholder="Nombre comercial / salón"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
       required
     />
+
   </div>
 
   <!-- EMAIL -->
   <div class="relative">
+
     <Mail
       size={18}
       className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
@@ -78,13 +86,15 @@ import {
       id="email"
       type="email"
       placeholder="Correo electrónico"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
       required
     />
+
   </div>
 
   <!-- PHONE -->
   <div class="relative">
+
     <Phone
       size={18}
       className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
@@ -95,9 +105,10 @@ import {
       inputmode="numeric"
       maxlength="10"
       placeholder="Número de teléfono"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
       required
     />
+
   </div>
 
   <!-- ASESOR -->
@@ -114,23 +125,20 @@ import {
       <button
         type="button"
         id="advisorTrigger"
-        class="flex h-12 w-full items-center justify-between rounded-xl border border-white/10 bg-black px-4"
+        class="flex h-12 w-full items-center justify-between rounded-xl border border-white/10 bg-black px-4 transition hover:border-white/20"
       >
 
         <div class="flex items-center gap-3">
 
-          <div class="grid h-8 w-8 place-items-center rounded-lg bg-white/5">
-            <Users
-              size={16}
-              className="pointer-events-none text-white/60"
-            />
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5">
+            <Users size={16} className="text-white/60" />
           </div>
 
           <span
             id="advisorLabel"
             class="text-sm text-white/40"
           >
-            Selecciona tu asesor
+            Selecciona tu asesor AVYNA
           </span>
 
         </div>
@@ -138,14 +146,15 @@ import {
         <ChevronDown
           id="advisorArrow"
           size={16}
-          className="pointer-events-none text-white/40 transition"
+          className="text-white/40 transition duration-300"
         />
 
       </button>
 
+      <!-- MENU -->
       <div
         id="advisorMenu"
-        class="absolute left-0 right-0 top-[calc(100%+8px)] z-50 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
+        class="absolute left-0 right-0 top-[calc(100%+8px)] z-40 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
       >
 
         {[
@@ -155,7 +164,7 @@ import {
         ].map((name) => (
           <button
             type="button"
-            class="advisor-option flex w-full rounded-xl px-3 py-3 text-left text-sm hover:bg-white/5"
+            class="advisor-option flex w-full rounded-xl px-3 py-3 text-left text-sm transition hover:bg-white/5"
             data-value={name}
           >
             {name}
@@ -181,50 +190,62 @@ import {
       type="password"
       minlength="8"
       placeholder="Contraseña (mínimo 8 caracteres)"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none transition focus:border-white/30"
       required
     />
 
-    <!-- OJO REAL -->
     <button
       type="button"
-      data-toggle-password
-      data-target="password"
-      class="absolute right-3 top-1/2 z-50 -translate-y-1/2 text-white/40"
+      id="togglePassword"
+      class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition hover:text-white"
     >
-      <span class="pointer-events-none text-lg">👁</span>
+      <Eye size={18} />
     </button>
 
   </div>
 
   <!-- TERMS -->
-  <label class="flex gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-white/60">
+  <label class="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-white/60">
 
-    <input type="checkbox" required />
+    <input
+      id="terms"
+      type="checkbox"
+      class="mt-1"
+      required
+    />
 
     <span>
-      Confirmo que soy cliente AVYNA Saltillo.
+      Confirmo que soy cliente AVYNA Saltillo y autorizo contacto comercial.
     </span>
 
   </label>
 
-  <!-- BTN -->
+  <!-- BUTTON -->
   <button
     id="submitBtn"
-    class="h-12 w-full rounded-xl bg-white font-semibold text-black"
+    class="h-12 w-full rounded-xl bg-white font-semibold text-black transition hover:scale-[1.01]"
   >
     Crear cuenta
   </button>
 
-  <p id="msg" class="min-h-5 text-center text-sm text-white/55"></p>
+  <!-- MESSAGE -->
+  <p
+    id="msg"
+    class="min-h-5 text-center text-sm text-white/55"
+  ></p>
 
 </form>
 
-<div class="mt-5 border-t border-white/10 pt-5">
+<!-- LOGIN -->
+<div class="mt-2 border-t border-white/10 pt-5 text-center">
+
+  <p class="text-sm text-white/45">
+    ¿Ya tienes cuenta?
+  </p>
 
   <a
     href="/auth/login"
-    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 hover:bg-white/10"
+    class="mt-3 inline-flex rounded-xl border border-white/10 px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
   >
     Iniciar sesión
   </a>
@@ -234,180 +255,219 @@ import {
 <script type="module">
 import { supabase } from "/src/lib/supabase.ts";
 
-window.addEventListener("DOMContentLoaded", () => {
+const form = document.getElementById("signupForm");
+const msg = document.getElementById("msg");
+const submitBtn = document.getElementById("submitBtn");
 
-  const $ = (id) => document.getElementById(id);
+const phone = document.getElementById("phone");
+const password = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
 
-  const form = $("signupForm");
-  const msg = $("msg");
-  const btn = $("submitBtn");
+const advisor = document.getElementById("advisor");
+const advisorTrigger = document.getElementById("advisorTrigger");
+const advisorMenu = document.getElementById("advisorMenu");
+const advisorArrow = document.getElementById("advisorArrow");
+const advisorLabel = document.getElementById("advisorLabel");
 
-  const phone = $("phone");
-
-  phone?.addEventListener("input", () => {
-    phone.value =
-      phone.value.replace(/\D/g, "").slice(0,10);
-  });
-
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    msg.textContent = "";
-    btn.disabled = true;
-    btn.textContent = "Creando...";
-
-    try {
-
-      const first = $("firstName").value.trim();
-      const last = $("lastName").value.trim();
-      const business = $("business").value.trim();
-      const email = $("email").value.trim().toLowerCase();
-      const password = $("password").value.trim();
-      const advisor = $("advisor").value.trim();
-
-      const { data, error } =
-        await supabase.auth.signUp({
-          email,
-          password
-        });
-
-      if (error || !data.user) {
-        msg.textContent =
-          error?.message || "Error.";
-        btn.disabled = false;
-        btn.textContent = "Crear cuenta";
-        return;
-      }
-
-      await supabase
-        .from("profiles")
-        .insert({
-          id: data.user.id,
-          first_name: first,
-          last_name: last,
-          name: first + " " + last,
-          business_name: business,
-          email,
-          phone: phone.value,
-          advisor,
-          role: "client",
-          approved: false
-        });
-
-      window.location.href =
-        "/auth/pending";
-
-    } catch {
-      msg.textContent =
-        "Error inesperado.";
-      btn.disabled = false;
-      btn.textContent =
-        "Crear cuenta";
-    }
-
-  });
-
+/* PHONE */
+phone?.addEventListener("input", () => {
+  phone.value = phone.value.replace(/\D/g, "").slice(0, 10);
 });
-</script>
 
-<script is:inline>
-(() => {
+/* PASSWORD TOGGLE */
+togglePassword?.addEventListener("click", () => {
+  const hidden = password.type === "password";
 
-  function boot() {
+  password.type = hidden ? "text" : "password";
 
-    /* OJO */
-    document
-      .querySelectorAll("[data-toggle-password]")
-      .forEach((btn) => {
+  togglePassword.innerHTML = hidden
+    ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 18 18"/><path d="M10.58 10.58a2 2 0 1 0 2.83 2.83"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 10 8 10 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M6.71 6.71A10.94 10.94 0 0 0 2 12s3 8 10 8a10.94 10.94 0 0 0 5.29-1.29"/></svg>`
+    : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+});
 
-        function toggle(e) {
-          e.preventDefault();
-          e.stopPropagation();
+/* ADVISOR */
+function closeAdvisor() {
+  advisorMenu.classList.add("hidden");
+  advisorArrow.style.transform = "rotate(0deg)";
+}
 
-          const id =
-            btn.dataset.target;
+advisorTrigger?.addEventListener("click", () => {
+  const hidden = advisorMenu.classList.contains("hidden");
 
-          const input =
-            document.getElementById(id);
+  if (hidden) {
+    advisorMenu.classList.remove("hidden");
+    advisorArrow.style.transform = "rotate(180deg)";
+  } else {
+    closeAdvisor();
+  }
+});
 
-          if (!input) return;
+document.querySelectorAll(".advisor-option").forEach((item) => {
+  item.addEventListener("click", () => {
+    advisor.value = item.dataset.value;
+    advisorLabel.textContent = item.dataset.value;
+    advisorLabel.classList.remove("text-white/40");
+    advisorLabel.classList.add("text-white");
+    closeAdvisor();
+  });
+});
 
-          input.type =
-            input.type === "password"
-              ? "text"
-              : "password";
-        }
+document.addEventListener("click", (e) => {
+  if (
+    !e.target.closest("#advisorTrigger") &&
+    !e.target.closest("#advisorMenu")
+  ) {
+    closeAdvisor();
+  }
+});
 
-        btn.addEventListener("click", toggle);
-        btn.addEventListener(
-          "touchstart",
-          toggle,
-          { passive:false }
-        );
+/* LOADING */
+function setLoading(state) {
+  submitBtn.disabled = state;
+  submitBtn.textContent =
+    state ? "Creando cuenta..." : "Crear cuenta";
+}
 
-      });
+/* SUBMIT */
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    /* ASESOR */
-    const trigger =
-      document.getElementById("advisorTrigger");
+  msg.textContent = "";
 
-    const menu =
-      document.getElementById("advisorMenu");
+  const firstName =
+    document.getElementById("firstName").value.trim();
 
-    const hidden =
-      document.getElementById("advisor");
+  const lastName =
+    document.getElementById("lastName").value.trim();
 
-    const label =
-      document.getElementById("advisorLabel");
+  const business =
+    document.getElementById("business").value.trim();
 
-    const arrow =
-      document.getElementById("advisorArrow");
+  const email =
+    document.getElementById("email")
+      .value.trim()
+      .toLowerCase();
 
-    trigger?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const phoneVal = phone.value.trim();
+  const advisorVal = advisor.value.trim();
+  const pass = password.value;
 
-      menu.classList.toggle("hidden");
+  if (
+    !firstName ||
+    !lastName ||
+    !business ||
+    !email ||
+    !phoneVal ||
+    !advisorVal ||
+    !pass
+  ) {
+    msg.textContent = "Completa todos los campos.";
+    return;
+  }
 
-      arrow.style.transform =
-        menu.classList.contains("hidden")
-          ? "rotate(0deg)"
-          : "rotate(180deg)";
+  if (phoneVal.length !== 10) {
+    msg.textContent = "Número inválido.";
+    return;
+  }
+
+  if (pass.length < 8) {
+    msg.textContent = "La contraseña debe tener mínimo 8 caracteres.";
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    /* CREATE AUTH */
+    const {
+      data: authData,
+      error: authError
+    } = await supabase.auth.signUp({
+      email,
+      password: pass
     });
 
-    document
-      .querySelectorAll(".advisor-option")
-      .forEach((item) => {
+    if (authError) {
+      msg.textContent = authError.message;
+      setLoading(false);
+      return;
+    }
 
-        item.addEventListener("click", () => {
+    let uid = authData?.user?.id;
 
-          const val =
-            item.dataset.value;
+    /* FALLBACK */
+    if (!uid) {
+      const {
+        data: userData
+      } = await supabase.auth.getUser();
 
-          hidden.value = val;
-          label.textContent = val;
-          label.className =
-            "text-sm text-white";
+      uid = userData?.user?.id;
+    }
 
-          menu.classList.add("hidden");
-          arrow.style.transform =
-            "rotate(0deg)";
-        });
+    if (!uid) {
+      msg.textContent =
+        "No se pudo crear usuario.";
+      setLoading(false);
+      return;
+    }
 
+    /* FOLIO */
+    const { count } = await supabase
+      .from("profiles")
+      .select("*", {
+        count: "exact",
+        head: true
       });
 
+    const localId =
+      "AVY-" +
+      String((count || 0) + 1).padStart(4, "0");
+
+    /* PROFILE INSERT */
+    const {
+      error: profileError
+    } = await supabase
+      .from("profiles")
+      .insert({
+        id: uid,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        name: `${firstName} ${lastName}`,
+        business_name: business,
+        phone: phoneVal,
+        advisor: advisorVal,
+        city: "Saltillo",
+        role: "client",
+        approved: false,
+        local_client_id: localId
+      });
+
+    if (profileError) {
+      msg.textContent =
+        "Cuenta creada, pero faltó guardar perfil.";
+      setLoading(false);
+      return;
+    }
+
+    msg.textContent =
+      `Cuenta creada correctamente. Folio ${localId}. Espera aprobación.`;
+
+    form.reset();
+
+    advisor.value = "";
+    advisorLabel.textContent =
+      "Selecciona tu asesor AVYNA";
+    advisorLabel.classList.remove("text-white");
+    advisorLabel.classList.add("text-white/40");
+
+  } catch (error) {
+    msg.textContent =
+      "Ocurrió un error inesperado.";
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      boot
-    );
-  } else {
-    boot();
-  }
-
-})();
+  setLoading(false);
+});
 </script>
 
 </AuthLayout>
