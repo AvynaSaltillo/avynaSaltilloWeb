@@ -250,7 +250,28 @@ import {
 
 </div>
 
-<!-- ✅ IMPORT DENTRO DEL LAYOUT -->
-<script type="module" src="../../scripts/signup.ts"></script>
+<script is:inline>
+document.addEventListener("DOMContentLoaded", () => {
+  const eye = document.getElementById("togglePassword");
+  const password = document.getElementById("password");
+
+  const trigger = document.getElementById("advisorTrigger");
+  const menu = document.getElementById("advisorMenu");
+
+  eye?.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    password.type =
+      password.type === "password"
+        ? "text"
+        : "password";
+  });
+
+  trigger?.addEventListener("click", (e) => {
+    e.preventDefault();
+    menu.classList.toggle("hidden");
+  });
+});
+</script>
 
 </AuthLayout>
