@@ -1,3 +1,6 @@
+// src/scripts/portal.ts
+// PREMIUM DEFINITIVO (basado en tu archivo bueno)
+
 import { supabase } from "../lib/supabase";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -5,7 +8,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById(id);
 
   const sidebar = $("sidebar");
-  const toggle = $("toggleSidebar");
+  const toggleSidebar = $("toggleSidebar");
+
   const iconOpen = $("iconOpen");
   const iconClose = $("iconClose");
 
@@ -18,13 +22,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const openMobileMenu = $("openMobileMenu");
   const closeMobileMenu = $("closeMobileMenu");
+
   const mobileSidebar = $("mobileSidebar");
   const mobileOverlay = $("mobileOverlay");
 
   /* =========================
      MOBILE MENU
   ========================= */
-  const openMenu = () => {
+  function openMenu() {
     mobileSidebar?.classList.remove(
       "-translate-x-full"
     );
@@ -35,9 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.body.style.overflow =
       "hidden";
-  };
+  }
 
-  const closeMenu = () => {
+  function closeMenu() {
     mobileSidebar?.classList.add(
       "-translate-x-full"
     );
@@ -48,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.body.style.overflow =
       "";
-  };
+  }
 
   openMobileMenu?.addEventListener(
     "click",
@@ -87,16 +92,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       "sidebar-collapsed"
     );
 
-    iconOpen?.classList.add(
-      "hidden"
-    );
-
+    iconOpen?.classList.add("hidden");
     iconClose?.classList.remove(
       "hidden"
     );
   }
 
-  toggle?.addEventListener(
+  toggleSidebar?.addEventListener(
     "click",
     () => {
       const state =
@@ -152,22 +154,15 @@ document.addEventListener("DOMContentLoaded", async () => {
               href + "/"
             );
 
-      if (active) {
-        link.classList.add(
-          "active-link"
-        );
-      } else {
-        link.classList.remove(
-          "active-link"
-        );
-      }
+      link.classList.toggle(
+        "active-link",
+        active
+      );
     });
 
   /* =========================
-     AUTH FIX REAL
-     NO REDIRECT AGRESIVO
+     SESSION FIX REAL
   ========================= */
-
   let tries = 0;
   let session = null;
 
@@ -206,70 +201,142 @@ document.addEventListener("DOMContentLoaded", async () => {
     session.user;
 
   /* =========================
-     PROFILE
+     PROFILE LOAD
   ========================= */
-  try {
-    const {
-      data: profile
-    } =
-      await supabase
-        .from("profiles")
-        .select(`
-          first_name,
-          email,
-          approved,
-          avatar_url
-        `)
-        .eq("id", user.id)
-        .maybeSingle();
+try {
+  const {
+    data: profile
+  } =
+    await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
 
-    if (!profile) {
-      return;
-    }
+  const rawFirst =
+    profile?.first_name ||
+    profile?.firstname ||
+    profile?.nombre ||
+    "";
 
-    const name =
-      profile.first_name ||
-      "Cliente";
+  const rawLast =
+    profile?.last_name ||
+    profile?.lastname ||
+    profile?.apellido ||
+    "";
 
-    if (sidebarName) {
-      sidebarName.textContent =
-        name;
-    }
+  const firstName =
+    String(rawFirst)
+      .trim()
+      .split(" ")[0] || "";
 
-    if (sidebarEmail) {
-      sidebarEmail.textContent =
-        profile.email ||
-        user.email ||
-        "";
-    }
+  const lastName =
+    String(rawLast)
+      .trim()
+      .split(" ")[0] || "";
 
-    if (sidebarAvatar) {
-      if (
-        profile.avatar_url
-      ) {
-        sidebarAvatar.innerHTML = `
-          <img
-            src="${profile.avatar_url}"
-            class="h-full w-full rounded-2xl object-cover"
-          />
-        `;
-      } else {
-        sidebarAvatar.textContent =
-          name
-            .charAt(0)
-            .toUpperCase();
-      }
-    }
+  let fullName = "";
 
-  } catch (error) {
-    console.error(error);
+  /* si existen columnas reales */
+  if (firstName || lastName) {
+    fullName =
+      `${firstName} ${lastName}`.trim();
   }
 
+  /* fallback desde name */
+  else if (
+    profile?.name
+  ) {
+    const parts =
+      String(profile.name)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    const n1 =
+      parts[0] || "";
+
+    const a1 =
+      parts[1] || "";
+
+    fullName =
+      `${n1} ${a1}`.trim();
+  }
+
+  /* fallback desde full_name */
+  else if (
+    profile?.full_name
+  ) {
+    const parts =
+      String(profile.full_name)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    const n1 =
+      parts[0] || "";
+
+    const a1 =
+      parts[1] || "";
+
+    fullName =
+      `${n1} ${a1}`.trim();
+  }
+
+  /* protección final */
+  if (!fullName) {
+    fullName =
+      "Cliente";
+  }
+
+  const email =
+    profile?.email ||
+    user.email ||
+    "";
+
+  if (sidebarName) {
+    sidebarName.textContent =
+      fullName;
+  }
+
+  if (sidebarEmail) {
+    sidebarEmail.textContent =
+      email;
+  }
+
+  if (sidebarAvatar) {
+    if (
+      profile?.avatar_url
+    ) {
+      sidebarAvatar.innerHTML = `
+<img
+src="${profile.avatar_url}"
+class="h-full w-full rounded-2xl object-cover"
+/>
+`;
+    } else {
+      sidebarAvatar.textContent =
+        fullName
+          .charAt(0)
+          .toUpperCase();
+    }
+  }
+
+} catch (error) {
+  console.error(error);
+
+  if (sidebarName)
+    sidebarName.textContent =
+      "Cliente";
+}
   /* =========================
-     AUTO REFRESH SESSION
+     WATCH SESSION
   ========================= */
   supabase.auth.onAuthStateChange(
-    (_event, newSession) => {
+    (
+      _event,
+      newSession
+    ) => {
       if (!newSession) {
         window.location.href =
           "/auth/login";

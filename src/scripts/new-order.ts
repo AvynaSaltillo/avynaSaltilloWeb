@@ -394,11 +394,11 @@ ${money(Number(item.priceSalon || 0) * item.qty)}
       if (creditTitle) creditTitle.textContent = "Contado total";
       if (creditText) creditText.textContent = "Pedido menor a $1,500";
     } else if (salon < 10000) {
-      if (creditTitle) creditTitle.textContent = "50% hoy + 50% a 15 días";
-      if (creditText) creditText.textContent = `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+      if (creditTitle) creditTitle.textContent = "50% entrega + 50% a 15 días";
+      if (creditText) creditText.textContent = `${money(salon / 2)} entrega y ${money(salon / 2)} después`;
     } else {
       if (creditTitle) creditTitle.textContent = "50% hoy + 50% a 30 días";
-      if (creditText) creditText.textContent = `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+      if (creditText) creditText.textContent = `${money(salon / 2)} entrega y ${money(salon / 2)} después`;
     }
 
     return { salon };
