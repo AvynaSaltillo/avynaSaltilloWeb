@@ -445,4 +445,109 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script is:inline>
+(() => {
+
+  function boot() {
+
+    /* =========================
+       TOGGLE PASSWORD
+    ========================= */
+
+    document
+      .querySelectorAll("[data-toggle-password]")
+      .forEach((btn) => {
+
+        btn.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const target =
+            btn.getAttribute("data-target");
+
+          const input =
+            document.getElementById(target);
+
+          if (!input) return;
+
+          input.type =
+            input.type === "password"
+              ? "text"
+              : "password";
+        };
+
+      });
+
+    /* =========================
+       ASESOR SELECT
+    ========================= */
+
+    const trigger =
+      document.getElementById("advisorTrigger");
+
+    const menu =
+      document.getElementById("advisorMenu");
+
+    const hidden =
+      document.getElementById("advisor");
+
+    const label =
+      document.getElementById("advisorLabel");
+
+    if (trigger && menu) {
+
+      trigger.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        menu.classList.toggle("hidden");
+      };
+
+      menu
+        .querySelectorAll("[data-value]")
+        .forEach((item) => {
+
+          item.onclick = () => {
+
+            const val =
+              item.getAttribute("data-value");
+
+            if (hidden) hidden.value = val;
+            if (label) label.textContent = val;
+
+            menu.classList.add("hidden");
+          };
+
+        });
+
+      document.addEventListener(
+        "click",
+        (e) => {
+
+          if (
+            !e.target.closest("#advisorTrigger") &&
+            !e.target.closest("#advisorMenu")
+          ) {
+            menu.classList.add("hidden");
+          }
+
+        }
+      );
+
+    }
+
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot
+    );
+  } else {
+    boot();
+  }
+
+})();
+</script>
+
 </AuthLayout>
