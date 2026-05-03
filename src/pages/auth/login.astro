@@ -13,10 +13,7 @@ import {
   subtitle="Acceso exclusivo para clientes activos AVYNA Saltillo."
 >
 
-<form
-  id="loginForm"
-  class="space-y-3"
->
+<form id="loginForm" class="space-y-3">
 
   <!-- EMAIL -->
   <div class="relative">
@@ -30,8 +27,9 @@ import {
       id="email"
       type="email"
       placeholder="Correo electrónico"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none transition focus:border-white/30"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
       required
+      autocomplete="email"
     />
 
   </div>
@@ -48,17 +46,20 @@ import {
       id="password"
       type="password"
       placeholder="Contraseña"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none transition focus:border-white/30"
+      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none"
       required
+      autocomplete="current-password"
     />
 
     <button
       type="button"
       id="togglePassword"
-      class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition hover:text-white"
-      aria-label="Mostrar contraseña"
+      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 active:scale-95"
     >
-      <Eye size={18} />
+      <Eye
+        size={18}
+        className="pointer-events-none"
+      />
     </button>
 
   </div>
@@ -67,32 +68,29 @@ import {
   <div class="flex items-center justify-between gap-3 pt-1">
 
     <label class="flex items-center gap-2 text-sm text-white/55">
-      <input
-        type="checkbox"
-        class="rounded border-white/20 bg-black"
-      />
+      <input type="checkbox" />
       <span>Recordarme</span>
     </label>
 
     <a
       href="/auth/forgot-password"
-      class="text-sm text-white/55 transition hover:text-white"
+      class="text-sm text-white/55 hover:text-white"
     >
       ¿Olvidaste tu contraseña?
     </a>
 
   </div>
 
-  <!-- BUTTON -->
+  <!-- BTN -->
   <button
     id="submitBtn"
-    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black transition hover:scale-[1.01]"
+    type="submit"
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black"
   >
     Entrar
     <ArrowRight size={16} />
   </button>
 
-  <!-- MESSAGE -->
   <p
     id="msg"
     class="min-h-5 text-center text-sm text-white/55"
@@ -100,71 +98,17 @@ import {
 
 </form>
 
-<!-- EXTRA -->
-<div class="mt-5 border-t border-white/10 pt-5 space-y-3">
+<div class="mt-5 border-t border-white/10 pt-5">
 
   <a
     href="/auth/signup"
-    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 hover:bg-white/10"
   >
     Solicitar acceso
   </a>
 
 </div>
 
-<script type="module">
-import { supabase } from "/src/lib/supabase.ts";
-
-window.addEventListener("load", () => {
-
-  const form = document.getElementById("loginForm");
-  const msg = document.getElementById("msg");
-  const btn = document.getElementById("submitBtn");
-
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
-  const eye = document.getElementById("togglePassword");
-
-  /* OJO */
-  eye?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    password.type =
-      password.type === "password"
-        ? "text"
-        : "password";
-  });
-
-  /* LOGIN */
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    msg.textContent = "";
-    btn.disabled = true;
-    btn.textContent = "Entrando...";
-
-    const mail = email.value.trim().toLowerCase();
-    const pass = password.value;
-
-    const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email: mail,
-        password: pass
-      });
-
-    if (error || !data.user) {
-      msg.textContent = "Credenciales inválidas.";
-      btn.disabled = false;
-      btn.textContent = "Entrar";
-      return;
-    }
-
-    window.location.href =
-      "/portal/dashboard";
-  });
-
-});
-</script>
+<script type="module" src="/src/scripts/login.ts"></script>
 
 </AuthLayout>
