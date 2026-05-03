@@ -1,11 +1,13 @@
-import { supabase } from "../lib/supabase.ts";
+// src/scripts/signup.ts
 
-window.addEventListener("load", () => {
-  const $ = (id: string) =>
-    document.getElementById(id);
+import { supabase } from "../lib/supabase";
+
+window.addEventListener("DOMContentLoaded", () => {
+  const $ = <T extends HTMLElement>(id: string) =>
+    document.getElementById(id) as T | null;
 
   const form = $("signupForm") as HTMLFormElement | null;
-  const msg = $("msg") as HTMLElement | null;
+  const msg = $("msg");
   const btn = $("submitBtn") as HTMLButtonElement | null;
 
   const phone = $("phone") as HTMLInputElement | null;
@@ -14,22 +16,22 @@ window.addEventListener("load", () => {
 
   const advisor = $("advisor") as HTMLInputElement | null;
   const trigger = $("advisorTrigger") as HTMLButtonElement | null;
-  const menu = $("advisorMenu") as HTMLElement | null;
-  const label = $("advisorLabel") as HTMLElement | null;
-  const arrow = $("advisorArrow") as HTMLElement | null;
+  const menu = $("advisorMenu");
+  const label = $("advisorLabel");
+  const arrow = $("advisorArrow");
 
-  /* PHONE */
+  if (!form || !msg || !btn) return;
+
+  /* 📱 PHONE */
   phone?.addEventListener("input", () => {
-    phone.value =
-      phone.value
-        .replace(/\D/g, "")
-        .slice(0, 10);
+    phone.value = phone.value
+      .replace(/\D/g, "")
+      .slice(0, 10);
   });
 
-  /* OJO */
+  /* 👁 PASSWORD */
   eye?.addEventListener("click", (e) => {
     e.preventDefault();
-    e.stopPropagation();
 
     if (!password) return;
 
@@ -39,13 +41,12 @@ window.addEventListener("load", () => {
         : "password";
   });
 
-  /* MENU */
+  /* 👤 ASESOR */
   function closeMenu() {
     menu?.classList.add("hidden");
 
     if (arrow) {
-      arrow.style.transform =
-        "rotate(0deg)";
+      arrow.style.transform = "rotate(0deg)";
     }
   }
 
@@ -55,7 +56,7 @@ window.addEventListener("load", () => {
 
     menu?.classList.toggle("hidden");
 
-    if (arrow && menu) {
+    if (menu && arrow) {
       arrow.style.transform =
         menu.classList.contains("hidden")
           ? "rotate(0deg)"
@@ -68,9 +69,7 @@ window.addEventListener("load", () => {
     .forEach((item) => {
       item.addEventListener("click", () => {
         const el = item as HTMLElement;
-
-        const val =
-          el.dataset.value || "";
+        const val = el.dataset.value || "";
 
         if (advisor) advisor.value = val;
 
@@ -95,37 +94,43 @@ window.addEventListener("load", () => {
     }
   });
 
+  /* 🔄 LOADING */
   function loading(state: boolean) {
-    if (!btn) return;
-
+  if (!btn) return;
     btn.disabled = state;
     btn.textContent =
       state
         ? "Creando cuenta..."
         : "Crear cuenta";
+
+    btn.classList.toggle(
+      "opacity-70",
+      state
+    );
   }
 
-  /* SUBMIT */
-  form?.addEventListener("submit", async (e) => {
+  /* 🚀 SUBMIT */
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    if (!msg) return;
 
     msg.textContent = "";
 
     const first =
-      ($("firstName") as HTMLInputElement)?.value.trim();
+      ($("firstName") as HTMLInputElement)
+        ?.value.trim() || "";
 
     const last =
-      ($("lastName") as HTMLInputElement)?.value.trim();
+      ($("lastName") as HTMLInputElement)
+        ?.value.trim() || "";
 
     const business =
-      ($("business") as HTMLInputElement)?.value.trim();
+      ($("business") as HTMLInputElement)
+        ?.value.trim() || "";
 
     const email =
       ($("email") as HTMLInputElement)
         ?.value.trim()
-        .toLowerCase();
+        .toLowerCase() || "";
 
     const phoneVal =
       phone?.value.trim() || "";
@@ -150,11 +155,15 @@ window.addEventListener("load", () => {
       return;
     }
 
+    if (pass.length < 8) {
+      msg.textContent =
+        "La contraseña debe tener mínimo 8 caracteres.";
+      return;
+    }
+
     loading(true);
 
     try {
-      await supabase.auth.signOut();
-
       const { data, error } =
         await supabase.auth.signUp({
           email,

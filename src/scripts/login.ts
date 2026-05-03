@@ -1,6 +1,8 @@
-import { supabase } from "../lib/supabase.ts";
+// src/scripts/login.ts
 
-window.addEventListener("load", () => {
+import { supabase } from "../lib/supabase";
+
+window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm") as HTMLFormElement | null;
   const msg = document.getElementById("msg") as HTMLElement | null;
   const btn = document.getElementById("submitBtn") as HTMLButtonElement | null;
@@ -9,44 +11,35 @@ window.addEventListener("load", () => {
   const password = document.getElementById("password") as HTMLInputElement | null;
   const eye = document.getElementById("togglePassword") as HTMLButtonElement | null;
 
-  /* OJO */
+  if (!form || !msg || !btn || !email || !password) return;
+
+  /* 👁 TOGGLE PASSWORD */
   eye?.addEventListener("click", (e) => {
     e.preventDefault();
-    e.stopPropagation();
-
-    if (!password) return;
-
     password.type =
       password.type === "password"
         ? "text"
         : "password";
   });
 
-  function loading(state: boolean) {
-    if (!btn) return;
-
+ function loading(state: boolean) {
+  if (!btn) return;
     btn.disabled = state;
-    btn.textContent =
-      state ? "Entrando..." : "Entrar";
+    btn.innerHTML = state ? "Entrando..." : "Entrar";
+    btn.classList.toggle("opacity-70", state);
   }
 
   /* LOGIN */
-  form?.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    if (!email || !password || !msg) return;
 
     msg.textContent = "";
 
-    const mail =
-      email.value.trim().toLowerCase();
-
-    const pass =
-      password.value.trim();
+    const mail = email.value.trim().toLowerCase();
+    const pass = password.value.trim();
 
     if (!mail || !pass) {
-      msg.textContent =
-        "Completa correo y contraseña.";
+      msg.textContent = "Completa correo y contraseña.";
       return;
     }
 
@@ -60,8 +53,7 @@ window.addEventListener("load", () => {
         });
 
       if (error || !data.user) {
-        msg.textContent =
-          "Credenciales inválidas.";
+        msg.textContent = "Credenciales inválidas.";
         loading(false);
         return;
       }
@@ -74,33 +66,25 @@ window.addEventListener("load", () => {
           .maybeSingle();
 
       if (!profile) {
-        msg.textContent =
-          "No se encontró perfil.";
+        msg.textContent = "No se encontró perfil.";
         loading(false);
         return;
       }
 
       if (profile.approved !== true) {
-        window.location.href =
-          "/auth/pending";
+        window.location.href = "/auth/pending";
         return;
       }
 
       if (profile.role === "admin") {
-        window.location.href =
-          "/admin";
+        window.location.href = "/admin";
         return;
       }
 
-      window.location.href =
-        "/portal/dashboard";
+      window.location.href = "/portal/dashboard";
 
-    } catch {
-      if (msg) {
-        msg.textContent =
-          "Error inesperado.";
-      }
-
+    } catch (err) {
+      msg.textContent = "Error inesperado.";
       loading(false);
     }
   });
