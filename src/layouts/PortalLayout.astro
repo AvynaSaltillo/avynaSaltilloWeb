@@ -170,31 +170,48 @@ const { title = "Portal AVYNA" } = Astro.props;
 <script type="module">
 import { supabase } from "/src/lib/supabase.ts";
 
-/* USER DATA */
-async function loadUser() {
+async function boot() {
 
   const {
     data: { user }
   } = await supabase.auth.getUser();
 
-  if (!user) return;
+  if (!user) {
+    window.location.href = "/auth/login";
+    return;
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("approved, role, first_name")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!profile) {
+    window.location.href = "/auth/signup";
+    return;
+  }
+
+  if (profile.approved !== true) {
+    window.location.href = "/auth/pending";
+    return;
+  }
+
+  if (
+    window.location.pathname.startsWith("/admin") &&
+    profile.role !== "admin"
+  ) {
+    window.location.href = "/portal/dashboard";
+    return;
+  }
 
   document.getElementById("sidebarEmail").textContent =
     user.email || "";
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("first_name")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (profile?.first_name) {
-    document.getElementById("sidebarName").textContent =
-      profile.first_name;
-  }
+  document.getElementById("sidebarName").textContent =
+    profile.first_name || "Cliente";
 }
 
-/* LOGOUT */
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "/auth/login";
@@ -208,7 +225,7 @@ document
   .getElementById("mobileLogout")
   ?.addEventListener("click", logout);
 
-loadUser();
+boot();
 </script>
 
 </body>
