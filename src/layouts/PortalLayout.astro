@@ -18,101 +18,106 @@ const { title = "Portal AVYNA" } = Astro.props;
 
     <div class="absolute inset-0 bg-black"></div>
 
-    <div class="absolute left-[-10%] top-[-10%] h-96 w-96 rounded-full bg-white/3 blur-3xl"></div>
+    <div class="absolute left-[-10%] top-[-10%] h-[34rem] w-[34rem] rounded-full bg-white/[0.03] blur-3xl"></div>
 
-    <div class="absolute bottom-[-10%] right-[-10%] h-120 w-120 rounded-full bg-white/3 blur-3xl"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] h-[38rem] w-[38rem] rounded-full bg-white/[0.025] blur-3xl"></div>
 
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.03),transparent_30%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.04),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.03),transparent_30%)]"></div>
 
   </div>
 
   <div class="flex min-h-screen">
 
     <!-- SIDEBAR -->
-    <aside class="hidden w-72 border-r border-white/10 bg-white/2 lg:flex lg:flex-col">
+    <aside class="hidden w-76 shrink-0 border-r border-white/10 bg-white/[0.02] lg:block">
 
-      <!-- BRAND -->
-      <div class="border-b border-white/10 px-6 py-6">
+      <!-- sticky container -->
+      <div class="sticky top-0 flex h-screen flex-col">
 
-        <p class="text-xs uppercase tracking-[0.4em] text-white/30">
-          AVYNA SALTILLO
-        </p>
+        <!-- TOP -->
+        <div class="border-b border-white/10 px-6 pt-7 pb-6">
 
-        <h1 class="mt-3 text-2xl font-semibold tracking-tight">
-          Portal Privado
-        </h1>
-
-        <p class="mt-2 text-sm text-white/45">
-          Clientes activos y distribuición local.
-        </p>
-
-      </div>
-
-      <!-- NAV -->
-      <nav class="flex-1 space-y-2 px-4 py-5">
-
-        <a
-          href="/portal/dashboard"
-          class="flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
-        >
-          Dashboard
-        </a>
-
-        <a
-          href="/portal/profile"
-          class="flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
-        >
-          Mi perfil
-        </a>
-
-        <a
-          href="/portal/orders"
-          class="flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
-        >
-          Pedidos
-        </a>
-
-        <a
-          href="/grow"
-          class="flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
-        >
-          Catálogo Grow
-        </a>
-
-        <a
-          href="/portal/support"
-          class="flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
-        >
-          Soporte
-        </a>
-
-      </nav>
-
-      <!-- USER -->
-      <div class="border-t border-white/10 px-4 py-4">
-
-        <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
-
-          <p
-            id="sidebarName"
-            class="font-medium"
-          >
-            Cliente
+          <p class="text-[11px] uppercase tracking-[0.45em] text-white/30">
+            AVYNA SALTILLO
           </p>
 
-          <p
-            id="sidebarEmail"
-            class="mt-1 text-xs text-white/45 break-all"
-          >
-            cargando...
+          <h1 class="mt-3 text-3xl font-semibold tracking-tight">
+            Portal Privado
+          </h1>
+
+          <p class="mt-2 text-sm leading-6 text-white/45">
+            Clientes activos, pedidos y atención comercial premium.
           </p>
 
-          <button
-            id="logoutBtn"
-            class="mt-4 flex h-10 w-full items-center justify-center rounded-xl bg-white font-medium text-black transition hover:scale-[1.01]"
+        </div>
+
+        <!-- NAV -->
+        <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-2 premium-scroll">
+
+          <a
+            href="/portal/dashboard"
+            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
           >
-            Cerrar sesión
-          </button>
+            Dashboard
+          </a>
+
+          <a
+            href="/portal/profile"
+            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+          >
+            Mi perfil
+          </a>
+
+          <a
+            href="/portal/orders"
+            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+          >
+            Pedidos
+          </a>
+
+          <a
+            href="/grow"
+            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+          >
+            Catálogo Grow
+          </a>
+
+          <a
+            href="/portal/support"
+            class="group flex items-center rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+          >
+            Soporte
+          </a>
+
+        </nav>
+
+        <!-- ALWAYS BOTTOM -->
+        <div class="mt-auto border-t border-white/10 p-4">
+
+          <div class="rounded-3xl border border-white/10 bg-black/50 p-4 backdrop-blur-xl">
+
+            <p
+              id="sidebarName"
+              class="font-semibold"
+            >
+              Cliente
+            </p>
+
+            <p
+              id="sidebarEmail"
+              class="mt-1 break-all text-xs text-white/45"
+            >
+              cargando...
+            </p>
+
+            <button
+              id="logoutBtn"
+              class="mt-4 flex h-11 w-full items-center justify-center rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.015]"
+            >
+              Cerrar sesión
+            </button>
+
+          </div>
 
         </div>
 
@@ -124,7 +129,7 @@ const { title = "Portal AVYNA" } = Astro.props;
     <div class="flex min-h-screen flex-1 flex-col">
 
       <!-- MOBILE TOPBAR -->
-      <header class="sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur-xl lg:hidden">
+      <header class="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl lg:hidden">
 
         <div class="flex items-center justify-between px-4 py-4">
 
@@ -133,7 +138,7 @@ const { title = "Portal AVYNA" } = Astro.props;
               AVYNA
             </p>
 
-            <p class="text-sm font-medium">
+            <p class="text-sm font-semibold">
               Portal Privado
             </p>
           </div>
@@ -158,8 +163,8 @@ const { title = "Portal AVYNA" } = Astro.props;
 
       </main>
 
-      <!-- FOOT -->
-      <footer class="border-t border-white/10 px-6 py-4 text-center text-xs text-white/30">
+      <!-- FOOTER -->
+      <footer class="border-t border-white/10 px-6 py-4 text-center text-xs text-white/25">
         © AVYNA Saltillo · Distribuidor autorizado
       </footer>
 
@@ -177,7 +182,7 @@ async function boot() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    window.location.href = "/auth/login";
+    location.href = "/auth/login";
     return;
   }
 
@@ -188,33 +193,53 @@ async function boot() {
     .maybeSingle();
 
   if (!profile) {
-    window.location.href = "/auth/signup";
+    location.href = "/auth/signup";
     return;
   }
 
   if (profile.approved !== true) {
-    window.location.href = "/auth/pending";
+    location.href = "/auth/pending";
     return;
   }
 
-  if (
-    window.location.pathname.startsWith("/admin") &&
-    profile.role !== "admin"
-  ) {
-    window.location.href = "/portal/dashboard";
-    return;
-  }
+  document.getElementById("sidebarName").textContent =
+    profile.first_name || "Cliente";
 
   document.getElementById("sidebarEmail").textContent =
     user.email || "";
 
-  document.getElementById("sidebarName").textContent =
-    profile.first_name || "Cliente";  
+  markActive();
+}
+
+function markActive() {
+
+  const path = window.location.pathname;
+
+  document.querySelectorAll("aside nav a").forEach((link) => {
+
+    const href = link.getAttribute("href");
+
+    if (href && path.startsWith(href)) {
+
+      link.classList.remove(
+  "text-white/75",
+  "hover:text-white"
+);
+
+link.classList.add(
+  "bg-white",
+  "!text-black",
+  "font-semibold"
+);
+
+    }
+
+  });
 }
 
 async function logout() {
   await supabase.auth.signOut();
-  window.location.href = "/auth/login";
+  location.href = "/auth/login";
 }
 
 document

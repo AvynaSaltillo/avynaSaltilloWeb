@@ -7,167 +7,97 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 <section class="space-y-8">
 
   <!-- HERO -->
-  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.02] to-transparent p-6 sm:p-8 lg:p-10">
+  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-6 sm:p-8 xl:p-10">
 
-    <div class="absolute -left-20 top-10 h-72 w-72 rounded-full bg-white/[0.02] blur-3xl"></div>
-    <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <!-- GLOWS -->
+    <div class="absolute -left-20 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.02] blur-3xl"></div>
     <div class="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-white/[0.02] blur-3xl"></div>
 
-    <div class="relative z-10 grid gap-8 xl:grid-cols-[1.45fr_.75fr] xl:items-start">
+    <div class="relative z-10 grid gap-8 xl:grid-cols-[1.4fr_.8fr]">
 
       <!-- LEFT -->
       <div>
 
         <p class="text-xs uppercase tracking-[0.45em] text-white/30">
-          Portal Privado
+          Private Client Portal
         </p>
 
         <h1
           id="welcomeName"
-          class="mt-5 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl"
+          class="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl"
         >
           Bienvenido
         </h1>
 
-        <p class="mt-5 max-w-2xl text-sm leading-7 text-white/60 sm:text-base">
-          Gestiona tus pedidos, consulta historial de compras,
-          promociones activas y condiciones comerciales exclusivas.
+        <p class="mt-5 max-w-2xl text-sm leading-7 text-white/55 sm:text-base">
+          Gestiona pedidos, historial comercial, promociones privadas y acceso exclusivo AVYNA Saltillo.
         </p>
 
+        <!-- ACTIONS -->
         <div class="mt-8 flex flex-wrap gap-3">
 
           <a
             href="/portal/orders"
             class="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
           >
-            Hacer pedido
+            Nuevo pedido
           </a>
 
           <a
             href="/grow"
-            class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+            class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10"
           >
-            Ver catálogo
+            Catálogo
           </a>
 
-        </div>
-
-        <!-- MINI STATS -->
-        <div class="mt-10 grid gap-4 sm:grid-cols-3">
-
-          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <p class="text-xs uppercase tracking-[0.25em] text-white/35">
-              Este mes
-            </p>
-            <p id="monthTotal" class="mt-3 text-3xl font-semibold">$0</p>
-          </div>
-
-          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <p class="text-xs uppercase tracking-[0.25em] text-white/35">
-              Pedidos
-            </p>
-            <p id="ordersCount" class="mt-3 text-3xl font-semibold">0</p>
-          </div>
-
-          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <p class="text-xs uppercase tracking-[0.25em] text-white/35">
-              Pendiente
-            </p>
-            <p id="pendingBalance" class="mt-3 text-3xl font-semibold">$0</p>
-          </div>
+          <a
+            href="https://wa.me/528441234567"
+            target="_blank"
+            class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10"
+          >
+            Soporte
+          </a>
 
         </div>
 
       </div>
 
       <!-- RIGHT -->
-      <div class="grid gap-5">
+      <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
 
-        <!-- COUNTDOWN -->
-        <div class="rounded-[2rem] border border-white/10 bg-zinc-950/90 p-6 shadow-[0_0_60px_rgba(255,255,255,0.02)]">
+        <p class="text-xs uppercase tracking-[0.45em] text-white/30">
+          Cierre semanal
+        </p>
 
-          <p class="text-xs uppercase tracking-[0.4em] text-white/35">
-            Cierre semanal
-          </p>
+        <div class="mt-4 flex items-center justify-between gap-3">
 
-          <div class="mt-4 flex items-end justify-between gap-3">
+          <h2 class="text-xl font-semibold">
+            Jueves 11:59 PM
+          </h2>
 
-            <div>
-              <h3 class="text-2xl font-semibold">
-                Cada Jueves 11:59 PM
-              </h3>
-
-              <p class="mt-2 text-sm text-white/45">
-                Pedido límite para surtido semanal.
-              </p>
-            </div>
-
-            <span
-              id="weeklyBadge"
-              class="rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-white/70"
-            >
-              Cargando...
-            </span>
-
-          </div>
-
-          <div class="mt-6 rounded-3xl border border-white/10 bg-black p-5">
-
-            <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
-              Tiempo restante
-            </p>
-
-            <p
-              id="countdown"
-              class="mt-3 text-4xl font-semibold tracking-tight"
-            >
-              00:00:00
-            </p>
-
-            <p
-              id="cutoffStatus"
-              class="mt-3 text-sm text-white/45"
-            >
-              Calculando...
-            </p>
-
-          </div>
+          <span
+            id="weeklyBadge"
+            class="rounded-full border border-white/10 px-4 py-2 text-xs text-white/70"
+          >
+            Cargando...
+          </span>
 
         </div>
 
-        <!-- RULES -->
-        <div class="rounded-[2rem] border border-white/10 bg-zinc-950/90 p-6">
+        <p
+          id="countdown"
+          class="mt-6 text-5xl font-semibold tracking-tight"
+        >
+          00:00:00
+        </p>
 
-          <p class="text-xs uppercase tracking-[0.4em] text-white/35">
-            Condiciones comerciales
-          </p>
-
-          <div class="mt-5 grid gap-3">
-
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-              <p class="font-semibold">$0 - $1,499</p>
-              <p class="mt-1 text-sm text-white/45">
-                Pago de contado total.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-              <p class="font-semibold">$1,500 - $9,999</p>
-              <p class="mt-1 text-sm text-white/45">
-                50% entrega + 50% a 15 días.
-              </p>
-            </div>
-
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-              <p class="font-semibold">$10,000+</p>
-              <p class="mt-1 text-sm text-white/45">
-                50% entrega + 50% a 30 días.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
+        <p
+          id="cutoffStatus"
+          class="mt-4 text-sm text-white/45"
+        >
+          Calculando...
+        </p>
 
       </div>
 
@@ -175,11 +105,64 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 
   </section>
 
+  <!-- KPI GRID -->
+  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+      <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        Este mes
+      </p>
+      <p
+        id="monthTotal"
+        class="mt-4 text-4xl font-semibold"
+      >
+        $0
+      </p>
+    </div>
+
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+      <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        Pedidos
+      </p>
+      <p
+        id="ordersCount"
+        class="mt-4 text-4xl font-semibold"
+      >
+        0
+      </p>
+    </div>
+
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+      <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        Pendiente
+      </p>
+      <p
+        id="pendingBalance"
+        class="mt-4 text-4xl font-semibold"
+      >
+        $0
+      </p>
+    </div>
+
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+      <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        Próximo pago
+      </p>
+      <p
+        id="nextDue"
+        class="mt-4 text-2xl font-semibold"
+      >
+        Sin saldo
+      </p>
+    </div>
+
+  </section>
+
   <!-- LOWER GRID -->
-  <section class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
+  <section class="grid gap-6 xl:grid-cols-[1.25fr_.75fr]">
 
     <!-- ORDERS -->
-    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+    <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
       <div class="flex items-center justify-between gap-3">
 
@@ -196,7 +179,10 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 
       </div>
 
-      <div id="ordersList" class="mt-6 space-y-3">
+      <div
+        id="ordersList"
+        class="mt-6 space-y-3"
+      >
 
         <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/45">
           Cargando pedidos...
@@ -204,405 +190,46 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 
       </div>
 
-    </div>
+    </section>
 
-    <!-- LAST ORDER -->
-    <div class="rounded-[2rem] border border-white/10 bg-zinc-950/90 p-6">
+    <!-- TERMS -->
+    <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
-      <p class="text-xs uppercase tracking-[0.4em] text-white/35">
-        Último pedido
-      </p>
-
-      <p
-        id="simTotal"
-        class="mt-4 text-5xl font-semibold"
-      >
-        $0
+      <p class="text-xs uppercase tracking-[0.4em] text-white/30">
+        Condiciones comerciales
       </p>
 
       <div class="mt-6 space-y-3">
 
-        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-          <p class="text-xs text-white/35">
-            Condición
-          </p>
-
-          <p
-            id="simLabel"
-            class="mt-2 font-semibold"
-          >
-            Contado total
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="font-semibold">$0 - $1,499</p>
+          <p class="mt-1 text-sm text-white/45">
+            Pago de contado total.
           </p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <p class="text-xs text-white/35">
-              Anticipo
-            </p>
-
-            <p
-              id="simDown"
-              class="mt-2 text-xl font-semibold"
-            >
-              $0
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <p class="text-xs text-white/35">
-              Saldo
-            </p>
-
-            <p
-              id="simBalance"
-              class="mt-2 text-xl font-semibold"
-            >
-              $0
-            </p>
-          </div>
-
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="font-semibold">$1,500 - $9,999</p>
+          <p class="mt-1 text-sm text-white/45">
+            50% entrega + 50% a 15 días.
+          </p>
         </div>
 
-        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-          <p class="text-xs text-white/35">
-            Próximo vencimiento
-          </p>
-
-          <p
-            id="nextDue"
-            class="mt-2 font-semibold"
-          >
-            Sin saldo
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+          <p class="font-semibold">$10,000+</p>
+          <p class="mt-1 text-sm text-white/45">
+            50% entrega + 50% a 30 días.
           </p>
         </div>
 
       </div>
 
-    </div>
+    </section>
 
   </section>
 
 </section>
 
-<script type="module">
-import { supabase } from "/src/lib/supabase.ts";
-
-function money(v = 0) {
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-    maximumFractionDigits: 0
-  }).format(v);
-}
-
-function getTerms(total) {
-  if (total < 1500) {
-    return {
-      label: "Contado total",
-      down: total,
-      balance: 0
-    };
-  }
-
-  if (total < 10000) {
-    return {
-      label: "50% hoy + 50% a 15 días",
-      down: total * 0.5,
-      balance: total * 0.5
-    };
-  }
-
-  return {
-    label: "50% hoy + 50% a 30 días",
-    down: total * 0.5,
-    balance: total * 0.5
-  };
-}
-
-function startCountdown() {
-
-  const el = document.getElementById("countdown");
-  const status = document.getElementById("cutoffStatus");
-  const badge = document.getElementById("weeklyBadge");
-
-  function setBadge(text, style = "normal") {
-
-    badge.textContent = text;
-
-    badge.className =
-      "inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-semibold leading-none transition border whitespace-nowrap min-w-[138px]";
-
-    if (style === "green") {
-      badge.classList.add(
-        "border-emerald-400/20",
-        "bg-emerald-400/10",
-        "text-emerald-300"
-      );
-    }
-
-    else if (style === "orange") {
-      badge.classList.add(
-        "border-orange-400/20",
-        "bg-orange-400/10",
-        "text-orange-300"
-      );
-    }
-
-    else if (style === "red") {
-      badge.classList.add(
-        "border-red-400/20",
-        "bg-red-400/10",
-        "text-red-300"
-      );
-    }
-
-    else if (style === "blue") {
-      badge.classList.add(
-        "border-sky-400/20",
-        "bg-sky-400/10",
-        "text-sky-300"
-      );
-    }
-
-    else {
-      badge.classList.add(
-        "border-white/10",
-        "bg-white/[0.03]",
-        "text-white/70"
-      );
-    }
-  }
-
-  function render(diff) {
-
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-
-    el.textContent =
-      `${String(d).padStart(2,"0")}:${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-  }
-
-  function nextThursday(now) {
-
-    const target = new Date(now);
-    const day = now.getDay();
-
-    let add = (4 - day + 7) % 7;
-
-    if (
-      day === 4 &&
-      (
-        now.getHours() < 23 ||
-        (now.getHours() === 23 && now.getMinutes() <= 59)
-      )
-    ) {
-      add = 0;
-    }
-
-    if (day === 0) {
-      add = 4; // domingo -> jueves
-    }
-
-    target.setDate(now.getDate() + add);
-    target.setHours(23,59,59,999);
-
-    return target;
-  }
-
-  function nextMonday(now) {
-
-    const target = new Date(now);
-    const day = now.getDay();
-
-    let add = (1 - day + 7) % 7;
-    if (add === 0) add = 7;
-
-    target.setDate(now.getDate() + add);
-    target.setHours(0,0,0,0);
-
-    return target;
-  }
-
-  function tick() {
-
-    const now = new Date();
-    const day = now.getDay();
-    const hour = now.getHours();
-
-    /* DOMINGO CERRADO */
-
-    if (day === 0) {
-
-      const monday = nextMonday(now);
-
-      render(monday - now);
-
-      setBadge("Cerrado hoy", "blue");
-
-      status.textContent =
-        "Domingo de descanso. Reanudamos el lunes.";
-
-      return;
-    }
-
-    /* LUNES A SABADO = ABIERTO */
-
-    const thursday = nextThursday(now);
-
-    render(thursday - now);
-
-    /* JUEVES */
-
-    if (day === 4 && hour >= 18) {
-
-      setBadge("Cierra hoy", "red");
-
-      status.textContent =
-        "Pedidos para surtido semanal cierran hoy 11:59 PM.";
-
-      return;
-    }
-
-    if (day === 4) {
-
-      setBadge("Prioridad hoy", "orange");
-
-      status.textContent =
-        "Los pedidos enviados hoy entran al surtido semanal.";
-
-      return;
-    }
-
-    /* VIERNES Y SABADO */
-
-    if (day === 5 || day === 6) {
-
-      setBadge("Pedidos abiertos", "green");
-
-      status.textContent =
-        "Puedes pedir hoy. Se procesa en siguiente ciclo.";
-
-      return;
-    }
-
-    /* LUNES A MIERCOLES */
-
-    setBadge("Pedidos abiertos", "green");
-
-    status.textContent =
-      "Semana activa. Recibiendo pedidos.";
-  }
-
-  tick();
-  setInterval(tick, 1000);
-}
-async function loadDashboard() {
-
-  startCountdown();
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  if (!user) return;
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("first_name")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (profile?.first_name) {
-    document.getElementById("welcomeName").textContent =
-      `Hola, ${profile.first_name}`;
-  }
-
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
-
-  const list = orders || [];
-
-  const month = new Date().getMonth();
-
-  const monthTotal = list
-    .filter(x =>
-      new Date(x.created_at).getMonth() === month
-    )
-    .reduce((a,b) => a + (b.total || 0), 0);
-
-  const pending = list
-    .reduce((a,b) => a + (b.balance || 0), 0);
-
-  document.getElementById("monthTotal").textContent =
-    money(monthTotal);
-
-  document.getElementById("ordersCount").textContent =
-    list.length;
-
-  document.getElementById("pendingBalance").textContent =
-    money(pending);
-
-  const debt = list.find(x => (x.balance || 0) > 0);
-
-  document.getElementById("nextDue").textContent =
-    debt?.due_date
-      ? new Date(debt.due_date).toLocaleDateString("es-MX")
-      : "Sin saldo";
-
-  const box = document.getElementById("ordersList");
-
-  if (!list.length) {
-    box.innerHTML = `
-      <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/45">
-        Aún no tienes pedidos registrados.
-      </div>
-    `;
-  } else {
-    box.innerHTML = list.slice(0,5).map(item => `
-      <div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/30 px-4 py-4">
-        <div>
-          <p class="font-medium">#${item.id}</p>
-          <p class="mt-1 text-xs text-white/45">${item.status || "Registrado"}</p>
-        </div>
-        <p class="font-medium">${money(item.total)}</p>
-      </div>
-    `).join("");
-  }
-
-  const lastTotal = list[0]?.total || 0;
-  const terms = getTerms(lastTotal);
-
-  document.getElementById("simTotal").textContent =
-    money(lastTotal);
-
-  document.getElementById("simLabel").textContent =
-    terms.label;
-
-  document.getElementById("simDown").textContent =
-    money(terms.down);
-
-  document.getElementById("simBalance").textContent =
-    money(terms.balance);
-}
-
-loadDashboard();
-</script>
-
-<script type="module">
-import { supabase } from "/src/lib/supabase.ts";
-
-const { data } = await supabase.auth.getSession();
-
-if (!data.session) {
- location.href="/auth/login";
-}
-</script>
+<script type="module" src="/src/scripts/dashboard.ts"></script>
 
 </PortalLayout>
