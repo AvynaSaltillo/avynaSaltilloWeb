@@ -1,14 +1,12 @@
-<!-- signup.astro (COMPLETO CORREGIDO MOBILE + OJO + ASESOR) -->
+<!-- signup.astro CORREGIDO COMPLETO -->
 ---
 import AuthLayout from "../../layouts/AuthLayout.astro";
-
 import {
   User,
   Building2,
   Mail,
   Phone,
   Lock,
-  Eye,
   Users,
   ChevronDown
 } from "lucide-react";
@@ -138,8 +136,8 @@ import {
         </div>
 
         <ChevronDown
-          size={16}
           id="advisorArrow"
+          size={16}
           className="pointer-events-none text-white/40 transition"
         />
 
@@ -147,7 +145,7 @@ import {
 
       <div
         id="advisorMenu"
-        class="absolute left-0 right-0 top-[calc(100%+8px)] z-40 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
+        class="absolute left-0 right-0 top-[calc(100%+8px)] z-50 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
       >
 
         {[
@@ -187,15 +185,14 @@ import {
       required
     />
 
+    <!-- OJO REAL -->
     <button
       type="button"
-      id="togglePassword"
-      class="absolute right-3 top-1/2 z-20 -translate-y-1/2 text-white/40 active:scale-95"
+      data-toggle-password
+      data-target="password"
+      class="absolute right-3 top-1/2 z-50 -translate-y-1/2 text-white/40"
     >
-      <Eye
-        size={18}
-        className="pointer-events-none"
-      />
+      <span class="pointer-events-none text-lg">👁</span>
     </button>
 
   </div>
@@ -203,7 +200,7 @@ import {
   <!-- TERMS -->
   <label class="flex gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-white/60">
 
-    <input id="terms" type="checkbox" required />
+    <input type="checkbox" required />
 
     <span>
       Confirmo que soy cliente AVYNA Saltillo.
@@ -219,10 +216,7 @@ import {
     Crear cuenta
   </button>
 
-  <p
-    id="msg"
-    class="min-h-5 text-center text-sm text-white/55"
-  ></p>
+  <p id="msg" class="min-h-5 text-center text-sm text-white/55"></p>
 
 </form>
 
@@ -242,194 +236,63 @@ import { supabase } from "/src/lib/supabase.ts";
 
 window.addEventListener("DOMContentLoaded", () => {
 
-  const $ = (id) =>
-    document.getElementById(id);
+  const $ = (id) => document.getElementById(id);
 
   const form = $("signupForm");
   const msg = $("msg");
   const btn = $("submitBtn");
 
   const phone = $("phone");
-  const password = $("password");
-  const toggle = $("togglePassword");
 
-  const advisor = $("advisor");
-  const trigger = $("advisorTrigger");
-  const menu = $("advisorMenu");
-  const label = $("advisorLabel");
-  const arrow = $("advisorArrow");
-
-  /* PHONE */
   phone?.addEventListener("input", () => {
     phone.value =
-      phone.value.replace(/\D/g, "")
-      .slice(0, 10);
+      phone.value.replace(/\D/g, "").slice(0,10);
   });
 
-  /* OJO */
-  toggle?.addEventListener("click", (e) => {
-    e.preventDefault();
-    password.type =
-      password.type === "password"
-        ? "text"
-        : "password";
-  });
-
-  /* ASESOR */
-  function closeMenu() {
-    menu.classList.add("hidden");
-    arrow.style.transform =
-      "rotate(0deg)";
-  }
-
-  trigger?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    menu.classList.toggle("hidden");
-
-    arrow.style.transform =
-      menu.classList.contains("hidden")
-        ? "rotate(0deg)"
-        : "rotate(180deg)";
-  });
-
-  document
-    .querySelectorAll(".advisor-option")
-    .forEach((item) => {
-
-      item.addEventListener("click", () => {
-
-        const val =
-          item.dataset.value || "";
-
-        advisor.value = val;
-        label.textContent = val;
-        label.className =
-          "text-sm text-white";
-
-        closeMenu();
-      });
-
-    });
-
-  document.addEventListener(
-    "click",
-    (e) => {
-      if (
-        !e.target.closest("#advisorTrigger") &&
-        !e.target.closest("#advisorMenu")
-      ) {
-        closeMenu();
-      }
-    }
-  );
-
-  function loading(state) {
-    btn.disabled = state;
-    btn.textContent =
-      state ? "Creando..." : "Crear cuenta";
-  }
-
-  /* SUBMIT */
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     msg.textContent = "";
-
-    const first =
-      $("firstName").value.trim();
-
-    const last =
-      $("lastName").value.trim();
-
-    const business =
-      $("business").value.trim();
-
-    const email =
-      $("email").value
-        .trim()
-        .toLowerCase();
-
-    const pass =
-      password.value.trim();
-
-    if (
-      !first ||
-      !last ||
-      !business ||
-      !email ||
-      !phone.value ||
-      !advisor.value ||
-      !pass
-    ) {
-      msg.textContent =
-        "Completa todos los campos.";
-      return;
-    }
-
-    loading(true);
+    btn.disabled = true;
+    btn.textContent = "Creando...";
 
     try {
 
-      await supabase.auth.signOut();
+      const first = $("firstName").value.trim();
+      const last = $("lastName").value.trim();
+      const business = $("business").value.trim();
+      const email = $("email").value.trim().toLowerCase();
+      const password = $("password").value.trim();
+      const advisor = $("advisor").value.trim();
 
-      const {
-        data,
-        error
-      } = await supabase.auth.signUp({
-        email,
-        password: pass
-      });
+      const { data, error } =
+        await supabase.auth.signUp({
+          email,
+          password
+        });
 
       if (error || !data.user) {
         msg.textContent =
-          error?.message ||
-          "No se pudo crear usuario.";
-        loading(false);
+          error?.message || "Error.";
+        btn.disabled = false;
+        btn.textContent = "Crear cuenta";
         return;
       }
 
-      const uid = data.user.id;
-
-      const { count } =
-        await supabase
-          .from("profiles")
-          .select("*", {
-            count: "exact",
-            head: true
-          });
-
-      const folio =
-        "AVY-" +
-        String(
-          (count || 0) + 1
-        ).padStart(4, "0");
-
-      const { error: pErr } =
-        await supabase
-          .from("profiles")
-          .insert({
-            id: uid,
-            email,
-            first_name: first,
-            last_name: last,
-            name: `${first} ${last}`,
-            business_name: business,
-            phone: phone.value,
-            advisor: advisor.value,
-            city: "Saltillo",
-            role: "client",
-            approved: false,
-            local_client_id: folio
-          });
-
-      if (pErr) {
-        msg.textContent =
-          pErr.message;
-        loading(false);
-        return;
-      }
+      await supabase
+        .from("profiles")
+        .insert({
+          id: data.user.id,
+          first_name: first,
+          last_name: last,
+          name: first + " " + last,
+          business_name: business,
+          email,
+          phone: phone.value,
+          advisor,
+          role: "client",
+          approved: false
+        });
 
       window.location.href =
         "/auth/pending";
@@ -437,7 +300,9 @@ window.addEventListener("DOMContentLoaded", () => {
     } catch {
       msg.textContent =
         "Error inesperado.";
-      loading(false);
+      btn.disabled = false;
+      btn.textContent =
+        "Crear cuenta";
     }
 
   });
@@ -450,23 +315,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function boot() {
 
-    /* =========================
-       TOGGLE PASSWORD
-    ========================= */
-
+    /* OJO */
     document
       .querySelectorAll("[data-toggle-password]")
       .forEach((btn) => {
 
-        btn.onclick = (e) => {
+        function toggle(e) {
           e.preventDefault();
           e.stopPropagation();
 
-          const target =
-            btn.getAttribute("data-target");
+          const id =
+            btn.dataset.target;
 
           const input =
-            document.getElementById(target);
+            document.getElementById(id);
 
           if (!input) return;
 
@@ -474,14 +336,18 @@ window.addEventListener("DOMContentLoaded", () => {
             input.type === "password"
               ? "text"
               : "password";
-        };
+        }
+
+        btn.addEventListener("click", toggle);
+        btn.addEventListener(
+          "touchstart",
+          toggle,
+          { passive:false }
+        );
 
       });
 
-    /* =========================
-       ASESOR SELECT
-    ========================= */
-
+    /* ASESOR */
     const trigger =
       document.getElementById("advisorTrigger");
 
@@ -494,47 +360,41 @@ window.addEventListener("DOMContentLoaded", () => {
     const label =
       document.getElementById("advisorLabel");
 
-    if (trigger && menu) {
+    const arrow =
+      document.getElementById("advisorArrow");
 
-      trigger.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    trigger?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-        menu.classList.toggle("hidden");
-      };
+      menu.classList.toggle("hidden");
 
-      menu
-        .querySelectorAll("[data-value]")
-        .forEach((item) => {
+      arrow.style.transform =
+        menu.classList.contains("hidden")
+          ? "rotate(0deg)"
+          : "rotate(180deg)";
+    });
 
-          item.onclick = () => {
+    document
+      .querySelectorAll(".advisor-option")
+      .forEach((item) => {
 
-            const val =
-              item.getAttribute("data-value");
+        item.addEventListener("click", () => {
 
-            if (hidden) hidden.value = val;
-            if (label) label.textContent = val;
+          const val =
+            item.dataset.value;
 
-            menu.classList.add("hidden");
-          };
+          hidden.value = val;
+          label.textContent = val;
+          label.className =
+            "text-sm text-white";
 
+          menu.classList.add("hidden");
+          arrow.style.transform =
+            "rotate(0deg)";
         });
 
-      document.addEventListener(
-        "click",
-        (e) => {
-
-          if (
-            !e.target.closest("#advisorTrigger") &&
-            !e.target.closest("#advisorMenu")
-          ) {
-            menu.classList.add("hidden");
-          }
-
-        }
-      );
-
-    }
+      });
 
   }
 

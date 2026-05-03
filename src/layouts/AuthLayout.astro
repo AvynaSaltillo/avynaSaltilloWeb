@@ -1,23 +1,28 @@
 ---
+// src/layouts/AuthLayout.astro
 import "../styles/global.css";
 
 const {
   title = "Acceso AVYNA Saltillo",
-  subtitle = "Portal exclusivo para clientes activos de nuestra distribución oficial."
+  subtitle =
+    "Portal exclusivo para clientes activos de nuestra distribución oficial."
 } = Astro.props;
 ---
 
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
   <title>{title}</title>
 </head>
 
 <body class="min-h-screen overflow-x-hidden bg-black text-white antialiased">
 
   <!-- BACKGROUND -->
-  <div class="fixed inset-0 -z-10 overflow-hidden">
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
 
     <div class="absolute inset-0 bg-black"></div>
 
@@ -33,22 +38,18 @@ const {
   <main class="min-h-screen lg:grid lg:grid-cols-[1.18fr_0.82fr]">
 
     <!-- LEFT -->
-    <section class="hidden min-h-screen border-r border-white/10 lg:flex lg:flex-col lg:justify-start">
+    <section class="hidden min-h-screen border-r border-white/10 lg:flex lg:flex-col">
 
-      <!-- TOP -->
       <div class="px-10 pt-8">
-
         <a
           href="/"
           class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
         >
           ← Volver al sitio
         </a>
-
       </div>
 
-      <!-- CONTENT -->
-      <div class="px-10 pt-14 pb-10">
+      <div class="px-10 pb-10 pt-14">
 
         <img
           src="/images/logo-avyna-white.png"
@@ -68,17 +69,16 @@ const {
           Realiza pedidos, consulta estatus, revisa historial y recibe soporte directo de AVYNA Saltillo.
         </p>
 
-        <!-- FEATURES -->
         <div class="mt-10 grid max-w-xl gap-4">
 
-          <div class="rounded-2xl border border-white/10 bg-white/3 p-4">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
             <p class="font-medium">Pedidos en línea</p>
             <p class="mt-1 text-sm text-white/45">
               Solicita surtido disponible de forma sencilla.
             </p>
           </div>
 
-          <div class="rounded-2xl border border-white/10 bg-white/3 p-4">
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
             <p class="font-medium">Perfil e historial</p>
             <p class="mt-1 text-sm text-white/45">
               Compras anteriores y atención personalizada.
@@ -96,27 +96,24 @@ const {
 
       <div class="w-full max-w-lg">
 
-        <!-- MOBILE -->
+        <!-- MOBILE TOP -->
         <div class="mb-5 lg:hidden">
-
           <a
             href="/"
             class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/75"
           >
             ← Inicio
           </a>
-
         </div>
 
         <!-- CARD -->
-        <div class="relative rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl backdrop-blur-xl">
+        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl backdrop-blur-xl">
 
-          <!-- SCROLL PANEL -->
+          <!-- CONTENT -->
           <div
             id="authPanel"
-            class="premium-scroll max-h-[92vh] overflow-y-auto rounded-3xl p-6 sm:p-7"
+            class="relative z-10 premium-scroll max-h-[92vh] overflow-y-auto rounded-3xl p-6 sm:p-7"
           >
-
 
             <p class="text-[11px] uppercase tracking-[0.38em] text-white/30">
               CLIENT ACCESS
@@ -130,17 +127,17 @@ const {
               {subtitle}
             </p>
 
-            <!-- SLOT -->
             <div class="mt-6 pb-4">
               <slot />
             </div>
 
           </div>
 
-          <!-- SMART FADE -->
+          <!-- FADE FIX -->
           <div
             id="scrollFade"
-            class="pointer-events-none absolute bottom-0 left-0 right-0 h-20 rounded-b-3xl bg-gradient-to-t from-black via-black/75 to-transparent opacity-100 transition-opacity duration-300"
+            aria-hidden="true"
+            class="pointer-events-none absolute bottom-0 left-0 right-0 z-0 h-20 rounded-b-3xl bg-gradient-to-t from-black via-black/75 to-transparent opacity-100 transition-opacity duration-300"
           ></div>
 
         </div>
@@ -158,26 +155,43 @@ const {
 
 <script is:inline>
 document.addEventListener("DOMContentLoaded", () => {
-  const panel = document.getElementById("authPanel");
-  const fade = document.getElementById("scrollFade");
+
+  const panel =
+    document.getElementById("authPanel");
+
+  const fade =
+    document.getElementById("scrollFade");
 
   if (!panel || !fade) return;
 
   function checkScrollFade() {
+
     const atBottom =
-      panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 8;
+      panel.scrollTop + panel.clientHeight >=
+      panel.scrollHeight - 8;
 
     const hasScroll =
-      panel.scrollHeight > panel.clientHeight + 8;
+      panel.scrollHeight >
+      panel.clientHeight + 8;
 
     fade.style.opacity =
-      hasScroll && !atBottom ? "1" : "0";
+      hasScroll && !atBottom
+        ? "1"
+        : "0";
   }
 
-  panel.addEventListener("scroll", checkScrollFade);
-  window.addEventListener("resize", checkScrollFade);
+  panel.addEventListener(
+    "scroll",
+    checkScrollFade
+  );
+
+  window.addEventListener(
+    "resize",
+    checkScrollFade
+  );
 
   checkScrollFade();
+
 });
 </script>
 
