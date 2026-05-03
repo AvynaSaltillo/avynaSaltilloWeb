@@ -2,14 +2,17 @@
 import "../styles/global.css";
 
 import {
+  RiHome5Line,
+  RiAddCircleLine,
   RiDashboardLine,
   RiUserLine,
   RiShoppingBag3Line,
-  RiSparklingLine,
   RiCustomerService2Line,
   RiLogoutBoxRLine,
   RiMenuFoldLine,
-  RiMenuUnfoldLine
+  RiMenuUnfoldLine,
+  RiMenu3Line,
+  RiCloseLine
 } from "react-icons/ri";
 
 const { title = "Portal AVYNA" } = Astro.props;
@@ -33,14 +36,14 @@ const { title = "Portal AVYNA" } = Astro.props;
 
 <div class="flex min-h-screen">
 
-  <!-- SIDEBAR -->
+  <!-- DESKTOP SIDEBAR -->
   <aside
     id="sidebar"
     class="hidden lg:flex h-screen sticky top-0 shrink-0 flex-col border-r border-white/10 bg-white/[0.025] backdrop-blur-2xl transition-all duration-300 w-[300px] min-w-[300px] overflow-hidden"
   >
 
     <!-- TOP -->
-    <div class="px-5 pt-5 pb-4 border-b border-white/10">
+    <div class="border-b border-white/10 px-5 pt-5 pb-4">
 
       <div class="flex items-center justify-between gap-3">
 
@@ -71,10 +74,22 @@ const { title = "Portal AVYNA" } = Astro.props;
     <!-- NAV -->
     <nav class="flex-1 overflow-y-auto px-4 py-5 space-y-2">
 
+      <a href="/portal/" class="nav-link">
+        <RiHome5Line size={20}/>
+        <span class="label-wrap">Inicio</span>
+      </a>
+
+      <a href="/portal/new-order" class="nav-link">
+        <RiAddCircleLine size={20}/>
+        <span class="label-wrap">Pedido nuevo</span>
+      </a>
+
       <a href="/portal/dashboard" class="nav-link">
         <RiDashboardLine size={20}/>
         <span class="label-wrap">Dashboard</span>
       </a>
+
+      <div class="my-4 border-t border-white/10"></div>
 
       <a href="/portal/profile" class="nav-link">
         <RiUserLine size={20}/>
@@ -86,11 +101,6 @@ const { title = "Portal AVYNA" } = Astro.props;
         <span class="label-wrap">Pedidos</span>
       </a>
 
-      <a href="/grow" class="nav-link">
-        <RiSparklingLine size={20}/>
-        <span class="label-wrap">Catálogo Grow</span>
-      </a>
-
       <a href="/portal/support" class="nav-link">
         <RiCustomerService2Line size={20}/>
         <span class="label-wrap">Soporte</span>
@@ -99,13 +109,16 @@ const { title = "Portal AVYNA" } = Astro.props;
     </nav>
 
     <!-- FOOT -->
-    <div class="mt-auto border-t border-white/10 p-4 shrink-0">
+    <div class="mt-auto border-t border-white/10 p-4">
 
       <div class="rounded-[28px] border border-white/10 bg-black/45 p-4">
 
         <div class="flex items-start gap-3">
 
-          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white text-black font-semibold">
+          <div
+            id="sidebarAvatar"
+            class="grid h-11 w-11 place-items-center rounded-2xl bg-white text-black font-semibold"
+          >
             A
           </div>
 
@@ -123,7 +136,7 @@ const { title = "Portal AVYNA" } = Astro.props;
 
         <button
           id="logoutBtn"
-          class="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.015]"
+          class="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white font-semibold text-black"
         >
           <RiLogoutBoxRLine size={18}/>
           <span class="label-wrap">Cerrar sesión</span>
@@ -131,35 +144,112 @@ const { title = "Portal AVYNA" } = Astro.props;
 
       </div>
 
-      <div class="pt-4 text-center text-[11px] leading-5 text-white/22 label-wrap">
-        © AVYNA Saltillo<br />
-        Distribuidor autorizado
+    </div>
+
+  </aside>
+
+  <!-- MOBILE MENU -->
+  <div
+    id="mobileOverlay"
+    class="fixed inset-0 z-40 hidden bg-black/70 backdrop-blur-sm lg:hidden"
+  ></div>
+
+  <aside
+    id="mobileSidebar"
+    class="fixed left-0 top-0 z-50 h-screen w-[290px] -translate-x-full border-r border-white/10 bg-black/95 backdrop-blur-2xl transition-transform duration-300 lg:hidden"
+  >
+
+    <div class="border-b border-white/10 px-5 py-5 flex items-center justify-between">
+
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.35em] text-white/30">
+          AVYNA
+        </p>
+
+        <p class="mt-1 font-semibold">
+          Portal Privado
+        </p>
       </div>
 
+      <button
+        id="closeMobileMenu"
+        class="grid h-10 w-10 place-items-center rounded-xl border border-white/10"
+      >
+        <RiCloseLine size={20}/>
+      </button>
+
     </div>
+
+    <nav class="p-4 space-y-2">
+
+      <a href="/portal/" class="nav-link mobile-link">
+        <RiHome5Line size={20}/>
+        <span>Inicio</span>
+      </a>
+
+      <a href="/portal/new-order" class="nav-link mobile-link">
+        <RiAddCircleLine size={20}/>
+        <span>Pedido nuevo</span>
+      </a>
+
+      <a href="/portal/dashboard" class="nav-link mobile-link">
+        <RiDashboardLine size={20}/>
+        <span>Dashboard</span>
+      </a>
+
+      <div class="my-4 border-t border-white/10"></div>
+
+      <a href="/portal/profile" class="nav-link mobile-link">
+        <RiUserLine size={20}/>
+        <span>Mi perfil</span>
+      </a>
+
+      <a href="/portal/orders" class="nav-link mobile-link">
+        <RiShoppingBag3Line size={20}/>
+        <span>Pedidos</span>
+      </a>
+
+      <a href="/portal/support" class="nav-link mobile-link">
+        <RiCustomerService2Line size={20}/>
+        <span>Soporte</span>
+      </a>
+
+    </nav>
 
   </aside>
 
   <!-- MAIN -->
   <div class="flex min-h-screen flex-1 flex-col">
 
-    <header class="lg:hidden sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+    <!-- MOBILE HEADER -->
+    <header class="lg:hidden sticky top-0 z-30 border-b border-white/10 bg-black/80 backdrop-blur-xl">
 
       <div class="flex items-center justify-between px-4 py-4">
 
-        <div>
-          <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
-            AVYNA
-          </p>
+        <div class="flex items-center gap-3">
 
-          <p class="text-sm font-semibold">
-            Portal Privado
-          </p>
+          <button
+            id="openMobileMenu"
+            class="grid h-10 w-10 place-items-center rounded-xl border border-white/10"
+          >
+            <RiMenu3Line size={20}/>
+          </button>
+
+          <div>
+            <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
+              AVYNA
+            </p>
+
+            <p class="text-sm font-semibold">
+              Portal Privado
+            </p>
+          </div>
+
         </div>
 
         <button
           id="mobileLogout"
-          class="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/80"
+          class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black"
         >
           Salir
         </button>
@@ -191,13 +281,6 @@ transition:.22s ease;
 white-space:nowrap;
 }
 
-.nav-link svg{
-width:20px;
-height:20px;
-display:block;
-flex-shrink:0;
-}
-
 .nav-link:hover:not(.active-link){
 background:rgba(255,255,255,.06);
 color:#fff;
@@ -209,20 +292,13 @@ background:#fff;
 color:#000 !important;
 font-weight:700;
 pointer-events:none;
-box-shadow:0 10px 30px rgba(255,255,255,.06);
 }
 
 .active-link svg{
 color:#000 !important;
 }
 
-.label-wrap{
-transition:.2s ease;
-white-space:nowrap;
-overflow:hidden;
-}
-
-/* COLLAPSED */
+/* collapsed desktop */
 .sidebar-collapsed{
 width:96px !important;
 min-width:96px !important;
@@ -232,94 +308,48 @@ min-width:96px !important;
 display:none !important;
 }
 
-.sidebar-collapsed .border-b{
-padding:16px 0 !important;
-display:flex;
+.sidebar-collapsed .nav-link{
+width:58px;
+height:58px;
+padding:0;
 justify-content:center;
 }
 
-.sidebar-collapsed #toggleSidebar{
-margin:0 !important;
-display:grid !important;
-place-items:center !important;
-}
-
 .sidebar-collapsed nav{
-flex:1 !important;
-overflow:hidden !important;
-display:flex !important;
-flex-direction:column !important;
-align-items:center !important;
-justify-content:center !important;
-gap:16px !important;
-padding:0 !important;
-margin:0 !important;
+padding:18px 0;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-.sidebar-collapsed .nav-link{
-width:58px !important;
-height:58px !important;
-padding:0 !important;
-margin:0 !important;
-display:grid !important;
-place-items:center !important;
-gap:0 !important;
-border-radius:20px !important;
-line-height:0 !important;
+.sidebar-collapsed .nav-link span{
+display:none;
 }
 
-.sidebar-collapsed .nav-link svg{
-margin:0 !important;
-padding:0 !important;
-display:block !important;
-width:21px !important;
-height:21px !important;
+.sidebar-collapsed #logoutBtn span{
+display:none;
 }
 
-.sidebar-collapsed .mt-auto{
-flex:none !important;
-padding:14px 0 18px !important;
-margin:0 !important;
-display:flex !important;
-justify-content:center !important;
-align-items:center !important;
+/* mobile products responsive */
+@media (max-width:1023px){
+
+#productsGrid .grid{
+grid-template-columns:1fr 90px 120px !important;
 }
 
-.sidebar-collapsed .rounded-\[28px\]{
-width:74px !important;
-padding:12px 0 !important;
-margin:0 !important;
-display:flex !important;
-flex-direction:column !important;
-align-items:center !important;
-justify-content:center !important;
-gap:12px !important;
-}
-
-.sidebar-collapsed .rounded-\[28px\] > div:first-child{
-display:flex !important;
-justify-content:center !important;
-align-items:center !important;
-gap:0 !important;
-margin:0 !important;
-}
-
-.sidebar-collapsed #logoutBtn{
-width:52px !important;
-height:52px !important;
-padding:0 !important;
-margin:0 !important;
-display:grid !important;
-place-items:center !important;
-border-radius:18px !important;
-}
-
-.sidebar-collapsed .text-center{
+#productsGrid .hide-mobile{
 display:none !important;
+}
+
+#productsGrid .product-name{
+font-size:14px;
+line-height:1.3;
+white-space:normal !important;
+}
+
 }
 </style>
 
-  
 <script>
   import "../scripts/portal.ts";
 </script>

@@ -1,4 +1,5 @@
 // src/scripts/new-order.ts
+// ARCHIVO COMPLETO CORREGIDO
 
 import { supabase } from "../lib/supabase";
 
@@ -20,57 +21,32 @@ declare global {
   }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const products =
-    window.__PRODUCTS__ || [];
+document.addEventListener("DOMContentLoaded", () => {
+  const products = window.__PRODUCTS__ || [];
 
-  const $ = (id: string) =>
-    document.getElementById(id);
+  const $ = (id: string) => document.getElementById(id);
 
   const grid = $("productsGrid");
   const cartBox = $("cartItems");
 
-  const search =
-    $("searchInput") as HTMLInputElement | null;
+  const search = $("searchInput") as HTMLInputElement | null;
+  const family = $("familyFilter") as HTMLSelectElement | null;
 
-  const family =
-    $("familyFilter") as HTMLSelectElement | null;
+  const limitSelect = $("limitSelect") as HTMLSelectElement | null;
+  const pageInfo = $("pageInfo");
+  const prevBtn = $("prevPage");
+  const nextBtn = $("nextPage");
 
-  const limitSelect =
-    $("limitSelect") as HTMLSelectElement | null;
+  const cartCount = $("cartCount");
+  const publicTotal = $("publicTotal");
+  const savingTotal = $("savingTotal");
+  const finalTotal = $("finalTotal");
 
-  const pageInfo =
-    $("pageInfo");
+  const clearBtn = $("clearBtn");
+  const sendBtn = $("sendBtn") as HTMLButtonElement | null;
 
-  const prevBtn =
-    $("prevPage");
-
-  const nextBtn =
-    $("nextPage");
-
-  const cartCount =
-    $("cartCount");
-
-  const publicTotal =
-    $("publicTotal");
-
-  const savingTotal =
-    $("savingTotal");
-
-  const finalTotal =
-    $("finalTotal");
-
-  const clearBtn =
-    $("clearBtn");
-
-  const sendBtn =
-    $("sendBtn") as HTMLButtonElement | null;
-
-  const creditTitle =
-    $("creditTitle");
-
-  const creditText =
-    $("creditText");
+  const creditTitle = $("creditTitle");
+  const creditText = $("creditText");
 
   let filtered = [...products];
   let cart: CartItem[] = [];
@@ -78,280 +54,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   let page = 1;
   let limit = 10;
 
-  /* ==============================
-     WHATSAPP
-  ============================== */
-  const advisors: Record<
-    string,
-    string
-  > = {
-    David:
-      "528442564688",
-    Daniel:
-      "528441111111",
-    Fernanda:
-      "528443333333"
+  const advisors: Record<string, string> = {
+    David: "528442564688",
+    Daniel: "528441111111",
+    Fernanda: "528443333333"
   };
 
-  /* ==============================
-     HELPERS
-  ============================== */
+  const isMobile = () => window.innerWidth < 1024;
+
   function money(v = 0) {
-    return new Intl.NumberFormat(
-      "es-MX",
-      {
-        style:
-          "currency",
-        currency:
-          "MXN",
-        maximumFractionDigits: 0
-      }
-    ).format(Number(v));
+    return new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
+      maximumFractionDigits: 0
+    }).format(Number(v));
   }
 
-  function qtyOf(
-    id: number | string
-  ) {
-    return (
-      cart.find(
-        (x) =>
-          String(
-            x.id
-          ) ===
-          String(id)
-      )?.qty || 0
-    );
+  function qtyOf(id: number | string) {
+    return cart.find((x) => String(x.id) === String(id))?.qty || 0;
   }
 
-  /* ==============================
-     FILTERS
-  ============================== */
-  function loadFamilies() {
-    if (!family)
-      return;
-
-    const rows =
-      [
-        ...new Set(
-          products
-            .map(
-              (x) =>
-                x.family
-            )
-            .filter(
-              Boolean
-            )
-        )
-      ];
-
-    family.innerHTML =
-      `<option value="">Todas las líneas</option>` +
-      rows
-        .map(
-          (x) =>
-            `<option value="${x}">${x}</option>`
-        )
-        .join("");
+  function removeItem(id: string) {
+    cart = cart.filter((x) => String(x.id) !== id);
+    renderAll();
   }
 
-  function applyFilters() {
-    const text =
-      search?.value
-        .trim()
-        .toLowerCase() ||
-      "";
+  function updateQty(id: string, step: number) {
+    const found = cart.find((x) => String(x.id) === id);
 
-    const fam =
-      family?.value ||
-      "";
-
-    filtered =
-      products.filter(
-        (item) => {
-          const byText =
-            item.name
-              .toLowerCase()
-              .includes(
-                text
-              );
-
-          const byFam =
-            !fam ||
-            item.family ===
-              fam;
-
-          return (
-            byText &&
-            byFam
-          );
-        }
-      );
-
-    page = 1;
-    renderProducts();
-  }
-
-  /* ==============================
-     PAGINATION
-  ============================== */
-  function currentRows() {
-    const start =
-      (page - 1) *
-      limit;
-
-    const end =
-      start +
-      limit;
-
-    return filtered.slice(
-      start,
-      end
-    );
-  }
-
-  function totalPages() {
-    return Math.max(
-      1,
-      Math.ceil(
-        filtered.length /
-          limit
-      )
-    );
-  }
-
-  function updatePager() {
-    if (pageInfo) {
-      pageInfo.textContent =
-        `${page} / ${totalPages()}`;
-    }
-
-    if (prevBtn) {
-      prevBtn.toggleAttribute(
-        "disabled",
-        page <= 1
-      );
-    }
-
-    if (nextBtn) {
-      nextBtn.toggleAttribute(
-        "disabled",
-        page >=
-          totalPages()
-      );
-    }
-  }
-
-  /* ==============================
-     PRODUCTS TABLE
-  ============================== */
-  function renderProducts() {
-    if (!grid)
-      return;
-
-    const rows =
-      currentRows();
-
-    if (!rows.length) {
-      grid.innerHTML =
-        `<div class="p-5 text-white/45">Sin resultados.</div>`;
-      updatePager();
-      return;
-    }
-
-    grid.innerHTML =
-      rows
-        .map(
-          (item) => `
-        <div class="grid grid-cols-[2fr_1fr_1fr_180px] gap-3 px-5 py-4 items-center hover:bg-white/[0.02] transition">
-
-          <div class="min-w-0">
-            <p class="truncate font-medium">
-              ${item.name}
-            </p>
-          </div>
-
-          <div class="text-sm text-white/55">
-            ${
-              item.family ||
-              "-"
-            }
-          </div>
-
-          <div class="font-medium">
-            ${money(
-              item.priceSalon ||
-                0
-            )}
-          </div>
-
-          <div class="flex items-center justify-center gap-2">
-
-            <button
-              class="qty-btn h-9 w-9 rounded-xl border border-white/10"
-              data-id="${
-                item.id
-              }"
-              data-step="-1"
-            >
-              -
-            </button>
-
-            <span class="w-8 text-center text-sm">
-              ${qtyOf(
-                item.id
-              )}
-            </span>
-
-            <button
-              class="qty-btn h-9 w-9 rounded-xl border border-white/10"
-              data-id="${
-                item.id
-              }"
-              data-step="1"
-            >
-              +
-            </button>
-
-          </div>
-
-        </div>
-      `
-        )
-        .join("");
-
-    bindQty();
-    updatePager();
-  }
-
-  /* ==============================
-     CART
-  ============================== */
-  function updateQty(
-    id: string,
-    step: number
-  ) {
-    const found =
-      cart.find(
-        (x) =>
-          String(
-            x.id
-          ) === id
-      );
-
-    if (
-      !found &&
-      step > 0
-    ) {
-      const item =
-        products.find(
-          (x) =>
-            String(
-              x.id
-            ) === id
-        );
-
-      if (!item)
-        return;
+    if (!found && step > 0) {
+      const item = products.find((x) => String(x.id) === id);
+      if (!item) return;
 
       cart.push({
         ...item,
@@ -362,401 +95,438 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    if (!found)
+    if (!found) return;
+
+    found.qty += step;
+
+    if (found.qty <= 0) {
+      removeItem(id);
       return;
-
-    found.qty +=
-      step;
-
-    if (
-      found.qty <= 0
-    ) {
-      cart =
-        cart.filter(
-          (x) =>
-            String(
-              x.id
-            ) !== id
-        );
     }
 
     renderAll();
   }
 
-  function renderCart() {
-    if (!cartBox)
+  function updateQtyDirect(id: string, qty: number) {
+    qty = Math.max(0, Math.floor(qty || 0));
+
+    const found = cart.find((x) => String(x.id) === id);
+
+    if (qty === 0) {
+      removeItem(id);
       return;
+    }
+
+    if (!found) {
+      const item = products.find((x) => String(x.id) === id);
+      if (!item) return;
+
+      cart.push({
+        ...item,
+        qty
+      });
+
+      renderAll();
+      return;
+    }
+
+    found.qty = qty;
+    renderAll();
+  }
+
+  function loadFamilies() {
+    if (!family) return;
+
+    const rows = [...new Set(products.map((x) => x.family).filter(Boolean))];
+
+    family.innerHTML =
+      `<option value="">Todas las líneas</option>` +
+      rows.map((x) => `<option value="${x}">${x}</option>`).join("");
+  }
+
+  function applyFilters() {
+    const text = search?.value.trim().toLowerCase() || "";
+    const fam = family?.value || "";
+
+    filtered = products.filter((item) => {
+      const byText = item.name.toLowerCase().includes(text);
+      const byFam = !fam || item.family === fam;
+      return byText && byFam;
+    });
+
+    page = 1;
+    renderProducts();
+  }
+
+  function currentRows() {
+    const start = (page - 1) * limit;
+    return filtered.slice(start, start + limit);
+  }
+
+  function totalPages() {
+    return Math.max(1, Math.ceil(filtered.length / limit));
+  }
+
+  function updatePager() {
+    if (pageInfo) pageInfo.textContent = `${page} / ${totalPages()}`;
+  }
+
+  /* ======================
+     PRODUCTS
+  ====================== */
+  function renderProducts() {
+    if (!grid) return;
+
+    const rows = currentRows();
+
+    if (!rows.length) {
+      grid.innerHTML = `<div class="p-4 text-sm text-white/45">Sin resultados.</div>`;
+      updatePager();
+      return;
+    }
+
+    if (isMobile()) {
+      grid.innerHTML = rows.map((item) => `
+<div class="p-2.5">
+<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-3 space-y-2">
+
+<div class="flex justify-between gap-3">
+<div class="min-w-0 flex-1">
+<p class="text-[13px] font-medium leading-5 break-words">
+${item.name}
+</p>
+
+<p class="mt-1 text-[12px] text-white/45">
+${item.family || "-"}
+</p>
+</div>
+
+<p class="text-[13px] font-semibold shrink-0">
+${money(item.priceSalon || 0)}
+</p>
+</div>
+
+<div class="flex justify-end items-center gap-2">
+
+<button
+class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300"
+data-id="${item.id}">
+✕
+</button>
+
+<button
+class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="-1">
+-
+</button>
+
+<input
+type="number"
+min="0"
+value="${qtyOf(item.id)}"
+data-id="${item.id}"
+class="qty-input h-9 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+/>
+
+<button
+class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="1">
++
+</button>
+
+</div>
+
+</div>
+</div>
+`).join("");
+
+    } else {
+      /* HEADER Y ROW USAN MISMAS COLUMNAS */
+      grid.innerHTML = rows.map((item) => `
+<div class="grid grid-cols-[minmax(0,1fr)_110px_130px_210px] gap-3 px-6 py-4 items-center">
+
+<div class="min-w-0">
+<p class="truncate text-[14px] font-medium pr-3">
+${item.name}
+</p>
+</div>
+
+<div class="text-[13px] text-white/55 truncate">
+${item.family || "-"}
+</div>
+
+<div class="text-[14px] font-semibold">
+${money(item.priceSalon || 0)}
+</div>
+
+<div class="flex items-center justify-end gap-2">
+
+<button
+class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="-1">
+-
+</button>
+
+<input
+type="number"
+min="0"
+value="${qtyOf(item.id)}"
+data-id="${item.id}"
+class="qty-input h-9 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+/>
+
+<button
+class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="1">
++
+</button>
+
+<button
+class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300"
+data-id="${item.id}">
+✕
+</button>
+
+</div>
+</div>
+`).join("");
+    }
+
+    bindActions();
+    updatePager();
+  }
+
+  /* ======================
+     CART
+  ====================== */
+  function renderCart() {
+    if (!cartBox) return;
 
     if (!cart.length) {
-      cartBox.innerHTML =
-        `
-        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/45">
-          Sin productos agregados.
-        </div>
-      `;
+      cartBox.innerHTML = `
+<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/45">
+Sin productos agregados.
+</div>`;
       totals();
       return;
     }
 
-    cartBox.innerHTML =
-      cart
-        .map(
-          (item) => `
-        <div class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+    cartBox.innerHTML = cart.map((item) => `
+<div class="rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-3">
 
-          <div class="space-y-3">
+<div class="flex items-start justify-between gap-2">
 
-            <div class="min-w-0">
-              <p class="truncate font-medium text-sm">
-                ${item.name}
-              </p>
-            </div>
+<p class="text-[13px] font-medium leading-5 pr-2">
+${item.name}
+</p>
 
-            <div class="flex items-center justify-between gap-3">
+<button
+class="remove-btn h-8 w-8 rounded-xl border border-red-400/20 text-red-300 shrink-0"
+data-id="${item.id}">
+✕
+</button>
 
-              <div class="flex items-center gap-2">
+</div>
 
-                <button
-                  class="qty-btn h-8 w-8 rounded-xl border border-white/10"
-                  data-id="${item.id}"
-                  data-step="-1"
-                >
-                  -
-                </button>
+<div class="mt-3 flex items-center justify-between gap-2">
 
-                <span class="w-6 text-center text-sm">
-                  ${item.qty}
-                </span>
+<div class="flex items-center gap-1">
 
-                <button
-                  class="qty-btn h-8 w-8 rounded-xl border border-white/10"
-                  data-id="${item.id}"
-                  data-step="1"
-                >
-                  +
-                </button>
+<button
+class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="-1">
+-
+</button>
 
-              </div>
+<input
+type="number"
+min="0"
+value="${item.qty}"
+data-id="${item.id}"
+class="qty-input h-8 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+/>
 
-              <p class="text-sm font-medium">
-                ${money(
-                  Number(
-                    item.priceSalon ||
-                      0
-                  ) *
-                    item.qty
-                )}
-              </p>
+<button
+class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+data-id="${item.id}"
+data-step="1">
++
+</button>
 
-            </div>
+</div>
 
-          </div>
+<p class="text-[13px] font-semibold whitespace-nowrap">
+${money(Number(item.priceSalon || 0) * item.qty)}
+</p>
 
-        </div>
-      `
-        )
-        .join("");
+</div>
 
-    bindQty();
+</div>
+`).join("");
+
+    bindActions();
     totals();
   }
 
-  /* ==============================
-     TOTALS + CREDIT
-  ============================== */
   function totals() {
     let pub = 0;
     let salon = 0;
 
-    cart.forEach(
-      (item) => {
-        pub +=
-          Number(
-            item.pricePublic ||
-              0
-          ) * item.qty;
+    cart.forEach((item) => {
+      pub += Number(item.pricePublic || 0) * item.qty;
+      salon += Number(item.priceSalon || 0) * item.qty;
+    });
 
-        salon +=
-          Number(
-            item.priceSalon ||
-              0
-          ) * item.qty;
-      }
-    );
+    const save = pub - salon;
+    const units = cart.reduce((a, b) => a + b.qty, 0);
 
-    const save =
-      pub - salon;
+    if (publicTotal) publicTotal.textContent = money(pub);
+    if (savingTotal) savingTotal.textContent = money(save);
+    if (finalTotal) finalTotal.textContent = money(salon);
+    if (cartCount) cartCount.textContent = `${units} items`;
 
-    if (publicTotal)
-      publicTotal.textContent =
-        money(pub);
-
-    if (savingTotal)
-      savingTotal.textContent =
-        money(save);
-
-    if (finalTotal)
-      finalTotal.textContent =
-        money(salon);
-
-    const units =
-      cart.reduce(
-        (
-          a,
-          b
-        ) =>
-          a +
-          b.qty,
-        0
-      );
-
-    if (cartCount) {
-      cartCount.textContent =
-        `${units} items`;
+    if (salon < 1500) {
+      if (creditTitle) creditTitle.textContent = "Contado total";
+      if (creditText) creditText.textContent = "Pedido menor a $1,500";
+    } else if (salon < 10000) {
+      if (creditTitle) creditTitle.textContent = "50% hoy + 50% a 15 días";
+      if (creditText) creditText.textContent = `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+    } else {
+      if (creditTitle) creditTitle.textContent = "50% hoy + 50% a 30 días";
+      if (creditText) creditText.textContent = `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
     }
 
-    /* CREDIT RULES */
-    if (
-      salon < 1500
-    ) {
-      creditTitle &&
-        (creditTitle.textContent =
-          "Contado total");
-
-      creditText &&
-        (creditText.textContent =
-          "Pedido menor a $1,500.");
-    }
-
-    else if (
-      salon < 10000
-    ) {
-      creditTitle &&
-        (creditTitle.textContent =
-          "50% hoy + 50% a 15 días");
-
-      creditText &&
-        (creditText.textContent =
-          `${money(
-            salon / 2
-          )} hoy y ${money(
-            salon / 2
-          )} después.`);
-    }
-
-    else {
-      creditTitle &&
-        (creditTitle.textContent =
-          "50% hoy + 50% a 30 días");
-
-      creditText &&
-        (creditText.textContent =
-          `${money(
-            salon / 2
-          )} hoy y ${money(
-            salon / 2
-          )} después.`);
-    }
-
-    return {
-      public: pub,
-      salon,
-      saving: save
-    };
+    return { salon };
   }
 
-  /* ==============================
-     SEND ORDER
-  ============================== */
   async function sendOrder() {
     if (!cart.length) {
-      alert(
-        "Agrega productos."
-      );
+      alert("Agrega productos.");
       return;
     }
 
     try {
-      const {
-        data: {
-          user
-        }
-      } =
-        await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
-        location.href =
-          "/auth/login";
+        location.href = "/auth/login";
         return;
       }
 
-      const {
-        data: profile
-      } =
-        await supabase
-          .from(
-            "profiles"
-          )
-          .select(
-            "name,first_name,advisor"
-          )
-          .eq(
-            "id",
-            user.id
-          )
-          .maybeSingle();
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("name,first_name,advisor")
+        .eq("id", user.id)
+        .maybeSingle();
 
-      const advisor =
-        profile?.advisor ||
-        "David";
-
-      const phone =
-        advisors[
-          advisor
-        ] ||
-        advisors.David;
-
+      const advisor = profile?.advisor || "David";
+      const phone = advisors[advisor];
       const client =
         profile?.name ||
         profile?.first_name ||
-        user.email ||
-        "Cliente";
+        user.email;
 
-      const sums =
-        totals();
+      const sums = totals();
 
-      let msg =
-        `*PEDIDO AVYNA*%0A%0A`;
-
+      let msg = `*PEDIDO AVYNA*%0A%0A`;
       msg += `Cliente: ${client}%0A`;
       msg += `Asesor: ${advisor}%0A%0A`;
 
-      msg +=
-        `*DETALLE*%0A`;
+      cart.forEach((item) => {
+        msg += `${item.qty} x ${item.name}%0A`;
+      });
 
-      cart.forEach(
-        (
-          item
-        ) => {
-          msg += `${item.qty} x ${item.name}%0A`;
-        }
-      );
+      msg += `%0ATotal: ${money(sums.salon)}`;
 
-      msg += `%0ATotal: ${money(
-        sums.salon
-      )}`;
-
-      window.open(
-        `https://wa.me/${phone}?text=${msg}`,
-        "_blank"
-      );
+      window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
 
     } catch {
-      alert(
-        "No se pudo enviar."
-      );
+      alert("No se pudo enviar.");
     }
   }
 
-  /* ==============================
-     EVENTS
-  ============================== */
+  function bindActions() {
+    document.querySelectorAll(".qty-btn").forEach((btn) => {
+      const clone = btn.cloneNode(true);
+      btn.parentNode?.replaceChild(clone, btn);
 
-function bindQty() {
-  document
-    .querySelectorAll(".qty-btn")
-    .forEach((btn) => {
-      const clone =
-        btn.cloneNode(true);
-
-      btn.parentNode?.replaceChild(
-        clone,
-        btn
-      );
-
-      clone.addEventListener(
-        "click",
-        () => {
-          const el =
-            clone as HTMLElement;
-
-          updateQty(
-            el.dataset.id || "",
-            Number(
-              el.dataset.step || 0
-            )
-          );
-        }
-      );
+      clone.addEventListener("click", () => {
+        const el = clone as HTMLElement;
+        updateQty(
+          el.dataset.id || "",
+          Number(el.dataset.step || 0)
+        );
+      });
     });
-}
+
+    document.querySelectorAll(".remove-btn").forEach((btn) => {
+      const clone = btn.cloneNode(true);
+      btn.parentNode?.replaceChild(clone, btn);
+
+      clone.addEventListener("click", () => {
+        const el = clone as HTMLElement;
+        removeItem(el.dataset.id || "");
+      });
+    });
+
+    document.querySelectorAll(".qty-input").forEach((input) => {
+      const clone = input.cloneNode(true) as HTMLInputElement;
+      input.parentNode?.replaceChild(clone, input);
+
+      const save = () => {
+        updateQtyDirect(
+          clone.dataset.id || "",
+          Number(clone.value)
+        );
+      };
+
+      clone.addEventListener("change", save);
+      clone.addEventListener("blur", save);
+    });
+  }
+
   function renderAll() {
     renderProducts();
     renderCart();
   }
 
-  search?.addEventListener(
-    "input",
-    applyFilters
-  );
+  search?.addEventListener("input", applyFilters);
+  family?.addEventListener("change", applyFilters);
 
-  family?.addEventListener(
-    "change",
-    applyFilters
-  );
+  limitSelect?.addEventListener("change", () => {
+    limit = Number(limitSelect.value);
+    page = 1;
+    renderProducts();
+  });
 
-  limitSelect?.addEventListener(
-    "change",
-    () => {
-      limit = Number(
-        limitSelect.value
-      );
-
-      page = 1;
-
+  prevBtn?.addEventListener("click", () => {
+    if (page > 1) {
+      page--;
       renderProducts();
     }
-  );
+  });
 
-  prevBtn?.addEventListener(
-    "click",
-    () => {
-      if (
-        page > 1
-      ) {
-        page--;
-        renderProducts();
-      }
+  nextBtn?.addEventListener("click", () => {
+    if (page < totalPages()) {
+      page++;
+      renderProducts();
     }
-  );
+  });
 
-  nextBtn?.addEventListener(
-    "click",
-    () => {
-      if (
-        page <
-        totalPages()
-      ) {
-        page++;
-        renderProducts();
-      }
-    }
-  );
+  clearBtn?.addEventListener("click", () => {
+    cart = [];
+    renderAll();
+  });
 
-  clearBtn?.addEventListener(
-    "click",
-    () => {
-      cart = [];
-      renderAll();
-    }
-  );
+  sendBtn?.addEventListener("click", sendOrder);
 
-  sendBtn?.addEventListener(
-    "click",
-    sendOrder
-  );
+  window.addEventListener("resize", renderProducts);
 
-  /* INIT */
   loadFamilies();
   applyFilters();
 });
