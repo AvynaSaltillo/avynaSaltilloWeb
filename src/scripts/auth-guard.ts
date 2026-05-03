@@ -1,9 +1,19 @@
+// src/scripts/auth-guard.ts
+
 import { supabase } from "../lib/supabase";
 
-const {
-  data: { session }
-} = await supabase.auth.getSession();
+(async () => {
+  try {
+    const {
+      data: { user },
+      error
+    } = await supabase.auth.getUser();
 
-if (!session) {
-  location.href = "/auth/login";
-}
+    if (error || !user) {
+      location.href = "/auth/login";
+      return;
+    }
+  } catch {
+    location.href = "/auth/login";
+  }
+})();

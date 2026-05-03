@@ -1,5 +1,3 @@
-// src/scripts/portal.ts
-
 import { supabase } from "../lib/supabase";
 
 document.addEventListener("DOMContentLoaded", async () => {

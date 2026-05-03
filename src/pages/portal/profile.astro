@@ -1,0 +1,295 @@
+---
+import PortalLayout from "../../layouts/PortalLayout.astro";
+---
+
+<PortalLayout title="Mi Perfil | AVYNA">
+
+<section class="space-y-8">
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:p-10">
+
+    <div class="absolute -left-16 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <div class="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-white/[0.02] blur-3xl"></div>
+
+    <div class="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+
+      <div class="flex items-center gap-5">
+
+        <div
+          id="profileAvatar"
+          class="grid h-20 w-20 place-items-center rounded-[2rem] bg-white text-2xl font-semibold text-black"
+        >
+          A
+        </div>
+
+        <div>
+
+          <p class="text-xs uppercase tracking-[0.42em] text-white/35">
+            CLIENT ACCOUNT
+          </p>
+
+          <h1
+            id="profileName"
+            class="mt-3 text-4xl font-semibold tracking-tight"
+          >
+            Mi Perfil
+          </h1>
+
+          <p
+            id="profileEmail"
+            class="mt-2 text-sm text-white/50"
+          >
+            cargando...
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+
+        <div class="rounded-3xl border border-white/10 bg-black/35 px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Cliente ID
+          </p>
+
+          <p
+            id="profileClientId"
+            class="mt-2 text-lg font-semibold"
+          >
+            --
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-black/35 px-5 py-4">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Estado
+          </p>
+
+          <p
+            id="profileStatus"
+            class="mt-2 text-lg font-semibold text-emerald-300"
+          >
+            Activo
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- GRID -->
+  <section class="grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
+
+    <!-- DATA -->
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <h2 class="text-2xl font-semibold">
+          Información comercial
+        </h2>
+
+        <button
+          id="editProfileBtn"
+          class="rounded-2xl border border-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10"
+        >
+          Editar
+        </button>
+
+      </div>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+
+        <div class="profile-card">
+          <p class="profile-label">
+            Nombre
+          </p>
+
+          <p
+            id="firstName"
+            class="profile-value"
+          >
+            --
+          </p>
+        </div>
+
+        <div class="profile-card">
+          <p class="profile-label">
+            Apellido
+          </p>
+
+          <p
+            id="lastName"
+            class="profile-value"
+          >
+            --
+          </p>
+        </div>
+
+        <div class="profile-card sm:col-span-2">
+          <p class="profile-label">
+            Negocio
+          </p>
+
+          <p
+            id="businessName"
+            class="profile-value"
+          >
+            --
+          </p>
+        </div>
+
+        <div class="profile-card">
+          <p class="profile-label">
+            Teléfono
+          </p>
+
+          <p
+            id="phone"
+            class="profile-value"
+          >
+            --
+          </p>
+        </div>
+
+        <div class="profile-card">
+          <p class="profile-label">
+            Ciudad
+          </p>
+
+          <p
+            id="city"
+            class="profile-value"
+          >
+            Saltillo
+          </p>
+        </div>
+
+        <div class="profile-card sm:col-span-2">
+          <p class="profile-label">
+            Asesor asignado
+          </p>
+
+          <p
+            id="advisor"
+            class="profile-value"
+          >
+            --
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SIDE -->
+    <div class="space-y-6">
+
+      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Seguridad
+        </p>
+
+        <h3 class="mt-4 text-2xl font-semibold">
+          Cuenta protegida
+        </h3>
+
+        <p class="mt-3 text-sm leading-7 text-white/50">
+          Mantén actualizados tus datos y cambia contraseña
+          cuando lo necesites.
+        </p>
+
+        <button
+          id="changePasswordBtn"
+          class="mt-6 inline-flex h-11 items-center justify-center rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
+        >
+          Cambiar contraseña
+        </button>
+
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Actividad
+        </p>
+
+        <div class="mt-5 space-y-4">
+
+          <div class="flex items-center justify-between">
+            <span class="text-white/50">
+              Pedidos totales
+            </span>
+
+            <span
+              id="ordersTotal"
+              class="font-semibold"
+            >
+              0
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-white/50">
+              Último acceso
+            </span>
+
+            <span
+              id="lastAccess"
+              class="font-semibold"
+            >
+              Hoy
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-white/50">
+              Miembro desde
+            </span>
+
+            <span
+              id="memberSince"
+              class="font-semibold"
+            >
+              --
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+<style>
+.profile-card{
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.03);
+border-radius:1.5rem;
+padding:1rem;
+}
+
+.profile-label{
+font-size:.72rem;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:rgba(255,255,255,.38);
+}
+
+.profile-value{
+margin-top:.55rem;
+font-size:1.05rem;
+font-weight:600;
+}
+</style>
+
+<script type="module" src="/src/scripts/profile.ts"></script>

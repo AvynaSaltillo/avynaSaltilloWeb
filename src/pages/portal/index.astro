@@ -1,0 +1,251 @@
+---
+import PortalLayout from "../../layouts/PortalLayout.astro";
+---
+
+<PortalLayout title="Portal AVYNA">
+
+<section class="space-y-8">
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:p-10">
+
+    <div class="absolute -left-16 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <div class="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-white/[0.02] blur-3xl"></div>
+
+    <div class="relative z-10 grid gap-8 lg:grid-cols-[1.3fr_.7fr]">
+
+      <!-- LEFT -->
+      <div>
+
+        <p class="text-xs uppercase tracking-[0.42em] text-white/35">
+          AVYNA PRIVATE ACCESS
+        </p>
+
+        <h1
+          id="portalWelcome"
+          class="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl"
+        >
+          Bienvenido 👋
+        </h1>
+
+        <p class="mt-5 max-w-2xl text-sm leading-7 text-white/55 sm:text-base">
+          Administra tus pedidos, revisa condiciones comerciales,
+          explora productos premium y mantén crecimiento constante
+          con acceso exclusivo para clientes AVYNA Saltillo.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+
+          <a
+            href="/portal/orders"
+            class="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
+          >
+            Nuevo pedido
+          </a>
+
+          <a
+            href="/portal/dashboard"
+            class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+          >
+            Ver dashboard
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="grid gap-4">
+
+        <div class="rounded-3xl border border-white/10 bg-black/35 p-5">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Próximo cierre
+          </p>
+
+          <p class="mt-3 text-2xl font-semibold">
+            Jueves 11:59 PM
+          </p>
+
+          <p class="mt-2 text-sm text-white/45">
+            Haz tu pedido antes del corte semanal.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-black/35 p-5">
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Estado cuenta
+          </p>
+
+          <p
+            id="portalPending"
+            class="mt-3 text-3xl font-semibold"
+          >
+            $0
+          </p>
+
+          <p class="mt-2 text-sm text-white/45">
+            Balance pendiente actual.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- QUICK ACCESS -->
+  <section>
+
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <h2 class="text-2xl font-semibold">
+        Accesos rápidos
+      </h2>
+
+      <p class="text-sm text-white/40">
+        Todo lo importante en un clic
+      </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+      <a
+        href="/portal/dashboard"
+        class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.05]"
+      >
+        <p class="text-sm text-white/40">
+          Panel
+        </p>
+
+        <h3 class="mt-3 text-xl font-semibold">
+          Dashboard
+        </h3>
+
+        <p class="mt-2 text-sm text-white/50">
+          Métricas, pedidos y actividad.
+        </p>
+      </a>
+
+      <a
+        href="/portal/orders"
+        class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.05]"
+      >
+        <p class="text-sm text-white/40">
+          Compras
+        </p>
+
+        <h3 class="mt-3 text-xl font-semibold">
+          Pedidos
+        </h3>
+
+        <p class="mt-2 text-sm text-white/50">
+          Historial y nuevos pedidos.
+        </p>
+      </a>
+
+      <a
+        href="/portal/profile"
+        class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.05]"
+      >
+        <p class="text-sm text-white/40">
+          Cuenta
+        </p>
+
+        <h3 class="mt-3 text-xl font-semibold">
+          Mi perfil
+        </h3>
+
+        <p class="mt-2 text-sm text-white/50">
+          Datos comerciales y contacto.
+        </p>
+      </a>
+
+      <a
+        href="/grow"
+        class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 transition hover:bg-white/[0.05]"
+      >
+        <p class="text-sm text-white/40">
+          Catálogo
+        </p>
+
+        <h3 class="mt-3 text-xl font-semibold">
+          Grow
+        </h3>
+
+        <p class="mt-2 text-sm text-white/50">
+          Productos y novedades premium.
+        </p>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- LOWER -->
+  <section class="grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
+
+    <!-- LAST ORDERS -->
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <h2 class="text-2xl font-semibold">
+          Últimos pedidos
+        </h2>
+
+        <a
+          href="/portal/orders"
+          class="text-sm text-white/45 hover:text-white"
+        >
+          Ver todos
+        </a>
+
+      </div>
+
+      <div
+        id="portalOrders"
+        class="mt-6 space-y-3"
+      >
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/45">
+          Cargando...
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="space-y-6">
+
+      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Pedidos este mes
+        </p>
+
+        <p
+          id="portalCount"
+          class="mt-4 text-5xl font-semibold"
+        >
+          0
+        </p>
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Compras este mes
+        </p>
+
+        <p
+          id="portalMonth"
+          class="mt-4 text-4xl font-semibold"
+        >
+          $0
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+<script type="module" src="/src/scripts/portal-home.ts"></script>
