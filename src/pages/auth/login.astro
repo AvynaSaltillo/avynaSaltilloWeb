@@ -1,3 +1,4 @@
+<!-- login.astro (COMPLETO CORREGIDO) -->
 ---
 import AuthLayout from "../../layouts/AuthLayout.astro";
 import {
@@ -13,14 +14,10 @@ import {
   subtitle="Acceso exclusivo para clientes activos AVYNA Saltillo."
 >
 
-<form
-  id="loginForm"
-  class="space-y-3"
->
+<form id="loginForm" class="space-y-3">
 
   <!-- EMAIL -->
   <div class="relative">
-
     <Mail
       size={18}
       className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
@@ -34,12 +31,10 @@ import {
       required
       autocomplete="email"
     />
-
   </div>
 
   <!-- PASSWORD -->
   <div class="relative">
-
     <Lock
       size={18}
       className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
@@ -57,28 +52,27 @@ import {
     <button
       type="button"
       id="togglePassword"
-      class="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-white/40 transition hover:text-white"
+      class="absolute right-3 top-1/2 z-20 -translate-y-1/2 text-white/40 active:scale-95"
       aria-label="Mostrar contraseña"
     >
-      <Eye size={18} />
+      <Eye
+        size={18}
+        className="pointer-events-none"
+      />
     </button>
-
   </div>
 
   <!-- OPTIONS -->
   <div class="flex items-center justify-between gap-3 pt-1">
 
     <label class="flex items-center gap-2 text-sm text-white/55">
-      <input
-        type="checkbox"
-        class="rounded border-white/20 bg-black"
-      />
+      <input type="checkbox" />
       <span>Recordarme</span>
     </label>
 
     <a
       href="/auth/forgot-password"
-      class="text-sm text-white/55 transition hover:text-white"
+      class="text-sm text-white/55 hover:text-white"
     >
       ¿Olvidaste tu contraseña?
     </a>
@@ -89,13 +83,15 @@ import {
   <button
     id="submitBtn"
     type="submit"
-    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black transition active:scale-[0.98]"
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white font-semibold text-black"
   >
     <span id="btnText">Entrar</span>
-    <ArrowRight size={16} />
+    <ArrowRight
+      size={16}
+      className="pointer-events-none"
+    />
   </button>
 
-  <!-- MESSAGE -->
   <p
     id="msg"
     class="min-h-5 text-center text-sm text-white/55"
@@ -103,12 +99,11 @@ import {
 
 </form>
 
-<!-- EXTRA -->
-<div class="mt-5 border-t border-white/10 pt-5 space-y-3">
+<div class="mt-5 border-t border-white/10 pt-5">
 
   <a
     href="/auth/signup"
-    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 hover:bg-white/10"
   >
     Solicitar acceso
   </a>
@@ -118,118 +113,104 @@ import {
 <script type="module">
 import { supabase } from "/src/lib/supabase.ts";
 
-const form = document.getElementById("loginForm");
-const msg = document.getElementById("msg");
-const submitBtn = document.getElementById("submitBtn");
-const btnText = document.getElementById("btnText");
+window.addEventListener("DOMContentLoaded", () => {
 
-const emailInput = document.getElementById("email");
-const password = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("msg");
+  const submitBtn = document.getElementById("submitBtn");
+  const btnText = document.getElementById("btnText");
 
-/* PASSWORD */
-togglePassword.addEventListener("click", () => {
-  password.type =
-    password.type === "password"
-      ? "text"
-      : "password";
-});
+  const emailInput = document.getElementById("email");
+  const password = document.getElementById("password");
+  const togglePassword =
+    document.getElementById("togglePassword");
 
-/* LOADING */
-function setLoading(state) {
+  /* OJO FUNCIONAL MOBILE */
+  togglePassword?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  submitBtn.disabled = state;
+    password.type =
+      password.type === "password"
+        ? "text"
+        : "password";
+  });
 
-  btnText.textContent =
-    state ? "Entrando..." : "Entrar";
-
-  submitBtn.classList.toggle(
-    "opacity-70",
-    state
-  );
-}
-
-/* LOGIN */
-form.addEventListener("submit", async (e) => {
-
-  e.preventDefault();
-  e.stopPropagation();
-
-  msg.textContent = "";
-
-  const email =
-    emailInput.value.trim().toLowerCase();
-
-  const pass =
-    password.value.trim();
-
-  if (!email || !pass) {
-    msg.textContent =
-      "Completa correo y contraseña.";
-    return;
+  function setLoading(state) {
+    submitBtn.disabled = state;
+    btnText.textContent =
+      state ? "Entrando..." : "Entrar";
   }
 
-  setLoading(true);
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  try {
+    msg.textContent = "";
 
-    /* LOGIN */
-    const {
-      data,
-      error
-    } = await supabase.auth.signInWithPassword({
-      email,
-      password: pass
-    });
+    const email =
+      emailInput.value.trim().toLowerCase();
 
-    if (error || !data.user) {
+    const pass =
+      password.value.trim();
+
+    if (!email || !pass) {
       msg.textContent =
-        "Credenciales inválidas.";
-      setLoading(false);
+        "Completa correo y contraseña.";
       return;
     }
 
-    /* PERFIL */
-    const {
-      data: profile
-    } = await supabase
-      .from("profiles")
-      .select("approved, role")
-      .eq("id", data.user.id)
-      .maybeSingle();
+    setLoading(true);
 
-    if (!profile) {
-      msg.textContent =
-        "No se encontró perfil.";
-      await supabase.auth.signOut();
-      setLoading(false);
-      return;
-    }
+    try {
 
-    if (profile.approved !== true) {
+      const { data, error } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password: pass
+        });
+
+      if (error || !data.user) {
+        msg.textContent =
+          "Credenciales inválidas.";
+        setLoading(false);
+        return;
+      }
+
+      const { data: profile } =
+        await supabase
+          .from("profiles")
+          .select("approved, role")
+          .eq("id", data.user.id)
+          .maybeSingle();
+
+      if (!profile) {
+        msg.textContent =
+          "No se encontró perfil.";
+        setLoading(false);
+        return;
+      }
+
+      if (profile.approved !== true) {
+        window.location.href =
+          "/auth/pending";
+        return;
+      }
+
+      if (profile.role === "admin") {
+        window.location.href = "/admin";
+        return;
+      }
 
       window.location.href =
-        "/auth/pending";
+        "/portal/dashboard";
 
-      return;
+    } catch {
+      msg.textContent =
+        "Ocurrió un error inesperado.";
+      setLoading(false);
     }
 
-/* REDIRECT */
-if (profile.role === "admin") {
-  window.location.href = "/admin";
-  return;
-}
-
-/* TODOS LOS DEMÁS = CLIENTE */
-window.location.href = "/portal/dashboard";
-
-  } catch (error) {
-
-    msg.textContent =
-      "Ocurrió un error inesperado.";
-
-    setLoading(false);
-  }
+  });
 
 });
 </script>
