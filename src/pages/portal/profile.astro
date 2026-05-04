@@ -51,13 +51,24 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
       <div class="grid gap-3 sm:w-[260px]">
 
         <div class="rounded-2xl border border-white/10 bg-black/35 px-5 py-4">
-          <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
-            Cliente ID
-          </p>
-          <p id="profileClientId" class="mt-2 text-xl font-semibold">
-            --
-          </p>
-        </div>
+  <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
+    Cliente ID
+  </p>
+
+  <div class="mt-2 flex items-center gap-2">
+    <p id="profileClientId" class="text-xl font-semibold">
+      --
+    </p>
+
+    <!-- BADGE -->
+    <span
+      id="verifiedBadge"
+      class="hidden items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-300"
+    >
+      ✔ Verificado
+    </span>
+  </div>
+</div>
 
         <div class="rounded-2xl border border-white/10 bg-black/35 px-5 py-4">
           <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
