@@ -1,110 +1,203 @@
-// src/scripts/profile.ts
-
 import { supabase } from "../lib/supabase";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const $ = (id: string) =>
-    document.getElementById(id);
+type Profile = {
+  id: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  business_name?: string | null;
+  phone?: string | null;
+  city?: string | null;
+  advisor?: string | null;
+  local_client_id?: string | null;
+  created_at?: string | null;
+};
 
-  const setText = (
-    id: string,
-    value: string
-  ) => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const $ = (id: string) => document.getElementById(id);
+
+  const setText = (id: string, value: string) => {
     const el = $(id);
     if (el) el.textContent = value;
   };
 
-  try {
-    /* AUTH REAL */
+  let user: any = null;
+  let profile: Profile | null = null;
+
+  /* =========================
+     🎨 GRADIENT GENERATOR
+  ========================= */
+  function getGradient(seed: string) {
+    let hash = 0;
+
+    for (let i = 0; i < seed.length; i++) {
+      hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    const gradients = [
+      "linear-gradient(135deg,#6366f1,#8b5cf6)",
+      "linear-gradient(135deg,#ec4899,#f43f5e)",
+      "linear-gradient(135deg,#22c55e,#06b6d4)",
+      "linear-gradient(135deg,#f59e0b,#ef4444)",
+      "linear-gradient(135deg,#0ea5e9,#6366f1)",
+      "linear-gradient(135deg,#a855f7,#ec4899)"
+    ];
+
+    return gradients[Math.abs(hash) % gradients.length];
+  }
+
+  function renderAvatar() {
+    const profileBox = $("profileAvatar");
+    const sidebarBox = $("sidebarAvatar");
+
+    if (!profile || !user) return;
+
+    const letter =
+      (
+        profile.first_name?.[0] ||
+        profile.business_name?.[0] ||
+        user.email?.[0] ||
+        "A"
+      ).toUpperCase();
+
+    const seed =
+      profile.first_name ||
+      profile.business_name ||
+      user.email ||
+      "A";
+
+    const gradient = getGradient(seed);
+
+    const html = `
+      <span class="avatar-letter">
+        ${letter}
+      </span>
+    `;
+
+    [profileBox, sidebarBox].forEach((el) => {
+      if (!el) return;
+
+      el.innerHTML = html;
+
+      const box = el as HTMLElement;
+
+      box.style.background = gradient;
+      box.style.boxShadow =
+        "0 10px 30px rgba(0,0,0,.45), 0 0 0 2px rgba(255,255,255,.04)";
+    });
+  }
+
+  /* ========================= */
+  async function loadProfile() {
     const {
-      data: { user },
-      error: authError
+      data: { user: authUser }
     } = await supabase.auth.getUser();
 
-    if (authError || !user) {
+    if (!authUser) {
       location.href = "/auth/login";
       return;
     }
 
-    const {
-      data: profile,
-      error
-    } = await supabase
+    user = authUser;
+
+    const { data } = await supabase
       .from("profiles")
-      .select(`
-        first_name,
-        last_name,
-        business_name,
-        phone,
-        city,
-        advisor,
-        local_client_id,
-        approved,
-        created_at
-      `)
+      .select("*")
       .eq("id", user.id)
-      .maybeSingle();
+      .single();
 
-    if (error || !profile) {
-      location.href = "/auth/signup";
-      return;
-    }
+    profile = data as Profile;
 
-    if (profile.approved !== true) {
-      location.href = "/auth/pending";
-      return;
-    }
-
-    const fullName =
+    const full =
       `${profile.first_name || ""} ${profile.last_name || ""}`.trim();
 
-    setText("profileName", fullName || "Mi Perfil");
-    setText("profileEmail", user.email || "");
+    const biz =
+      profile.business_name || "Mi negocio";
+
+    const email =
+      user.email || "--";
+
+    setText("profileName", full || biz);
+    setText("profileBusiness", biz);
+    setText("profileEmail", email);
     setText("profileClientId", profile.local_client_id || "AVY-0000");
-    setText("profileStatus", "Activo");
 
-    const avatar = $("profileAvatar");
-    if (avatar) {
-      avatar.textContent =
-        (profile.first_name?.[0] ||
-          user.email?.[0] ||
-          "A").toUpperCase();
-    }
-
-    setText("firstName", profile.first_name || "--");
-    setText("lastName", profile.last_name || "--");
-    setText("businessName", profile.business_name || "--");
-    setText("phone", profile.phone || "--");
+    setText("fullName", full || "--");
+    setText("businessNameText", biz);
+    setText("phoneText", profile.phone || "--");
+    setText("emailText", email);
     setText("city", profile.city || "Saltillo");
     setText("advisor", profile.advisor || "--");
 
-    const { count } = await supabase
-      .from("orders")
-      .select("*", {
-        count: "exact",
-        head: true
-      })
-      .eq("user_id", user.id);
+    ( $("businessNameInput") as HTMLInputElement ).value = biz;
+    ( $("phoneInput") as HTMLInputElement ).value = profile.phone || "";
+    ( $("emailInput") as HTMLInputElement ).value = email;
 
-    setText("ordersTotal", String(count || 0));
-
-    if (profile.created_at) {
-      setText(
-        "memberSince",
-        new Date(profile.created_at).toLocaleDateString(
-          "es-MX",
-          {
-            year: "numeric",
-            month: "short"
-          }
-        )
-      );
-    }
-
-    setText("lastAccess", "Hoy");
-
-  } catch (err) {
-    console.error(err);
-    location.href = "/auth/login";
+    renderAvatar();
   }
+
+  /* ========================= */
+  $("editProfileBtn")?.addEventListener("click", () => {
+    $("editProfileBtn")?.classList.add("hidden");
+    $("saveProfileBtn")?.classList.remove("hidden");
+    $("cancelProfileBtn")?.classList.remove("hidden");
+
+    ["businessNameInput", "phoneInput", "emailInput"].forEach(id =>
+      $(id)?.classList.remove("hidden")
+    );
+
+    ["businessNameText", "phoneText", "emailText"].forEach(id =>
+      $(id)?.classList.add("hidden")
+    );
+  });
+
+  $("cancelProfileBtn")?.addEventListener(
+    "click",
+    () => location.reload()
+  );
+
+  $("saveProfileBtn")?.addEventListener(
+    "click",
+    async () => {
+      const business =
+        ( $("businessNameInput") as HTMLInputElement ).value.trim();
+
+      const phone =
+        ( $("phoneInput") as HTMLInputElement ).value.trim();
+
+      const email =
+        ( $("emailInput") as HTMLInputElement ).value.trim();
+
+      await supabase
+        .from("profiles")
+        .update({
+          business_name: business,
+          phone
+        })
+        .eq("id", user.id);
+
+      if (email && email !== user.email) {
+        await supabase.auth.updateUser({ email });
+      }
+
+      location.reload();
+    }
+  );
+
+  $("changePasswordBtn")?.addEventListener(
+    "click",
+    async () => {
+      const pass = prompt("Nueva contraseña");
+
+      if (!pass || pass.length < 6) {
+        alert("Mínimo 6 caracteres");
+        return;
+      }
+
+      await supabase.auth.updateUser({ password: pass });
+
+      alert("Contraseña actualizada");
+    }
+  );
+
+  loadProfile();
 });
