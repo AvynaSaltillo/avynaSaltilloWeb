@@ -1,0 +1,193 @@
+---
+import "../styles/global.css";
+
+import {
+  RiDashboardLine,
+  RiShoppingBag3Line,
+  RiUserLine,
+  RiLogoutBoxRLine
+} from "react-icons/ri";
+
+const { title = "Admin AVYNA" } = Astro.props;
+
+const path = Astro.url.pathname;
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+</head>
+
+<body class="min-h-screen bg-black text-white antialiased">
+
+<!-- 🌌 BACKGROUND PREMIUM -->
+<div class="fixed inset-0 -z-10 overflow-hidden">
+  <div class="absolute inset-0 bg-black"></div>
+
+  <div class="absolute left-[-10%] top-[-10%] h-[500px] w-[500px] rounded-full bg-white/5 blur-3xl"></div>
+  <div class="absolute right-[-10%] bottom-[-10%] h-[500px] w-[500px] rounded-full bg-white/5 blur-3xl"></div>
+</div>
+
+<div class="flex min-h-screen">
+
+  <!-- 🧭 SIDEBAR -->
+  <aside class="hidden lg:flex w-72 h-screen sticky top-0 flex-col border-r border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.02] backdrop-blur-2xl shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+
+    <!-- TOP -->
+    <div class="px-6 py-6 border-b border-white/10">
+      <p class="text-[10px] uppercase tracking-[0.4em] text-white/30">
+        AVYNA
+      </p>
+      <h1 class="mt-3 text-2xl font-semibold">
+        Admin
+      </h1>
+    </div>
+
+    <!-- NAV -->
+    <nav class="flex-1 p-4 space-y-2 text-sm">
+
+      <a href="/admin"
+        class={`nav-admin ${path === "/admin" ? "active" : ""}`}>
+        <RiDashboardLine size={18}/>
+        Dashboard
+      </a>
+
+      <a href="/admin/orders"
+        class={`nav-admin ${path.startsWith("/admin/orders") ? "active" : ""}`}>
+        <RiShoppingBag3Line size={18}/>
+        Pedidos
+      </a>
+
+      <a href="/admin/clients"
+        class={`nav-admin ${path.startsWith("/admin/clients") ? "active" : ""}`}>
+        <RiUserLine size={18}/>
+        Clientes
+      </a>
+
+    </nav>
+
+    <!-- FOOT -->
+    <div class="p-4 border-t border-white/10">
+      <button id="logoutBtn"
+        class="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-white text-black text-sm font-semibold hover:opacity-90 transition">
+        <RiLogoutBoxRLine size={18}/>
+        Cerrar sesión
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- 🧱 MAIN -->
+  <div class="flex flex-1 flex-col">
+
+    <!-- 🔝 HEADER -->
+    <header class="sticky top-0 z-30 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+
+      <div class="flex items-center justify-between px-6 py-4">
+
+        <!-- LEFT -->
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
+            AVYNA
+          </p>
+          <p class="text-sm font-semibold">
+            {title}
+          </p>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4">
+
+          <!-- STATUS -->
+          <div class="hidden sm:flex items-center gap-2 text-xs text-white/50">
+            <span class="h-2 w-2 rounded-full bg-green-400"></span>
+            Sistema activo
+          </div>
+
+          <!-- AVATAR -->
+          <div class="h-9 w-9 rounded-xl bg-white text-black grid place-items-center text-sm font-semibold">
+            A
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- 📦 CONTENT -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8">
+
+      <div class="mx-auto w-full max-w-[1400px]">
+
+        <slot />
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+<style>
+/* NAV */
+.nav-admin {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  color:rgba(255,255,255,.7);
+  transition:.2s;
+}
+
+.nav-admin:hover {
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  transform: translateX(3px);
+}
+
+/* ACTIVE */
+.nav-admin.active {
+  background:#fff;
+  color:#000;
+  font-weight:600;
+}
+
+.nav-admin.active svg {
+  color:#000;
+}
+
+/* KPI CARDS (GLOBAL REUSE) */
+.stat-card {
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter: blur(10px);
+  transition: all .25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* GENERIC CARD */
+.card {
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  border-radius:24px;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 10px 40px rgba(0,0,0,0.6);
+}
+</style>
+
+</body>
+</html>

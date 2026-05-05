@@ -1,5 +1,6 @@
-// src/scripts/profile.ts
 import { supabase } from "../lib/supabase";
+
+type PaymentType = "credit" | "cash";
 
 type Profile = {
   id: string;
@@ -11,17 +12,14 @@ type Profile = {
   advisor?: string | null;
   official_client_id?: string | null;
   local_client_id?: string | null;
+  payment_type?: PaymentType | null;
   created_at?: string | null;
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const $ = (id: string) =>
-    document.getElementById(id);
+  const $ = (id: string) => document.getElementById(id);
 
-  const setText = (
-    id: string,
-    value: string
-  ) => {
+  const setText = (id: string, value: string) => {
     const el = $(id);
     if (el) el.textContent = value;
   };
@@ -36,9 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let hash = 0;
 
     for (let i = 0; i < seed.length; i++) {
-      hash =
-        seed.charCodeAt(i) +
-        ((hash << 5) - hash);
+      hash = seed.charCodeAt(i) + ((hash << 5) - hash);
     }
 
     const gradients = [
@@ -50,28 +46,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       "linear-gradient(135deg,#a855f7,#ec4899)"
     ];
 
-    return gradients[
-      Math.abs(hash) %
-        gradients.length
-    ];
+    return gradients[Math.abs(hash) % gradients.length];
   }
 
   function renderAvatar() {
-    const profileBox =
-      $("profileAvatar");
-    const sidebarBox =
-      $("sidebarAvatar");
+    const profileBox = $("profileAvatar");
+    const sidebarBox = $("sidebarAvatar");
 
-    if (!profile || !user)
-      return;
+    if (!profile || !user) return;
 
-    const letter =
-      (
-        profile.first_name?.[0] ||
-        profile.business_name?.[0] ||
-        user.email?.[0] ||
-        "A"
-      ).toUpperCase();
+    const letter = (
+      profile.first_name?.[0] ||
+      profile.business_name?.[0] ||
+      user.email?.[0] ||
+      "A"
+    ).toUpperCase();
 
     const seed =
       profile.first_name ||
@@ -79,31 +68,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       user.email ||
       "A";
 
-    const gradient =
-      getGradient(seed);
+    const gradient = getGradient(seed);
 
-    const html = `
-      <span class="avatar-letter">
-        ${letter}
-      </span>
-    `;
+    const html = `<span class="avatar-letter">${letter}</span>`;
 
-    [profileBox, sidebarBox].forEach(
-      (el) => {
-        if (!el) return;
+    [profileBox, sidebarBox].forEach((el) => {
+      if (!el) return;
 
-        el.innerHTML = html;
+      el.innerHTML = html;
 
-        const box =
-          el as HTMLElement;
-
-        box.style.background =
-          gradient;
-
-        box.style.boxShadow =
-          "0 10px 30px rgba(0,0,0,.45), 0 0 0 2px rgba(255,255,255,.04)";
-      }
-    );
+      const box = el as HTMLElement;
+      box.style.background = gradient;
+      box.style.boxShadow =
+        "0 10px 30px rgba(0,0,0,.45), 0 0 0 2px rgba(255,255,255,.04)";
+    });
   }
 
   /* =========================
@@ -112,163 +90,125 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function loadProfile() {
     const {
       data: { user: authUser }
-    } =
-      await supabase.auth.getUser();
+    } = await supabase.auth.getUser();
 
     if (!authUser) {
-      location.href =
-        "/auth/login";
+      location.href = "/auth/login";
       return;
     }
 
     user = authUser;
 
-    const { data } =
-      await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
+    const { data } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
 
-    profile =
-      data as Profile;
+    profile = data as Profile;
 
     const full =
       `${profile.first_name || ""} ${profile.last_name || ""}`.trim();
 
-    const business =
-      profile.business_name ||
-      "Mi negocio";
-
-    const email =
-      user.email || "--";
+    const business = profile.business_name || "Mi negocio";
+    const email = user.email || "--";
 
     /* ===== TEXTOS ===== */
-    setText(
-      "profileName",
-      full || business
-    );
+    setText("profileName", full || business);
+    setText("profileBusiness", business);
+    setText("profileEmail", email);
 
-    setText(
-      "profileBusiness",
-      business
-    );
+    /* =========================
+       CLIENT ID + BADGES (FIX REAL)
+    ========================= */
 
-    setText(
-      "profileEmail",
-      email
-    );
+    const officialId = profile.official_client_id;
+    const localId = profile.local_client_id;
 
-    /* ===== CLIENT ID + BADGE ===== */
-    const clientId =
-      profile.official_client_id ||
-      profile.local_client_id ||
-      "AVY-0000";
+    // 🔍 DEBUG (puedes quitar después)
+    console.log("official:", officialId);
+    console.log("local:", localId);
 
-    setText(
-      "profileClientId",
-      clientId
-    );
+    // 🔥 VALIDACIÓN REAL (anti-null, anti-string-null, anti-copy)
+    const hasOfficial =
+      officialId !== null &&
+      officialId !== undefined &&
+      typeof officialId === "string" &&
+      officialId.trim() !== "" &&
+      officialId.trim().toLowerCase() !== "null";
 
-    const badge =
-      $("verifiedBadge");
+    // 🔥 ID FINAL
+    const clientId = hasOfficial
+      ? officialId!
+      : localId || "AVY-0000";
 
-    if (
-      profile.official_client_id
-    ) {
-      badge?.classList.remove(
-        "hidden"
-      );
-    } else {
-      badge?.classList.add(
-        "hidden"
-      );
+    setText("profileClientId", clientId);
+
+    // 🔥 VERIFICADO SOLO SI:
+    // existe official REAL y NO es igual al local
+    const isVerified =
+      hasOfficial &&
+      officialId !== localId;
+
+    const verifiedBadge = $("verifiedBadge");
+
+    if (verifiedBadge) {
+      verifiedBadge.classList.toggle("hidden", !isVerified);
     }
 
-    /* ===== INFO ===== */
-    setText(
-      "fullName",
-      full || "--"
-    );
+    /* =========================
+       BADGE CRÉDITO / CONTADO
+    ========================= */
+    const creditBadge = $("creditBadge");
 
-    setText(
-      "businessNameText",
-      business
-    );
+    if (creditBadge) {
+      const type = profile.payment_type || "cash";
 
-    setText(
-      "phoneText",
-      profile.phone || "--"
-    );
+      creditBadge.classList.remove("hidden", "contado");
 
-    setText(
-      "emailText",
-      email
-    );
+      if (type === "credit") {
+        creditBadge.textContent = "Cliente con crédito";
+      } else {
+        creditBadge.textContent = "Pago de contado";
+        creditBadge.classList.add("contado");
+      }
 
-    setText(
-      "city",
-      profile.city ||
-        "Saltillo"
-    );
+      creditBadge.classList.remove("hidden");
+    }
 
-    setText(
-      "advisor",
-      profile.advisor ||
-        "--"
-    );
+    /* =========================
+       INFO
+    ========================= */
+    setText("fullName", full || "--");
+    setText("businessNameText", business);
+    setText("phoneText", profile.phone || "--");
+    setText("emailText", email);
+    setText("city", profile.city || "Saltillo");
+    setText("advisor", profile.advisor || "--");
 
-    (
-      $("businessNameInput") as HTMLInputElement
-    ).value = business;
-
-    (
-      $("phoneInput") as HTMLInputElement
-    ).value =
-      profile.phone || "";
-
-    (
-      $("emailInput") as HTMLInputElement
-    ).value = email;
+    ($("businessNameInput") as HTMLInputElement).value = business;
+    ($("phoneInput") as HTMLInputElement).value = profile.phone || "";
+    ($("emailInput") as HTMLInputElement).value = email;
 
     /* ===== FECHA ===== */
     if (profile.created_at) {
       setText(
         "memberSince",
-        new Date(
-          profile.created_at
-        ).toLocaleDateString(
-          "es-MX",
-          {
-            year: "numeric",
-            month: "short"
-          }
-        )
+        new Date(profile.created_at).toLocaleDateString("es-MX", {
+          year: "numeric",
+          month: "short"
+        })
       );
     }
 
     /* ===== PEDIDOS ===== */
-    const { count } =
-      await supabase
-        .from("orders")
-        .select("*", {
-          count: "exact",
-          head: true
-        })
-        .eq(
-          "user_id",
-          user.id
-        );
+    const { count } = await supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id);
 
-    setText(
-      "ordersTotal",
-      String(count || 0)
-    );
-
-    setText(
-      "lastAccess",
-      "Hoy"
-    );
+    setText("ordersTotal", String(count || 0));
+    setText("lastAccess", "Hoy");
 
     renderAvatar();
   }
@@ -276,123 +216,69 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* =========================
      EDIT PROFILE
   ========================= */
-  $("editProfileBtn")?.addEventListener(
-    "click",
-    () => {
-      $("editProfileBtn")?.classList.add(
-        "hidden"
-      );
+  $("editProfileBtn")?.addEventListener("click", () => {
+    $("editProfileBtn")?.classList.add("hidden");
+    $("saveProfileBtn")?.classList.remove("hidden");
+    $("cancelProfileBtn")?.classList.remove("hidden");
 
-      $("saveProfileBtn")?.classList.remove(
-        "hidden"
-      );
+    ["businessNameInput", "phoneInput", "emailInput"].forEach((id) =>
+      $(id)?.classList.remove("hidden")
+    );
 
-      $("cancelProfileBtn")?.classList.remove(
-        "hidden"
-      );
+    ["businessNameText", "phoneText", "emailText"].forEach((id) =>
+      $(id)?.classList.add("hidden")
+    );
+  });
 
-      [
-        "businessNameInput",
-        "phoneInput",
-        "emailInput"
-      ].forEach((id) =>
-        $(id)?.classList.remove(
-          "hidden"
-        )
-      );
+  $("cancelProfileBtn")?.addEventListener("click", () =>
+    location.reload()
+  );
 
-      [
-        "businessNameText",
-        "phoneText",
-        "emailText"
-      ].forEach((id) =>
-        $(id)?.classList.add(
-          "hidden"
-        )
-      );
+  $("saveProfileBtn")?.addEventListener("click", async () => {
+    const business = (
+      $("businessNameInput") as HTMLInputElement
+    ).value.trim();
+
+    const phone = (
+      $("phoneInput") as HTMLInputElement
+    ).value.trim();
+
+    const email = (
+      $("emailInput") as HTMLInputElement
+    ).value.trim();
+
+    await supabase
+      .from("profiles")
+      .update({
+        business_name: business,
+        phone
+      })
+      .eq("id", user.id);
+
+    if (email && email !== user.email) {
+      await supabase.auth.updateUser({ email });
     }
-  );
 
-  $("cancelProfileBtn")?.addEventListener(
-    "click",
-    () => location.reload()
-  );
-
-  $("saveProfileBtn")?.addEventListener(
-    "click",
-    async () => {
-      const business =
-        (
-          $("businessNameInput") as HTMLInputElement
-        ).value.trim();
-
-      const phone =
-        (
-          $("phoneInput") as HTMLInputElement
-        ).value.trim();
-
-      const email =
-        (
-          $("emailInput") as HTMLInputElement
-        ).value.trim();
-
-      await supabase
-        .from("profiles")
-        .update({
-          business_name:
-            business,
-          phone
-        })
-        .eq(
-          "id",
-          user.id
-        );
-
-      if (
-        email &&
-        email !== user.email
-      ) {
-        await supabase.auth.updateUser(
-          { email }
-        );
-      }
-
-      location.reload();
-    }
-  );
+    location.reload();
+  });
 
   /* =========================
      PASSWORD
   ========================= */
-  $("changePasswordBtn")?.addEventListener(
-    "click",
-    async () => {
-      const pass =
-        prompt(
-          "Nueva contraseña"
-        );
+  $("changePasswordBtn")?.addEventListener("click", async () => {
+    const pass = prompt("Nueva contraseña");
 
-      if (
-        !pass ||
-        pass.length < 6
-      ) {
-        alert(
-          "Mínimo 6 caracteres"
-        );
-        return;
-      }
-
-      await supabase.auth.updateUser(
-        {
-          password: pass
-        }
-      );
-
-      alert(
-        "Contraseña actualizada"
-      );
+    if (!pass || pass.length < 6) {
+      alert("Mínimo 6 caracteres");
+      return;
     }
-  );
+
+    await supabase.auth.updateUser({
+      password: pass
+    });
+
+    alert("Contraseña actualizada");
+  });
 
   loadProfile();
 });

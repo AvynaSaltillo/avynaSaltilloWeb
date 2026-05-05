@@ -1,0 +1,71 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import ClientsTable from "../../components/admin/ClientsTable.astro";
+---
+
+<AdminLayout title="Clientes">
+
+  <section class="space-y-6">
+
+    <!-- HEADER -->
+    <div>
+      <h1 class="text-2xl font-semibold">Clientes</h1>
+      <p class="text-sm text-white/50">
+        Gestión de clientes registrados en el sistema
+      </p>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="flex gap-3">
+
+      <select id="filterStatus"
+        class="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-sm">
+        <option value="">Todos</option>
+        <option value="active">Activos</option>
+<option value="blocked">Bloqueados</option>
+<option value="pending">Pendientes</option>
+      </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="card p-6">
+      <ClientsTable />
+    </div>
+
+  </section>
+
+
+
+  <script>
+    import "../../scripts/admin-clients.ts";
+  </script>
+
+</AdminLayout>
+
+<!-- MODAL GLOBAL -->
+<div id="clientModal" class="fixed inset-0 hidden z-[9999]">
+
+  <!-- OVERLAY -->
+  <div id="modalOverlay"
+       class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+  <!-- WRAPPER -->
+  <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+
+    <!-- CONTENEDOR -->
+    <div id="modalContainer"
+      class="w-full max-w-2xl rounded-3xl 
+             bg-zinc-900/95 backdrop-blur-xl
+             border border-white/10 
+             shadow-[0_0_80px_rgba(0,0,0,0.8)]
+             p-6">
+
+      <!-- CONTENIDO DINÁMICO -->
+      <div id="modalContent"></div>
+
+    </div>
+
+  </div>
+
+</div>

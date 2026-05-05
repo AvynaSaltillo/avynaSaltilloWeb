@@ -966,9 +966,9 @@ export const products = [
   extra:
     "Incluye reflejos naturales, intensos, blancos y luminosos. Mezcla 1:1.5.",
   tag: "Pro",
-  priceSalon: 91,
-  pricePublic: 130,
-  saving: 39,
+  priceSalon: 165,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/colore-zenzero.png"
 },
 
@@ -982,9 +982,9 @@ export const products = [
   extra:
     "Mezcla 1:1.5 efecto intenso / 1:2 efecto pastel.",
   tag: "Trend",
-  priceSalon: 119,
-  pricePublic: 170,
-  saving: 51,
+  priceSalon: 165,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/pastel-colors.png"
 },
 
@@ -998,9 +998,9 @@ export const products = [
   extra:
     "Colores disponibles: blanco, beige, amarillo, naranja, rojo, violeta, fucsia, azul, lavanda, gris y café.",
   tag: "Top",
-  priceSalon: 280,
-  pricePublic: 400,
-  saving: 120,
+  priceSalon: 259,
+  pricePublic: 370,
+  saving: 111,
   image: "/images/products/color/pigmento-zenzero.png"
 },
 
@@ -1014,9 +1014,9 @@ export const products = [
   extra:
     "Volúmenes disponibles: 6, 10, 20, 30 y 40 vol.",
   tag: "Pro",
-  priceSalon: 126,
-  pricePublic: 180,
-  saving: 54,
+  priceSalon: 237,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/oxycream.png"
 },
 
@@ -1030,9 +1030,9 @@ export const products = [
   extra:
     "Especial para rubios fríos y tonos cenizos.",
   tag: "Pro",
-  priceSalon: 154,
-  pricePublic: 220,
-  saving: 66,
+  priceSalon: 237,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/oxycream-platino.png"
 },
 
@@ -1046,9 +1046,9 @@ export const products = [
   extra:
     "Ideal para técnicas controladas y trabajos de precisión.",
   tag: "Pro",
-  priceSalon: 245,
-  pricePublic: 350,
-  saving: 105,
+  priceSalon: 375,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/decolorato-crema.png"
 },
 
@@ -1062,9 +1062,9 @@ export const products = [
   extra:
     "Aclara de forma uniforme y controlada.",
   tag: "Salon",
-  priceSalon: 343,
-  pricePublic: 490,
-  saving: 147,
+  priceSalon: 340,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/decolorato-polvo.png"
 },
 
@@ -1078,9 +1078,9 @@ export const products = [
   extra:
     "Ayuda a neutralizar amarillos no deseados.",
   tag: "Top",
-  priceSalon: 413,
-  pricePublic: 590,
-  saving: 177,
+  priceSalon: 382,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/decolorato-plus9.png"
 },
 
@@ -1094,9 +1094,9 @@ export const products = [
   extra:
     "35% menos rotura. Tecnología Plex. Vegano y sin aroma.",
   tag: "Nuevo",
-  priceSalon: 490,
-  pricePublic: 700,
-  saving: 210,
+  priceSalon: 427,
+  pricePublic: 0,
+  saving: 0,
   image: "/images/products/profesional/color/decolorato-plex9.png"
 },
 
@@ -1126,7 +1126,7 @@ export const products = [
   extra:
     "",
   tag: "Pro",
-  priceSalon: 0,
+  priceSalon: 1470,
   pricePublic: 0,
   saving: 0,
   image: "/images/products/profesional/tratamientos/additivex-uno.png"
@@ -1142,7 +1142,7 @@ export const products = [
   extra:
     "",
   tag: "Pro",
-  priceSalon: 0,
+  priceSalon: 567,
   pricePublic: 0,
   saving: 0,
   image: "/images/products/profesional/tratamientos/additivex-due.png"
@@ -1158,7 +1158,7 @@ export const products = [
   extra:
     "",
   tag: "Pro",
-  priceSalon: 0,
+  priceSalon: 1470,
   pricePublic: 0,
   saving: 0,
   image: "/images/products/profesional/tratamientos/additivex-tre.png"

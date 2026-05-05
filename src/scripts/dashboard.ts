@@ -54,7 +54,7 @@ if (authError || !user) {
       await supabase
         .from("profiles")
         .select(
-          "first_name,approved"
+          "first_name,status"
         )
         .eq("id", user.id)
         .maybeSingle();
@@ -65,13 +65,16 @@ if (authError || !user) {
       return;
     }
 
-    if (
-      profile.approved !== true
-    ) {
-      location.href =
-        "/auth/pending";
-      return;
-    }
+   if (profile.status === "blocked") {
+  await supabase.auth.signOut();
+  location.href = "/auth/blocked";
+  return;
+}
+
+if (profile.status !== "active") {
+  location.href = "/auth/login";
+  return;
+}
 
     setText(
       "welcomeName",

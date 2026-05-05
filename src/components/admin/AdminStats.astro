@@ -1,0 +1,43 @@
+<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+  <div class="stat-card">
+    <p>Pedidos</p>
+    <h3 id="kpiOrders">0</h3>
+  </div>
+
+  <div class="stat-card">
+    <p>Facturado</p>
+    <h3 id="kpiRevenue">$0</h3>
+  </div>
+
+  <div class="stat-card">
+    <p>Pendiente</p>
+    <h3 id="kpiPending">$0</h3>
+  </div>
+
+  <div class="stat-card">
+    <p>Ticket promedio</p>
+    <h3 id="kpiAvg">$0</h3>
+  </div>
+
+</div>
+
+<style>
+.stat-card {
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  padding:20px;
+  border-radius:20px;
+}
+.stat-card p {
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.25em;
+  color:rgba(255,255,255,.4);
+}
+.stat-card h3 {
+  margin-top:10px;
+  font-size:28px;
+  font-weight:600;
+}
+</style>

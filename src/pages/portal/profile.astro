@@ -1,5 +1,14 @@
 ---
 import PortalLayout from "../../layouts/PortalLayout.astro";
+
+import {
+  FiCheckCircle,
+  FiShield,
+  FiActivity,
+  FiEdit2,
+  FiCreditCard,
+  FiDollarSign
+} from "react-icons/fi";
 ---
 
 <PortalLayout title="Mi Perfil | AVYNA">
@@ -7,33 +16,27 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 <section class="mx-auto max-w-7xl space-y-8">
 
   <!-- HEADER -->
-  <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 lg:p-8">
+  <section class="rounded-4xl border border-white/10 bg-white/3 p-6 lg:p-8">
 
     <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
 
-      <!-- AVATAR SIMPLE -->
+      <!-- AVATAR -->
       <div class="relative shrink-0">
-
         <div
-  id="profileAvatar"
-  class="relative grid h-28 w-28 place-items-center rounded-full text-4xl font-semibold text-white shadow-xl overflow-hidden"
->
-  A
-</div>
-
+          id="profileAvatar"
+          class="grid h-28 w-28 place-items-center rounded-full text-4xl font-semibold text-white shadow-xl"
+        >
+          A
+        </div>
       </div>
 
       <!-- INFO -->
       <div class="min-w-0 flex-1">
-
         <p class="text-xs uppercase tracking-[0.42em] text-white/35">
           CLIENT ACCOUNT
         </p>
 
-        <h1
-          id="profileName"
-          class="mt-2 text-3xl font-semibold tracking-tight lg:text-5xl"
-        >
+        <h1 id="profileName" class="mt-2 text-3xl font-semibold lg:text-5xl">
           Mi Perfil
         </h1>
 
@@ -44,39 +47,49 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
         <p id="profileEmail" class="mt-1 text-sm text-white/45">
           cargando...
         </p>
-
       </div>
 
       <!-- STATUS -->
-      <div class="grid gap-3 sm:w-[260px]">
+      <div class="grid gap-3 sm:w-67.5">
 
+        <!-- CLIENT ID -->
         <div class="rounded-2xl border border-white/10 bg-black/35 px-5 py-4">
-  <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
-    Cliente ID
-  </p>
 
-  <div class="mt-2 flex items-center gap-2">
-    <p id="profileClientId" class="text-xl font-semibold">
-      --
-    </p>
-
-    <!-- BADGE -->
-    <span
-      id="verifiedBadge"
-      class="hidden items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-300"
-    >
-      ✔ Verificado
-    </span>
-  </div>
-</div>
-
-        <div class="rounded-2xl border border-white/10 bg-black/35 px-5 py-4">
           <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
-            Estado
+            Cliente ID
           </p>
-          <p id="profileStatus" class="mt-2 text-xl font-semibold text-emerald-300">
-            Activo
+
+          <div class="mt-2 flex items-center gap-2 flex-wrap">
+
+            <p id="profileClientId" class="text-xl font-semibold tracking-wide">
+              ---
+            </p>
+
+            <!-- SOLO ESTE BADGE EXISTE -->
+            <span id="verifiedBadge" class="hidden verified-badge">
+              <FiCheckCircle size={14} />
+              Verificado
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- STATUS + PAGO -->
+        <div class="rounded-2xl border border-white/10 bg-black/35 px-5 py-4">
+
+          <p class="text-[11px] uppercase tracking-[0.25em] text-white/35">
+            Status
           </p>
+          <div class="mt-2 status-row items-center gap-2">
+
+            <span id="profileStatus" class="text-xl font-semibold text-emerald-300">
+              Activo
+            </span>
+
+            <span id="creditBadge" class="hidden credit-badge"></span>
+
+          </div>
         </div>
 
       </div>
@@ -91,15 +104,12 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
     <!-- LEFT -->
     <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
-      <div class="flex items-center justify-between gap-3">
-
-        <h2 class="text-2xl font-semibold">
-          Información comercial
-        </h2>
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold">Información comercial</h2>
 
         <div class="flex gap-2">
-
-          <button id="editProfileBtn" class="action-btn">
+          <button id="editProfileBtn" class="action-btn flex items-center gap-2">
+            <FiEdit2 size={14} />
             Editar
           </button>
 
@@ -110,9 +120,7 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
           <button id="saveProfileBtn" class="save-btn hidden">
             Guardar
           </button>
-
         </div>
-
       </div>
 
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
@@ -124,36 +132,20 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 
         <div class="profile-card sm:col-span-2">
           <p class="profile-label">Negocio</p>
-
           <p id="businessNameText" class="profile-value">--</p>
-
-          <input
-            id="businessNameInput"
-            class="profile-input hidden"
-          />
+          <input id="businessNameInput" class="profile-input hidden" />
         </div>
 
         <div class="profile-card">
           <p class="profile-label">Teléfono</p>
-
           <p id="phoneText" class="profile-value">--</p>
-
-          <input
-            id="phoneInput"
-            class="profile-input hidden"
-          />
+          <input id="phoneInput" class="profile-input hidden" />
         </div>
 
         <div class="profile-card">
           <p class="profile-label">Correo</p>
-
           <p id="emailText" class="profile-value break-all">--</p>
-
-          <input
-            id="emailInput"
-            type="email"
-            class="profile-input hidden"
-          />
+          <input id="emailInput" type="email" class="profile-input hidden" />
         </div>
 
         <div class="profile-card">
@@ -173,50 +165,43 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
     <!-- RIGHT -->
     <section class="space-y-6">
 
+      <!-- ACTIVIDAD -->
       <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
-
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Seguridad
-        </p>
-
-        <h3 class="mt-4 text-2xl font-semibold">
-          Cuenta protegida
-        </h3>
-
-        <button
-          id="changePasswordBtn"
-          class="mt-6 h-11 w-full rounded-2xl bg-white text-sm font-semibold text-black"
-        >
-          Cambiar contraseña
-        </button>
-
-      </div>
-
-      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
-
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Actividad
-        </p>
+        <div class="flex items-center gap-2 text-white/60">
+          <FiActivity size={16} />
+          <p class="text-xs uppercase tracking-[0.35em]">Actividad</p>
+        </div>
 
         <div class="mt-5 space-y-4">
-
           <div class="flex justify-between">
             <span class="text-white/50">Pedidos totales</span>
-            <span id="ordersTotal" class="font-semibold">0</span>
+            <span id="ordersTotal">0</span>
           </div>
 
           <div class="flex justify-between">
             <span class="text-white/50">Último acceso</span>
-            <span id="lastAccess" class="font-semibold">Hoy</span>
+            <span id="lastAccess">Hoy</span>
           </div>
 
           <div class="flex justify-between">
             <span class="text-white/50">Miembro desde</span>
-            <span id="memberSince" class="font-semibold">--</span>
+            <span id="memberSince">--</span>
           </div>
+        </div>
+      </div>
 
+      <!-- SEGURIDAD -->
+      <div class="rounded-[2rem] border border-white/10 bg-black/35 p-6">
+        <div class="flex items-center gap-2 text-white/60">
+          <FiShield size={16} />
+          <p class="text-xs uppercase tracking-[0.35em]">Seguridad</p>
         </div>
 
+        <h3 class="mt-4 text-2xl font-semibold">Cuenta protegida</h3>
+
+        <button id="changePasswordBtn" class="mt-6 w-full h-11 rounded-2xl bg-white text-black font-semibold">
+          Cambiar contraseña
+        </button>
       </div>
 
     </section>
@@ -226,89 +211,113 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 </section>
 
 <style>
+.verified-badge{
+align-items:center;
+gap:6px;
+
+padding:4px 10px;
+font-size:11px;
+font-weight:600;
+letter-spacing:.02em;
+
+border-radius:999px;
+
+color:#34d399;
+background:rgba(16,185,129,.12);
+border:1px solid rgba(16,185,129,.22);
+
+box-shadow:
+0 0 0 1px rgba(16,185,129,.04),
+0 6px 18px rgba(16,185,129,.08);
+
+transition:.2s ease;
+}
+
+/* 👇 SOLO cuando está visible */
+.verified-badge:not(.hidden){
+display:inline-flex;
+}
+
+.credit-badge{
+align-items:center;
+gap:6px;
+
+padding:4px 10px;
+font-size:11px;
+font-weight:600;
+letter-spacing:.02em;
+
+border-radius:999px;
+
+/* azul elegante */
+color:#60a5fa;
+background:rgba(59,130,246,.10);
+border:1px solid rgba(59,130,246,.18);
+
+box-shadow:
+0 0 0 1px rgba(59,130,246,.04),
+0 6px 18px rgba(59,130,246,.06);
+
+transition:.2s ease;
+}
+
+/* 👇 SOLO cuando está visible */
+.credit-badge:not(.hidden){
+display:inline-flex;
+}
+
+.credit-badge.contado{
+background:rgba(255,255,255,.1);
+color:#ddd;
+}
+
 .profile-card{
 border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.03);
 border-radius:1.5rem;
 padding:1rem;
 }
+
 .profile-label{
-font-size:.72rem;
-letter-spacing:.18em;
-text-transform:uppercase;
-color:rgba(255,255,255,.38);
+font-size:.7rem;
+letter-spacing:.15em;
+color:rgba(255,255,255,.4);
 }
+
 .profile-value{
-margin-top:.35rem;
-font-size:1.1rem;
+margin-top:.3rem;
 font-weight:600;
 }
+
 .profile-input{
-margin-top:.7rem;
-width:100%;
-height:46px;
-border:1px solid rgba(255,255,255,.1);
-background:#000;
+margin-top:.5rem;
+height:44px;
 border-radius:1rem;
 padding:0 1rem;
+background:#000;
+border:1px solid rgba(255,255,255,.1);
 }
+
 .action-btn{
 height:44px;
-padding:0 16px;
+padding:0 14px;
 border-radius:1rem;
 border:1px solid rgba(255,255,255,.1);
 }
+
 .save-btn{
 height:44px;
-padding:0 18px;
+padding:0 16px;
 border-radius:1rem;
 background:#fff;
 color:#000;
 font-weight:700;
 }
 
-.avatar-letter{
-font-size:1.8rem;
-font-weight:700;
-letter-spacing:.02em;
-color:#fff;
-}
-
-/* base avatar */
-#profileAvatar,
-#sidebarAvatar{
-position:relative;
-display:grid;
-place-items:center;
-border-radius:999px;
-overflow:hidden;
-transition:.25s ease;
-}
-
-/* hover premium */
-#profileAvatar:hover,
-#sidebarAvatar:hover{
-transform:scale(1.06);
-filter:brightness(1.08);
-}
-
-/* glow real */
-#profileAvatar::after,
-#sidebarAvatar::after{
-content:"";
-position:absolute;
-inset:0;
-border-radius:999px;
-box-shadow:0 0 60px rgba(99,102,241,.45);
-opacity:.25;
-pointer-events:none;
-transition:.3s;
-}
-
-/* hover glow boost */
-#profileAvatar:hover::after,
-#sidebarAvatar:hover::after{
-opacity:.5;
+.status-row{
+display:flex;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
 }
 </style>
 
