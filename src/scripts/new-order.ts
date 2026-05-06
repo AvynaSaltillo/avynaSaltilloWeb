@@ -259,7 +259,7 @@ let lastLevel = 0; // 0 = base, 1 = mínimo, 2 = pro
 
   ${
     !(item.pricePublic && Number(item.pricePublic) > 0)
-      ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-purple-500/30 text-purple-400">
+      ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-sky-600 text-sky-600">
           PRO
         </span>`
       : ""
@@ -409,7 +409,7 @@ data-id="${item.id}">
 
   ${
     !(item.pricePublic && Number(item.pricePublic) > 0)
-      ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-purple-500/30 text-purple-400">
+      ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-sky-500/30 text-sky-400">
           PRO
         </span>`
       : ""

@@ -29,14 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
     !advisor
   ) return;
 
-  /* PHONE */
+  /* =========================
+     PHONE FORMAT
+  ========================= */
   phone.addEventListener("input", () => {
     phone.value = phone.value
       .replace(/\D/g, "")
       .slice(0, 10);
   });
 
-  /* 👁 PASSWORD */
+  /* =========================
+     👁 PASSWORD TOGGLE
+  ========================= */
   eye?.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -46,7 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
         : "password";
   });
 
-  /* ASESOR */
+  /* =========================
+     ASESOR DROPDOWN
+  ========================= */
   function closeMenu() {
     menu?.classList.add("hidden");
 
@@ -99,9 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* LOADING */
+  /* =========================
+     LOADING UI
+  ========================= */
   function loading(state: boolean) {
-      if (!btn) return;
+    if (!btn) return;
+
     btn.disabled = state;
     btn.textContent = state
       ? "Creando cuenta..."
@@ -110,7 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.classList.toggle("opacity-70", state);
   }
 
-  /* SUBMIT */
+  /* =========================
+     SUBMIT
+  ========================= */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -136,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const advisorVal = advisor.value.trim();
     const pass = password.value.trim();
 
+    /* VALIDACIÓN */
     if (
       !first ||
       !last ||
@@ -145,8 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       !advisorVal ||
       !pass
     ) {
-      msg.textContent =
-        "Completa todos los campos.";
+      msg.textContent = "Completa todos los campos.";
       return;
     }
 
@@ -164,7 +175,9 @@ document.addEventListener("DOMContentLoaded", () => {
       /* LIMPIAR SESIÓN */
       await supabase.auth.signOut();
 
-      /* CREAR AUTH USER */
+      /* =========================
+         AUTH USER
+      ========================= */
       const {
         data: authData,
         error: authError
@@ -184,14 +197,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       uid = authData.user.id;
 
-      /* FOLIO ÚNICO */
+      /* =========================
+         GENERAR FOLIO
+      ========================= */
       const folio =
         "AVY-" +
         crypto.randomUUID()
           .slice(0, 6)
           .toUpperCase();
 
-      /* INSERT PROFILE */
+      /* =========================
+         INSERT PROFILE
+      ========================= */
       const {
         error: profileError
       } = await supabase
@@ -206,13 +223,20 @@ document.addEventListener("DOMContentLoaded", () => {
           phone: phoneVal,
           advisor: advisorVal,
           city: "Saltillo",
+
+          /* 🔥 SISTEMA NUEVO */
           role: "client",
-          approved: false,
-          local_client_id: folio
+          status: "pending",
+
+          /* 💰 CONFIG */
+          payment_type: "cash",
+
+          /* 🆔 IDS */
+          local_client_id: folio,
+          official_client_id: null
         });
 
       if (profileError) {
-        /* rollback parcial */
         await supabase.auth.signOut();
 
         msg.textContent =
@@ -222,14 +246,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      window.location.href =
-        "/auth/pending";
+      /* REDIRECT */
+      window.location.href = "/auth/pending";
 
     } catch (error) {
       console.error(error);
 
-      msg.textContent =
-        "Error inesperado.";
+      msg.textContent = "Error inesperado.";
 
       loading(false);
     }

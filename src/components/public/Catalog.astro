@@ -193,16 +193,6 @@ const families = [
 
   </div>
 
-  <!-- FLOAT WHATSAPP -->
-  <a
-    href="https://wa.me/528445069238"
-    target="_blank"
-    class="fixed right-4 bottom-4 z-50 hidden h-14 items-center gap-3 rounded-full bg-white px-6 font-semibold text-black shadow-2xl transition hover:scale-105 md:flex"
-  >
-    <MessageCircle size={18} />
-    WhatsApp
-  </a>
-
   <!-- MODAL -->
   <div
     id="productModal"
@@ -303,14 +293,6 @@ const families = [
 
           <div class="mt-6 grid gap-3">
 
-            <a
-              id="modalWhatsapp"
-              href="#"
-              target="_blank"
-              class="flex h-12 items-center justify-center rounded-2xl bg-white font-semibold text-black"
-            >
-              Solicitar por WhatsApp
-            </a>
 
             <button
               id="closeBottom"
@@ -399,7 +381,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const extra = document.getElementById("modalExtra");
   const extraWrap = document.getElementById("extraWrap");
   const image = document.getElementById("modalImage");
-  const wa = document.getElementById("modalWhatsapp");
 
   cards.forEach((card) => {
     card.addEventListener("click", () => {
@@ -423,10 +404,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       image.src = data.image || "";
       image.alt = data.name || "";
-
-      wa.href =
-        "https://wa.me/528445069238?text=Hola,%20me%20interesa%20" +
-        encodeURIComponent(data.name || "producto");
 
       modal.classList.remove("hidden");
       modal.classList.add("flex");
