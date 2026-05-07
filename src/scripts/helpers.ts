@@ -56,3 +56,11 @@ export function properCase(
     .join(" ");
 
 }
+
+const FLOW = [
+  "waiting_supplier",
+  "ordered_supplier",
+  "ready_delivery",
+  "on_route",
+  "delivered"
+];

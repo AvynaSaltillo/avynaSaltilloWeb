@@ -103,40 +103,190 @@ if (profile?.status === "blocked") {
     });
   }
 
-  function badge(status = "") {
+function badge(status = "") {
 
-    const s = status.toLowerCase();
+  const s =
+    String(status).toLowerCase();
 
-    if (s === "pending") {
-      return `
-        <span class="inline-flex rounded-full border border-yellow-500/20 bg-yellow-500/10 px-3 py-1 text-xs text-yellow-300">
-          Pendiente
-        </span>
-      `;
-    }
-
-    if (s === "paid") {
-      return `
-        <span class="inline-flex rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1 text-xs text-green-300">
-          Pagado
-        </span>
-      `;
-    }
-
-    if (s === "cancelled") {
-      return `
-        <span class="inline-flex rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs text-red-300">
-          Cancelado
-        </span>
-      `;
-    }
+  if (s === "waiting_supplier") {
 
     return `
-      <span class="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-        ${status}
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-yellow-500/20
+
+          bg-yellow-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-yellow-300
+        "
+      >
+        Esperando proveedor
       </span>
     `;
+
   }
+
+  if (s === "ordered_supplier") {
+
+    return `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-sky-500/20
+
+          bg-sky-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-sky-300
+        "
+      >
+        Pedido realizado
+      </span>
+    `;
+
+  }
+
+  if (s === "on_route") {
+
+  return `
+    <span
+      class="
+        inline-flex whitespace-nowrap
+
+        rounded-full
+
+        border border-orange-500/20
+
+        bg-orange-500/10
+
+        px-3 py-1
+
+        text-xs
+
+        text-orange-300
+      "
+    >
+      En ruta
+    </span>
+  `;
+
+}
+
+  if (s === "ready_delivery") {
+
+    return `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-emerald-500/20
+
+          bg-emerald-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-emerald-300
+        "
+      >
+        Listo entrega
+      </span>
+    `;
+
+  }
+
+  if (s === "delivered") {
+
+    return `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-green-500/20
+
+          bg-green-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-green-300
+        "
+      >
+        Entregado
+      </span>
+    `;
+
+  }
+
+  if (s === "cancelled") {
+
+    return `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-red-500/20
+
+          bg-red-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-red-300
+        "
+      >
+        Cancelado
+      </span>
+    `;
+
+  }
+
+  return `
+    <span
+      class="
+        inline-flex whitespace-nowrap
+
+        rounded-full
+
+        border border-white/10
+
+        bg-white/5
+
+        px-3 py-1
+
+        text-xs
+
+        text-white/70
+      "
+    >
+      ${status}
+    </span>
+  `;
+
+}
 
   async function loadOrders() {
 
@@ -157,7 +307,8 @@ if (profile?.status === "blocked") {
     client_name,
     business_name,
     total,
-    balance,
+    amount_paid,
+    delivery_status,
     status,
     created_at,
     advisor_id
@@ -179,7 +330,10 @@ const {
   error
 } = await query;
     if (error) {
-      console.error(error);
+      console.error(
+  "ORDERS ERROR",
+  error
+);
 
       table.innerHTML = `
         <tr>
@@ -309,56 +463,172 @@ const {
     }
 
     // TABLE
-    table.innerHTML = filtered.map((order) => `
+table.innerHTML = filtered.map((order) => {
 
-      <tr class="border-b border-white/5 hover:bg-white/3 transition">
+  const initials =
+    (
+      order.business_name ||
+      order.client_name ||
+      "A"
+    )
+    .split(" ")
+    .map((w: any[]) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
-        <td class="px-6 py-5 font-medium whitespace-nowrap">
-          #${order.id}
-        </td>
+  return `
 
-        <td class="px-6 py-5">
+    <tr
+      class="
+        border-b border-white/5
 
-          <div class="flex flex-col">
+        transition-all duration-300
 
-            <span class="font-medium">
-              ${order.business_name || "—"}
-            </span>
+        hover:bg-white/[0.03]
+      "
+    >
 
-            <span class="text-xs text-white/40 mt-1">
-              ${order.client_name || "—"}
-            </span>
+      <!-- ORDER -->
+      <td class="px-6 py-5">
+
+        <div class="flex items-center gap-4">
+
+          <!-- AVATAR -->
+          <div
+            class="
+              grid h-12 w-12 shrink-0 place-items-center
+
+              rounded-2xl
+
+              border border-white/10
+
+              bg-white/[0.04]
+
+              text-sm
+              font-semibold
+              text-white/80
+            "
+          >
+            ${initials}
+          </div>
+
+          <!-- INFO -->
+          <div class="min-w-0">
+
+            <p class="font-medium text-white">
+              #${String(order.id)
+                .slice(0, 8)
+                .toUpperCase()}
+            </p>
+
+            <p class="mt-1 text-xs text-white/35">
+              Pedido comercial
+            </p>
 
           </div>
 
-        </td>
+        </div>
 
-        <td class="px-6 py-5">
-          ${badge(order.status)}
-        </td>
+      </td>
 
-        <td class="px-6 py-5 font-semibold whitespace-nowrap">
-          ${money(order.total)}
-        </td>
+      <!-- CLIENT -->
+      <td class="px-6 py-5">
 
-        <td class="px-6 py-5 whitespace-nowrap text-sm text-white/60">
-          ${date(order.created_at)}
-        </td>
+        <div class="flex flex-col">
 
-        <td class="px-6 py-5 text-right">
+          <span class="font-medium text-white">
+            ${order.business_name || "—"}
+          </span>
 
-          <a
-            href="/admin/order/${order.id}"
-            class="inline-flex h-10 items-center justify-center rounded-xl border border-white/10 px-4 text-sm text-white/80 transition hover:bg-white/10"
-          >
-            Ver
-          </a>
+          <span class="mt-1 text-xs text-white/40">
+            ${order.client_name || "—"}
+          </span>
 
-        </td>
+        </div>
 
-      </tr>
+      </td>
 
-    `).join("");
+      <!-- STATUS -->
+      <td class="px-6 py-5 whitespace-nowrap">
+  ${badge(order.delivery_status)}
+</td>
+
+      <!-- TOTAL -->
+      <td class="px-6 py-5">
+
+        <div class="flex flex-col">
+
+          <span class="text-lg font-semibold text-white">
+            ${money(order.total)}
+          </span>
+
+          <span class="mt-1 text-xs text-white/35">
+            Balance:
+            ${money((
+  Number(order.total || 0) -
+  Number(order.amount_paid || 0)
+) || 0)}
+          </span>
+
+        </div>
+
+      </td>
+
+      <!-- DATE -->
+      <td class="px-6 py-5">
+
+        <div class="flex flex-col">
+
+          <span class="text-sm text-white/80">
+            ${date(order.created_at)}
+          </span>
+
+          <span class="mt-1 text-xs text-emerald-300">
+            Live
+          </span>
+
+        </div>
+
+      </td>
+
+      <!-- ACTION -->
+      <td class="px-6 py-5 text-right">
+
+        <a
+          href="/admin/order/${order.id}"
+          class="
+            inline-flex h-11 items-center justify-center gap-2
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            px-5
+
+            text-sm text-white/80
+
+            transition-all duration-300
+
+            hover:border-white/20
+            hover:bg-white/[0.08]
+            hover:text-white
+          "
+        >
+
+          Ver pedido
+
+        </a>
+
+      </td>
+
+    </tr>
+
+  `;
+
+}).join("");
 
   }
 

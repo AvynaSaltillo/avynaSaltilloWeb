@@ -216,17 +216,31 @@ function deliveryBadge(
 
   }
 
-  if (
-    s === "in_transit"
-  ) {
+if (s === "on_route") {
 
-    return `
-<div class="inline-flex rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-2 text-sm text-violet-300">
-  En tránsito
-</div>
-`;
+  return `
+    <span
+      class="
+        inline-flex whitespace-nowrap
 
-  }
+        rounded-full
+
+        border border-orange-500/20
+
+        bg-orange-500/10
+
+        px-3 py-1
+
+        text-xs
+
+        text-orange-300
+      "
+    >
+      En ruta
+    </span>
+  `;
+
+}
 
   if (
     s === "ready_delivery"

@@ -19,8 +19,6 @@ type Order = {
 
   created_at: string;
 
-  status?: string;
-
   total?: number;
 
   amount_due?: number;
@@ -167,15 +165,31 @@ const perPage = 5;
 
       }
 
-      if (s === "in_transit") {
+     if (s === "on_route") {
 
-        return `
-<span class="rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs text-violet-300">
-  En tránsito
-</span>
-`;
+  return `
+    <span
+      class="
+        inline-flex whitespace-nowrap
 
-      }
+        rounded-full
+
+        border border-orange-500/20
+
+        bg-orange-500/10
+
+        px-3 py-1
+
+        text-xs
+
+        text-orange-300
+      "
+    >
+      En ruta
+    </span>
+  `;
+
+}
 
       if (s === "ready_delivery") {
 
@@ -271,7 +285,6 @@ const perPage = 5;
 `;
 
     }
-
 
     /* =========================
        KPIS
@@ -448,7 +461,7 @@ p-4
       </p>
 
       <div class="mt-2">
-        ${badge(order.delivery_status || order.status || "")}
+        ${badge(order.delivery_status || "")}
       </div>
 
     </div>
@@ -645,7 +658,7 @@ p-4
   </td>
 
   <td class="px-4 py-5">
-    ${badge(item.delivery_status || item.status || "")}
+    ${badge(item.delivery_status || "")}
   </td>
 
   <td class="px-4 py-5">
@@ -913,13 +926,13 @@ if (nextPage) {
        LOAD
     ========================= */
 
-    async function loadOrders() {
+async function loadOrders() {
 
-      try {
+  try {
 
-        if (table) {
+    if (table) {
 
-          table.innerHTML = `
+      table.innerHTML = `
 <tr>
   <td colspan="7" class="py-10 text-center text-white/45">
     Cargando pedidos...
@@ -927,78 +940,91 @@ if (nextPage) {
 </tr>
 `;
 
-        }
+    }
 
-        const {
-          data: { user },
-          error: authError
-        } =
-          await supabase.auth.getUser();
+    /* =========================
+       AUTH
+    ========================= */
 
-        if (
-          authError ||
-          !user
-        ) {
+    const {
+      data: { user },
+      error: authError
+    } =
+      await supabase.auth.getUser();
 
-          location.href =
-            "/portal/login";
+    if (
+      authError ||
+      !user
+    ) {
 
-          return;
+      location.href =
+        "/portal/login";
 
-        }
+      return;
 
-        const {
-          data,
-          error
-        } =
-          await supabase
-            .from("orders")
-            .select(`
-              id,
-              created_at,
+    }
+    
+    /* =========================
+       ORDERS
+    ========================= */
 
-              total,
+    const {
+      data,
+      error
+    } =
+      await supabase
+        .from("orders")
+        .select(`
+          id,
+          created_at,
 
-              amount_due,
-              amount_paid,
+          total,
 
-              payment_type,
-              payment_status,
+          amount_due,
+          amount_paid,
 
-              delivery_status,
-              status,
+          payment_type,
+          payment_status,
 
-              due_date,
+          delivery_status,
 
-              order_items (
-                id,
-                product_name,
-                quantity,
-                unit_price,
-                subtotal
-              )
-            `)
-            .eq("client_id", user.id)
-            .order("created_at", {
-              ascending: false
-            });
+          due_date,
 
-        if (error) {
-          throw error;
-        }
+          order_items (
+            id,
+            product_name,
+            quantity,
+            unit_price,
+            subtotal
+          )
+        `)
+        .eq(
+          "client_id",
+          user.id
+        )
+        .order("created_at", {
+          ascending: false
+        });
 
-        allOrders =
-          (data as Order[]) || [];
+    if (error) {
+      throw error;
+    }
 
-        applyFilters();
+    allOrders =
+      (data as Order[]) || [];
 
-      } catch (err) {
+    applyFilters();
 
-        console.error(err);
+  } catch (err) {
 
-        if (table) {
+    console.error(
+      "ORDERS LOAD ERROR",
+      err
+    );
 
-          table.innerHTML = `
+    if (table) {
+
+      table.innerHTML = `
 <tr>
   <td colspan="7" class="py-10 text-center text-red-300">
     No se pudieron cargar los pedidos.
@@ -1006,11 +1032,11 @@ if (nextPage) {
 </tr>
 `;
 
-        }
-
-      }
-
     }
+
+  }
+
+}
 
     /* =========================
        EVENTS
