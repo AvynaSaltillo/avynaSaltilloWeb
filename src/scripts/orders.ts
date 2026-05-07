@@ -1,419 +1,820 @@
 // src/scripts/orders.ts
+// COMPLETO CORREGIDO + FIX MODAL DUPLICADO
 
 import { supabase } from "../lib/supabase";
 
 type Order = {
-  id: number | string;
+  id: string;
+
   created_at: string;
+
   status?: string;
+
   total?: number;
+
   balance?: number;
+
+  payment_type?: string;
+
+  advisor?: string;
+
+  items?: any[];
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const $ = (id: string) =>
-    document.getElementById(id);
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
 
-  const table =
-    $("ordersTable");
+    /* =========================
+       DOM
+    ========================= */
 
-  const searchInput =
-    $("searchInput") as HTMLInputElement | null;
+    const $ = (id: string) =>
+      document.getElementById(id);
 
-  const statusFilter =
-    $("statusFilter") as HTMLSelectElement | null;
+    const table =
+      $("ordersTable");
 
-  const sortFilter =
-    $("sortFilter") as HTMLSelectElement | null;
+    const searchInput =
+      $("searchInput") as HTMLInputElement | null;
 
-  const refreshBtn =
-    $("refreshOrders") as HTMLButtonElement | null;
+    const statusFilter =
+      $("statusFilter") as HTMLSelectElement | null;
 
-  let allOrders: Order[] = [];
+    const sortFilter =
+      $("sortFilter") as HTMLSelectElement | null;
 
-  /* =========================
-     HELPERS
-  ========================= */
-  function money(v = 0) {
-    return new Intl.NumberFormat(
-      "es-MX",
-      {
-        style: "currency",
-        currency: "MXN",
-        maximumFractionDigits: 0
-      }
-    ).format(Number(v));
-  }
+    const refreshBtn =
+      $("refreshOrders") as HTMLButtonElement | null;
 
-  function date(v: string) {
-    return new Date(v).toLocaleDateString(
-      "es-MX",
-      {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      }
-    );
-  }
+    /* =========================
+       STATE
+    ========================= */
 
-  function badge(status = "") {
-    const s =
-      status.toLowerCase();
+    let allOrders: Order[] = [];
 
-    if (s.includes("pend")) {
-      return `
-        <span class="rounded-full border border-yellow-400/20 bg-yellow-400/10 px-3 py-1 text-xs text-yellow-300">
-          Pendiente
-        </span>
-      `;
+    let modalOpen = false;
+
+    /* =========================
+       HELPERS
+    ========================= */
+
+    function money(v = 0) {
+
+      return new Intl.NumberFormat(
+        "es-MX",
+        {
+          style: "currency",
+          currency: "MXN",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      ).format(Number(v || 0));
+
     }
 
-    if (s.includes("pro")) {
-      return `
-        <span class="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-xs text-sky-300">
-          Proceso
-        </span>
-      `;
+    function date(v: string) {
+
+      const d = new Date(v);
+
+      return d.toLocaleString(
+        "es-MX",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true
+        }
+      );
+
     }
 
-    if (s.includes("env")) {
-      return `
-        <span class="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1 text-xs text-violet-300">
-          Enviado
-        </span>
-      `;
-    }
-
-    if (
-      s.includes("ent") ||
-      s.includes("done")
+    function setText(
+      id: string,
+      value: string
     ) {
-      return `
-        <span class="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-          Entregado
-        </span>
-      `;
+
+      const el = $(id);
+
+      if (el)
+        el.textContent = value;
+
     }
 
-    return `
-      <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
-        Registrado
-      </span>
-    `;
-  }
+    /* =========================
+       BADGES
+    ========================= */
 
-  function setText(
-    id: string,
-    value: string
-  ) {
-    const el = $(id);
-    if (el) el.textContent = value;
-  }
+    function badge(status = "") {
 
-  /* =========================
-     KPIS
-  ========================= */
-  function renderStats(
-    list: Order[]
-  ) {
-    const totalOrders =
-      list.length;
+      const s =
+        status.toLowerCase();
 
-    const totalAmount =
-      list.reduce(
-        (acc, item) =>
-          acc +
-          Number(
-            item.total || 0
-          ),
-        0
-      );
+      if (s.includes("pending")) {
 
-    const totalBalance =
-      list.reduce(
-        (acc, item) =>
-          acc +
-          Number(
-            item.balance || 0
-          ),
-        0
-      );
+        return `
+<span class="rounded-full border border-yellow-400/20 bg-yellow-400/10 px-3 py-1 text-xs text-yellow-300">
+  Pendiente
+</span>
+`;
 
-    setText(
-      "ordersTotal",
-      String(totalOrders)
-    );
-
-    setText(
-      "ordersAmount",
-      money(totalAmount)
-    );
-
-    setText(
-      "ordersBalance",
-      money(totalBalance)
-    );
-  }
-
-  /* =========================
-     TABLE
-  ========================= */
-  function renderTable(
-    list: Order[]
-  ) {
-    if (!table) return;
-
-    if (!list.length) {
-      table.innerHTML = `
-        <tr>
-          <td colspan="6" class="py-8 text-center text-white/45">
-            No se encontraron pedidos.
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    table.innerHTML =
-      list.map(
-        (item) => `
-        <tr class="hover:bg-white/[0.02] transition">
-          <td class="py-4 font-medium">
-            #${item.id}
-          </td>
-
-          <td class="py-4 text-white/70">
-            ${date(item.created_at)}
-          </td>
-
-          <td class="py-4">
-            ${badge(item.status)}
-          </td>
-
-          <td class="py-4 font-medium">
-            ${money(item.total || 0)}
-          </td>
-
-          <td class="py-4 ${
-            Number(item.balance || 0) > 0
-              ? "text-yellow-300"
-              : "text-white/70"
-          }">
-            ${money(item.balance || 0)}
-          </td>
-
-          <td class="py-4 text-right">
-            <button
-              data-id="${item.id}"
-              class="view-order rounded-xl border border-white/10 px-4 py-2 text-sm text-white/75 transition hover:bg-white/10 hover:text-white"
-            >
-              Ver
-            </button>
-          </td>
-        </tr>
-      `
-      ).join("");
-
-    document
-      .querySelectorAll(
-        ".view-order"
-      )
-      .forEach((btn) => {
-        btn.addEventListener(
-          "click",
-          () => {
-            const id =
-              (
-                btn as HTMLElement
-              ).dataset.id;
-
-            alert(
-              `Detalle pedido #${id}\n(Próximamente modal premium)`
-            );
-          }
-        );
-      });
-  }
-
-  /* =========================
-     FILTERS
-  ========================= */
-  function applyFilters() {
-    let list = [
-      ...allOrders
-    ];
-
-    const search =
-      searchInput?.value
-        .trim()
-        .toLowerCase() || "";
-
-    const status =
-      statusFilter?.value || "";
-
-    const sort =
-      sortFilter?.value ||
-      "recent";
-
-    if (search) {
-      list = list.filter(
-        (item) =>
-          String(
-            item.id
-          ).includes(search) ||
-          (
-            item.status || ""
-          )
-            .toLowerCase()
-            .includes(search)
-      );
-    }
-
-    if (status) {
-      list = list.filter(
-        (item) =>
-          (
-            item.status || ""
-          ).toLowerCase() ===
-          status.toLowerCase()
-      );
-    }
-
-    if (sort === "high") {
-      list.sort(
-        (a, b) =>
-          Number(
-            b.total || 0
-          ) -
-          Number(
-            a.total || 0
-          )
-      );
-    }
-
-    else if (
-      sort === "low"
-    ) {
-      list.sort(
-        (a, b) =>
-          Number(
-            a.total || 0
-          ) -
-          Number(
-            b.total || 0
-          )
-      );
-    }
-
-    else {
-      list.sort(
-        (a, b) =>
-          new Date(
-            b.created_at
-          ).getTime() -
-          new Date(
-            a.created_at
-          ).getTime()
-      );
-    }
-
-    renderStats(list);
-    renderTable(list);
-  }
-
-  /* =========================
-     LOAD
-  ========================= */
-  async function loadOrders() {
-    try {
-      if (table) {
-        table.innerHTML = `
-          <tr>
-            <td colspan="6" class="py-8 text-center text-white/45">
-              Cargando pedidos...
-            </td>
-          </tr>
-        `;
       }
-
-      const {
-        data: { user },
-        error: authError
-      } =
-        await supabase.auth.getUser();
 
       if (
-        authError ||
-        !user
+        s.includes("process") ||
+        s.includes("preparing")
       ) {
-        location.href =
-          "/auth/login";
-        return;
+
+        return `
+<span class="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-xs text-sky-300">
+  Preparando
+</span>
+`;
+
       }
 
-      const {
-        data,
-        error
-      } =
-        await supabase
-          .from("orders")
-          .select("*")
-          .eq(
-            "user_id",
-            user.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
+      if (
+        s.includes("shipped") ||
+        s.includes("sent")
+      ) {
+
+        return `
+<span class="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1 text-xs text-violet-300">
+  Enviado
+</span>
+`;
+
+      }
+
+      if (
+        s.includes("delivered") ||
+        s.includes("done")
+      ) {
+
+        return `
+<span class="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
+  Entregado
+</span>
+`;
+
+      }
+
+      if (
+        s.includes("cancel")
+      ) {
+
+        return `
+<span class="rounded-full border border-red-400/20 bg-red-400/10 px-3 py-1 text-xs text-red-300">
+  Cancelado
+</span>
+`;
+
+      }
+
+      return `
+<span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
+  Registrado
+</span>
+`;
+
+    }
+
+    /* =========================
+       KPIS
+    ========================= */
+
+    function renderStats(
+      list: Order[]
+    ) {
+
+      const totalOrders =
+        list.length;
+
+      const totalAmount =
+        list.reduce(
+          (acc, item) => {
+
+            return acc +
+              Number(item.total || 0);
+
+          },
+          0
+        );
+
+      const totalBalance =
+        list.reduce(
+          (acc, item) => {
+
+            return acc +
+              Number(item.balance || 0);
+
+          },
+          0
+        );
+
+      setText(
+        "ordersTotal",
+        String(totalOrders)
+      );
+
+      setText(
+        "ordersAmount",
+        money(totalAmount)
+      );
+
+      setText(
+        "ordersBalance",
+        money(totalBalance)
+      );
+
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    function showDetails(
+      order: Order
+    ) {
+
+      // 🔥 BLOQUEAR DUPLICADOS
+      if (modalOpen) return;
+
+      modalOpen = true;
+
+      // 🔥 ELIMINAR EXISTENTES
+      document
+        .querySelectorAll(
+          "#orderDetailsModal"
+        )
+        .forEach((m) => m.remove());
+
+      const items =
+        order.items || [];
+
+const lines =
+  items.map((item) => {
+
+    return `
+<div class="flex items-center justify-between gap-4 border-b border-white/5 py-3 last:border-0">
+
+  <div class="min-w-0 flex-1">
+
+    <p class="truncate text-sm font-medium">
+      ${item.name}
+    </p>
+
+    <p class="mt-1 text-xs text-white/40">
+      ${item.qty} × ${money(item.priceSalon || 0)}
+    </p>
+
+  </div>
+
+  <div class="shrink-0 text-right">
+
+    <p class="text-sm font-semibold whitespace-nowrap">
+      ${money(item.total || 0)}
+    </p>
+
+  </div>
+
+</div>
+`;
+
+  }).join("");
+
+      const modal =
+        document.createElement("div");
+
+      modal.id =
+        "orderDetailsModal";
+
+      modal.className = `
+fixed inset-0 z-[9999]
+flex items-center justify-center
+bg-black/70 backdrop-blur-sm
+p-4
+`;
+
+      modal.innerHTML = `
+
+<div class="w-full max-w-2xl rounded-[2rem] border border-white/10 bg-zinc-950 p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+
+  <div class="flex items-start justify-between gap-4">
+
+    <div>
+
+      <p class="text-xs uppercase tracking-[0.3em] text-white/40">
+        Pedido
+      </p>
+
+      <h2 class="mt-2 text-2xl font-semibold break-all">
+        #${order.id}
+      </h2>
+
+    </div>
+
+    <button
+      id="closeOrderModal"
+      class="h-10 w-10 shrink-0 rounded-xl border border-white/10 text-white/70 transition hover:bg-white/10"
+    >
+      ✕
+    </button>
+
+  </div>
+
+  <div class="mt-6 grid gap-4 sm:grid-cols-3">
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+      <p class="text-xs text-white/40">
+        Fecha
+      </p>
+
+      <p class="mt-2 text-sm font-medium">
+        ${date(order.created_at)}
+      </p>
+
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+      <p class="text-xs text-white/40">
+        Estatus
+      </p>
+
+      <div class="mt-2">
+        ${badge(order.status)}
+      </div>
+
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+
+      <p class="text-xs text-white/40">
+        Pago
+      </p>
+
+      <p class="mt-2 text-sm font-medium">
+
+        ${
+          order.payment_type === "cash"
+            ? "Contado"
+
+            : order.payment_type === "credit_15"
+            ? "Crédito 50% entrega + 50% 15 días"
+
+            : order.payment_type === "credit_30"
+            ? "Crédito 50% entrega + 50% 30 días"
+
+            : "—"
+        }
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="mt-6 max-h-85 overflow-y-auto rounded-2xl border border-white/10 bg-white/2 px-4">
+
+    ${lines}
+
+  </div>
+
+  <div class="mt-6 flex items-center justify-between rounded-2xl border border-white/10 bg-white/3 p-5">
+
+    <div>
+
+      <p class="text-xs text-white/40">
+        Total
+      </p>
+
+      <p class="mt-2 text-2xl font-semibold">
+        ${money(order.total || 0)}
+      </p>
+
+    </div>
+
+    <div class="text-right">
+
+      <p class="text-xs text-white/40">
+        Saldo
+      </p>
+
+      <p class="mt-2 text-xl font-semibold ${
+        Number(order.balance || 0) > 0
+          ? "text-yellow-300"
+          : "text-white"
+      }">
+        ${money(order.balance || 0)}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+`;
+
+      document.body.appendChild(
+        modal
+      );
+
+      function close() {
+
+        modal.remove();
+
+        modalOpen = false;
+
+      }
+
+      modal
+        .querySelector(
+          "#closeOrderModal"
+        )
+        ?.addEventListener(
+          "click",
+          close
+        );
+
+      modal.addEventListener(
+        "click",
+        (e) => {
+
+          if (e.target === modal)
+            close();
+
+        }
+      );
+
+      window.addEventListener(
+        "keydown",
+        (e) => {
+
+          if (e.key === "Escape")
+            close();
+
+        },
+        { once: true }
+      );
+
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    function renderTable(
+      list: Order[]
+    ) {
+
+      if (!table) return;
+
+      if (!list.length) {
+
+        table.innerHTML = `
+<tr>
+  <td colspan="6" class="py-10 text-center text-white/45">
+    No tienes pedidos aún.
+  </td>
+</tr>
+`;
+
+        return;
+
+      }
+
+      table.innerHTML =
+        list.map((item) => `
+
+<tr class="border-b border-white/5 transition hover:bg-white/[0.03]">
+
+  <td class="px-4 py-5 font-medium">
+
+    <div>
+
+      <p>
+        #${item.id.slice(0, 8)}
+      </p>
+
+      <p class="mt-1 text-xs text-white/40">
+        ${item.advisor || "AVYNA"}
+      </p>
+
+    </div>
+
+  </td>
+
+  <td class="px-4 py-5 text-white/70">
+    ${date(item.created_at)}
+  </td>
+
+  <td class="px-4 py-5">
+    ${badge(item.status)}
+  </td>
+
+  <td class="px-4 py-5 font-semibold">
+    ${money(item.total || 0)}
+  </td>
+
+  <td class="px-4 py-5 ${
+    Number(item.balance || 0) > 0
+      ? "text-yellow-300"
+      : "text-white/70"
+  }">
+
+    ${money(item.balance || 0)}
+
+  </td>
+
+  <td class="px-4 py-5 text-right">
+
+    <button
+      data-id="${item.id}"
+      class="view-order rounded-2xl border border-white/10 px-4 py-2 text-sm text-white/75 transition hover:bg-white/10 hover:text-white"
+    >
+      Ver detalle
+    </button>
+
+  </td>
+
+</tr>
+
+`).join("");
+
+      document
+        .querySelectorAll(".view-order")
+        .forEach((btn) => {
+
+          const clone =
+            btn.cloneNode(true) as HTMLElement;
+
+          btn.parentNode?.replaceChild(
+            clone,
+            btn
+          );
+
+          clone.addEventListener(
+            "click",
+            () => {
+
+              const id =
+                clone.dataset.id;
+
+              const order =
+                allOrders.find(
+                  (o) => o.id === id
+                );
+
+              if (!order) return;
+
+              showDetails(order);
+
             }
           );
 
-      if (error)
-        throw error;
+        });
 
-      allOrders =
-        data || [];
-
-      applyFilters();
-
-    } catch (err) {
-      console.error(err);
-
-      if (table) {
-        table.innerHTML = `
-          <tr>
-            <td colspan="6" class="py-8 text-center text-red-300">
-              No se pudieron cargar los pedidos.
-            </td>
-          </tr>
-        `;
-      }
     }
+
+    /* =========================
+       FILTERS
+    ========================= */
+
+    function applyFilters() {
+
+      let list = [
+        ...allOrders
+      ];
+
+      const search =
+        searchInput?.value
+          .trim()
+          .toLowerCase() || "";
+
+      const status =
+        statusFilter?.value || "";
+
+      const sort =
+        sortFilter?.value ||
+        "recent";
+
+      if (search) {
+
+        list = list.filter(
+          (item) => {
+
+            return (
+
+              String(item.id)
+                .toLowerCase()
+                .includes(search)
+
+              ||
+
+              (item.status || "")
+                .toLowerCase()
+                .includes(search)
+
+            );
+
+          }
+        );
+
+      }
+
+      if (status) {
+
+        list = list.filter(
+          (item) => {
+
+            return (
+              item.status || ""
+            ).toLowerCase() ===
+            status.toLowerCase();
+
+          }
+        );
+
+      }
+
+      if (sort === "high") {
+
+        list.sort(
+          (a, b) => {
+
+            return (
+              Number(b.total || 0) -
+              Number(a.total || 0)
+            );
+
+          }
+        );
+
+      }
+
+      else if (
+        sort === "low"
+      ) {
+
+        list.sort(
+          (a, b) => {
+
+            return (
+              Number(a.total || 0) -
+              Number(b.total || 0)
+            );
+
+          }
+        );
+
+      }
+
+      else {
+
+        list.sort(
+          (a, b) => {
+
+            return (
+              new Date(
+                b.created_at
+              ).getTime()
+
+              -
+
+              new Date(
+                a.created_at
+              ).getTime()
+            );
+
+          }
+        );
+
+      }
+
+      renderStats(list);
+
+      renderTable(list);
+
+    }
+
+    /* =========================
+       LOAD
+    ========================= */
+
+    async function loadOrders() {
+
+      try {
+
+        if (table) {
+
+          table.innerHTML = `
+<tr>
+  <td colspan="6" class="py-10 text-center text-white/45">
+    Cargando pedidos...
+  </td>
+</tr>
+`;
+
+        }
+
+        const {
+          data: { user },
+          error: authError
+        } =
+          await supabase.auth.getUser();
+
+        if (
+          authError ||
+          !user
+        ) {
+
+          location.href =
+            "/auth/login";
+
+          return;
+
+        }
+
+        const {
+          data,
+          error
+        } =
+          await supabase
+            .from("orders")
+            .select("*")
+            .eq(
+              "user_id",
+              user.id
+            )
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+        if (error)
+          throw error;
+
+        allOrders =
+          data || [];
+
+        applyFilters();
+
+      } catch (err) {
+
+        console.error(err);
+
+        if (table) {
+
+          table.innerHTML = `
+<tr>
+  <td colspan="6" class="py-10 text-center text-red-300">
+    No se pudieron cargar los pedidos.
+  </td>
+</tr>
+`;
+
+        }
+
+      }
+
+    }
+
+    /* =========================
+       EVENTS
+    ========================= */
+
+    searchInput?.addEventListener(
+      "input",
+      applyFilters
+    );
+
+    statusFilter?.addEventListener(
+      "change",
+      applyFilters
+    );
+
+    sortFilter?.addEventListener(
+      "change",
+      applyFilters
+    );
+
+    refreshBtn?.addEventListener(
+      "click",
+      loadOrders
+    );
+
+    /* =========================
+       INIT
+    ========================= */
+
+    loadOrders();
+
   }
-
-  /* =========================
-     EVENTS
-  ========================= */
-  searchInput?.addEventListener(
-    "input",
-    applyFilters
-  );
-
-  statusFilter?.addEventListener(
-    "change",
-    applyFilters
-  );
-
-  sortFilter?.addEventListener(
-    "change",
-    applyFilters
-  );
-
-  refreshBtn?.addEventListener(
-    "click",
-    loadOrders
-  );
-
-  loadOrders();
-});
+);

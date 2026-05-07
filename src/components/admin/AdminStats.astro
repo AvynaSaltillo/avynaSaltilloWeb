@@ -1,43 +1,59 @@
-<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+---
+// src/components/admin/AdminStats.astro
+---
 
-  <div class="stat-card">
-    <p>Pedidos</p>
-    <h3 id="kpiOrders">0</h3>
+<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+
+  <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+    <p class="text-xs uppercase tracking-[0.38em] text-white/35">
+      Total pedidos
+    </p>
+
+    <p
+      id="kpiOrders"
+      class="mt-5 text-5xl font-semibold tracking-tight"
+    >
+      0
+    </p>
   </div>
 
-  <div class="stat-card">
-    <p>Facturado</p>
-    <h3 id="kpiRevenue">$0</h3>
+  <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+    <p class="text-xs uppercase tracking-[0.38em] text-white/35">
+      Facturado
+    </p>
+
+    <p
+      id="kpiRevenue"
+      class="mt-5 text-5xl font-semibold tracking-tight"
+    >
+      $0.00
+    </p>
   </div>
 
-  <div class="stat-card">
-    <p>Pendiente</p>
-    <h3 id="kpiPending">$0</h3>
+  <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+    <p class="text-xs uppercase tracking-[0.38em] text-white/35">
+      Pendiente
+    </p>
+
+    <p
+      id="kpiPending"
+      class="mt-5 text-5xl font-semibold tracking-tight"
+    >
+      $0.00
+    </p>
   </div>
 
-  <div class="stat-card">
-    <p>Ticket promedio</p>
-    <h3 id="kpiAvg">$0</h3>
+  <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+    <p class="text-xs uppercase tracking-[0.38em] text-white/35">
+      Ticket promedio
+    </p>
+
+    <p
+      id="kpiAvg"
+      class="mt-5 text-5xl font-semibold tracking-tight"
+    >
+      $0.00
+    </p>
   </div>
 
-</div>
-
-<style>
-.stat-card {
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.03);
-  padding:20px;
-  border-radius:20px;
-}
-.stat-card p {
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.25em;
-  color:rgba(255,255,255,.4);
-}
-.stat-card h3 {
-  margin-top:10px;
-  font-size:28px;
-  font-weight:600;
-}
-</style>
+</section>

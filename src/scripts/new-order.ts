@@ -15,11 +15,23 @@ type CartItem = Product & {
   qty: number;
 };
 
+type ProfileRole =
+  | "super_admin"
+  | "admin"
+  | "client";
+
+type ProfileStatus =
+  | "active"
+  | "pending"
+  | "blocked";
+
 declare global {
   interface Window {
     __PRODUCTS__: Product[];
   }
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const products = window.__PRODUCTS__ || [];
@@ -95,34 +107,25 @@ let lastLevel = 0; // 0 = base, 1 = mínimo, 2 = pro
   let page = 1;
   let limit = 10;
 
-  const advisors: Record<string, { name: string; phone: string }> = {
-  michelle: {
-    name: "Michelle Navarrete",
-    phone: "528445069238"
-  },
-  blanca: {
-    name: "Blanca Mejía",
-    phone: "528441111111"
-  },
-  angeles: {
-    name: "Ángles Encinas",
-    phone: "524521174729"
-  }
-};
-
   const isMobile = () => window.innerWidth < 1024;
 
   function isModalOpen() {
   return modal && !modal.classList.contains("hidden");
 }
 
-  function money(v = 0) {
-    return new Intl.NumberFormat("es-MX", {
+function money(v = 0) {
+
+  return new Intl.NumberFormat(
+    "es-MX",
+    {
       style: "currency",
       currency: "MXN",
-      maximumFractionDigits: 0
-    }).format(Number(v));
-  }
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ).format(Number(v || 0));
+
+}
 
   function qtyOf(id: number | string) {
     return cart.find((x) => String(x.id) === String(id))?.qty || 0;
@@ -633,7 +636,7 @@ const hasMixed =
   const PLUS = 10000;
 
   let percent = 0;
-const salonRounded = Math.round(salon);
+const salonRounded = Number(salon.toFixed(2));
 
 if (salonRounded >= 10000) {
   currentLevel = 2;
@@ -698,7 +701,7 @@ if (desktopMinText) {
 }
 else {
   desktopMinText.textContent =
-    `Agrega ${money(1500 - salonRounded)} para pedido mínimo`;
+  `Faltan ${money(1500 - salonRounded)} para pedido mínimo`;
 }
 
 }
@@ -802,25 +805,43 @@ if (salonRounded >= 10000) {
 }
 
 if (modalMinText) {
-  modalMinText.classList.remove("text-green-400", "text-purple-500");
+
+  modalMinText.classList.remove(
+    "text-green-400",
+    "text-purple-500"
+  );
 
   if (salonRounded >= 10000) {
-    modalMinText.textContent = "Pedido plus alcanzado ✨";
-    modalMinText.classList.add("text-purple-500");
 
-  } else if (salonRounded >= 1500) {
-  const remainingPlus = 10000 - salonRounded;
+    modalMinText.textContent =
+      "Pedido plus alcanzado ✨";
 
-  modalMinText.textContent =
-    `Pedido mínimo alcanzado. Agrega ${money(remainingPlus)} para pedido plus`;
+    modalMinText.classList.add(
+      "text-purple-500"
+    );
 
-  modalMinText.classList.add("text-green-400");
+  }
+  else if (salonRounded >= 1500) {
+
+    const remainingPlus =
+      10000 - salonRounded;
+
+    modalMinText.textContent =
+      `Pedido mínimo alcanzado. Agrega ${money(remainingPlus)} para pedido plus`;
+
+    modalMinText.classList.add(
+      "text-green-400"
+    );
+
+  }
+  else {
+
+    modalMinText.textContent =
+      `Faltan ${money(1500 - salonRounded)} para pedido mínimo`;
+
+  }
+
 }
-}
-
-// ======================
-// CREDIT (DESKTOP)
-// ======================
 
 // ======================
 // CREDIT (DESKTOP)
@@ -1005,10 +1026,6 @@ if (modalTotal && modalCreditTitle) {
 // MODAL CREDIT
 // ======================
 
-// ======================
-// MODAL CREDIT
-// ======================
-
 if (salonRounded < 1500) {
 
   modalCreditTitleText && (modalCreditTitleText.textContent = "Contado total");
@@ -1076,55 +1093,326 @@ lastLevel = currentLevel;
   return { salon };
 }
 
-  async function sendOrder() {
-    if (!cart.length) {
-      alert("Agrega productos.");
+async function sendOrder() {
+
+  if (!cart.length) {
+    alert("Agrega productos.");
+    return;
+  }
+
+  try {
+
+    if (sendBtn) {
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Enviando...";
+    }
+
+    // ======================
+    // USER
+    // ======================
+
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      location.href = "/auth/login";
       return;
     }
 
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
+    // ======================
+    // PROFILE
+    // ======================
 
-      if (!user) {
-        location.href = "/auth/login";
-        return;
-      }
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select(`
+  id,
+  role,
+  status,
+  advisor_id,
+  name,
+  first_name,
+  last_name,
+  business_name,
+  address_line,
+  colony,
+  postal_code,
+  city,
+  state
+`)
+      .eq("id", user.id)
+      .single();
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("name,first_name,advisor")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      const advisorKey = (profile?.advisor || "david").toLowerCase();
-
-const advisorData = advisors[advisorKey] || advisors["david"];
-
-const advisorName = advisorData.name;
-const phone = advisorData.phone;
-      const client =
-        profile?.name ||
-        profile?.first_name ||
-        user.email;
-
-      const sums = totals();
-
-      let msg = `*PEDIDO AVYNA*%0A%0A`;
-      msg += `Cliente: ${client}%0A`;
-      msg += `Asesor: ${advisorName}%0A%0A`;
-
-      cart.forEach((item) => {
-        msg += `${item.qty} x ${item.name}%0A`;
-      });
-
-      msg += `%0ATotal: ${money(sums.salon)}`;
-
-      window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
-
-    } catch {
-      alert("No se pudo enviar.");
+    if (!profile) {
+      
+      alert("No se pudo cargar perfil.");
+      return;
     }
+
+const role =
+  profile.role as ProfileRole;
+
+const status =
+  profile.status as ProfileStatus;
+
+if (status === "blocked") {
+
+  await supabase.auth.signOut();
+
+  location.href = "/auth/blocked";
+
+  return;
+
+}
+
+if (status !== "active") {
+
+  location.href = "/auth/pending";
+
+  return;
+
+}
+
+if (role !== "client") {
+
+  alert("Solo clientes pueden enviar pedidos.");
+
+  return;
+
+}
+
+    
+
+ // ======================
+// ADMIN REAL
+// ======================
+
+const { data: admin } = await supabase
+  .from("admins")
+.select(`
+  id,
+  display_name,
+  whatsapp
+`)
+.eq("id", profile.advisor_id)
+.single();
+
+if (!admin) {
+  alert("No se encontró asesor.");
+  return;
+}
+
+const advisorName =
+  admin.display_name || "AVYNA";
+
+const phone =
+  admin.whatsapp || "";
+
+    // ======================
+    // TOTALS
+    // ======================
+
+    const sums = totals();
+
+    // ======================
+    // ITEMS
+    // ======================
+
+// ======================
+// ITEMS
+// ======================
+
+const items = cart.map((item) => ({
+
+  id: item.id,
+
+  name: item.name,
+
+  family: item.family || "",
+
+  qty: Number(item.qty || 0),
+
+  // 🔥 IMPORTANTE
+  priceSalon: Number(item.priceSalon || 0),
+
+  // 🔥 IMPORTANTE
+  pricePublic: Number(item.pricePublic || 0),
+
+  // 🔥 TOTAL REAL ITEM
+  total:
+    Number(item.priceSalon || 0) *
+    Number(item.qty || 0)
+
+}));
+
+// ======================
+// INSERT ORDER
+// ======================
+
+const total = Number(sums.salon || 0);
+
+let paymentType = "cash";
+
+if (total >= 10000) {
+  paymentType = "credit_30";
+}
+else if (total >= 1500) {
+  paymentType = "credit_15";
+}
+
+const { data: order, error } = await supabase
+  .from("orders")
+  .insert({
+
+    user_id: user.id,
+
+    client_id: user.id,
+
+    client_name:
+      profile.name ||
+      `${profile.first_name || ""} ${profile.last_name || ""}`.trim(),
+
+    business_name:
+      profile.business_name || "",
+
+    advisor_id:
+  profile.advisor_id,
+
+  advisor_name:
+  advisorName,
+
+    // 🔥 ITEMS YA CORREGIDOS
+    items,
+
+    subtotal: total,
+
+    total: total,
+
+    // 🔥 AL CREARSE = TOTAL
+    balance: total,
+
+    payment_type: paymentType,
+
+    status: "pending",
+
+    notes: "",
+
+    address_line:
+      profile.address_line || "",
+
+    colony:
+      profile.colony || "",
+
+    postal_code:
+      profile.postal_code || "",
+
+    city:
+      profile.city || "",
+
+    state:
+      profile.state || "",
+
+    whatsapp_sent: false
+
+  })
+  .select()
+  .single();
+
+if (error || !order) {
+  console.error(error);
+  alert("No se pudo crear pedido.");
+  return;
+}
+
+    // ======================
+    // WHATSAPP
+    // ======================
+
+const lines: string[] = [];
+
+lines.push("*PEDIDO AVYNA*");
+
+lines.push();
+
+lines.push(
+  `Cliente: ${
+    profile.name ||
+    profile.first_name ||
+    user.email
+  }`
+);
+
+lines.push(
+  `_Negocio: ${
+    profile.business_name || "-"
+  }_`
+);
+
+lines.push("");
+
+lines.push("PRODUCTOS:");
+
+cart.forEach((item) => {
+
+  lines.push(
+    `*${item.qty}x* ${item.name} — ${money(
+      Number(item.priceSalon || 0) * item.qty
+    )}`
+  );
+
+});
+
+lines.push("");
+
+lines.push(
+  `*TOTAL SALÓN: ${money(sums.salon)}*`
+);
+
+const msg = encodeURIComponent(
+  lines.join("\n")
+);
+
+window.open(
+  `https://wa.me/${phone}?text=${msg}`,
+  "_blank"
+);
+
+await supabase
+  .from("orders")
+  .update({
+    whatsapp_sent: true
+  })
+  .eq("id", order.id);
+
+    // ======================
+    // RESET
+    // ======================
+
+    cart = [];
+
+    renderAll();
+
+    closeModalFn();
+
+    showSuccess();
+
+  } catch (err) {
+
+    console.error(err);
+
+    alert("Error inesperado.");
+
+  } finally {
+
+    if (sendBtn) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Enviar pedido";
+    }
+
   }
+
+}
 
   function bindActions() {
     document.querySelectorAll(".qty-btn").forEach((btn) => {
@@ -1257,4 +1545,132 @@ function animateItem(id: string) {
   setTimeout(() => {
     el.classList.remove("scale-[1.04]");
   }, 120);
+}
+
+function showSuccess() {
+
+  const old = document.getElementById("successOverlay");
+
+  if (old) old.remove();
+
+  const div = document.createElement("div");
+
+  div.id = "successOverlay";
+
+  div.innerHTML = `
+  
+  <div class="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+
+    <!-- BACKDROP -->
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <!-- CARD -->
+    <div
+      class="
+        relative w-full max-w-md overflow-hidden
+        rounded-[2rem]
+        border border-white/10
+        bg-gradient-to-b from-zinc-900 to-black
+        p-7
+        shadow-[0_0_80px_rgba(0,0,0,0.9)]
+        animate-[fadeUp_.35s_ease]
+      "
+    >
+
+      <!-- GLOW -->
+      <div class="absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-green-500/20 blur-3xl"></div>
+
+      <!-- ICON -->
+      <div class="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-green-400/20 bg-green-500/10">
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-10 w-10 text-green-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+
+      </div>
+
+      <!-- TEXT -->
+      <div class="relative mt-6 text-center">
+
+        <p class="text-[11px] uppercase tracking-[0.35em] text-green-400/80">
+          Pedido enviado
+        </p>
+
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight">
+          Pedido registrado
+        </h2>
+
+        <p class="mt-3 text-sm leading-7 text-white/50">
+          Tu pedido fue enviado correctamente al asesor AVYNA y quedó registrado en el sistema.
+        </p>
+
+      </div>
+
+      <!-- ACTION -->
+      <div class="relative mt-7 grid gap-3">
+
+        <a
+          href="/portal/orders"
+          class="
+            flex h-12 items-center justify-center
+            rounded-2xl
+            bg-white
+            text-sm
+            font-semibold
+            text-black
+            transition
+            hover:scale-[1.02]
+          "
+        >
+          Ver pedidos
+        </a>
+
+        <button
+          id="closeSuccess"
+          class="
+            h-11 rounded-2xl
+            border border-white/10
+            bg-white/[0.03]
+            text-sm text-white/70
+            transition
+            hover:bg-white/10
+          "
+        >
+          Seguir comprando
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  `;
+
+  document.body.appendChild(div);
+
+  document.body.classList.add("overflow-hidden");
+
+  const close = () => {
+
+    div.remove();
+
+    document.body.classList.remove("overflow-hidden");
+
+  };
+
+  div
+    .querySelector("#closeSuccess")
+    ?.addEventListener("click", close);
+
 }

@@ -1,115 +1,256 @@
 import { supabase } from "../lib/supabase";
 
+type ProfileRole =
+  | "super_admin"
+  | "admin"
+  | "client";
+
+type ProfileStatus =
+  | "active"
+  | "pending"
+  | "blocked";
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const form = document.getElementById("loginForm") as HTMLFormElement | null;
-  const msg = document.getElementById("msg") as HTMLElement | null;
-  const btn = document.getElementById("submitBtn") as HTMLButtonElement | null;
-  const email = document.getElementById("email") as HTMLInputElement | null;
-  const password = document.getElementById("password") as HTMLInputElement | null;
-  const eye = document.getElementById("togglePassword") as HTMLButtonElement | null;
+  const form =
+    document.getElementById("loginForm") as HTMLFormElement | null;
+
+  const msg =
+    document.getElementById("msg") as HTMLElement | null;
+
+  const btn =
+    document.getElementById("submitBtn") as HTMLButtonElement | null;
+
+  const email =
+    document.getElementById("email") as HTMLInputElement | null;
+
+  const password =
+    document.getElementById("password") as HTMLInputElement | null;
+
+  const eye =
+    document.getElementById("togglePassword") as HTMLButtonElement | null;
 
   if (!form || !msg || !btn || !email || !password) return;
 
-  /* 👁 TOGGLE PASSWORD */
+  /* =========================
+     👁 TOGGLE PASSWORD
+  ========================= */
+
   eye?.addEventListener("click", (e) => {
+
     e.preventDefault();
-    password.type = password.type === "password" ? "text" : "password";
+
+    password.type =
+      password.type === "password"
+        ? "text"
+        : "password";
   });
 
-  /* LOADING */
+  /* =========================
+     BUTTON LOADING
+  ========================= */
+
   function loading(state: boolean) {
+
     btn!.disabled = state;
-    btn!.textContent = state ? "Entrando..." : "Entrar";
-    btn!.classList.toggle("opacity-70", state);
+
+    btn!.textContent =
+      state
+        ? "Entrando..."
+        : "Entrar";
+
+    btn!.classList.toggle(
+      "opacity-70",
+      state
+    );
+
+    btn!.classList.toggle(
+      "pointer-events-none",
+      state
+    );
   }
 
-  /* LOGIN */
+  /* =========================
+     LOGIN
+  ========================= */
+
   form.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     msg.textContent = "";
 
-    const mail = email.value.trim().toLowerCase();
-    const pass = password.value.trim();
+    const mail =
+      email.value
+        .trim()
+        .toLowerCase();
+
+    const pass =
+      password.value.trim();
 
     if (!mail || !pass) {
-      msg.textContent = "Completa correo y contraseña.";
+
+      msg.textContent =
+        "Completa correo y contraseña.";
+
       return;
     }
 
     loading(true);
 
     try {
-      /* AUTH */
-      const { data, error } = await supabase.auth.signInWithPassword({
+
+      /* =========================
+         AUTH
+      ========================= */
+
+      const {
+        data,
+        error
+      } = await supabase.auth.signInWithPassword({
         email: mail,
         password: pass
       });
 
       if (error || !data.user) {
-        msg.textContent = "Credenciales inválidas.";
+
+        msg.textContent =
+          "Credenciales inválidas.";
+
         loading(false);
+
         return;
       }
 
       const uid = data.user.id;
 
-      /* PROFILE */
-      const { data: profile, error: profileError } = await supabase
+      await supabase.auth.getSession();
+
+      const sessionCheck =
+  await supabase.auth.getSession();
+
+console.log(sessionCheck);
+
+      /* =========================
+         PROFILE
+      ========================= */
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabase
         .from("profiles")
-        .select("status, role")
+        .select(`
+          status,
+          role,
+          advisor_id
+        `)
         .eq("id", uid)
         .maybeSingle();
 
-      if (profileError || !profile) {
+     if (profileError || !profile) {
+
+  console.log("PROFILE ERROR:", profileError);
+  console.log("PROFILE:", profile);
+  console.log("UID:", uid);
+
+  msg.textContent =
+    profileError?.message ||
+    "No se pudo cargar perfil.";
+
+  loading(false);
+
+  return;
+}
+
+
+            const role =
+  (profile.role as ProfileRole)
+  || "client";
+
+const status =
+  profile.status as ProfileStatus;
+
+      /* =========================
+         STATUS FLOW
+      ========================= */
+
+      if (status === "pending") {
+
+        loading(false);
+
+        window.location.href =
+          "/auth/pending";
+
+        return;
+      }
+
+      if (status === "blocked") {
+
         await supabase.auth.signOut();
-        msg.textContent = "No se pudo cargar perfil.";
+
         loading(false);
+
+        window.location.href =
+          "/auth/blocked";
+
+        return;
+      }
+
+      if (status !== "active") {
+
+        await supabase.auth.signOut();
+
+        msg.textContent =
+          "Estado inválido.";
+
+        loading(false);
+
         return;
       }
 
       /* =========================
-         🔥 STATUS FLOW
+         ROLE FLOW
       ========================= */
 
-      if (profile.status === "pending") {
+      // 🔥 SUPER ADMIN
+      if (role === "super_admin") {
+
         loading(false);
-        window.location.href = "/auth/pending";
+
+        window.location.href =
+          "/super-admin";
+
         return;
       }
 
-      if (profile.status === "blocked") {
-        await supabase.auth.signOut(); // 🔥 clave
+      // 🔥 ADMIN / ADVISOR
+      if (role === "admin") {
+
         loading(false);
-        window.location.href = "/auth/blocked";
+
+        window.location.href =
+          "/admin";
+
         return;
       }
 
-      if (profile.status !== "active") {
-        msg.textContent = "Estado desconocido.";
-        loading(false);
-        return;
-      }
-
-      /* =========================
-         🔥 ROLE FLOW
-      ========================= */
-
-      if (profile.role === "admin") {
-        loading(false);
-        window.location.href = "/admin";
-        return;
-      }
-
+      // 🔥 CLIENT
       loading(false);
-      window.location.href = "/portal";
+
+      window.location.href =
+        "/portal";
 
     } catch (err) {
+
       console.error(err);
-      msg.textContent = "Error inesperado.";
+
+      msg.textContent =
+        "Error inesperado.";
+
       loading(false);
     }
+
   });
 
 });

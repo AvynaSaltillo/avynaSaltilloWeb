@@ -456,9 +456,9 @@ export const products = [
   description:
     "Acondicionador instantáneo de dos fases con acción hidratante, nutritiva y reparadora para cabellos decolorados, rubios cenizos y canos.",
   tag: "Top",
-  priceSalon: 280.5,
+  priceSalon: 280,
   pricePublic: 400,
-  saving: 119.5,
+  saving: 120,
   image: "/images/products/platino/platino-bifasico.png"
 },
 
@@ -646,9 +646,9 @@ export const products = [
   description:
     "Tratamiento especial para cabellos escasos. Fortalece el cabello y ayuda a prevenir la caída.",
   tag: "",
-  priceSalon: 171.5,
-  pricePublic: 245,
-  saving: 73.5,
+  priceSalon: 154,
+  pricePublic: 220,
+  saving: 66,
   image: "/images/products/abbondanza/shampoo-abbondanza-250ml.png"
 },
 
@@ -676,9 +676,9 @@ export const products = [
   extra:
     "Modo de uso: aplicar sobre cuero cabelludo limpio, masajear y usar 3 veces por semana.",
   tag: "Top",
-  priceSalon: 483,
-  pricePublic: 690,
-  saving: 207,
+  priceSalon: 427,
+  pricePublic: 610,
+  saving: 183,
   image: "/images/products/abbondanza/lozione-abbondanza.png"
 },
 
@@ -694,9 +694,9 @@ export const products = [
   description:
     "Libre de parabenos, sulfatos y alcohol. Ideal para cuero cabelludo sensible o graso.",
   tag: "",
-  priceSalon: 227.5,
-  pricePublic: 325,
-  saving: 97.5,
+  priceSalon: 266,
+  pricePublic: 380,
+  saving: 114,
   image: "/images/products/agave/agave-shampoo-500ml.png"
 },
 
@@ -708,9 +708,9 @@ export const products = [
   description:
     "Formato salón con extracto de agave y aceites esenciales. Limpieza profunda y balanceada.",
   tag: "Pro",
-  priceSalon: 357,
-  pricePublic: 510,
-  saving: 153,
+  priceSalon: 451.5,
+  pricePublic: 645,
+  saving: 193.5,
   image: "/images/products/agave/agave-shampoo-1000ml.png"
 },
 
@@ -722,9 +722,9 @@ export const products = [
   description:
     "Nutrición ligera para cuero cabelludo sensible. Mantiene pureza sin saturar el cabello.",
   tag: "",
-  priceSalon: 224,
-  pricePublic: 320,
-  saving: 96,
+  priceSalon: 252,
+  pricePublic: 360,
+  saving: 108,
   image: "/images/products/agave/agave-maschera-500ml.png"
 },
 
@@ -736,9 +736,9 @@ export const products = [
   description:
     "Formato profesional con extracto de agave, menta y lavanda para uso continuo.",
   tag: "Pro",
-  priceSalon: 343,
-  pricePublic: 490,
-  saving: 147,
+  priceSalon: 381.5,
+  pricePublic: 545,
+  saving: 163.5,
   image: "/images/products/agave/agave-maschera-1000ml.png"
 },
 
@@ -750,9 +750,9 @@ export const products = [
   description:
     "Sin enjuague. Hidrata, desenreda y refresca cuero cabelludo sensible.",
   tag: "Top",
-  priceSalon: 234.5,
-  pricePublic: 335,
-  saving: 100.5,
+  priceSalon: 280,
+  pricePublic: 400,
+  saving: 120,
   image: "/images/products/agave/agave-bifasico.png"
 },
 
@@ -766,9 +766,9 @@ export const products = [
   extra:
     "Modo de uso: aplicar en cuero cabelludo limpio y masajear. No enjuagar. 3 veces por semana.",
   tag: "",
-  priceSalon: 420,
-  pricePublic: 600,
-  saving: 180,
+  priceSalon: 234.5,
+  pricePublic: 335,
+  saving: 100.5,
   image: "/images/products/agave/agave-lozione.png"
 },
 
@@ -786,9 +786,9 @@ export const products = [
   extra:
     "Uso: aplicar en cabello húmedo de 5 a 7 rocíos. Incluye protección térmica.",
   tag: "Top",
-  priceSalon: 280,
-  pricePublic: 400,
-  saving: 120,
+  priceSalon: 210,
+  pricePublic: 300,
+  saving: 90,
   image: "/images/products/tratamientos/tratamientos-pozione10.png"
 },
 
@@ -802,9 +802,9 @@ export const products = [
   extra:
     "Para cabellos muy dañados se recomienda dejar de medios a puntas sin enjuagar.",
   tag: "Pro",
-  priceSalon: 343,
-  pricePublic: 490,
-  saving: 147,
+  priceSalon: 231,
+  pricePublic: 330,
+  saving: 99,
   image: "/images/products/tratamientos/tratamientos-pozionebooster.png"
 },
 
@@ -834,9 +834,9 @@ export const products = [
   extra:
     "Ingrediente activo: Ácido Hialurónico. Recomendado para cabello decolorado o maltratado.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 185.5,
+  pricePublic: 265,
+  saving: 79.5,
   image: "/images/products/solidos/solido-ialuronico-shampoo.png"
 },
 
@@ -850,9 +850,9 @@ export const products = [
   extra:
     "Ingrediente activo: Ácido Hialurónico y proteína de trigo.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 185.5,
+  pricePublic: 265,
+  saving: 79.5,
   image: "/images/products/solidos/solido-ialuronico-maschera.png"
 },
 
@@ -866,9 +866,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Litchi. Ideal para cabellos teñidos.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 196,
+  pricePublic: 280,
+  saving: 84,
   image: "/images/products/solidos/solido-litchi-shampoo.png"
 },
 
@@ -882,9 +882,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Litchi.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 196,
+  pricePublic: 280,
+  saving: 84,
   image: "/images/products/solidos/solido-litchi-maschera.png"
 },
 
@@ -898,9 +898,9 @@ export const products = [
   extra:
     "Ingrediente activo: Aceite de Argán.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 182,
+  pricePublic: 265,
+  saving: 83,
   image: "/images/products/solidos/solido-argan-shampoo.png"
 },
 
@@ -914,9 +914,9 @@ export const products = [
   extra:
     "Ingrediente activo: Aceite de Argán.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 182,
+  pricePublic: 260,
+  saving: 83,
   image: "/images/products/solidos/solido-argan-maschera.png"
 },
 
@@ -930,9 +930,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Ginseng y aminoácidos.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 210,
+  pricePublic: 300,
+  saving: 90,
   image: "/images/products/solidos/solido-freschezza-shampoo.png"
 },
 
@@ -946,9 +946,9 @@ export const products = [
   extra:
     "Ingrediente activo: Extracto de Ginseng y aminoácidos.",
   tag: "Eco",
-  priceSalon: 168,
-  pricePublic: 240,
-  saving: 72,
+  priceSalon: 210,
+  pricePublic: 300,
+  saving: 90,
   image: "/images/products/solidos/solido-freschezza-maschera.png"
 },
 
@@ -1174,9 +1174,9 @@ export const products = [
   extra:
     "Con queratina y semillas de lino. Protector térmico.",
   tag: "Top",
-  priceSalon: 266,
-  pricePublic: 380,
-  saving: 114,
+  priceSalon: 381.5,
+  pricePublic: 545,
+  saving: 163.5,
   image: "/images/products/xtyling/xtyling-liquidsilk.png"
 },
 
@@ -1190,9 +1190,9 @@ export const products = [
   extra:
     "Efecto anti-humedad hasta 24 horas.",
   tag: "Pro",
-  priceSalon: 245,
-  pricePublic: 350,
-  saving: 105,
+  priceSalon: 406,
+  pricePublic: 580,
+  saving: 174,
   image: "/images/products/xtyling/xtyling-lissdilino.png"
 },
 
@@ -1222,9 +1222,9 @@ export const products = [
   extra:
     "Ideal para estilos estructurados.",
   tag: "Barber",
-  priceSalon: 224,
-  pricePublic: 320,
-  saving: 96,
+  priceSalon: 269.5,
+  pricePublic: 385,
+  saving: 115.5,
   image: "/images/products/xtyling/xtyling-fiberpaste.png"
 },
 
@@ -1238,9 +1238,9 @@ export const products = [
   extra:
     "Ideal para rizos y ondas.",
   tag: "Top",
-  priceSalon: 224,
-  pricePublic: 320,
-  saving: 96,
+  priceSalon: 276.5,
+  pricePublic: 395,
+  saving: 118.5,
   image: "/images/products/xtyling/xtyling-curly.png"
 },
 
@@ -1254,9 +1254,9 @@ export const products = [
   extra:
     "Ideal para volumen y styling diario.",
   tag: "Salon",
-  priceSalon: 224,
-  pricePublic: 320,
-  saving: 96,
+  priceSalon: 248.5,
+  pricePublic: 355,
+  saving: 106.5,
   image: "/images/products/xtyling/xtyling-mousse.png"
 },
 
@@ -1270,9 +1270,9 @@ export const products = [
   extra:
     "Disponible también en 500 ml.",
   tag: "Strong",
-  priceSalon: 140,
-  pricePublic: 200,
-  saving: 60,
+  priceSalon: 168,
+  pricePublic: 240,
+  saving: 72,
   image: "/images/products/xtyling/xtyling-gel-100.png"
 },
 
@@ -1286,9 +1286,9 @@ export const products = [
   extra:
     "Control prolongado sin resecar.",
   tag: "Pro",
-  priceSalon: 224,
-  pricePublic: 320,
-  saving: 96,
+  priceSalon: 287,
+  pricePublic: 410,
+  saving: 123,
   image: "/images/products/xtyling/xtyling-gel-500.png"
 },
 
@@ -1302,9 +1302,9 @@ export const products = [
   extra:
     "Aplicación ligera y secado rápido.",
   tag: "Salon",
-  priceSalon: 252,
-  pricePublic: 360,
-  saving: 108,
+  priceSalon: 497,
+  pricePublic: 710,
+  saving: 213,
   image: "/images/products/xtyling/xtyling-lacca.png"
 },
 

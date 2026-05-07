@@ -1,0 +1,42 @@
+/* 🔥 FIX AUTOFILL DARK MODE */
+.auth-scope input:-webkit-autofill,
+.auth-scope input:-webkit-autofill:hover,
+.auth-scope input:-webkit-autofill:focus,
+.auth-scope input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  box-shadow: 0 0 0 1000px black inset !important;
+
+  -webkit-text-fill-color: white !important;
+  caret-color: white;
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.auth-scope .input {
+  height: 48px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: black;
+  padding-left: 44px;
+  padding-right: 12px;
+  outline: none;
+}
+
+.auth-scope .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.35);
+  pointer-events: none;
+  z-index: 2; /* 🔥 importante */
+}
+
+.auth-scope input:not(:placeholder-shown) {
+  color: white;
+}   
+
+

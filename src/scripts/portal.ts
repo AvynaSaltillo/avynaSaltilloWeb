@@ -1,9 +1,9 @@
 // src/scripts/portal.ts
-// PREMIUM DEFINITIVO (basado en tu archivo bueno)
 
 import { supabase } from "../lib/supabase";
 
 document.addEventListener("DOMContentLoaded", async () => {
+
   const $ = (id: string) =>
     document.getElementById(id);
 
@@ -29,22 +29,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* =========================
      MOBILE MENU
   ========================= */
+
   function openMenu() {
     mobileSidebar?.classList.remove("-translate-x-full");
     mobileSidebar?.classList.remove("translate-x-[-100%]");
+
     mobileOverlay?.classList.remove("hidden");
+
     document.body.style.overflow = "hidden";
   }
 
   function closeMenu() {
     mobileSidebar?.classList.add("-translate-x-full");
     mobileSidebar?.classList.add("translate-x-[-100%]");
+
     mobileOverlay?.classList.add("hidden");
+
     document.body.style.overflow = "";
   }
 
   openMobileMenu?.addEventListener("click", openMenu);
+
   closeMobileMenu?.addEventListener("click", closeMenu);
+
   mobileOverlay?.addEventListener("click", closeMenu);
 
   document.querySelectorAll(".mobile-link").forEach((link) => {
@@ -54,16 +61,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* =========================
      DESKTOP SIDEBAR
   ========================= */
+
   const collapsed =
     localStorage.getItem("sidebar-collapsed") === "true";
 
   if (collapsed) {
     sidebar?.classList.add("sidebar-collapsed");
+
     iconOpen?.classList.add("hidden");
     iconClose?.classList.remove("hidden");
   }
 
   toggleSidebar?.addEventListener("click", () => {
+
     const state =
       sidebar?.classList.toggle("sidebar-collapsed") || false;
 
@@ -79,12 +89,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* =========================
      ACTIVE LINKS
   ========================= */
+
   const path =
     location.pathname.replace(/\/$/, "") || "/";
 
   document.querySelectorAll(".nav-link").forEach((link) => {
+
     const href =
-      (link.getAttribute("href") || "").replace(/\/$/, "");
+      (link.getAttribute("href") || "")
+        .replace(/\/$/, "");
 
     if (!href) return;
 
@@ -100,12 +113,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   /* =========================
-     SESSION FIX REAL
+     SESSION FIX
   ========================= */
+
   let tries = 0;
   let session = null;
 
   while (tries < 8 && !session) {
+
     const { data } =
       await supabase.auth.getSession();
 
@@ -128,68 +143,237 @@ document.addEventListener("DOMContentLoaded", async () => {
   const user = session.user;
 
   /* =========================
-     PROFILE LOAD + STATUS GUARD 🔥
+     🔒 STATUS SECURITY GUARD
   ========================= */
-  try {
-    // =========================
-// 🔥 PROFILE FIX (ANTI-RACE)
-// =========================
 
-// =========================
-// 🔥 PROFILE LOAD SAFE
-// =========================
+  async function validateStatus() {
 
-let profile = null;
-let attempts = 0;
+    try {
 
-while (!profile && attempts < 6) {
+      const { data: latestProfile } = await supabase
+        .from("profiles")
+        .select(`
+          status,
+          role,
+          first_name,
+          last_name,
+          name,
+          email,
+          avatar_url,
+          business_name,
+          official_client_id,
+          local_client_id,
+          payment_type
+        `)
+        .eq("id", user.id)
+        .maybeSingle();
 
-  const { data } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .maybeSingle();
+      if (!latestProfile) return;
 
-  profile = data;
+      /* 🚫 BLOCKED */
+      if (latestProfile.status === "blocked") {
 
-  if (!profile) {
-    await new Promise(r => setTimeout(r, 250));
+        await supabase.auth.signOut();
+
+        window.location.href = "/auth/blocked";
+
+        return;
+      }
+
+      /* ⏳ PENDING */
+      if (latestProfile.status === "pending") {
+
+        await supabase.auth.signOut();
+
+        window.location.href = "/auth/pending";
+
+        return;
+      }
+
+      /* ❌ INVALID */
+      if (latestProfile.status !== "active") {
+
+        await supabase.auth.signOut();
+
+        window.location.href = "/auth/login";
+
+        return;
+      }
+
+    } catch (err) {
+      console.error("validateStatus error", err);
+    }
   }
 
-  attempts++;
-}
+  /* 🔥 VALIDACIÓN INICIAL */
+  await validateStatus();
 
-// ⚠️ SOLO FALLA SI DESPUÉS DE INTENTOS NO HAY PROFILE
-if (!profile) {
-  console.warn("Profile no disponible aún, evitando logout forzado");
-  return; // 🔥 clave: NO cerrar sesión
-}
+  /* 🔥 AUTO VALIDACIÓN */
+  setInterval(() => {
+    validateStatus();
+  }, 15000);
 
-if (!profile) {
-  await supabase.auth.signOut();
-  window.location.href = "/auth/login";
+  /* 🔥 VALIDAR AL VOLVER */
+  window.addEventListener("focus", () => {
+    validateStatus();
+  });
+
+  /* 🔥 VALIDAR EN NAVEGACIÓN */
+window.addEventListener("popstate", () => {
+  validateStatus();
+});
+
+/* 🔥 VALIDAR EN LINKS */
+document.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    validateStatus();
+  });
+});
+
+/* 🔥 VALIDAR AL VISIBILIDAD */
+document.addEventListener("visibilitychange", () => {
+
+  if (document.visibilityState === "visible") {
+    validateStatus();
+  }
+
+});
+
+/* =========================
+   🔥 GLOBAL SECURITY CLICK GUARD
+========================= */
+
+window.addEventListener(
+  "click",
+  async (e) => {
+
+    try {
+
+      const { data: latestProfile } = await supabase
+        .from("profiles")
+        .select("status")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (!latestProfile) return;
+
+      /* 🚫 BLOCKED */
+      if (latestProfile.status === "blocked") {
+
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        await supabase.auth.signOut();
+
+        window.location.href = "/auth/blocked";
+
+        return false;
+      }
+
+      /* ⏳ PENDING */
+      if (latestProfile.status === "pending") {
+
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        await supabase.auth.signOut();
+
+        window.location.href = "/auth/pending";
+
+        return false;
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
+
+  },
+  true
+);
+
+  /* =========================
+     PROFILE LOAD
+  ========================= */
+
+  try {
+
+    let profile = null;
+    let attempts = 0;
+
+    while (!profile && attempts < 6) {
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      profile = data;
+
+      if (!profile) {
+        await new Promise((r) =>
+          setTimeout(r, 250)
+        );
+      }
+
+      attempts++;
+    }
+
+    if (!profile) {
+      console.warn("Profile no disponible aún");
+      return;
+    }
+
+    /* =========================
+   🔥 ADMIN REDIRECT
+========================= */
+
+if (
+  profile.role === "admin" ||
+  profile.role === "super_admin"
+) {
+
+  window.location.href = "/admin";
+
   return;
 }
 
-    // =========================
-    // 🔥 STATUS GUARD (AQUÍ ESTÁ EL FIX)
-    // =========================
-   /* 🔒 BLOQUEADO */
-if (profile.status === "blocked") {
-  await supabase.auth.signOut();
-  window.location.href = "/auth/blocked";
-  return;
-}
+    /* =========================
+       🔒 STATUS GUARD
+    ========================= */
 
-/* 🚫 SOLO ACTIVE PUEDE ESTAR AQUÍ */
-if (profile.status !== "active") {
-  window.location.href = "/auth/login";
-  return;
-}
+    if (profile.status === "blocked") {
 
-    // =========================
-    // 👇 TU LÓGICA ORIGINAL (NO TOCADA)
-    // =========================
+      await supabase.auth.signOut();
+
+      window.location.href = "/auth/blocked";
+
+      return;
+    }
+
+    if (profile.status === "pending") {
+
+      await supabase.auth.signOut();
+
+      window.location.href = "/auth/pending";
+
+      return;
+    }
+
+    if (profile.status !== "active") {
+
+      await supabase.auth.signOut();
+
+      window.location.href = "/auth/login";
+
+      return;
+    }
+
+    /* =========================
+       USER DATA
+    ========================= */
 
     const rawFirst =
       profile?.first_name ||
@@ -216,11 +400,12 @@ if (profile.status !== "active") {
     let fullName = "";
 
     if (firstName || lastName) {
+
       fullName =
         `${firstName} ${lastName}`.trim();
-    }
 
-    else if (profile?.name) {
+    } else if (profile?.name) {
+
       const parts =
         String(profile.name)
           .trim()
@@ -229,9 +414,9 @@ if (profile.status !== "active") {
 
       fullName =
         `${parts[0] || ""} ${parts[1] || ""}`.trim();
-    }
 
-    else if (profile?.full_name) {
+    } else if (profile?.full_name) {
+
       const parts =
         String(profile.full_name)
           .trim()
@@ -251,6 +436,10 @@ if (profile.status !== "active") {
       user.email ||
       "";
 
+    /* =========================
+       SIDEBAR
+    ========================= */
+
     if (sidebarName) {
       sidebarName.textContent = fullName;
     }
@@ -260,35 +449,64 @@ if (profile.status !== "active") {
     }
 
     if (sidebarAvatar) {
+
       if (profile?.avatar_url) {
+
         sidebarAvatar.innerHTML = `
-<img src="${profile.avatar_url}" class="h-full w-full rounded-2xl object-cover"/>
+<img
+src="${profile.avatar_url}"
+class="h-full w-full rounded-2xl object-cover"
+/>
 `;
+
       } else {
+
         sidebarAvatar.textContent =
           fullName.charAt(0).toUpperCase();
       }
     }
 
-    const mobileName = document.getElementById("mobileName");
-    const mobileEmail = document.getElementById("mobileEmail");
-    const mobileAvatar = document.getElementById("mobileAvatar");
+    /* =========================
+       MOBILE
+    ========================= */
 
-    if (mobileName) mobileName.textContent = fullName;
-    if (mobileEmail) mobileEmail.textContent = email;
+    const mobileName =
+      document.getElementById("mobileName");
+
+    const mobileEmail =
+      document.getElementById("mobileEmail");
+
+    const mobileAvatar =
+      document.getElementById("mobileAvatar");
+
+    if (mobileName) {
+      mobileName.textContent = fullName;
+    }
+
+    if (mobileEmail) {
+      mobileEmail.textContent = email;
+    }
 
     if (mobileAvatar) {
+
       if (profile?.avatar_url) {
+
         mobileAvatar.innerHTML = `
-<img src="${profile.avatar_url}" class="h-full w-full rounded-2xl object-cover"/>
+<img
+src="${profile.avatar_url}"
+class="h-full w-full rounded-2xl object-cover"
+/>
 `;
+
       } else {
+
         mobileAvatar.textContent =
           fullName.charAt(0).toUpperCase();
       }
     }
 
   } catch (error) {
+
     console.error(error);
 
     if (sidebarName)
@@ -300,20 +518,32 @@ if (profile.status !== "active") {
     if (sidebarAvatar)
       sidebarAvatar.textContent = "C";
 
-    const mobileName = document.getElementById("mobileName");
-    const mobileEmail = document.getElementById("mobileEmail");
-    const mobileAvatar = document.getElementById("mobileAvatar");
+    const mobileName =
+      document.getElementById("mobileName");
 
-    if (mobileName) mobileName.textContent = "Cliente";
-    if (mobileEmail) mobileEmail.textContent = "";
-    if (mobileAvatar) mobileAvatar.textContent = "C";
+    const mobileEmail =
+      document.getElementById("mobileEmail");
+
+    const mobileAvatar =
+      document.getElementById("mobileAvatar");
+
+    if (mobileName)
+      mobileName.textContent = "Cliente";
+
+    if (mobileEmail)
+      mobileEmail.textContent = "";
+
+    if (mobileAvatar)
+      mobileAvatar.textContent = "C";
   }
 
   /* =========================
      WATCH SESSION
   ========================= */
+
   supabase.auth.onAuthStateChange(
     (_event, newSession) => {
+
       if (!newSession) {
         window.location.href = "/auth/login";
       }
@@ -323,12 +553,18 @@ if (profile.status !== "active") {
   /* =========================
      LOGOUT
   ========================= */
+
   async function logout() {
+
     await supabase.auth.signOut();
+
     closeMenu();
+
     window.location.href = "/auth/login";
   }
 
   logoutBtn?.addEventListener("click", logout);
+
   mobileLogout?.addEventListener("click", logout);
+
 });

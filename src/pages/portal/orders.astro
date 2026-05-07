@@ -53,21 +53,68 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
   <!-- FILTERS -->
   <section class="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
 
+    <!-- SEARCH -->
     <div class="rounded-2xl border border-white/20 bg-white/[0.05] px-4 transition focus-within:border-white/40 focus-within:ring-1 focus-within:ring-white/20">
+
       <input
         id="searchInput"
         type="text"
         placeholder="Buscar pedido..."
         class="h-14 w-full bg-transparent text-sm outline-none placeholder:text-white/40"
       />
+
     </div>
 
-    <select class="h-14 rounded-2xl border border-white/20 bg-zinc-900 text-white px-4 text-sm outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20">
-      <option>Todos los estatus</option>
+    <!-- STATUS -->
+    <select
+      id="statusFilter"
+      class="h-14 rounded-2xl border border-white/20 bg-zinc-900 px-4 text-sm text-white outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20"
+    >
+
+      <option value="">
+        Todos los estatus
+      </option>
+
+      <option value="pending">
+        Pendientes
+      </option>
+
+      <option value="preparing">
+        Preparando
+      </option>
+
+      <option value="shipped">
+        Enviados
+      </option>
+
+      <option value="delivered">
+        Entregados
+      </option>
+
+      <option value="cancelled">
+        Cancelados
+      </option>
+
     </select>
 
-    <select class="h-14 rounded-2xl border border-white/20 bg-zinc-900 text-white px-4 text-sm outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20">
-      <option>Más recientes</option>
+    <!-- SORT -->
+    <select
+      id="sortFilter"
+      class="h-14 rounded-2xl border border-white/20 bg-zinc-900 px-4 text-sm text-white outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20"
+    >
+
+      <option value="recent">
+        Más recientes
+      </option>
+
+      <option value="high">
+        Mayor total
+      </option>
+
+      <option value="low">
+        Menor total
+      </option>
+
     </select>
 
   </section>
@@ -75,58 +122,120 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
   <!-- KPIS -->
   <section class="grid gap-4 sm:grid-cols-3">
 
+    <!-- TOTAL -->
     <div class="rounded-[2rem] border border-white/10 bg-white/[0.05] p-6">
-      <p class="text-xs uppercase tracking-[0.35em] text-white/40">Total pedidos</p>
-      <p class="mt-4 text-4xl font-semibold">0</p>
+
+      <p class="text-xs uppercase tracking-[0.35em] text-white/40">
+        Total pedidos
+      </p>
+
+      <p
+        id="ordersTotal"
+        class="mt-4 text-4xl font-semibold"
+      >
+        0
+      </p>
+
     </div>
 
+    <!-- FACTURADO -->
     <div class="rounded-[2rem] border border-white/10 bg-white/[0.05] p-6">
-      <p class="text-xs uppercase tracking-[0.35em] text-white/40">Facturado</p>
-      <p class="mt-4 text-4xl font-semibold">$0</p>
+
+      <p class="text-xs uppercase tracking-[0.35em] text-white/40">
+        Facturado
+      </p>
+
+      <p
+        id="ordersAmount"
+        class="mt-4 text-4xl font-semibold"
+      >
+        $0
+      </p>
+
     </div>
 
+    <!-- SALDO -->
     <div class="rounded-[2rem] border border-white/10 bg-white/[0.05] p-6">
-      <p class="text-xs uppercase tracking-[0.35em] text-white/40">Pendiente</p>
-      <p class="mt-4 text-4xl font-semibold">$0</p>
+
+      <p class="text-xs uppercase tracking-[0.35em] text-white/40">
+        Pendiente
+      </p>
+
+      <p
+        id="ordersBalance"
+        class="mt-4 text-4xl font-semibold"
+      >
+        $0
+      </p>
+
     </div>
 
   </section>
 
-  <!-- TABLE (FIX REAL) -->
-<section>
+  <!-- TABLE -->
+  <section>
 
-  <div class="rounded-[2rem] border border-white/10 bg-white/[0.05] overflow-hidden">
+    <div class="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.05]">
 
-    <div class="w-full overflow-x-auto">
+      <div class="w-full overflow-x-auto">
 
-      <table class="min-w-[720px] w-full text-left">
+        <table class="min-w-[720px] w-full text-left">
 
-        <thead class="text-xs uppercase tracking-[0.28em] text-white/60">
-          <tr class="border-b border-white/10">
-            <th class="px-4 py-4">Pedido</th>
-            <th class="px-4 py-4">Fecha</th>
-            <th class="px-4 py-4">Estatus</th>
-            <th class="px-4 py-4">Total</th>
-            <th class="px-4 py-4">Saldo</th>
-            <th class="px-4 py-4 text-right">Acción</th>
-          </tr>
-        </thead>
+          <thead class="text-xs uppercase tracking-[0.28em] text-white/60">
 
-        <tbody>
-          <tr>
-            <td colspan="6" class="py-12 text-center text-white/50 text-sm">
-              No tienes pedidos aún.
-            </td>
-          </tr>
-        </tbody>
+            <tr class="border-b border-white/10">
 
-      </table>
+              <th class="px-4 py-4 text-left">
+                Pedido
+              </th>
+
+              <th class="px-4 py-4 text-left">
+                Fecha
+              </th>
+
+              <th class="px-4 py-4 text-left">
+                Estatus
+              </th>
+
+              <th class="px-4 py-4 text-left">
+                Total
+              </th>
+
+              <th class="px-4 py-4 text-left">
+                Saldo
+              </th>
+
+              <th class="px-4 py-4 text-right">
+                Acción
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <!-- 🔥 ESTE ID FALTABA -->
+          <tbody id="ordersTable">
+
+            <tr>
+
+              <td
+                colspan="6"
+                class="py-12 text-center text-sm text-white/50"
+              >
+                Cargando pedidos...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 </section>
 

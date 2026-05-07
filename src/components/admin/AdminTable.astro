@@ -1,16 +1,54 @@
-<table class="w-full min-w-[900px] text-sm">
+---
+// src/components/admin/AdminTable.astro
+---
 
-  <thead class="text-xs uppercase tracking-[0.25em] text-white/40 border-b border-white/10">
-    <tr>
-      <th class="px-6 py-4">Pedido</th>
-      <th>Cliente</th>
-      <th>Estatus</th>
-      <th>Total</th>
-      <th>Fecha</th>
-      <th class="text-right px-6">Acción</th>
+<table class="min-w-full text-left">
+
+  <thead class="border-b border-white/10">
+
+    <tr class="text-xs uppercase tracking-[0.35em] text-white/40">
+
+      <th class="px-6 py-5">
+        Pedido
+      </th>
+
+      <th class="px-6 py-5">
+        Cliente
+      </th>
+
+      <th class="px-6 py-5">
+        Estatus
+      </th>
+
+      <th class="px-6 py-5">
+        Total
+      </th>
+
+      <th class="px-6 py-5">
+        Fecha
+      </th>
+
+      <th class="px-6 py-5 text-right">
+        Acción
+      </th>
+
     </tr>
+
   </thead>
 
-  <tbody id="ordersTable"></tbody>
+  <tbody id="ordersTable">
+
+    <tr>
+
+      <td
+        colspan="6"
+        class="py-16 text-center text-sm text-white/45"
+      >
+        Cargando pedidos...
+      </td>
+
+    </tr>
+
+  </tbody>
 
 </table>

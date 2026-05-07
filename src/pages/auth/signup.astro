@@ -9,7 +9,9 @@ import {
   Lock,
   Eye,
   Users,
-  ChevronDown
+  ChevronDown,
+  MapPin,
+  Hash
 } from "lucide-react";
 ---
 
@@ -24,88 +26,60 @@ import {
   <div class="grid grid-cols-2 gap-3">
 
     <div class="relative">
-      <User
-        size={18}
-        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-      />
-
-      <input
-        id="firstName"
-        placeholder="Nombres"
-        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
-        required
-      />
+      <User className="input-icon" size={18} />
+      <input id="firstName" placeholder="Nombres" class="input" required />
     </div>
 
     <div class="relative">
-      <User
-        size={18}
-        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-      />
-
-      <input
-        id="lastName"
-        placeholder="Apellidos"
-        class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
-        required
-      />
+      <User className="input-icon" size={18} />
+      <input id="lastName" placeholder="Apellidos" class="input" required />
     </div>
 
   </div>
 
   <!-- NEGOCIO -->
   <div class="relative">
-
-    <Building2
-      size={18}
-      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-    />
-
-    <input
-      id="business"
-      placeholder="Nombre comercial / salón"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
-      required
-    />
-
+    <Building2 className="input-icon" size={18} />
+    <input id="business" placeholder="Nombre comercial / salón" class="input" required />
   </div>
 
   <!-- EMAIL -->
   <div class="relative">
-
-    <Mail
-      size={18}
-      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-    />
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Correo electrónico"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
-      required
-      autocomplete="email"
-    />
-
+    <Mail className="input-icon" size={18} />
+    <input id="email" type="email" placeholder="Correo electrónico" class="input" required />
   </div>
 
   <!-- PHONE -->
   <div class="relative">
+    <Phone className="input-icon" size={18} />
+    <input id="phone" inputmode="numeric" maxlength="10" placeholder="Número de teléfono" class="input" required />
+  </div>
 
-    <Phone
-      size={18}
-      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-    />
+  <!-- 🔥 DIRECCIÓN -->
+  <div class="space-y-3">
 
-    <input
-      id="phone"
-      inputmode="numeric"
-      maxlength="10"
-      placeholder="Número de teléfono"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-4 outline-none"
-      required
-      autocomplete="tel"
-    />
+    <p class="text-xs text-white/40 px-1">Dirección comercial</p>
+
+    <!-- CALLE -->
+    <div class="relative">
+      <MapPin className="input-icon" size={18} />
+      <input id="address" placeholder="Calle y número" class="input" required />
+    </div>
+
+    <!-- COLONIA + CP -->
+    <div class="grid grid-cols-2 gap-3">
+
+      <div class="relative">
+        <MapPin className="input-icon" size={18} />
+        <input id="colony" placeholder="Colonia" class="input" required />
+      </div>
+
+      <div class="relative">
+        <Hash className="input-icon" size={18} />
+        <input id="postalCode" placeholder="Código postal" class="input" required />
+      </div>
+
+    </div>
 
   </div>
 
@@ -129,49 +103,29 @@ import {
         <div class="flex items-center gap-3">
 
           <div class="grid h-8 w-8 place-items-center rounded-lg bg-white/5">
-            <Users
-              size={16}
-              className="pointer-events-none text-white/60"
-            />
+            <Users size={16} className="text-white/60" />
           </div>
 
-          <span
-            id="advisorLabel"
-            class="text-sm text-white/40"
-          >
+          <span id="advisorLabel" class="text-sm text-white/40">
             Selecciona tu asesor
           </span>
 
         </div>
 
-        <ChevronDown
-          id="advisorArrow"
-          size={16}
-          className="pointer-events-none text-white/40 transition"
-        />
+        <ChevronDown id="advisorArrow" size={16} className="text-white/40 transition" />
 
       </button>
 
       <div
-        id="advisorMenu"
-        class="absolute left-0 right-0 top-[calc(100%+8px)] z-40 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
-      >
+  id="advisorMenu"
+  class="absolute left-0 right-0 top-[calc(100%+8px)] z-40 hidden rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl"
+>
 
-        {[
-          "Ángeles Encinas",
-          "Michelle Navarrete",
-          "Blanca Mejía"
-        ].map((name) => (
-          <button
-            type="button"
-            class="advisor-option flex w-full rounded-xl px-3 py-3 text-left text-sm hover:bg-white/5"
-            data-value={name}
-          >
-            {name}
-          </button>
-        ))}
+  <div class="px-3 py-3 text-sm text-white/40">
+    Cargando asesores...
+  </div>
 
-      </div>
+</div>
 
     </div>
 
@@ -179,48 +133,30 @@ import {
 
   <!-- PASSWORD -->
   <div class="relative">
-
-    <Lock
-      size={18}
-      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35"
-    />
+    <Lock className="input-icon" size={18} />
 
     <input
       id="password"
       type="password"
       minlength="8"
       placeholder="Contraseña (mínimo 8 caracteres)"
-      class="h-12 w-full rounded-xl border border-white/10 bg-black pl-11 pr-12 outline-none"
+      class="input pr-12"
       required
-      autocomplete="new-password"
     />
 
     <button
       type="button"
       id="togglePassword"
-      class="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 active:scale-95"
+      class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
     >
-      <Eye
-        size={18}
-        className="pointer-events-none"
-      />
+      <Eye size={18} />
     </button>
-
   </div>
 
   <!-- TERMS -->
   <label class="flex gap-3 rounded-2xl border border-white/10 bg-white/3 p-3 text-[13px] text-white/60">
-
-    <input
-      id="terms"
-      type="checkbox"
-      required
-    />
-
-    <span>
-      Confirmo que soy cliente AVYNA Saltillo.
-    </span>
-
+    <input id="terms" type="checkbox" required />
+    <span>Confirmo que soy cliente AVYNA Saltillo.</span>
   </label>
 
   <!-- BTN -->
@@ -232,22 +168,17 @@ import {
     Crear cuenta
   </button>
 
-  <p
-    id="msg"
-    class="min-h-5 text-center text-sm text-white/55"
-  ></p>
+  <p id="msg" class="min-h-5 text-center text-sm text-white/55"></p>
 
 </form>
 
 <div class="mt-5 border-t border-white/10 pt-5">
-
   <a
     href="/auth/login"
-    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm font-medium text-white/80 hover:bg-white/10"
+    class="flex h-11 w-full items-center justify-center rounded-xl border border-white/10 text-sm text-white/80 hover:bg-white/10"
   >
     Iniciar sesión
   </a>
-
 </div>
 
 <script>

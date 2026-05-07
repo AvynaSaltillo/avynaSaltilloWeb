@@ -1,0 +1,261 @@
+---
+// src/pages/admin/order/[id].astro
+
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+const { id } = Astro.params;
+---
+
+<AdminLayout>
+
+<section class="space-y-8">
+
+  <!-- HEADER -->
+  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-8">
+
+    <div class="absolute -left-20 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.02] blur-3xl"></div>
+
+    <div class="relative z-10 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+
+      <div>
+
+        <p class="text-xs uppercase tracking-[0.45em] text-white/30">
+          Order Detail
+        </p>
+
+        <h1
+          id="orderTitle"
+          class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl break-all"
+        >
+          #...
+        </h1>
+
+        <p
+          id="orderDate"
+          class="mt-4 text-sm text-white/55"
+        >
+          —
+        </p>
+
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+
+        <button
+          id="markPaid"
+          class="h-12 rounded-2xl bg-green-500 px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
+        >
+          Marcar pagado
+        </button>
+
+        <button
+          id="cancelOrder"
+          class="h-12 rounded-2xl border border-red-500/20 px-6 text-sm text-red-300 transition hover:bg-red-500/10"
+        >
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- GRID -->
+  <section class="grid gap-6 xl:grid-cols-[1fr_380px]">
+
+    <!-- LEFT -->
+    <div class="space-y-6">
+
+      <!-- CLIENT -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Cliente
+        </p>
+
+        <div class="mt-6 space-y-5">
+
+          <div>
+            <p class="text-sm text-white/40">
+              Nombre
+            </p>
+
+            <p
+              id="clientName"
+              class="mt-1 text-lg font-semibold"
+            >
+              —
+            </p>
+          </div>
+
+          <div>
+            <p class="text-sm text-white/40">
+              Negocio
+            </p>
+
+            <p
+              id="businessName"
+              class="mt-1 text-lg font-semibold"
+            >
+              —
+            </p>
+          </div>
+
+          <div>
+            <p class="text-sm text-white/40">
+              Asesor
+            </p>
+
+            <p
+              id="advisorName"
+              class="mt-1 text-lg font-semibold"
+            >
+              —
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ITEMS -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] overflow-hidden">
+
+        <div class="border-b border-white/10 px-7 py-5">
+
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Productos
+          </p>
+
+        </div>
+
+        <div
+          id="itemsContainer"
+          class="divide-y divide-white/5"
+        >
+
+          <div class="p-8 text-sm text-white/45">
+            Cargando...
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="space-y-6">
+
+      <!-- STATUS -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Estado
+        </p>
+
+        <div class="mt-6">
+
+          <div
+            id="statusBadge"
+            class="inline-flex rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-2 text-sm text-yellow-300"
+          >
+            Pendiente
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- PAYMENT -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Pago
+        </p>
+
+        <div class="mt-6 space-y-5">
+
+          <div>
+            <p class="text-sm text-white/40">
+              Tipo
+            </p>
+
+            <p
+              id="paymentType"
+              class="mt-1 text-lg font-semibold"
+            >
+              —
+            </p>
+          </div>
+
+          <div>
+            <p class="text-sm text-white/40">
+              Total
+            </p>
+
+            <p
+              id="orderTotal"
+              class="mt-1 text-3xl font-semibold"
+            >
+              —
+            </p>
+          </div>
+
+          <div>
+            <p class="text-sm text-white/40">
+              Saldo
+            </p>
+
+            <p
+              id="orderBalance"
+              class="mt-1 text-3xl font-semibold text-yellow-300"
+            >
+              —
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ADDRESS -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+          Dirección
+        </p>
+
+        <div class="mt-6 space-y-4">
+
+          <p id="addressLine">
+            —
+          </p>
+
+          <p id="colony">
+            —
+          </p>
+
+          <p id="cityState">
+            —
+          </p>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </section>
+
+</section>
+
+<script define:vars={{ id }}>
+  window.__ORDER_ID__ = id;
+</script>
+
+<script type="module" src="/src/scripts/admin-order-detail.ts"></script>
+
+</AdminLayout>
