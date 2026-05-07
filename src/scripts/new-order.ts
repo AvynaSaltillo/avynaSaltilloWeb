@@ -3,15 +3,31 @@
 
 import { supabase } from "../lib/supabase";
 
+import { createOrder } from "../services/orders.service";
+
 type Product = {
-  id: number | string;
+  id: string | number;
+
   name: string;
+
   family?: string;
+
   priceSalon?: number;
+
   pricePublic?: number;
 };
 
-type CartItem = Product & {
+type CartItem = {
+  id: string | number;
+
+  name: string;
+
+  family?: string;
+
+  priceSalon: number;
+
+  pricePublic: number;
+
   qty: number;
 };
 
@@ -36,7 +52,8 @@ declare global {
 document.addEventListener("DOMContentLoaded", () => {
   const products = window.__PRODUCTS__ || [];
 
-  const $ = (id: string) => document.getElementById(id);
+  const $ = (id: string) =>
+  document.getElementById(id);
 
   const grid = $("productsGrid");
   const cartBox = $("cartItems");
@@ -131,7 +148,9 @@ function money(v = 0) {
     return cart.find((x) => String(x.id) === String(id))?.qty || 0;
   }
 
-  function removeItem(id: string) {
+  function removeItem(
+  id: string | number
+) {
     cart = cart.filter((x) => String(x.id) !== id);
     renderAll();
   }
@@ -144,9 +163,20 @@ function money(v = 0) {
       if (!item) return;
 
       cart.push({
-        ...item,
-        qty: 1
-      });
+  id: item.id,
+
+  name: item.name,
+
+  family: item.family || "",
+
+  priceSalon:
+    Number(item.priceSalon || 0),
+
+  pricePublic:
+    Number(item.pricePublic || 0),
+
+  qty: 1
+});
 
       renderAll();
       return;
@@ -182,9 +212,20 @@ function money(v = 0) {
       if (!item) return;
 
       cart.push({
-        ...item,
-        qty
-      });
+  id: item.id,
+
+  name: item.name,
+
+  family: item.family || "",
+
+  priceSalon:
+    Number(item.priceSalon || 0),
+
+  pricePublic:
+    Number(item.pricePublic || 0),
+
+  qty
+});
 
       animateItem(id);
       renderAll();
@@ -1195,7 +1236,7 @@ const { data: admin } = await supabase
   display_name,
   whatsapp
 `)
-.eq("id", profile.advisor_id)
+.eq("profile_id", profile.advisor_id)
 .single();
 
 if (!admin) {
@@ -1209,125 +1250,26 @@ const advisorName =
 const phone =
   admin.whatsapp || "";
 
-    // ======================
-    // TOTALS
-    // ======================
-
-    const sums = totals();
-
-    // ======================
-    // ITEMS
-    // ======================
-
+  // ======================
+// CREATE ORDER
 // ======================
-// ITEMS
-// ======================
+console.log(profile);
 
-const items = cart.map((item) => ({
-
-  id: item.id,
-
-  name: item.name,
-
-  family: item.family || "",
-
-  qty: Number(item.qty || 0),
-
-  // 🔥 IMPORTANTE
-  priceSalon: Number(item.priceSalon || 0),
-
-  // 🔥 IMPORTANTE
-  pricePublic: Number(item.pricePublic || 0),
-
-  // 🔥 TOTAL REAL ITEM
-  total:
-    Number(item.priceSalon || 0) *
-    Number(item.qty || 0)
-
-}));
-
-// ======================
-// INSERT ORDER
-// ======================
-
-const total = Number(sums.salon || 0);
-
-let paymentType = "cash";
-
-if (total >= 10000) {
-  paymentType = "credit_30";
-}
-else if (total >= 1500) {
-  paymentType = "credit_15";
-}
-
-const { data: order, error } = await supabase
-  .from("orders")
-  .insert({
-
-    user_id: user.id,
-
-    client_id: user.id,
-
-    client_name:
-      profile.name ||
-      `${profile.first_name || ""} ${profile.last_name || ""}`.trim(),
-
-    business_name:
-      profile.business_name || "",
-
-    advisor_id:
-  profile.advisor_id,
-
-  advisor_name:
-  advisorName,
-
-    // 🔥 ITEMS YA CORREGIDOS
-    items,
-
-    subtotal: total,
-
-    total: total,
-
-    // 🔥 AL CREARSE = TOTAL
-    balance: total,
-
-    payment_type: paymentType,
-
-    status: "pending",
-
-    notes: "",
-
-    address_line:
-      profile.address_line || "",
-
-    colony:
-      profile.colony || "",
-
-    postal_code:
-      profile.postal_code || "",
-
-    city:
-      profile.city || "",
-
-    state:
-      profile.state || "",
-
-    whatsapp_sent: false
-
-  })
-  .select()
-  .single();
-
-if (error || !order) {
-  console.error(error);
-  alert("No se pudo crear pedido.");
-  return;
-}
+const {
+  order,
+  total
+} = await createOrder({
+  user,
+  profile,
+  cart
+});
 
     // ======================
     // WHATSAPP
     // ======================
+
+  const orderTotal =
+  Number(total || 0);
 
 const lines: string[] = [];
 
@@ -1366,7 +1308,7 @@ cart.forEach((item) => {
 lines.push("");
 
 lines.push(
-  `*TOTAL SALÓN: ${money(sums.salon)}*`
+  `*TOTAL SALÓN: ${money(orderTotal)}*`
 );
 
 const msg = encodeURIComponent(
@@ -1383,7 +1325,7 @@ await supabase
   .update({
     whatsapp_sent: true
   })
-  .eq("id", order.id);
+  .eq("id", order.id.slice(0,8).toUpperCase());
 
     // ======================
     // RESET
@@ -1533,7 +1475,9 @@ modalClearBtn?.addEventListener("click", () => {
 modalSendBtn?.addEventListener("click", sendOrder);
 });
 
-function animateItem(id: string) {
+function animateItem(
+  id: string | number
+) {
   const el = document
     .querySelector(`[data-id="${id}"]`)
     ?.closest("div");

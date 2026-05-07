@@ -2,9 +2,9 @@ export const site = {
   brand: "AVYNA Saltillo",
   title: "Distribuidor Profesional de Belleza",
   city: "Saltillo, Coahuila",
-  whatsapp: "528441234567",
-  phone: "+52 844 123 4567",
-  email: "contacto@avynasaltillo.com",
+  whatsapp: "524521174729",
+  phone: "+52 452 117 4729",
+  email: "avyna.saltillo@gmail.com",
   instagram: "https://instagram.com/avynasaltillo",
   facebook: "https://facebook.com/avynasaltillo",
 

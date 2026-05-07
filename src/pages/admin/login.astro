@@ -1,69 +1,161 @@
 ---
-import AuthLayout from "../../layouts/AuthLayout.astro";
+import AdminAuthLayout from "../../layouts/AdminAuthLayout.astro";
+
+import {
+  Mail,
+  Lock,
+  Eye,
+  ShieldCheck,
+  ArrowRight
+} from "lucide-react";
 ---
 
-<AuthLayout>
+<AdminAuthLayout
+  title="Admin Access"
+  subtitle="Acceso restringido al sistema administrativo AVYNA Saltillo."
+>
 
-  <h1 class="text-2xl font-semibold mb-6">Iniciar sesión</h1>
+<form
+  id="loginForm"
+  class="space-y-4"
+>
 
-  <form id="loginForm" class="flex flex-col gap-4">
+  <!-- TOP -->
+  <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
 
-    <input 
-      type="email" 
-      id="email" 
-      placeholder="Correo" 
-      required 
-      class="p-3 bg-neutral-950 border border-neutral-800 rounded"
+    <div class="flex items-center gap-3">
+
+      <div class="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
+
+        <ShieldCheck
+          size={20}
+          className="text-white/80"
+        />
+
+      </div>
+
+      <div>
+
+        <p class="text-sm font-medium text-white">
+          Panel protegido
+        </p>
+
+        <p class="text-xs text-white/40">
+          Solo administradores autorizados
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- EMAIL -->
+  <div class="space-y-2">
+
+    <label class="text-xs uppercase tracking-[0.22em] text-white/35">
+      Correo
+    </label>
+
+    <div class="group relative">
+
+      <Mail
+        size={18}
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/30 transition group-focus-within:text-white/70"
+      />
+
+      <input
+        id="email"
+        type="email"
+        placeholder="admin@empresa.com"
+        autocomplete="email"
+        required
+        class="auth-scope h-13 w-full rounded-2xl border border-white/10 bg-white/[0.04] pl-11 pr-4 text-sm text-white outline-none backdrop-blur-xl transition placeholder:text-white/20 focus:border-white/20 focus:bg-white/[0.06]"
+      />
+
+    </div>
+
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="space-y-2">
+
+    <label class="text-xs uppercase tracking-[0.22em] text-white/35">
+      Contraseña
+    </label>
+
+    <div class="group relative">
+
+      <Lock
+        size={18}
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/30 transition group-focus-within:text-white/70"
+      />
+
+      <input
+        id="password"
+        type="password"
+        placeholder="••••••••"
+        autocomplete="current-password"
+        required
+        class="auth-scope h-13 w-full rounded-2xl border border-white/10 bg-white/[0.04] pl-11 pr-12 text-sm text-white outline-none backdrop-blur-xl transition placeholder:text-white/20 focus:border-white/20 focus:bg-white/[0.06]"
+      />
+
+      <button
+        type="button"
+        id="togglePassword"
+        class="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/35 transition hover:bg-white/5 hover:text-white/70 active:scale-95"
+      >
+        <Eye
+          size={17}
+          className="pointer-events-none"
+        />
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ERROR -->
+  <div
+    id="msg"
+    class="hidden rounded-2xl border border-red-500/15 bg-red-500/8 px-4 py-3 text-sm text-red-300"
+  ></div>
+
+  <!-- BTN -->
+  <button
+    id="submitBtn"
+    type="submit"
+    class="group flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-white font-semibold text-black transition hover:opacity-92 active:scale-[0.99]"
+  >
+
+    <ShieldCheck
+      size={17}
+      className="transition group-hover:rotate-6"
     />
 
-    <input 
-      type="password" 
-      id="password" 
-      placeholder="Contraseña" 
-      required 
-      class="p-3 bg-neutral-950 border border-neutral-800 rounded"
+    <span>
+      Entrar al panel
+    </span>
+
+    <ArrowRight
+      size={16}
+      className="transition group-hover:translate-x-0.5"
     />
 
-    <button 
-      class="bg-white text-black p-3 rounded font-medium hover:opacity-90 transition">
-      Entrar
-    </button>
+  </button>
 
-  </form>
+  <!-- FOOT -->
+  <div class="pt-2 text-center">
 
-  <p id="error" class="text-red-400 text-sm mt-3 hidden"></p>
+    <p class="text-xs leading-relaxed text-white/25">
+      Sistema administrativo interno AVYNA.
+      Toda actividad puede ser monitoreada.
+    </p>
 
-</AuthLayout>
+  </div>
 
-<script type="module">
-  import { supabase } from "../lib/supabase";
+</form>
 
-  const form = document.getElementById("loginForm");
-  const errorText = document.getElementById("error");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    errorText.classList.add("hidden");
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      errorText.textContent = error.message;
-      errorText.classList.remove("hidden");
-      return;
-    }
-
-    // 🔥 CLAVE: guardar sesión correctamente
-    document.cookie = `sb-access-token=${data.session.access_token}; path=/`;
-    document.cookie = `sb-refresh-token=${data.session.refresh_token}; path=/`;
-
-    window.location.href = "/admin";
-  });
+<script>
+  import "../../scripts/admin-login.ts";
 </script>

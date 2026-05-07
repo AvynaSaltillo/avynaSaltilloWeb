@@ -218,17 +218,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const first =
       ($("firstName") as HTMLInputElement)
         ?.value
-        .trim();
+        .trim().toUpperCase();
 
     const last =
       ($("lastName") as HTMLInputElement)
         ?.value
-        .trim();
+        .trim().toUpperCase();
 
     const business =
       ($("business") as HTMLInputElement)
         ?.value
-        .trim();
+        .trim().toUpperCase();
 
     const email =
       ($("email") as HTMLInputElement)

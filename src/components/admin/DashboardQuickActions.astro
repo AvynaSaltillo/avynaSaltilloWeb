@@ -1,0 +1,612 @@
+---
+import {
+  Sparkles,
+  Plus,
+  UserPlus,
+  Wallet,
+  CalendarDays,
+  ArrowUpRight,
+  Activity,
+  BellDot,
+  Boxes
+} from "lucide-react";
+---
+
+<section
+  class="
+    group relative overflow-hidden
+
+    rounded-[2.4rem]
+
+    border border-white/10
+
+    bg-gradient-to-br
+    from-white/[0.08]
+    via-white/[0.03]
+    to-black
+
+    p-6 sm:p-8 xl:p-10
+  "
+>
+
+  <!-- TOP LINE -->
+  <div
+    class="
+      absolute left-0 top-0 h-px w-full
+
+      bg-gradient-to-r
+      from-white/50
+      via-white/10
+      to-transparent
+    "
+  ></div>
+
+  <!-- GLOWS -->
+  <div
+    class="
+      absolute -right-24 -top-24
+
+      h-80 w-80
+
+      rounded-full
+
+      bg-white/[0.05]
+
+      blur-3xl
+    "
+  ></div>
+
+  <div
+    class="
+      absolute bottom-0 left-1/4
+
+      h-72 w-72
+
+      rounded-full
+
+      bg-white/[0.03]
+
+      blur-3xl
+    "
+  ></div>
+
+  <div
+    class="
+      relative z-10
+
+      flex flex-col gap-10
+
+      xl:flex-row
+      xl:items-end
+      xl:justify-between
+    "
+  >
+
+    <!-- LEFT -->
+    <div class="max-w-3xl">
+
+      <!-- BADGES -->
+      <div class="flex flex-wrap items-center gap-3">
+
+        <!-- LIVE -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-full
+
+            border border-emerald-500/15
+
+            bg-emerald-500/10
+
+            px-4 py-2
+
+            text-[11px]
+            uppercase
+            tracking-[0.28em]
+
+            text-emerald-300
+          "
+        >
+
+          <div
+            class="
+              h-2 w-2 rounded-full
+
+              bg-emerald-400
+
+              animate-pulse
+            "
+          ></div>
+
+          System Live
+
+        </div>
+
+        <!-- STATUS -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-full
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            px-4 py-2
+
+            text-[11px]
+            uppercase
+            tracking-[0.28em]
+
+            text-white/45
+          "
+        >
+
+          <Sparkles size={13} />
+
+          Operations Center
+
+        </div>
+
+      </div>
+
+      <!-- TITLE -->
+      <h1
+        class="
+          mt-7
+
+          max-w-4xl
+
+          text-4xl
+          font-semibold
+          leading-tight
+          tracking-tight
+
+          sm:text-5xl
+          xl:text-6xl
+        "
+      >
+        Dashboard administrativo
+      </h1>
+
+      <!-- DESC -->
+      <p
+        class="
+          mt-6
+
+          max-w-2xl
+
+          text-sm
+          leading-8
+          text-white/45
+
+          sm:text-[15px]
+        "
+      >
+        Monitorea ventas, actividad comercial, pedidos,
+        clientes y comportamiento operativo desde un solo panel centralizado.
+      </p>
+
+      <!-- INSIGHTS -->
+      <div class="mt-8 flex flex-wrap gap-3">
+
+        <!-- INSIGHT -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-black/25
+
+            px-4 py-3
+
+            text-sm text-white/70
+          "
+        >
+
+          <ArrowUpRight
+            size={16}
+            className="text-emerald-300"
+          />
+
+          +18% crecimiento semanal
+
+        </div>
+
+        <!-- INSIGHT -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-black/25
+
+            px-4 py-3
+
+            text-sm text-white/70
+          "
+        >
+
+          <BellDot
+            size={16}
+            className="text-yellow-300"
+          />
+
+          2 alertas pendientes
+
+        </div>
+
+        <!-- INSIGHT -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-black/25
+
+            px-4 py-3
+
+            text-sm text-white/70
+          "
+        >
+
+          <Activity
+            size={16}
+            className="text-sky-300"
+          />
+
+          Actividad en tiempo real
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="w-full max-w-xl space-y-4">
+
+      <!-- FILTER -->
+      <div
+        class="
+          flex items-center justify-between gap-4
+
+          rounded-[1.75rem]
+
+          border border-white/10
+
+          bg-black/25
+
+          px-5 py-4
+
+          backdrop-blur-xl
+        "
+      >
+
+        <!-- LEFT -->
+        <div class="flex items-center gap-3">
+
+          <div
+            class="
+              grid h-11 w-11 place-items-center
+
+              rounded-2xl
+
+              border border-white/10
+
+              bg-white/[0.05]
+
+              text-white/60
+            "
+          >
+
+            <CalendarDays size={18} />
+
+          </div>
+
+          <div>
+
+            <p class="text-[10px] uppercase tracking-[0.28em] text-white/30">
+              Periodo
+            </p>
+
+            <p class="mt-1 text-sm text-white/70">
+              Analytics Range
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- SELECT -->
+        <select
+          id="rangeFilter"
+          class="
+            rounded-xl
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            px-4 py-2
+
+            text-sm text-white
+
+            outline-none
+
+            transition
+
+            hover:bg-white/[0.06]
+          "
+        >
+
+          <option value="7d" class="bg-black">
+            7 días
+          </option>
+
+          <option value="1m" selected class="bg-black">
+            1 mes
+          </option>
+
+          <option value="3m" class="bg-black">
+            3 meses
+          </option>
+
+          <option value="6m" class="bg-black">
+            6 meses
+          </option>
+
+          <option value="1y" class="bg-black">
+            1 año
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- ACTION GRID -->
+      <div class="grid gap-3 sm:grid-cols-2">
+
+        <!-- ORDERS -->
+        <a
+          href="/admin/orders"
+          class="
+            group/action relative overflow-hidden
+
+            rounded-[1.75rem]
+
+            border border-white/10
+
+            bg-white
+
+            p-5
+
+            text-black
+
+            transition-all duration-300
+
+            hover:-translate-y-1
+          "
+        >
+
+          <div
+            class="
+              absolute -right-8 -top-8
+
+              h-28 w-28
+
+              rounded-full
+
+              bg-black/5
+
+              blur-2xl
+            "
+          ></div>
+
+          <div class="relative">
+
+            <div
+              class="
+                grid h-12 w-12 place-items-center
+
+                rounded-2xl
+
+                bg-black/5
+              "
+            >
+
+              <Plus size={20} />
+
+            </div>
+
+            <h3 class="mt-5 text-lg font-semibold">
+              Pedidos
+            </h3>
+
+            <p class="mt-2 text-sm text-black/55">
+              Gestiona actividad comercial y flujo operativo.
+            </p>
+
+          </div>
+
+        </a>
+
+        <!-- CLIENTS -->
+        <a
+          href="/admin/clients"
+          class="
+            group/action relative overflow-hidden
+
+            rounded-[1.75rem]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            p-5
+
+            transition-all duration-300
+
+            hover:-translate-y-1
+            hover:bg-white/[0.06]
+          "
+        >
+
+          <div class="relative">
+
+            <div
+              class="
+                grid h-12 w-12 place-items-center
+
+                rounded-2xl
+
+                border border-white/10
+
+                bg-white/[0.05]
+
+                text-white/70
+              "
+            >
+
+              <UserPlus size={20} />
+
+            </div>
+
+            <h3 class="mt-5 text-lg font-semibold">
+              Clientes
+            </h3>
+
+            <p class="mt-2 text-sm text-white/45">
+              CRM comercial y administración de cuentas.
+            </p>
+
+          </div>
+
+        </a>
+
+        <!-- CREDIT -->
+        <button
+          class="
+            group/action relative overflow-hidden
+
+            rounded-[1.75rem]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            p-5
+
+            text-left
+
+            transition-all duration-300
+
+            hover:-translate-y-1
+            hover:bg-white/[0.06]
+          "
+        >
+
+          <div class="relative">
+
+            <div
+              class="
+                grid h-12 w-12 place-items-center
+
+                rounded-2xl
+
+                border border-yellow-500/15
+
+                bg-yellow-500/10
+
+                text-yellow-300
+              "
+            >
+
+              <Wallet size={20} />
+
+            </div>
+
+            <h3 class="mt-5 text-lg font-semibold">
+              Créditos
+            </h3>
+
+            <p class="mt-2 text-sm text-white/45">
+              Balance financiero y saldos pendientes.
+            </p>
+
+          </div>
+
+        </button>
+
+        <!-- INVENTORY -->
+        <button
+          class="
+            group/action relative overflow-hidden
+
+            rounded-[1.75rem]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            p-5
+
+            text-left
+
+            transition-all duration-300
+
+            hover:-translate-y-1
+            hover:bg-white/[0.06]
+          "
+        >
+
+          <div class="relative">
+
+            <div
+              class="
+                grid h-12 w-12 place-items-center
+
+                rounded-2xl
+
+                border border-sky-500/15
+
+                bg-sky-500/10
+
+                text-sky-300
+              "
+            >
+
+              <Boxes size={20} />
+
+            </div>
+
+            <h3 class="mt-5 text-lg font-semibold">
+              Operaciones
+            </h3>
+
+            <p class="mt-2 text-sm text-white/45">
+              Actividad, entregas y coordinación interna.
+            </p>
+
+          </div>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

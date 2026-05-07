@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 
+import { APP } from "../config/app"
+
 import {
   RiHome5Line,
   RiAddCircleLine,
@@ -83,21 +85,16 @@ const { title = "Portal AVYNA" } = Astro.props;
         <span class="label-wrap">Pedido nuevo</span>
       </a>
 
-      <a href="/portal/dashboard" class="nav-link">
-        <RiDashboardLine size={20}/>
-        <span class="label-wrap">Dashboard</span>
-      </a>
-
       <div class="my-4 border-t border-white/10"></div>
-
-      <a href="/portal/profile" class="nav-link">
-        <RiUserLine size={20}/>
-        <span class="label-wrap">Mi perfil</span>
-      </a>
 
       <a href="/portal/orders" class="nav-link">
         <RiShoppingBag3Line size={20}/>
         <span class="label-wrap">Pedidos</span>
+      </a>
+      
+      <a href="/portal/profile" class="nav-link">
+        <RiUserLine size={20}/>
+        <span class="label-wrap">Mi perfil</span>
       </a>
 
       <a href="/portal/support" class="nav-link">
@@ -145,6 +142,23 @@ const { title = "Portal AVYNA" } = Astro.props;
 
     </div>
 
+      
+  <footer class="border-t border-white/5 px-6 py-4">
+
+  <div class="flex items-center justify-between text-xs text-white/25">
+
+    <p>
+      {APP.copyright}
+    </p>
+
+    <p>
+      {APP.version}
+    </p>
+
+  </div>
+
+</footer>
+
   </aside>
 
   <!-- MOBILE MENU -->
@@ -191,21 +205,16 @@ const { title = "Portal AVYNA" } = Astro.props;
         <span>Pedido nuevo</span>
       </a>
 
-      <a href="/portal/dashboard" class="nav-link mobile-link">
-        <RiDashboardLine size={20}/>
-        <span>Dashboard</span>
-      </a>
-
       <div class="my-4 border-t border-white/10"></div>
-
-      <a href="/portal/profile" class="nav-link mobile-link">
-        <RiUserLine size={20}/>
-        <span>Mi perfil</span>
-      </a>
 
       <a href="/portal/orders" class="nav-link mobile-link">
         <RiShoppingBag3Line size={20}/>
         <span>Pedidos</span>
+      </a>
+
+            <a href="/portal/profile" class="nav-link mobile-link">
+        <RiUserLine size={20}/>
+        <span>Mi perfil</span>
       </a>
 
       <a href="/portal/support" class="nav-link mobile-link">

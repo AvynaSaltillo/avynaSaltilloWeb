@@ -1,0 +1,531 @@
+---
+import {
+  DollarSign,
+  TrendingUp,
+  ShoppingBag,
+  Users,
+  CreditCard,
+  ArrowUpRight,
+  Activity
+} from "lucide-react";
+---
+
+<section
+  class="
+    grid gap-4
+
+    md:grid-cols-2
+    2xl:grid-cols-5
+  "
+>
+
+  <!-- SALES -->
+  <div
+    class="
+      group relative overflow-hidden
+
+      rounded-[2.2rem]
+
+      border border-emerald-500/10
+
+      bg-gradient-to-br
+      from-emerald-500/[0.14]
+      via-emerald-500/[0.05]
+      to-black
+
+      p-6
+
+      transition-all duration-300
+
+      hover:-translate-y-1
+      hover:border-emerald-400/20
+    "
+  >
+
+    <!-- GLOW -->
+    <div
+      class="
+        absolute -right-16 -top-16
+
+        h-56 w-56
+
+        rounded-full
+
+        bg-emerald-500/15
+
+        blur-3xl
+      "
+    ></div>
+
+    <!-- TOP LINE -->
+    <div
+      class="
+        absolute left-0 top-0 h-px w-full
+
+        bg-gradient-to-r
+        from-emerald-400/60
+        via-emerald-400/10
+        to-transparent
+      "
+    ></div>
+
+    <div class="relative z-10">
+
+      <!-- HEADER -->
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.32em] text-white/40">
+            Ventas
+          </p>
+
+          <h2
+            id="kpiSales"
+            class="
+              mt-5
+
+              text-4xl
+              font-semibold
+              tracking-tight
+
+              xl:text-5xl
+            "
+          >
+            $0.00
+          </h2>
+
+        </div>
+
+        <div
+          class="
+            grid h-14 w-14 place-items-center
+
+            rounded-2xl
+
+            border border-emerald-400/15
+
+            bg-emerald-400/10
+
+            text-emerald-300
+
+            shadow-[0_0_30px_rgba(74,222,128,0.15)]
+          "
+        >
+
+          <DollarSign size={24} />
+
+        </div>
+
+      </div>
+
+      <!-- FOOT -->
+      <div class="mt-8 flex items-center justify-between gap-3">
+
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-full
+
+            border border-emerald-400/15
+
+            bg-emerald-400/10
+
+            px-3 py-1.5
+
+            text-[11px]
+            font-medium
+            text-emerald-300
+          "
+        >
+
+          <Activity size={12} />
+
+          Live Revenue
+
+        </div>
+
+        <div class="flex items-center gap-1 text-sm text-emerald-300">
+
+          <ArrowUpRight size={15} />
+
+          +18%
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- REVENUE -->
+  <div
+    class="
+      group relative overflow-hidden
+
+      rounded-[2.2rem]
+
+      border border-sky-500/10
+
+      bg-gradient-to-br
+      from-sky-500/[0.12]
+      via-sky-500/[0.04]
+      to-black
+
+      p-6
+
+      transition-all duration-300
+
+      hover:-translate-y-1
+      hover:border-sky-400/20
+    "
+  >
+
+    <div
+      class="
+        absolute -right-10 -top-10
+
+        h-44 w-44
+
+        rounded-full
+
+        bg-sky-500/10
+
+        blur-3xl
+      "
+    ></div>
+
+    <div class="relative z-10">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.32em] text-white/40">
+            Ingresos
+          </p>
+
+          <h2
+            id="kpiRevenue"
+            class="mt-5 text-4xl font-semibold tracking-tight xl:text-5xl"
+          >
+            $0.00
+          </h2>
+
+        </div>
+
+        <div
+          class="
+            grid h-14 w-14 place-items-center
+
+            rounded-2xl
+
+            border border-sky-400/15
+
+            bg-sky-400/10
+
+            text-sky-300
+          "
+        >
+
+          <TrendingUp size={22} />
+
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+
+        <p class="text-sm text-white/35">
+          Flujo comercial
+        </p>
+
+        <span class="text-sm text-sky-300">
+          +12%
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ORDERS -->
+  <div
+    class="
+      group relative overflow-hidden
+
+      rounded-[2.2rem]
+
+      border border-violet-500/10
+
+      bg-gradient-to-br
+      from-violet-500/[0.12]
+      via-violet-500/[0.04]
+      to-black
+
+      p-6
+
+      transition-all duration-300
+
+      hover:-translate-y-1
+      hover:border-violet-400/20
+    "
+  >
+
+    <div
+      class="
+        absolute -right-10 -top-10
+
+        h-44 w-44
+
+        rounded-full
+
+        bg-violet-500/10
+
+        blur-3xl
+      "
+    ></div>
+
+    <div class="relative z-10">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.32em] text-white/40">
+            Pedidos
+          </p>
+
+          <h2
+            id="kpiOrders"
+            class="mt-5 text-4xl font-semibold tracking-tight xl:text-5xl"
+          >
+            0
+          </h2>
+
+        </div>
+
+        <div
+          class="
+            grid h-14 w-14 place-items-center
+
+            rounded-2xl
+
+            border border-violet-400/15
+
+            bg-violet-400/10
+
+            text-violet-300
+          "
+        >
+
+          <ShoppingBag size={22} />
+
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+
+        <p class="text-sm text-white/35">
+          Actividad operativa
+        </p>
+
+        <span class="text-sm text-violet-300">
+          Live
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CLIENTS -->
+  <div
+    class="
+      group relative overflow-hidden
+
+      rounded-[2.2rem]
+
+      border border-white/10
+
+      bg-gradient-to-br
+      from-white/[0.08]
+      via-white/[0.03]
+      to-black
+
+      p-6
+
+      transition-all duration-300
+
+      hover:-translate-y-1
+      hover:border-white/20
+    "
+  >
+
+    <div
+      class="
+        absolute -right-10 -top-10
+
+        h-44 w-44
+
+        rounded-full
+
+        bg-white/[0.06]
+
+        blur-3xl
+      "
+    ></div>
+
+    <div class="relative z-10">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.32em] text-white/40">
+            Clientes
+          </p>
+
+          <h2
+            id="kpiClients"
+            class="mt-5 text-4xl font-semibold tracking-tight xl:text-5xl"
+          >
+            0
+          </h2>
+
+        </div>
+
+        <div
+          class="
+            grid h-14 w-14 place-items-center
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-white/[0.05]
+
+            text-white
+          "
+        >
+
+          <Users size={22} />
+
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+
+        <p class="text-sm text-white/35">
+          Clientes activos
+        </p>
+
+        <span class="text-sm text-white/60">
+          CRM
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CREDIT -->
+  <div
+    class="
+      group relative overflow-hidden
+
+      rounded-[2.2rem]
+
+      border border-yellow-500/10
+
+      bg-gradient-to-br
+      from-yellow-500/[0.12]
+      via-yellow-500/[0.04]
+      to-black
+
+      p-6
+
+      transition-all duration-300
+
+      hover:-translate-y-1
+      hover:border-yellow-400/20
+    "
+  >
+
+    <div
+      class="
+        absolute -right-10 -top-10
+
+        h-44 w-44
+
+        rounded-full
+
+        bg-yellow-500/10
+
+        blur-3xl
+      "
+    ></div>
+
+    <div class="relative z-10">
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.32em] text-white/40">
+            Crédito pendiente
+          </p>
+
+          <h2
+            id="kpiCredit"
+            class="mt-5 text-4xl font-semibold tracking-tight xl:text-5xl"
+          >
+            $0.00
+          </h2>
+
+        </div>
+
+        <div
+          class="
+            grid h-14 w-14 place-items-center
+
+            rounded-2xl
+
+            border border-yellow-400/15
+
+            bg-yellow-400/10
+
+            text-yellow-300
+          "
+        >
+
+          <CreditCard size={22} />
+
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+
+        <p class="text-sm text-white/35">
+          Balance financiero
+        </p>
+
+        <span class="text-sm text-yellow-300">
+          Atención
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

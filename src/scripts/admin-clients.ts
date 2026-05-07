@@ -99,23 +99,32 @@ document.addEventListener("DOMContentLoaded", async () => {
      BADGES
   ========================= */
 
-  const badge = (type = "") => {
+ const badge = (type = "") => {
 
-    if (type === "credit") {
-
-      return `
-        <span class="badge green">
-          Crédito
-        </span>
-      `;
-    }
+  if (type === "credit") {
 
     return `
-      <span class="badge">
-        Contado
+      <span class="badge green">
+        Crédito
       </span>
     `;
-  };
+  }
+
+if (type === "cash") {
+
+  return `
+    <span class="badge cash">
+      Contado
+    </span>
+  `;
+}
+
+  return `
+    <span class="badge yellow">
+      Sin definir
+    </span>
+  `;
+};
 
   const statusBadge = (status = "") => {
 
@@ -165,20 +174,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     let query = supabase
       .from("profiles")
       .select(`
-        id,
-        first_name,
-        last_name,
-        name,
-        business_name,
-        email,
-        city,
-        payment_type,
-        status,
-        role,
-        official_client_id,
-        advisor_id,
-        created_at
-      `)
+  id,
+  first_name,
+  last_name,
+  email,
+  city,
+  business_name,
+  payment_type,
+  official_client_id,
+  status,
+
+  address_line,
+  colony,
+  state,
+  postal_code
+`)
       .eq("role", "client")
       .order("created_at", {
         ascending: false
@@ -223,29 +233,157 @@ document.addEventListener("DOMContentLoaded", async () => {
      RENDER
   ========================= */
 
-  function render(list: any[]) {
+function render(list: any[]) {
 
-    if (!table) return;
+  if (!table) return;
 
-    if (!list.length) {
+  const cards =
+    document.getElementById(
+      "clientsCards"
+    ) as HTMLElement | null;
 
-      table.innerHTML = `
-        <tr>
+  /* ========================================
+     EMPTY
+  ========================================= */
 
-          <td
-            colspan="6"
-            class="py-10 text-center text-white/40"
-          >
-            Sin clientes
-          </td>
+  if (!list.length) {
 
-        </tr>
+    table.innerHTML = `
+      <tr>
+
+        <td
+          colspan="6"
+          class="py-10 text-center text-white/40"
+        >
+          Sin clientes
+        </td>
+
+      </tr>
+    `;
+
+    if (cards) {
+
+      cards.innerHTML = `
+        <div class="card p-5 text-center text-sm text-white/40">
+          Sin clientes
+        </div>
       `;
-
-      return;
     }
 
-    table.innerHTML = list.map(client => {
+    return;
+  }
+
+  /* ========================================
+     DESKTOP TABLE
+  ========================================= */
+
+  table.innerHTML = list.map(client => {
+
+    const displayName =
+      `${client.first_name || ""} ${client.last_name || ""}`.trim()
+      || client.name
+      || "—";
+
+    return `
+
+      <tr class="border-b border-white/5 transition hover:bg-white/[0.03]">
+
+        <td class="px-6 py-4">
+
+          <div class="font-medium text-white">
+            ${displayName}
+          </div>
+
+          ${
+            client.business_name
+              ? `
+                <div class="mt-1 text-xs text-white/40">
+                  ${client.business_name}
+                </div>
+              `
+              : ""
+          }
+
+        </td>
+
+        <td class="px-6 py-4">
+          ${client.email || "—"}
+        </td>
+
+        <td class="px-6 py-4">
+          ${client.city || "—"}
+        </td>
+
+        <td class="px-6 py-4">
+          ${badge(client.payment_type)}
+        </td>
+
+        <td class="px-6 py-4">
+          ${statusBadge(client.status)}
+        </td>
+
+        <td class="px-6 py-4 text-right">
+
+          <div class="flex justify-end gap-2">
+
+            ${
+              client.status === "pending"
+
+                ? `
+                  <button
+                    data-id="${client.id}"
+                    class="btn-approve">
+                    Aprobar
+                  </button>
+                `
+
+                : client.status === "active"
+
+                ? `
+                  <button
+                    data-id="${client.id}"
+                    class="btn-block">
+                    Bloquear
+                  </button>
+                `
+
+                : `
+                  <button
+                    data-id="${client.id}"
+                    class="btn-activate">
+                    Reactivar
+                  </button>
+                `
+            }
+
+            <button
+              data-id="${client.id}"
+              class="btn-edit">
+              Editar
+            </button>
+
+            <button
+              data-id="${client.id}"
+              class="btn-delete">
+              Eliminar
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+  }).join("");
+
+  /* ========================================
+     MOBILE CARDS
+  ========================================= */
+
+  if (cards) {
+
+    cards.innerHTML = list.map(client => {
 
       const displayName =
         `${client.first_name || ""} ${client.last_name || ""}`.trim()
@@ -254,45 +392,93 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       return `
 
-        <tr class="border-b border-white/5 hover:bg-white/[0.03] transition">
+        <div class="card overflow-hidden">
 
-          <td class="px-6 py-3">
+          <!-- TOP -->
+          <button
+            data-expand="${client.id}"
+            class="flex w-full items-start justify-between gap-3 p-4 text-left transition hover:bg-white/[0.02]"
+          >
 
-            <div class="font-medium">
-              ${displayName}
+            <div class="min-w-0">
+
+              <p class="truncate font-semibold text-white">
+                ${displayName}
+              </p>
+
+              <p class="mt-1 truncate text-sm text-white/45">
+                ${client.email || "—"}
+              </p>
+
+            </div>
+
+            <div class="flex shrink-0 items-center gap-3">
+
+              ${statusBadge(client.status)}
+
+              <span class="text-white/30">
+                ↓
+              </span>
+
+            </div>
+
+          </button>
+
+          <!-- EXPAND -->
+          <div
+            id="expand-${client.id}"
+            class="hidden border-t border-white/5 p-4"
+          >
+
+            <!-- META -->
+            <div class="grid grid-cols-2 gap-4 text-sm">
+
+              <div>
+
+                <p class="text-white/35">
+                  Ciudad
+                </p>
+
+                <p class="mt-1 text-white">
+                  ${client.city || "—"}
+                </p>
+
+              </div>
+
+              <div>
+
+                <p class="text-white/35">
+                  Tipo
+                </p>
+
+                <div class="mt-1">
+                  ${badge(client.payment_type)}
+                </div>
+
+              </div>
+
             </div>
 
             ${
               client.business_name
                 ? `
-                  <div class="text-xs text-white/40">
-                    ${client.business_name}
+                  <div class="mt-4">
+
+                    <p class="text-sm text-white/35">
+                      Negocio
+                    </p>
+
+                    <p class="mt-1 text-sm text-white">
+                      ${client.business_name}
+                    </p>
+
                   </div>
                 `
                 : ""
             }
 
-          </td>
-
-          <td class="px-6 py-3">
-            ${client.email || "—"}
-          </td>
-
-          <td class="px-6 py-3">
-            ${client.city || "—"}
-          </td>
-
-          <td class="px-6 py-3">
-            ${badge(client.payment_type)}
-          </td>
-
-          <td class="px-6 py-3">
-            ${statusBadge(client.status)}
-          </td>
-
-          <td class="px-6 py-3 text-right">
-
-            <div class="flex justify-end gap-2">
+            <!-- ACTIONS -->
+            <div class="mt-5 grid grid-cols-2 gap-2">
 
               ${
                 client.status === "pending"
@@ -332,22 +518,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
               <button
                 data-id="${client.id}"
-                class="btn-delete">
-                Archivar
+                class="btn-delete col-span-2">
+                Eliminar
               </button>
 
             </div>
 
-          </td>
+          </div>
 
-        </tr>
+        </div>
 
       `;
     }).join("");
 
-    attachEvents();
+    /* EXPAND EVENTS */
+
+    document
+      .querySelectorAll("[data-expand]")
+      .forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+          const id =
+            (btn as HTMLElement)
+              .dataset.expand;
+
+          const content =
+            document.getElementById(
+              `expand-${id}`
+            );
+
+          content?.classList.toggle(
+            "hidden"
+          );
+        });
+      });
   }
 
+  attachEvents();
+}
   /* =========================
      MODAL
   ========================= */
@@ -356,131 +565,296 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!modalContent) return;
 
-    modalContent.innerHTML = `
-      <div class="modal-card">
+modalContent.innerHTML = `
 
-        <div class="modal-header">
+  <div class="space-y-6">
 
-          <div class="flex flex-col gap-1">
+    <!-- TOP -->
+    <div class="flex items-start justify-between gap-4">
 
-            <h2 class="text-lg font-semibold tracking-tight">
-              Cliente
-            </h2>
+      <div>
 
-            <div class="flex items-center gap-2 text-sm">
+        <p class="text-2xl font-semibold text-white">
+          Cliente
+        </p>
 
-              ${status[client.status] || ""}
+        <div class="mt-2 flex flex-wrap items-center gap-2 text-sm">
 
-              <span class="text-white/30">•</span>
+          ${statusBadge(client.status)}
 
-              <span class="text-white/50">
-                ${client.email || ""}
-              </span>
+          <span class="text-white/25">
+            •
+          </span>
 
-            </div>
-
-          </div>
-
-          <button
-            id="modalCloseBtn"
-            class="text-white/40 transition hover:text-white">
-
-            ✕
-
-          </button>
-
-        </div>
-
-        <div class="modal-body">
-
-          <div class="modal-section">
-
-            <p class="section-title">
-              Información personal
-            </p>
-
-            <div class="grid">
-
-              <input
-                id="firstName"
-                value="${client.first_name || ""}" />
-
-              <input
-                id="lastName"
-                value="${client.last_name || ""}" />
-
-            </div>
-
-          </div>
-
-          <div class="modal-section">
-
-            <p class="section-title">
-              Información comercial
-            </p>
-
-            <input
-              id="business"
-              value="${client.business_name || ""}" />
-
-            <input
-              id="city"
-              value="${client.city || ""}" />
-
-            <input
-              id="clientId"
-              value="${client.official_client_id || ""}" />
-
-          </div>
-
-          <div class="modal-section">
-
-            <p class="section-title">
-              Configuración
-            </p>
-
-            <select id="paymentType">
-
-              <option
-                value="credit"
-                ${client.payment_type === "credit"
-                  ? "selected"
-                  : ""}>
-                Crédito
-              </option>
-
-              <option
-                value="cash"
-                ${client.payment_type === "cash"
-                  ? "selected"
-                  : ""}>
-                Contado
-              </option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-
-          <button
-            id="cancelBtn"
-            class="btn-ghost">
-            Cancelar
-          </button>
-
-          <button
-            id="saveBtn"
-            class="btn-save">
-            Guardar cambios
-          </button>
+          <span class="text-white/55">
+            ${client.email || "Sin correo"}
+          </span>
 
         </div>
 
       </div>
-    `;
+
+      <button
+        id="closeModal"
+        class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/40 transition hover:bg-white/[0.05] hover:text-white"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <!-- PERSONAL -->
+    <div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+
+      <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
+        Información personal
+      </p>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+
+        <div>
+
+          <label class="mb-2 block text-sm text-white/45">
+            Nombre
+          </label>
+
+          <input
+            id="editFirstName"
+            value="${client.first_name || ""}"
+            class="modal-input"
+          />
+
+        </div>
+
+        <div>
+
+          <label class="mb-2 block text-sm text-white/45">
+            Apellido
+          </label>
+
+          <input
+            id="editLastName"
+            value="${client.last_name || ""}"
+            class="modal-input"
+          />
+
+        </div>
+
+        <div class="sm:col-span-2">
+
+  <label class="mb-2 block text-sm text-white/45">
+    Correo electrónico
+  </label>
+
+  <input
+    id="editEmail"
+    value="${client.email || ""}"
+    class="modal-input"
+  />
+
+</div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTACT -->
+<div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+
+  <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
+    Dirección
+  </p>
+
+  <div class="space-y-4">
+
+    <!-- ADDRESS -->
+    <div>
+
+      <label class="mb-2 block text-sm text-white/45">
+        Calle y número
+      </label>
+
+      <input
+        id="editAddressLine"
+        value="${client.address_line || ""}"
+        class="modal-input"
+      />
+
+    </div>
+
+    <!-- COLONY -->
+    <div>
+
+      <label class="mb-2 block text-sm text-white/45">
+        Colonia
+      </label>
+
+      <input
+        id="editColony"
+        value="${client.colony || ""}"
+        class="modal-input"
+      />
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid gap-4 sm:grid-cols-3">
+
+      <div>
+
+        <label class="mb-2 block text-sm text-white/45">
+          Ciudad
+        </label>
+
+        <input
+          id="editCity"
+          value="${client.city || ""}"
+          class="modal-input"
+        />
+
+      </div>
+
+      <div>
+
+        <label class="mb-2 block text-sm text-white/45">
+          Estado
+        </label>
+
+        <input
+          id="editState"
+          value="${client.state || ""}"
+          class="modal-input"
+        />
+
+      </div>
+
+      <div>
+
+        <label class="mb-2 block text-sm text-white/45">
+          Código postal
+        </label>
+
+        <input
+          id="editPostalCode"
+          value="${client.postal_code || ""}"
+          class="modal-input"
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- BUSINESS -->
+    <div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+
+      <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
+        Información comercial
+      </p>
+
+      <div class="space-y-4">
+
+        <div>
+
+          <label class="mb-2 block text-sm text-white/45">
+            Negocio
+          </label>
+
+          <input
+            id="editBusiness"
+            value="${client.business_name || ""}"
+            class="modal-input"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SYSTEM -->
+    <!-- SYSTEM -->
+<div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+
+  <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
+    Configuración del sistema
+  </p>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+
+    <div>
+
+      <label class="mb-2 block text-sm text-white/45">
+        Tipo de cliente
+      </label>
+
+      <select
+        id="editPaymentType"
+        class="modal-input"
+      >
+
+        <option
+          value="credit"
+          ${client.payment_type === "credit" ? "selected" : ""}
+        >
+          Crédito
+        </option>
+
+        <option
+          value="cash"
+          ${client.payment_type === "cash" ? "selected" : ""}
+        >
+          Contado
+        </option>
+
+      </select>
+
+    </div>
+
+    <div>
+
+      <label class="mb-2 block text-sm text-white/45">
+        Official Client ID
+      </label>
+
+      <input
+        id="editOfficialId"
+        value="${client.official_client_id || ""}"
+        placeholder="Sin asignar"
+        class="modal-input"
+      />
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- ACTIONS -->
+    <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+
+      <button
+        id="cancelEdit"
+        class="h-12 rounded-2xl border border-white/10 bg-white/[0.03] px-5 text-sm font-medium text-white transition hover:bg-white/[0.06]"
+      >
+        Cancelar
+      </button>
+
+      <button
+        id="saveClient"
+        class="h-12 rounded-2xl bg-green-500 px-6 text-sm font-semibold text-black transition hover:brightness-110"
+      >
+        Guardar cambios
+      </button>
+
+    </div>
+
+  </div>
+
+`;
 
     attachModalEvents(client);
   }
@@ -493,17 +867,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const close = () => {
 
-      modal?.classList.add("hidden");
+  modal?.classList.add(
+    "hidden"
+  );
 
-      currentClient = null;
-    };
+  currentClient = null;
+
+  /* 🔥 RESTORE SCROLL */
+
+  document.body.style.overflow =
+    "";
+
+  document.documentElement.style.overflow =
+    "";
+};
 
     document
-      .getElementById("modalCloseBtn")
+      .getElementById("closeModal")
       ?.addEventListener("click", close);
 
     document
-      .getElementById("cancelBtn")
+      .getElementById("cancelEdit")
       ?.addEventListener("click", close);
 
     document
@@ -520,108 +904,154 @@ document.addEventListener("DOMContentLoaded", async () => {
     /* SAVE */
 
     document
-      .getElementById("saveBtn")
-      ?.addEventListener("click", async () => {
+  .getElementById("saveClient")
+  ?.addEventListener("click", async () => {
 
-        const btn =
-          document.querySelector<HTMLButtonElement>(
-            "#saveBtn"
-          );
+    const btn =
+      document.querySelector<HTMLButtonElement>(
+        "#saveClient"
+      );
 
-        if (!btn) return;
+    if (!btn) return;
 
-        btn.innerHTML = "Guardando...";
+    btn.innerHTML =
+      "Guardando...";
 
-        btn.classList.add("opacity-70");
+    btn.classList.add(
+      "opacity-70"
+    );
 
-        btn.setAttribute(
-          "disabled",
-          "true"
-        );
+    btn.disabled = true;
 
-        const firstNameInput =
-          document.querySelector<HTMLInputElement>(
-            "#firstName"
-          );
+    /* ========================================
+       INPUTS
+    ========================================= */
 
-        const lastNameInput =
-          document.querySelector<HTMLInputElement>(
-            "#lastName"
-          );
+    const updated = {
 
-        const businessInput =
-          document.querySelector<HTMLInputElement>(
-            "#business"
-          );
+      first_name:
+        (
+          document.getElementById(
+            "editFirstName"
+          ) as HTMLInputElement
+        )?.value || "",
 
-        const cityInput =
-          document.querySelector<HTMLInputElement>(
-            "#city"
-          );
+      last_name:
+        (
+          document.getElementById(
+            "editLastName"
+          ) as HTMLInputElement
+        )?.value || "",
 
-        const clientIdInput =
-          document.querySelector<HTMLInputElement>(
-            "#clientId"
-          );
+      email:
+        (
+          document.getElementById(
+            "editEmail"
+          ) as HTMLInputElement
+        )?.value || "",
 
-        const paymentTypeInput =
-          document.querySelector<HTMLSelectElement>(
-            "#paymentType"
-          );
+      business_name:
+        (
+          document.getElementById(
+            "editBusiness"
+          ) as HTMLInputElement
+        )?.value || "",
 
-        const updated = {
+      address_line:
+        (
+          document.getElementById(
+            "editAddressLine"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          first_name:
-            firstNameInput?.value || "",
+      colony:
+        (
+          document.getElementById(
+            "editColony"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          last_name:
-            lastNameInput?.value || "",
+      city:
+        (
+          document.getElementById(
+            "editCity"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          business_name:
-            businessInput?.value || "",
+      state:
+        (
+          document.getElementById(
+            "editState"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          city:
-            cityInput?.value || "",
+      postal_code:
+        (
+          document.getElementById(
+            "editPostalCode"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          official_client_id:
-            clientIdInput?.value || "",
+      official_client_id:
+        (
+          document.getElementById(
+            "editOfficialId"
+          ) as HTMLInputElement
+        )?.value || "",
 
-          payment_type:
-            paymentTypeInput?.value || "cash"
-        };
+      payment_type:
+        (
+          document.getElementById(
+            "editPaymentType"
+          ) as HTMLSelectElement
+        )?.value || "cash"
+    };
 
-        const { error } = await supabase
-          .from("profiles")
-          .update(updated)
-          .eq("id", client.id);
+    /* ========================================
+       UPDATE
+    ========================================= */
 
-        if (error) {
+    const { error } =
+      await supabase
+        .from("profiles")
+        .update(updated)
+        .eq("id", client.id);
 
-          console.error(error);
+    if (error) {
 
-          btn.innerHTML = "Error";
+      console.error(error);
 
-          btn.classList.remove("opacity-70");
+      btn.innerHTML =
+        "Error";
 
-          btn.removeAttribute("disabled");
+      btn.disabled = false;
 
-          return;
-        }
+      btn.classList.remove(
+        "opacity-70"
+      );
 
-        btn.innerHTML = "✓ Guardado";
+      return;
+    }
 
-        btn.classList.remove("opacity-70");
+    btn.innerHTML =
+      "✓ Guardado";
 
-        btn.classList.add("bg-green-500");
+    btn.classList.remove(
+      "opacity-70"
+    );
 
-        setTimeout(async () => {
+    btn.classList.add(
+      "bg-green-400"
+    );
 
-          close();
+    setTimeout(async () => {
 
-          await loadClients();
+      close();
 
-        }, 800);
-      });
+      await loadClients();
+
+    }, 700);
+  });
   }
 
   /* =========================
@@ -737,9 +1167,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             renderModal(data);
 
-            modal?.classList.remove(
-              "hidden"
-            );
+           modal?.classList.remove(
+  "hidden"
+);
+
+/* 🔥 LOCK SCROLL */
+
+document.body.style.overflow =
+  "hidden";
+
+document.documentElement.style.overflow =
+  "hidden";
           }
         );
       });

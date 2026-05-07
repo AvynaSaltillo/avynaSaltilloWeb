@@ -1,16 +1,58 @@
-<table class="w-full min-w-[900px] text-sm">
+<!-- ========================================
+     MOBILE CARDS
+======================================== -->
 
-  <thead class="text-xs uppercase tracking-[0.2em] text-white/40 border-b border-white/10">
-    <tr>
-      <th class="px-6 py-3 text-left">Cliente</th>
-      <th class="px-6 py-3 text-left">Email</th>
-      <th class="px-6 py-3 text-left">Ciudad</th>
-      <th class="px-6 py-3 text-left">Tipo</th>
-      <th class="px-6 py-3 text-left">Estado</th>
-      <th class="px-6 py-3 text-right">Acción</th>
-    </tr>
-  </thead>
+<div
+  id="clientsCards"
+  class="space-y-3 lg:hidden"
+></div>
 
-  <tbody id="clientsTable"></tbody>
+<!-- ========================================
+     DESKTOP TABLE
+======================================== -->
 
-</table>
+<div class="hidden lg:block">
+
+  <div class="table-wrap">
+
+    <table class="admin-table text-sm">
+
+      <thead class="border-b border-white/10 text-xs uppercase tracking-[0.2em] text-white/40">
+
+        <tr>
+
+          <th class="min-w-[260px] px-6 py-4 text-left">
+            Cliente
+          </th>
+
+          <th class="min-w-[240px] px-6 py-4 text-left">
+            Email
+          </th>
+
+          <th class="min-w-[140px] px-6 py-4 text-left">
+            Ciudad
+          </th>
+
+          <th class="min-w-[120px] px-6 py-4 text-left">
+            Tipo
+          </th>
+
+          <th class="min-w-[140px] px-6 py-4 text-left">
+            Estado
+          </th>
+
+          <th class="min-w-[260px] px-6 py-4 text-right">
+            Acción
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="clientsTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>

@@ -3,57 +3,111 @@
 
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 
+import {
+  RiArrowLeftLine,
+  RiWhatsappLine,
+  RiMoneyDollarCircleLine,
+  RiTruckLine,
+  RiCheckLine,
+  RiCloseCircleLine
+} from "react-icons/ri";
+
 const { id } = Astro.params;
 ---
 
-<AdminLayout>
+<AdminLayout title="Detalle pedido">
 
-<section class="space-y-8">
+<section class="space-y-6">
 
-  <!-- HEADER -->
-  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-8">
+  <!-- HERO -->
+  <section class="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-6 sm:p-8">
 
+    <!-- GLOWS -->
     <div class="absolute -left-20 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+
     <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.02] blur-3xl"></div>
 
-    <div class="relative z-10 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+    <div class="relative z-10 flex flex-col gap-7 2xl:flex-row 2xl:items-end 2xl:justify-between">
 
-      <div>
+      <!-- LEFT -->
+      <div class="min-w-0">
 
-        <p class="text-xs uppercase tracking-[0.45em] text-white/30">
+        <a
+          href="/admin/orders"
+          class="inline-flex items-center gap-2 text-sm text-white/45 transition hover:text-white"
+        >
+
+          <RiArrowLeftLine size={18}/>
+
+          Volver
+
+        </a>
+
+        <p class="mt-5 text-[11px] uppercase tracking-[0.38em] text-white/25">
           Order Detail
         </p>
 
         <h1
           id="orderTitle"
-          class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl break-all"
+          class="mt-4 break-all text-3xl font-semibold tracking-tight sm:text-5xl"
         >
           #...
         </h1>
 
         <p
           id="orderDate"
-          class="mt-4 text-sm text-white/55"
+          class="mt-4 text-sm text-white/45"
         >
           —
         </p>
 
       </div>
 
-      <div class="flex flex-wrap gap-3">
+      <!-- ACTIONS -->
+      <div class="grid gap-3 sm:grid-cols-2 xl:flex">
 
         <button
-          id="markPaid"
-          class="h-12 rounded-2xl bg-green-500 px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
+          id="markPreparing"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-sky-500/20 bg-sky-500/10 px-5 text-sm text-sky-300 transition hover:bg-sky-500/20"
         >
-          Marcar pagado
+
+          <RiTruckLine size={18}/>
+
+          Preparando
+
+        </button>
+
+        <button
+          id="markDelivered"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 text-sm text-emerald-300 transition hover:bg-emerald-500/20"
+        >
+
+          <RiCheckLine size={18}/>
+
+          Entregado
+
+        </button>
+
+        <button
+          id="registerPayment"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
+        >
+
+          <RiMoneyDollarCircleLine size={18}/>
+
+          Registrar pago
+
         </button>
 
         <button
           id="cancelOrder"
-          class="h-12 rounded-2xl border border-red-500/20 px-6 text-sm text-red-300 transition hover:bg-red-500/10"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-red-500/20 px-5 text-sm text-red-300 transition hover:bg-red-500/10"
         >
+
+          <RiCloseCircleLine size={18}/>
+
           Cancelar
+
         </button>
 
       </div>
@@ -63,57 +117,81 @@ const { id } = Astro.params;
   </section>
 
   <!-- GRID -->
-  <section class="grid gap-6 xl:grid-cols-[1fr_380px]">
+  <section class="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_420px]">
 
     <!-- LEFT -->
     <div class="space-y-6">
 
       <!-- CLIENT -->
-      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 sm:p-7">
 
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Cliente
-        </p>
-
-        <div class="mt-6 space-y-5">
+        <div class="flex items-start justify-between gap-4">
 
           <div>
-            <p class="text-sm text-white/40">
-              Nombre
+
+            <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+              Cliente
             </p>
 
-            <p
+            <h2
               id="clientName"
-              class="mt-1 text-lg font-semibold"
+              class="mt-4 text-2xl font-semibold"
             >
               —
-            </p>
-          </div>
-
-          <div>
-            <p class="text-sm text-white/40">
-              Negocio
-            </p>
+            </h2>
 
             <p
               id="businessName"
-              class="mt-1 text-lg font-semibold"
+              class="mt-2 text-sm text-white/45"
             >
               —
             </p>
+
           </div>
 
-          <div>
-            <p class="text-sm text-white/40">
-              Asesor
+          <a
+            id="whatsappBtn"
+            target="_blank"
+            class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-white/70 transition hover:bg-white/[0.08] hover:text-white"
+          >
+
+            <RiWhatsappLine size={22}/>
+
+          </a>
+
+        </div>
+
+        <!-- GRID -->
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+
+          <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
+
+            <p class="text-xs text-white/40">
+              Tipo pago
             </p>
 
             <p
-              id="advisorName"
-              class="mt-1 text-lg font-semibold"
+              id="paymentType"
+              class="mt-2 text-lg font-semibold"
             >
               —
             </p>
+
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
+
+            <p class="text-xs text-white/40">
+              Estado pago
+            </p>
+
+            <div
+              id="paymentStatus"
+              class="mt-2"
+            >
+              —
+            </div>
+
           </div>
 
         </div>
@@ -121,13 +199,32 @@ const { id } = Astro.params;
       </section>
 
       <!-- ITEMS -->
-      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] overflow-hidden">
+      <section class="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04]">
 
-        <div class="border-b border-white/10 px-7 py-5">
+        <div class="border-b border-white/10 px-6 py-5">
 
-          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-            Productos
-          </p>
+          <div class="flex items-center justify-between gap-4">
+
+            <div>
+
+              <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+                Productos
+              </p>
+
+              <p class="mt-2 text-sm text-white/40">
+                Productos incluidos en el pedido
+              </p>
+
+            </div>
+
+            <div
+              id="itemsCount"
+              class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/55"
+            >
+              0 items
+            </div>
+
+          </div>
 
         </div>
 
@@ -137,7 +234,41 @@ const { id } = Astro.params;
         >
 
           <div class="p-8 text-sm text-white/45">
-            Cargando...
+            Cargando productos...
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- TIMELINE -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+          Timeline
+        </p>
+
+        <div
+          id="timelineContainer"
+          class="mt-7 space-y-5"
+        >
+
+          <div class="flex gap-4">
+
+            <div class="mt-1 h-3 w-3 rounded-full bg-yellow-400"></div>
+
+            <div>
+
+              <p class="text-sm font-medium">
+                Pedido registrado
+              </p>
+
+              <p class="mt-1 text-xs text-white/40">
+                Esperando preparación
+              </p>
+
+            </div>
+
           </div>
 
         </div>
@@ -149,72 +280,84 @@ const { id } = Astro.params;
     <!-- RIGHT -->
     <div class="space-y-6">
 
-      <!-- STATUS -->
+      <!-- TOTALS -->
       <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
 
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Estado
+        <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+          Totales
         </p>
 
-        <div class="mt-6">
+        <div class="mt-7 space-y-5">
 
-          <div
-            id="statusBadge"
-            class="inline-flex rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-2 text-sm text-yellow-300"
-          >
-            Pendiente
+          <div class="flex items-center justify-between text-sm text-white/45">
+
+            <span>
+              Subtotal
+            </span>
+
+            <span id="subtotal">
+              —
+            </span>
+
           </div>
 
-        </div>
+          <div class="flex items-center justify-between text-sm text-white/45">
 
-      </section>
+            <span>
+              Pagado
+            </span>
 
-      <!-- PAYMENT -->
-      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
-
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Pago
-        </p>
-
-        <div class="mt-6 space-y-5">
-
-          <div>
-            <p class="text-sm text-white/40">
-              Tipo
-            </p>
-
-            <p
-              id="paymentType"
-              class="mt-1 text-lg font-semibold"
+            <span
+              id="amountPaid"
+              class="text-emerald-300"
             >
               —
-            </p>
+            </span>
+
           </div>
 
-          <div>
-            <p class="text-sm text-white/40">
-              Total
-            </p>
+          <div class="flex items-center justify-between text-sm text-white/45">
 
-            <p
-              id="orderTotal"
-              class="mt-1 text-3xl font-semibold"
+            <span>
+              Pendiente
+            </span>
+
+            <span
+              id="amountDue"
+              class="text-yellow-300"
             >
               —
-            </p>
+            </span>
+
           </div>
 
-          <div>
-            <p class="text-sm text-white/40">
-              Saldo
-            </p>
+          <div class="border-t border-white/10 pt-5">
 
-            <p
-              id="orderBalance"
-              class="mt-1 text-3xl font-semibold text-yellow-300"
-            >
-              —
-            </p>
+            <div class="flex items-end justify-between gap-4">
+
+              <div>
+
+                <p class="text-xs text-white/40">
+                  Total pedido
+                </p>
+
+                <p
+                  id="orderTotal"
+                  class="mt-2 text-4xl font-semibold tracking-tight"
+                >
+                  —
+                </p>
+
+              </div>
+
+              <div
+                id="deliveryStatus"
+              >
+                —
+              </div>
+
+            </div>
+
           </div>
 
         </div>
@@ -224,11 +367,11 @@ const { id } = Astro.params;
       <!-- ADDRESS -->
       <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
 
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
           Dirección
         </p>
 
-        <div class="mt-6 space-y-4">
+        <div class="mt-7 space-y-4 text-sm text-white/75">
 
           <p id="addressLine">
             —
@@ -246,6 +389,73 @@ const { id } = Astro.params;
 
       </section>
 
+      <!-- PAYMENTS -->
+<section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+  <div class="flex items-center justify-between gap-4">
+
+    <div>
+
+      <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+        Pagos registrados
+      </p>
+
+      <p class="mt-2 text-sm text-white/40">
+        Historial financiero del pedido
+      </p>
+
+    </div>
+
+  </div>
+
+  <div
+    id="paymentsContainer"
+    class="mt-7 space-y-3"
+  >
+
+    <div class="text-sm text-white/45">
+      Cargando pagos...
+    </div>
+
+  </div>
+
+</section>
+
+      <!-- NOTES -->
+      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+
+        <div class="flex items-center justify-between gap-4">
+
+          <div>
+
+            <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+              Notas internas
+            </p>
+
+            <p class="mt-2 text-sm text-white/40">
+              Solo visible para admins
+            </p>
+
+          </div>
+
+        </div>
+
+        <textarea
+          id="adminNotes"
+          rows="6"
+          placeholder="Agregar notas internas..."
+          class="mt-6 w-full rounded-2xl border border-white/10 bg-black/30 p-4 text-sm outline-none transition focus:border-white/20"
+        ></textarea>
+
+        <button
+          id="saveNotes"
+          class="mt-4 inline-flex h-11 items-center justify-center rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
+        >
+          Guardar notas
+        </button>
+
+      </section>
+
     </div>
 
   </section>
@@ -256,6 +466,159 @@ const { id } = Astro.params;
   window.__ORDER_ID__ = id;
 </script>
 
-<script type="module" src="/src/scripts/admin-order-detail.ts"></script>
+<script
+  type="module"
+  src="/src/scripts/admin-order-detail.ts"
+></script>
 
 </AdminLayout>
+
+<!-- PAYMENT MODAL -->
+<div
+  id="paymentModal"
+  class="fixed inset-0 z-[9999] hidden"
+>
+
+  <!-- OVERLAY -->
+  <div
+    id="paymentOverlay"
+    class="absolute inset-0 bg-black/70 backdrop-blur-md"
+  ></div>
+
+  <!-- WRAPPER -->
+  <div class="relative z-10 flex min-h-screen items-end justify-center p-0 sm:items-center sm:p-4">
+
+    <!-- CARD -->
+    <div
+      id="paymentCard"
+      class="w-full rounded-t-[2.5rem] border border-white/10 bg-zinc-950 p-6 shadow-[0_0_80px_rgba(0,0,0,0.8)] sm:max-w-lg sm:rounded-[2rem]"
+    >
+
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+            Registrar pago
+          </p>
+
+          <h3 class="mt-3 text-2xl font-semibold">
+            Nuevo pago
+          </h3>
+
+        </div>
+
+        <button
+          id="closePaymentModal"
+          class="h-11 w-11 rounded-2xl border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <!-- FORM -->
+      <div class="mt-8 space-y-5">
+
+        <!-- AMOUNT -->
+        <div>
+
+          <label class="mb-2 block text-sm text-white/55">
+            Monto
+          </label>
+
+          <input
+            id="paymentAmount"
+            type="number"
+            placeholder="0.00"
+            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+          />
+
+        </div>
+
+        <!-- METHOD -->
+        <div>
+
+          <label class="mb-2 block text-sm text-white/55">
+            Método
+          </label>
+
+          <select
+            id="paymentMethod"
+            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+          >
+
+            <option value="transfer">
+              Transferencia
+            </option>
+
+            <option value="cash">
+              Efectivo
+            </option>
+
+            <option value="card">
+              Tarjeta
+            </option>
+
+          </select>
+
+        </div>
+
+        <!-- REFERENCE -->
+        <div>
+
+          <label class="mb-2 block text-sm text-white/55">
+            Referencia
+          </label>
+
+          <input
+            id="paymentReference"
+            type="text"
+            placeholder="Folio / referencia"
+            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+          />
+
+        </div>
+
+        <!-- NOTES -->
+        <div>
+
+          <label class="mb-2 block text-sm text-white/55">
+            Notas
+          </label>
+
+          <textarea
+            id="paymentNotes"
+            rows="4"
+            placeholder="Notas internas..."
+            class="w-full rounded-2xl border border-white/10 bg-black/40 p-4 text-sm outline-none transition focus:border-white/20"
+          ></textarea>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex gap-3 pt-2">
+
+          <button
+            id="cancelPaymentBtn"
+            class="flex-1 h-12 rounded-2xl border border-white/10 text-sm text-white/70 transition hover:bg-white/10"
+          >
+            Cancelar
+          </button>
+
+          <button
+            id="submitPaymentBtn"
+            class="flex-1 h-12 rounded-2xl bg-white text-sm font-semibold text-black transition hover:scale-[1.02]"
+          >
+            Registrar pago
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

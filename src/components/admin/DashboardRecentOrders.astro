@@ -1,0 +1,355 @@
+---
+import {
+  ShoppingBag,
+  ArrowUpRight,
+  Activity,
+  PackageCheck
+} from "lucide-react";
+---
+
+<section
+  class="
+    group relative overflow-hidden
+
+    rounded-[2.2rem]
+
+    border border-white/10
+
+    bg-gradient-to-br
+    from-white/[0.07]
+    via-white/[0.03]
+    to-black
+
+    p-6 sm:p-7
+  "
+>
+
+  <!-- TOP LINE -->
+  <div
+    class="
+      absolute left-0 top-0 h-px w-full
+
+      bg-gradient-to-r
+      from-white/50
+      via-white/10
+      to-transparent
+    "
+  ></div>
+
+  <!-- GLOW -->
+  <div
+    class="
+      absolute -right-16 top-0
+
+      h-72 w-72
+
+      rounded-full
+
+      bg-white/[0.04]
+
+      blur-3xl
+    "
+  ></div>
+
+  <!-- HEADER -->
+  <div class="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+
+    <!-- LEFT -->
+    <div>
+
+      <!-- BADGE -->
+      <div
+        class="
+          inline-flex items-center gap-2
+
+          rounded-full
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          px-4 py-2
+
+          text-[11px]
+          uppercase
+          tracking-[0.32em]
+
+          text-white/45
+        "
+      >
+
+        <div
+          class="
+            h-2 w-2 rounded-full
+
+            bg-emerald-400
+
+            animate-pulse
+          "
+        ></div>
+
+        Orders Feed
+
+      </div>
+
+      <!-- TITLE -->
+      <h3
+        class="
+          mt-5
+
+          text-3xl
+          font-semibold
+          tracking-tight
+        "
+      >
+        Pedidos recientes
+      </h3>
+
+      <p class="mt-3 max-w-lg text-sm leading-7 text-white/45">
+        Seguimiento operativo de pedidos registrados recientemente.
+      </p>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex flex-wrap gap-3">
+
+      <!-- LIVE -->
+      <div
+        class="
+          inline-flex items-center gap-2
+
+          rounded-2xl
+
+          border border-emerald-500/15
+
+          bg-emerald-500/10
+
+          px-4 py-3
+
+          text-sm font-medium
+
+          text-emerald-300
+        "
+      >
+
+        <Activity size={15} />
+
+        Live
+
+      </div>
+
+      <!-- VIEW -->
+      <a
+        href="/admin/orders"
+        class="
+          inline-flex items-center gap-2
+
+          rounded-2xl
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          px-4 py-3
+
+          text-sm text-white/70
+
+          transition
+
+          hover:bg-white/[0.08]
+          hover:text-white
+        "
+      >
+
+        <ArrowUpRight size={15} />
+
+        Ver todos
+
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <div
+    class="
+      relative z-10
+
+      mt-8
+
+      grid gap-3
+
+      sm:grid-cols-3
+    "
+  >
+
+    <!-- ORDERS -->
+    <div
+      class="
+        rounded-2xl
+
+        border border-white/10
+
+        bg-black/25
+
+        p-4
+      "
+    >
+
+      <p class="text-[10px] uppercase tracking-[0.28em] text-white/30">
+        Pedidos
+      </p>
+
+      <p class="mt-3 text-2xl font-semibold">
+        12
+      </p>
+
+      <p class="mt-1 text-xs text-emerald-300">
+        +4 hoy
+      </p>
+
+    </div>
+
+    <!-- DELIVERY -->
+    <div
+      class="
+        rounded-2xl
+
+        border border-white/10
+
+        bg-black/25
+
+        p-4
+      "
+    >
+
+      <p class="text-[10px] uppercase tracking-[0.28em] text-white/30">
+        Entregas
+      </p>
+
+      <p class="mt-3 text-2xl font-semibold">
+        5
+      </p>
+
+      <p class="mt-1 text-xs text-white/35">
+        Pendientes
+      </p>
+
+    </div>
+
+    <!-- ACTIVE -->
+    <div
+      class="
+        rounded-2xl
+
+        border border-white/10
+
+        bg-black/25
+
+        p-4
+      "
+    >
+
+      <p class="text-[10px] uppercase tracking-[0.28em] text-white/30">
+        Actividad
+      </p>
+
+      <p class="mt-3 text-2xl font-semibold">
+        Live
+      </p>
+
+      <p class="mt-1 text-xs text-sky-300">
+        Sistema activo
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+  <div
+    id="recentOrders"
+    class="relative z-10 mt-8 space-y-4"
+  >
+
+    <!-- LOADING -->
+    <div
+      class="
+        rounded-[1.75rem]
+
+        border border-white/10
+
+        bg-black/25
+
+        p-5
+      "
+    >
+
+      <div class="flex items-center gap-4">
+
+        <!-- ICON -->
+        <div
+          class="
+            grid h-12 w-12 place-items-center
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            text-white/35
+          "
+        >
+
+          <ShoppingBag size={18} />
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="flex-1">
+
+          <p class="font-medium text-white/80">
+            Cargando pedidos...
+          </p>
+
+          <p class="mt-1 text-sm text-white/40">
+            Obteniendo actividad comercial reciente.
+          </p>
+
+        </div>
+
+        <!-- STATUS -->
+        <div
+          class="
+            inline-flex items-center gap-2
+
+            rounded-full
+
+            border border-emerald-500/15
+
+            bg-emerald-500/10
+
+            px-3 py-1
+
+            text-[11px]
+
+            text-emerald-300
+          "
+        >
+
+          <PackageCheck size={12} />
+
+          Sync
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

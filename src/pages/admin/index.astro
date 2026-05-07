@@ -1,75 +1,60 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
-import AdminStats from "../../components/admin/AdminStats.astro";
+
+import DashboardStats from "../../components/admin/DashboardStats.astro";
+
+import DashboardQuickActions from "../../components/admin/DashboardQuickActions.astro";
+
+import DashboardRecentOrders from "../../components/admin/DashboardRecentOrders.astro";
+
+import DashboardTopClients from "../../components/admin/DashboardTopClients.astro";
+
+import DashboardActivity from "../../components/admin/DashboardActivity.astro";
+
+import DashboardRevenue
+from "../../components/admin/DashboardRevenue";
 ---
 
-<AdminLayout>
+<AdminLayout title="Dashboard">
 
-<section class="space-y-8">
+  <section class="space-y-8">
 
-  <!-- HERO -->
-  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-8">
+    <DashboardQuickActions />
 
-    <div class="absolute -left-20 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
-    <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.02] blur-3xl"></div>
+    <DashboardStats />
 
-    <div class="relative z-10 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+    <section
+      class="
+        grid gap-6
 
-      <div>
-        <p class="text-xs uppercase tracking-[0.45em] text-white/30">
-          Admin System
-        </p>
+        2xl:grid-cols-[1.4fr,0.8fr]
+      "
+    >
 
-        <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
-          Control general
-        </h1>
+      <DashboardRevenue client:load data={[]}/>
 
-        <p class="mt-4 max-w-2xl text-sm text-white/55">
-          Visión completa de clientes, pedidos y operación comercial.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- KPIs -->
-  <AdminStats />
-
-  <!-- GRID -->
-  <section class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-
-    <!-- PEDIDOS RECIENTES -->
-    <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
-
-      <div class="flex justify-between items-center">
-        <h2 class="text-xl font-semibold">Pedidos recientes</h2>
-        <a href="/admin/pedidos" class="text-sm text-white/40 hover:text-white">
-          Ver todos
-        </a>
-      </div>
-
-      <div id="recentOrders" class="mt-5 space-y-3">
-        <div class="text-white/40 text-sm">Cargando...</div>
-      </div>
+      <DashboardActivity />
 
     </section>
 
-    <!-- CLIENTES TOP -->
-    <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+    <section
+      class="
+        grid gap-6
 
-      <h2 class="text-xl font-semibold">Clientes recientes</h2>
+        xl:grid-cols-2
+      "
+    >
 
-      <div id="recentClients" class="mt-5 space-y-3">
-        <div class="text-white/40 text-sm">Cargando...</div>
-      </div>
+      <DashboardRecentOrders />
+
+      <DashboardTopClients />
 
     </section>
 
   </section>
 
-</section>
-
-<script type="module" src="/src/scripts/admin-dashboard.ts"></script>
+  <script>
+    import "../../scripts/admin-dashboard.ts";
+  </script>
 
 </AdminLayout>

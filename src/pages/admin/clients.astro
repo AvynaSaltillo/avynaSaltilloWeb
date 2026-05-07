@@ -7,35 +7,70 @@ import ClientsTable from "../../components/admin/ClientsTable.astro";
 
   <section class="space-y-6">
 
-    <!-- HEADER -->
-    <div>
-      <h1 class="text-2xl font-semibold">Clientes</h1>
-      <p class="text-sm text-white/50">
-        Gestión de clientes registrados en el sistema
-      </p>
+    <!-- ========================================
+         HEADER
+    ========================================= -->
+
+    <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+
+      <!-- LEFT -->
+      <div>
+
+        <p class="text-[11px] uppercase tracking-[0.28em] text-white/25">
+          Administración
+        </p>
+
+        <h1 class="mt-2 text-3xl font-semibold tracking-tight">
+          Clientes
+        </h1>
+
+        <p class="mt-3 max-w-xl text-sm leading-relaxed text-white/45">
+          Gestión de clientes registrados en el sistema AVYNA.
+        </p>
+
+      </div>
+
+      <!-- FILTERS -->
+      <div class="flex flex-col gap-3 sm:flex-row">
+
+        <select
+          id="filterStatus"
+          class="h-11 min-w-[180px] rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white outline-none backdrop-blur-xl transition focus:border-white/20 focus:bg-white/[0.06]"
+        >
+
+          <option value="">
+            Todos
+          </option>
+
+          <option value="active">
+            Activos
+          </option>
+
+          <option value="blocked">
+            Bloqueados
+          </option>
+
+          <option value="pending">
+            Pendientes
+          </option>
+
+        </select>
+
+      </div>
+
     </div>
 
-    <!-- FILTROS -->
-    <div class="flex gap-3">
+    <!-- ========================================
+         TABLE / CARDS
+    ========================================= -->
 
-      <select id="filterStatus"
-        class="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-sm">
-        <option value="">Todos</option>
-        <option value="active">Activos</option>
-<option value="blocked">Bloqueados</option>
-<option value="pending">Pendientes</option>
-      </select>
+    <div class="card p-3 sm:p-4">
 
-    </div>
-
-    <!-- TABLE -->
-    <div class="card p-6">
       <ClientsTable />
+
     </div>
 
   </section>
-
-
 
   <script>
     import "../../scripts/admin-clients.ts";
@@ -43,25 +78,31 @@ import ClientsTable from "../../components/admin/ClientsTable.astro";
 
 </AdminLayout>
 
-<!-- MODAL GLOBAL -->
-<div id="clientModal" class="fixed inset-0 hidden z-[9999]">
+<!-- ========================================
+     MODAL
+======================================== -->
+
+<div
+  id="clientModal"
+  class="fixed inset-0 z-[9999] hidden"
+>
 
   <!-- OVERLAY -->
-  <div id="modalOverlay"
-       class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  <div
+    id="modalOverlay"
+    class="absolute inset-0 bg-black/75 backdrop-blur-md"
+  ></div>
 
   <!-- WRAPPER -->
-  <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+  <div class="relative z-10 flex min-h-screen items-end justify-center p-0 sm:items-center sm:p-4">
 
-    <!-- CONTENEDOR -->
-    <div id="modalContainer"
-      class="w-full max-w-2xl rounded-3xl 
-             bg-zinc-900/95 backdrop-blur-xl
-             border border-white/10 
-             shadow-[0_0_80px_rgba(0,0,0,0.8)]
-             p-6">
+    <!-- CONTAINER -->
+    <div
+      id="modalContainer"
+      class="max-h-[92vh] w-full overflow-y-auto rounded-t-[2rem] border border-white/10 bg-zinc-900/95 p-5 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl sm:max-w-2xl sm:rounded-3xl sm:p-6"
+    >
 
-      <!-- CONTENIDO DINÁMICO -->
+      <!-- CONTENT -->
       <div id="modalContent"></div>
 
     </div>

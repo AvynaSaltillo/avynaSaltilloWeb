@@ -2,126 +2,609 @@
 import "../styles/global.css";
 import "../styles/admin.css";
 
+import { APP } from "../config/app";
+
+import { createClient } from "@supabase/supabase-js";
+
 import {
   RiDashboardLine,
   RiShoppingBag3Line,
   RiUserLine,
-  RiLogoutBoxRLine
+  RiLogoutBoxRLine,
+  RiMenu3Line,
+  RiCloseLine
 } from "react-icons/ri";
 
 const { title = "Admin AVYNA" } = Astro.props;
 
 const path = Astro.url.pathname;
+
+/* ========================================
+   SUPABASE SSR
+======================================== */
+
+const supabase = createClient(
+  import.meta.env.PUBLIC_SUPABASE_URL,
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+  {
+    global: {
+      headers: {
+        Authorization:
+          `Bearer ${Astro.cookies.get("sb-access-token")?.value ?? ""}`
+      }
+    }
+  }
+);
+
+/* ========================================
+   SESSION
+======================================== */
+
+let adminName = "Administrador";
+let adminLetter = "A";
+
+try {
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (user) {
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profile?.full_name) {
+
+      adminName =
+        profile.full_name;
+
+      adminLetter =
+        profile.full_name
+          .charAt(0)
+          .toUpperCase();
+    }
+  }
+
+} catch (err) {
+
+  console.error(err);
+
+}
 ---
 
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
   <title>{title}</title>
+
 </head>
 
-<body class="min-h-screen bg-black text-white antialiased">
+<body class="min-h-screen overflow-x-hidden bg-black text-white antialiased">
 
-<!-- 🌌 BACKGROUND PREMIUM -->
+<!-- ========================================
+     BACKGROUND
+======================================== -->
+
 <div class="fixed inset-0 -z-10 overflow-hidden">
+
+  <!-- BASE -->
   <div class="absolute inset-0 bg-black"></div>
 
-  <div class="absolute left-[-10%] top-[-10%] h-[500px] w-[500px] rounded-full bg-white/5 blur-3xl"></div>
-  <div class="absolute right-[-10%] bottom-[-10%] h-[500px] w-[500px] rounded-full bg-white/5 blur-3xl"></div>
+  <!-- GRID -->
+  <div
+    class="
+      absolute inset-0 opacity-[0.025]
+      [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)]
+      [background-size:60px_60px]
+    "
+  ></div>
+
+  <!-- TOP GLOW -->
+  <div
+    class="
+      absolute -left-[10%] -top-[10%]
+
+      h-[34rem]
+      w-[34rem]
+
+      rounded-full
+
+      bg-white/[0.05]
+
+      blur-3xl
+    "
+  ></div>
+
+  <!-- BOTTOM GLOW -->
+  <div
+    class="
+      absolute -bottom-[20%] -right-[10%]
+
+      h-[36rem]
+      w-[36rem]
+
+      rounded-full
+
+      bg-white/[0.04]
+
+      blur-3xl
+    "
+  ></div>
+
 </div>
 
 <div class="flex min-h-screen">
 
-  <!-- 🧭 SIDEBAR -->
-  <aside class="hidden lg:flex w-72 h-screen sticky top-0 flex-col border-r border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.02] backdrop-blur-2xl shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+  <!-- ========================================
+       MOBILE TOPBAR
+  ========================================= -->
 
-    <!-- TOP -->
-    <div class="px-6 py-6 border-b border-white/10">
-      <p class="text-[10px] uppercase tracking-[0.4em] text-white/30">
+  <header
+    class="
+      fixed inset-x-0 top-0 z-40
+
+      flex h-16 items-center justify-between
+
+      border-b border-white/10
+
+      bg-black/70
+
+      px-4
+
+      backdrop-blur-2xl
+
+      lg:hidden
+    "
+  >
+
+    <!-- MENU -->
+    <button
+      id="openSidebar"
+      class="
+        flex h-10 w-10 items-center justify-center
+
+        rounded-xl
+
+        border border-white/10
+
+        bg-white/[0.03]
+
+        transition
+
+        hover:bg-white/[0.06]
+      "
+    >
+
+      <RiMenu3Line size={20}/>
+
+    </button>
+
+    <!-- TITLE -->
+    <div class="text-center">
+
+      <p class="text-[10px] uppercase tracking-[0.32em] text-white/25">
         AVYNA
       </p>
-      <h1 class="mt-3 text-2xl font-semibold">
-        Admin
-      </h1>
+
+      <p class="mt-1 text-sm font-medium">
+        {title}
+      </p>
+
     </div>
 
-    <!-- NAV -->
-    <nav class="flex-1 p-4 space-y-2 text-sm">
+    <!-- AVATAR -->
+    <div
+      class="
+        grid h-10 w-10 place-items-center
 
-      <a href="/admin"
-        class={`nav-admin ${path === "/admin" ? "active" : ""}`}>
-        <RiDashboardLine size={18}/>
-        Dashboard
-      </a>
+        rounded-2xl
 
-      <a href="/admin/orders"
-        class={`nav-admin ${path.startsWith("/admin/orders") ? "active" : ""}`}>
-        <RiShoppingBag3Line size={18}/>
-        Pedidos
-      </a>
+        border border-white/10
 
-      <a href="/admin/clients"
-        class={`nav-admin ${path.startsWith("/admin/clients") ? "active" : ""}`}>
-        <RiUserLine size={18}/>
-        Clientes
-      </a>
+        bg-white
 
-    </nav>
-
-    <!-- FOOT -->
-    <div class="p-4 border-t border-white/10">
-      <button id="logoutBtn"
-        class="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-white text-black text-sm font-semibold hover:opacity-90 transition">
-        <RiLogoutBoxRLine size={18}/>
-        Cerrar sesión
-      </button>
+        text-sm font-bold text-black
+      "
+    >
+      {adminLetter}
     </div>
 
-  </aside>
+  </header>
 
-  <!-- 🧱 MAIN -->
-  <div class="flex flex-1 flex-col">
+  <!-- ========================================
+       MOBILE OVERLAY
+  ========================================= -->
 
-    <!-- 🔝 HEADER -->
-    <header class="sticky top-0 z-30 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+  <div
+    id="sidebarOverlay"
+    class="
+      pointer-events-none
 
-      <div class="flex items-center justify-between px-6 py-4">
+      fixed inset-0 z-40
 
-        <!-- LEFT -->
+      bg-black/70
+
+      opacity-0
+
+      backdrop-blur-sm
+
+      transition
+
+      lg:hidden
+    "
+  ></div>
+
+  <!-- ========================================
+       SIDEBAR
+  ========================================= -->
+
+  <aside
+    id="sidebar"
+    class="
+      fixed left-0 top-0 z-50
+
+      flex h-screen
+      w-[88vw]
+      max-w-[320px]
+
+      -translate-x-full
+      flex-col
+
+      border-r border-white/10
+
+      bg-gradient-to-b
+      from-white/[0.07]
+      via-white/[0.03]
+      to-black
+
+      backdrop-blur-2xl
+
+      transition-transform duration-300
+
+      lg:sticky
+      lg:z-10
+      lg:w-72
+      lg:max-w-none
+      lg:translate-x-0
+    "
+  >
+
+    <!-- TOP LINE -->
+    <div
+      class="
+        absolute left-0 top-0 h-px w-full
+
+        bg-gradient-to-r
+        from-white/40
+        via-white/10
+        to-transparent
+      "
+    ></div>
+
+    <!-- HEADER -->
+    <div class="border-b border-white/10 px-6 py-6">
+
+      <div class="flex items-start justify-between gap-4">
+
         <div>
-          <p class="text-[10px] uppercase tracking-[0.35em] text-white/35">
+
+          <p class="text-[10px] uppercase tracking-[0.42em] text-white/25">
             AVYNA
           </p>
-          <p class="text-sm font-semibold">
-            {title}
+
+          <h1 class="mt-3 text-3xl font-semibold tracking-tight">
+            Admin
+          </h1>
+
+          <p class="mt-2 text-sm text-white/35">
+            Internal Management System
           </p>
+
         </div>
 
-        <!-- RIGHT -->
-        <div class="flex items-center gap-4">
+        <!-- CLOSE -->
+        <button
+          id="closeSidebar"
+          class="
+            flex h-10 w-10 items-center justify-center
 
-          <!-- STATUS -->
-          <div class="hidden sm:flex items-center gap-2 text-xs text-white/50">
-            <span class="h-2 w-2 rounded-full bg-green-400"></span>
-            Sistema activo
-          </div>
+            rounded-xl
 
-          <!-- AVATAR -->
-          <div class="h-9 w-9 rounded-xl bg-white text-black grid place-items-center text-sm font-semibold">
-            A
-          </div>
+            border border-white/10
+
+            bg-white/[0.03]
+
+            transition
+
+            hover:bg-white/[0.06]
+
+            lg:hidden
+          "
+        >
+
+          <RiCloseLine size={20}/>
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- USER -->
+    <div class="border-b border-white/10 px-6 py-5">
+
+      <div class="flex items-center gap-3">
+
+        <!-- AVATAR -->
+        <div
+          class="
+            grid h-12 w-12 place-items-center
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-white
+
+            text-sm font-bold text-black
+
+            shadow-xl
+          "
+        >
+          {adminLetter}
+        </div>
+
+        <!-- INFO -->
+        <div class="min-w-0 flex-1">
+
+          <p class="truncate text-sm font-medium text-white">
+            {adminName}
+          </p>
+
+          <p class="mt-1 text-xs text-white/35">
+            Administrador
+          </p>
 
         </div>
 
       </div>
 
-    </header>
+    </div>
 
-    <!-- 📦 CONTENT -->
-    <main class="flex-1 p-4 sm:p-6 lg:p-8">
+    <!-- ========================================
+         NAVIGATION
+    ========================================= -->
 
-      <div class="mx-auto w-full max-w-[1400px]">
+    <nav class="flex-1 space-y-2 overflow-y-auto p-4 text-sm">
+
+      <!-- DASHBOARD -->
+      <a
+        href="/admin"
+        class={`
+          group flex items-center gap-3
+
+          rounded-2xl
+
+          px-4 py-3
+
+          text-sm font-medium
+
+          transition-all duration-200
+
+          ${
+            path === "/admin"
+              ? `
+                bg-white
+                text-black
+                shadow-[0_10px_30px_rgba(255,255,255,0.12)]
+              `
+              : `
+                text-white/70
+                hover:bg-white/[0.05]
+                hover:text-white
+                hover:translate-x-1
+              `
+          }
+        `}
+      >
+
+        <RiDashboardLine
+          size={18}
+          className="
+            transition
+            group-hover:scale-105
+          "
+        />
+
+        Dashboard
+
+      </a>
+
+      <!-- ORDERS -->
+      <a
+        href="/admin/orders"
+        class={`
+          group flex items-center gap-3
+
+          rounded-2xl
+
+          px-4 py-3
+
+          text-sm font-medium
+
+          transition-all duration-200
+
+          ${
+            path.startsWith("/admin/orders")
+              ? `
+                bg-white
+                text-black
+                shadow-[0_10px_30px_rgba(255,255,255,0.12)]
+              `
+              : `
+                text-white/70
+                hover:bg-white/[0.05]
+                hover:text-white
+                hover:translate-x-1
+              `
+          }
+        `}
+      >
+
+        <RiShoppingBag3Line
+          size={18}
+          className="
+            transition
+            group-hover:scale-105
+          "
+        />
+
+        Pedidos
+
+      </a>
+
+      <!-- CLIENTS -->
+      <a
+        href="/admin/clients"
+        class={`
+          group flex items-center gap-3
+
+          rounded-2xl
+
+          px-4 py-3
+
+          text-sm font-medium
+
+          transition-all duration-200
+
+          ${
+            path.startsWith("/admin/clients")
+              ? `
+                bg-white
+                text-black
+                shadow-[0_10px_30px_rgba(255,255,255,0.12)]
+              `
+              : `
+                text-white/70
+                hover:bg-white/[0.05]
+                hover:text-white
+                hover:translate-x-1
+              `
+          }
+        `}
+      >
+
+        <RiUserLine
+          size={18}
+          className="
+            transition
+            group-hover:scale-105
+          "
+        />
+
+        Clientes
+
+      </a>
+
+    </nav>
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
+    <div class="mt-auto border-t border-white/10 p-4">
+
+      <!-- LOGOUT -->
+      <button
+        id="logoutBtn"
+        class="
+          flex h-11 w-full items-center justify-center gap-2
+
+          rounded-2xl
+
+          bg-white
+
+          font-semibold text-black
+
+          transition
+
+          hover:opacity-90
+          active:scale-[0.985]
+        "
+      >
+
+        <RiLogoutBoxRLine size={18}/>
+
+        <span>
+          Cerrar sesión
+        </span>
+
+      </button>
+
+      <!-- FOOTER -->
+      <footer class="pt-4">
+
+        <div
+          class="
+            flex items-center justify-between
+
+            text-[11px]
+
+            text-white/20
+          "
+        >
+
+          <p>
+            {APP.copyright}
+          </p>
+
+          <p>
+            {APP.version}
+          </p>
+
+        </div>
+
+      </footer>
+
+    </div>
+
+  </aside>
+
+  <!-- ========================================
+       MAIN
+  ========================================= -->
+
+  <div class="flex min-h-screen flex-1 flex-col overflow-visible">
+
+    <main
+      class="
+        flex-1 overflow-visible
+
+        px-4
+        pb-4
+        pt-20
+
+        sm:px-6
+        sm:pb-6
+
+        lg:p-8
+        lg:pt-8
+      "
+    >
+
+      <div class="mx-auto w-full max-w-[1600px] space-y-8">
 
         <slot />
 
@@ -133,62 +616,9 @@ const path = Astro.url.pathname;
 
 </div>
 
-<style>
-/* NAV */
-.nav-admin {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:12px;
-  color:rgba(255,255,255,.7);
-  transition:.2s;
-}
-
-.nav-admin:hover {
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  transform: translateX(3px);
-}
-
-/* ACTIVE */
-.nav-admin.active {
-  background:#fff;
-  color:#000;
-  font-weight:600;
-}
-
-.nav-admin.active svg {
-  color:#000;
-}
-
-/* KPI CARDS (GLOBAL REUSE) */
-.stat-card {
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  padding:20px;
-  border-radius:20px;
-  backdrop-filter: blur(10px);
-  transition: all .25s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.2);
-}
-
-/* GENERIC CARD */
-.card {
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  border-radius:24px;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    0 10px 40px rgba(0,0,0,0.6);
-}
-</style>
+<script>
+  import "../scripts/admin-layout.ts";
+</script>
 
 </body>
 </html>

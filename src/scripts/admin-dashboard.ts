@@ -1,486 +1,310 @@
 import { supabase } from "../lib/supabase";
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
 
-  const table =
-    document.getElementById("ordersTable");
+    /* =========================
+       ELEMENTS
+    ========================= */
 
- const searchInput =
-  document.querySelector<HTMLInputElement>(
-    "#searchInput"
-  );
+    const rangeFilter =
+      document.getElementById(
+        "rangeFilter"
+      ) as HTMLSelectElement | null;
 
-  const statusFilter =
-  document.querySelector<HTMLSelectElement>(
-    "#statusFilter"
-  );
-
-  const sortFilter =
-  document.querySelector<HTMLSelectElement>(
-    "#sortFilter"
-  );
-
-  const refreshBtn =
-  document.querySelector<HTMLButtonElement>(
-    "#refreshOrders"
-  );
-
-  let orders: any[] = [];
-
-  /* =========================
-     🔐 AUTH
-  ========================= */
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-
-    window.location.href =
-      "/auth/login";
-
-    return;
-  }
-
-  /* =========================
-     🔥 PROFILE
-  ========================= */
-
-  const {
-    data: profile
-  } = await supabase
-    .from("profiles")
-    .select(`
-      role,
-      status
-    `)
-    .eq("id", user.id)
-    .single();
-
-  if (
-    profile?.role !== "admin" &&
-    profile?.role !== "super_admin"
-  ) {
-
-    window.location.href =
-      "/portal";
-
-    return;
-  }
-
-  if (profile?.status === "blocked") {
-
-    await supabase.auth.signOut();
-
-    window.location.href =
-      "/auth/blocked";
-
-    return;
-  }
-
-  /* =========================
-     MONEY
-  ========================= */
-
-  function money(v = 0) {
-
-    return new Intl.NumberFormat(
-      "es-MX",
-      {
-        style: "currency",
-        currency: "MXN",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    ).format(Number(v || 0));
-  }
-
-  /* =========================
-     DATE
-  ========================= */
-
-  function date(v: string) {
-
-    return new Date(v)
-      .toLocaleDateString("es-MX", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      });
-  }
-
-  /* =========================
-     STATUS BADGE
-  ========================= */
-
-  function badge(status = "") {
-
-    const s =
-      status.toLowerCase();
-
-    if (s === "pending") {
-
-      return `
-        <span class="badge yellow">
-          Pendiente
-        </span>
-      `;
-    }
-
-    if (s === "paid") {
-
-      return `
-        <span class="badge green">
-          Pagado
-        </span>
-      `;
-    }
-
-    if (s === "cancelled") {
-
-      return `
-        <span class="badge red">
-          Cancelado
-        </span>
-      `;
-    }
-
-    return `
-      <span class="badge">
-        ${status}
-      </span>
-    `;
-  }
-
-  /* =========================
-     LOAD ORDERS
-  ========================= */
-
-  async function loadOrders() {
-
-    let query = supabase
-      .from("orders")
-      .select(`
-        id,
-        total,
-        status,
-        created_at,
-        advisor_id,
-        client_name,
-        business_name
-      `)
-      .order(
-        "created_at",
-        { ascending: false }
-      );
-
-    // 🔥 ADMIN SOLO VE SUS PEDIDOS
-    if (profile?.role === "admin") {
-
-      query = query.eq(
-        "advisor_id",
-        user!.id
-      );
-    }
+    /* =========================
+       AUTH
+    ========================= */
 
     const {
-      data,
-      error
-    } = await query;
+      data: { user }
+    } = await supabase.auth.getUser();
 
-    if (error) {
+    if (!user) {
 
-      console.error(error);
-
-      return;
-    }
-
-    orders = data || [];
-
-    applyFilters();
-  }
-
-  /* =========================
-     RENDER
-  ========================= */
-
-  function render(list: any[]) {
-
-    if (!table) return;
-
-    if (!list.length) {
-
-      table.innerHTML = `
-        <tr>
-
-          <td
-            colspan="6"
-            class="py-10 text-center text-white/40"
-          >
-            Sin pedidos
-          </td>
-
-        </tr>
-      `;
-
-      updateStats([]);
+      window.location.href =
+        "/admin/login";
 
       return;
     }
 
-    table.innerHTML = list.map(o => `
+    /* =========================
+       PROFILE
+    ========================= */
 
-      <tr class="border-b border-white/5 hover:bg-white/3 transition">
+    const {
+      data: profile
+    } = await supabase
+      .from("profiles")
+      .select(`
+        role,
+        status
+      `)
+      .eq("id", user.id)
+      .single();
 
-        <td class="px-6 py-4 font-medium">
+    if (
+      profile?.role !== "admin" &&
+      profile?.role !== "super_admin"
+    ) {
 
-          #${o.id}
+      window.location.href =
+        "/portal";
 
-        </td>
+      return;
+    }
 
-        <td class="px-6 py-4">
+    if (profile?.status === "blocked") {
 
-          <div class="font-medium">
-            ${o.business_name || "—"}
-          </div>
+      await supabase.auth.signOut();
 
-          <div class="text-xs text-white/40">
-            ${o.client_name || ""}
-          </div>
+      window.location.href =
+        "/auth/blocked";
 
-        </td>
+      return;
+    }
 
-        <td class="px-6 py-4">
+    /* =========================
+       MONEY
+    ========================= */
 
-          ${badge(o.status)}
+    function money(v = 0) {
 
-        </td>
+      return new Intl.NumberFormat(
+        "es-MX",
+        {
+          style: "currency",
+          currency: "MXN"
+        }
+      ).format(Number(v || 0));
+    }
 
-        <td class="px-6 py-4 font-semibold">
+    /* =========================
+       RANGE
+    ========================= */
 
-          ${money(o.total)}
+    function getRangeDate(
+      range: string
+    ) {
 
-        </td>
+      const now =
+        new Date();
 
-        <td class="px-6 py-4">
+      const d =
+        new Date();
 
-          ${date(o.created_at)}
+      switch (range) {
 
-        </td>
+        case "7d":
+          d.setDate(
+            now.getDate() - 7
+          );
+          break;
 
-        <td class="px-6 py-4 text-right">
+        case "3m":
+          d.setMonth(
+            now.getMonth() - 3
+          );
+          break;
 
-          <a
-            href="/admin/order/${o.id}"
-            class="btn-action"
-          >
-            Ver
-          </a>
+        case "6m":
+          d.setMonth(
+            now.getMonth() - 6
+          );
+          break;
 
-        </td>
+        case "1y":
+          d.setFullYear(
+            now.getFullYear() - 1
+          );
+          break;
 
-      </tr>
+        default:
+          d.setMonth(
+            now.getMonth() - 1
+          );
+      }
 
-    `).join("");
+      return d.toISOString();
+    }
 
-    updateStats(list);
-  }
+    /* =========================
+       LOAD DASHBOARD
+    ========================= */
 
-  /* =========================
-     KPIS
-  ========================= */
+    async function loadDashboard() {
 
-  function updateStats(list: any[]) {
+      const range =
+        rangeFilter?.value || "1m";
 
-    const totalOrders =
-      list.length;
+      const from =
+        getRangeDate(range);
 
-    const revenue =
-      list.reduce(
-        (a, b) =>
-          a + Number(b.total || 0),
-        0
-      );
+      /* =========================
+         ORDERS
+      ========================= */
 
-    const pending =
-      list
-        .filter(
-          o => o.status === "pending"
-        )
-        .reduce(
+      let ordersQuery =
+        supabase
+          .from("orders")
+          .select(`
+            id,
+            total,
+            status,
+            payment_type,
+            created_at
+          `)
+          .gte(
+            "created_at",
+            from
+          );
+
+      // 🔥 admin normal
+      if (profile?.role === "admin") {
+
+        ordersQuery =
+          ordersQuery.eq(
+            "advisor_id",
+            user?.id
+          );
+      }
+
+      const {
+        data: orders
+      } = await ordersQuery;
+
+      /* =========================
+         CLIENTS
+      ========================= */
+
+      let clientsQuery =
+        supabase
+          .from("profiles")
+          .select(`
+            id,
+            status
+          `)
+          .eq(
+            "role",
+            "client"
+          )
+          .eq(
+            "status",
+            "active"
+          );
+
+      if (profile?.role === "admin") {
+
+        clientsQuery =
+          clientsQuery.eq(
+            "advisor_id",
+            user?.id
+          );
+      }
+
+      const {
+        data: clients
+      } = await clientsQuery;
+
+      const list =
+        orders || [];
+
+      /* =========================
+         KPIS
+      ========================= */
+
+      const totalSales =
+        list.reduce(
           (a, b) =>
             a + Number(b.total || 0),
           0
         );
 
-    const avg =
-      totalOrders
-        ? revenue / totalOrders
-        : 0;
+      const totalOrders =
+        list.length;
 
-    const kpiOrders =
-      document.getElementById(
-        "kpiOrders"
-      );
+      const pendingCredit =
+        list
+          .filter(
+            o =>
+              o.payment_type ===
+              "credit"
+          )
+          .reduce(
+            (a, b) =>
+              a + Number(b.total || 0),
+            0
+          );
 
-    const kpiRevenue =
-      document.getElementById(
-        "kpiRevenue"
-      );
+      const totalClients =
+        clients?.length || 0;
 
-    const kpiPending =
-      document.getElementById(
-        "kpiPending"
-      );
+      /* =========================
+         RENDER
+      ========================= */
 
-    const kpiAvg =
-      document.getElementById(
-        "kpiAvg"
-      );
-
-    if (kpiOrders) {
-      kpiOrders.textContent =
-        String(totalOrders);
-    }
-
-    if (kpiRevenue) {
-      kpiRevenue.textContent =
-        money(revenue);
-    }
-
-    if (kpiPending) {
-      kpiPending.textContent =
-        money(pending);
-    }
-
-    if (kpiAvg) {
-      kpiAvg.textContent =
-        money(avg);
-    }
-  }
-
-  /* =========================
-     FILTERS
-  ========================= */
-
-  function applyFilters() {
-
-    let list = [...orders];
-
-    const search =
-      searchInput?.value
-        .toLowerCase()
-        .trim() || "";
-
-    const status =
-      statusFilter?.value || "";
-
-    const sort =
-      sortFilter?.value || "";
-
-    /* SEARCH */
-
-    if (search) {
-
-      list = list.filter(o => {
-
-        const business =
-          (
-            o.business_name || ""
-          ).toLowerCase();
-
-        const client =
-          (
-            o.client_name || ""
-          ).toLowerCase();
-
-        return (
-          String(o.id)
-            .includes(search)
-          ||
-          business.includes(search)
-          ||
-          client.includes(search)
+      const sales =
+        document.getElementById(
+          "kpiSales"
         );
-      });
+
+      const revenue =
+        document.getElementById(
+          "kpiRevenue"
+        );
+
+      const ordersKpi =
+        document.getElementById(
+          "kpiOrders"
+        );
+
+      const clientsKpi =
+        document.getElementById(
+          "kpiClients"
+        );
+
+      const creditKpi =
+        document.getElementById(
+          "kpiCredit"
+        );
+
+      if (sales) {
+        sales.textContent =
+          money(totalSales);
+      }
+
+      if (revenue) {
+        revenue.textContent =
+          money(totalSales);
+      }
+
+      if (ordersKpi) {
+        ordersKpi.textContent =
+          String(totalOrders);
+      }
+
+      if (clientsKpi) {
+        clientsKpi.textContent =
+          String(totalClients);
+      }
+
+      if (creditKpi) {
+        creditKpi.textContent =
+          money(pendingCredit);
+      }
     }
 
-    /* STATUS */
+    /* =========================
+       FILTER EVENT
+    ========================= */
 
-    if (status) {
+    rangeFilter?.addEventListener(
+      "change",
+      loadDashboard
+    );
 
-      list = list.filter(
-        o => o.status === status
-      );
-    }
+    await loadDashboard();
 
-    /* SORT */
-
-    if (sort === "high") {
-
-      list.sort(
-        (a, b) =>
-          Number(b.total || 0)
-          -
-          Number(a.total || 0)
-      );
-
-    } else if (sort === "low") {
-
-      list.sort(
-        (a, b) =>
-          Number(a.total || 0)
-          -
-          Number(b.total || 0)
-      );
-    }
-
-    render(list);
   }
-
-  /* =========================
-     EVENTS
-  ========================= */
-
-  searchInput?.addEventListener(
-    "input",
-    applyFilters
-  );
-
-  statusFilter?.addEventListener(
-    "change",
-    applyFilters
-  );
-
-  sortFilter?.addEventListener(
-    "change",
-    applyFilters
-  );
-
-  refreshBtn?.addEventListener(
-    "click",
-    async () => {
-
-      const btn =
-        refreshBtn as HTMLButtonElement;
-
-      btn.disabled = true;
-
-      btn.classList.add(
-        "opacity-70"
-      );
-
-      await loadOrders();
-
-      btn.disabled = false;
-
-      btn.classList.remove(
-        "opacity-70"
-      );
-    }
-  );
-
-  await loadOrders();
-
-});
+);

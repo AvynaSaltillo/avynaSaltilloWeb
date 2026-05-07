@@ -9,6 +9,43 @@
    BASE
 -------------------------------- */
 
+/* ========================================
+   SELECT OPTIONS DARK
+======================================== */
+
+select.modal-input option {
+
+  background:#111 !important;
+
+  color:white !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+
+  -webkit-box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  -webkit-text-fill-color:
+    white !important;
+
+  caret-color:white;
+
+  border-color:
+    rgba(255,255,255,.08) !important;
+
+  transition:
+    background-color 9999s ease-in-out 0s;
+}
+
 /* =========================
    GLOBAL SCROLLBAR
 ========================= */

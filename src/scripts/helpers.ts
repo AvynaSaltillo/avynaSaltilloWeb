@@ -1,9 +1,15 @@
-export function money(v = 0) {
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-    maximumFractionDigits: 0
-  }).format(v);
+export function money(value = 0) {
+
+  return new Intl.NumberFormat(
+    "es-MX",
+    {
+      style: "currency",
+      currency: "MXN",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ).format(Number(value || 0));
+
 }
 
 export function getTerms(total: number) {
@@ -28,4 +34,25 @@ export function getTerms(total: number) {
     down: total / 2,
     balance: total / 2
   };
+}
+
+export function properCase(
+  value = ""
+) {
+
+  return value
+    .toLowerCase()
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => {
+
+      return (
+        word.charAt(0)
+          .toUpperCase() +
+        word.slice(1)
+      );
+
+    })
+    .join(" ");
+
 }

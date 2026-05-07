@@ -1,53 +1,90 @@
 ---
 import PortalLayout from "../../layouts/PortalLayout.astro";
+
+import {
+  FiShoppingBag,
+  FiTrendingUp,
+  FiPackage,
+  FiCreditCard,
+  FiClock,
+  FiShield,
+  FiArrowRight
+} from "react-icons/fi";
 ---
 
-<PortalLayout title="Portal AVYNA">
+<PortalLayout title="Dashboard | AVYNA Saltillo">
 
 <section class="space-y-8">
 
   <!-- HERO -->
-  <section class="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/3 p-6 sm:p-8 lg:p-10">
+  <section class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 p-6 sm:p-8 xl:p-10">
 
-    <div class="absolute -left-16 top-0 h-72 w-72 rounded-full bg-white/3 blur-3xl"></div>
-    <div class="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-white/2 blur-3xl"></div>
+    <!-- GLOWS -->
+    <div class="absolute -left-20 top-0 h-72 w-72 rounded-full bg-white/[0.03] blur-3xl"></div>
+    <div class="absolute right-0 top-0 h-80 w-80 rounded-full bg-white/[0.02] blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-white/[0.02] blur-3xl"></div>
 
-    <div class="relative z-10 grid gap-8 lg:grid-cols-[1.3fr_.7fr]">
+    <div class="relative z-10 grid gap-8 xl:grid-cols-[1.4fr_.8fr]">
 
       <!-- LEFT -->
       <div>
 
-        <p class="text-xs uppercase tracking-[0.42em] text-white/35">
-          AVYNA PRIVATE ACCESS
-        </p>
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs text-white/60 backdrop-blur-xl">
+
+          <FiShield size={14} />
+
+          <span class="uppercase tracking-[0.3em]">
+            Private Client Portal
+          </span>
+
+        </div>
 
         <h1
-          id="portalWelcome"
-          class="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl xl:text-6xl"
+          id="welcomeName"
+          class="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl xl:text-6xl"
         >
-          Bienvenido 👋
+          Hola
         </h1>
 
         <p class="mt-5 max-w-2xl text-sm leading-7 text-white/55 sm:text-base">
-          Administra tus pedidos, revisa condiciones comerciales,
-          explora productos premium y mantén crecimiento constante
-          con acceso exclusivo para clientes AVYNA Saltillo.
+          Gestiona pedidos, historial comercial, promociones privadas y acceso exclusivo AVYNA Saltillo.
         </p>
 
+        <!-- ACTIONS -->
         <div class="mt-8 flex flex-wrap gap-3">
 
           <a
-            href="/portal/orders"
-            class="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
+            href="/portal/new-order"
+            class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 text-sm font-semibold text-black transition hover:scale-[1.02]"
           >
+
+            <FiShoppingBag size={16} />
+
             Nuevo pedido
+
           </a>
 
           <a
-            href="/portal/dashboard"
-            class="inline-flex h-12 items-center justify-center rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+            href="/grow"
+            class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10"
           >
-            Ver dashboard
+
+            <FiPackage size={16} />
+
+            Catálogo
+
+          </a>
+
+          <a
+            href="https://wa.me/524521174729"
+            target="_blank"
+            class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 px-6 text-sm font-medium text-white/80 transition hover:bg-white/10"
+          >
+
+            <FiArrowRight size={16} />
+
+            Soporte
+
           </a>
 
         </div>
@@ -55,37 +92,142 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
       </div>
 
       <!-- RIGHT -->
-      <div class="grid gap-4">
+      <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
 
-        <div class="rounded-3xl border border-white/10 bg-black/35 p-5">
-          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-            Próximo cierre
-          </p>
+        <div class="flex items-center justify-between gap-3">
 
-          <p class="mt-3 text-2xl font-semibold">
-            Jueves 11:59 PM
-          </p>
+          <div>
 
-          <p class="mt-2 text-sm text-white/45">
-            Haz tu pedido antes del corte semanal.
-          </p>
+            <p class="text-xs uppercase tracking-[0.45em] text-white/30">
+              Cierre semanal
+            </p>
+
+            <h2 class="mt-3 text-2xl font-semibold">
+              Jueves 11:59 PM
+            </h2>
+
+          </div>
+
+          <span
+            id="weeklyBadge"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-300"
+          >
+
+            <FiClock size={13} />
+
+            Semana activa
+
+          </span>
+
         </div>
 
-        <div class="rounded-3xl border border-white/10 bg-black/35 p-5">
+        <p
+          id="countdown"
+          class="mt-8 text-5xl font-semibold tracking-tight"
+        >
+          00:00:00
+        </p>
+
+        <p
+          id="cutoffStatus"
+          class="mt-4 text-sm text-white/45"
+        >
+          Calculando...
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- KPI GRID -->
+  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+    <!-- ESTE MES -->
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <div>
+
           <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-            Estado cuenta
+            Este mes
           </p>
 
           <p
-            id="portalPending"
-            class="mt-3 text-3xl font-semibold"
+            id="monthTotal"
+            class="mt-4 text-4xl font-semibold"
           >
-            $0
+            $0.00
           </p>
 
-          <p class="mt-2 text-sm text-white/45">
-            Balance pendiente actual.
+        </div>
+
+        <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70">
+
+          <FiTrendingUp size={20} />
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <div>
+
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Pedidos
           </p>
+
+          <p
+            id="ordersCount"
+            class="mt-4 text-4xl font-semibold"
+          >
+            0
+          </p>
+
+        </div>
+
+        <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70">
+
+          <FiPackage size={20} />
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TICKET -->
+    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+
+      <div class="flex items-center justify-between gap-3">
+
+        <div>
+
+          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+            Ticket promedio
+          </p>
+
+          <p
+            id="avgTicket"
+            class="mt-4 text-4xl font-semibold"
+          >
+            $0.00
+          </p>
+
+        </div>
+
+        <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70">
+
+          <FiCreditCard size={20} />
+
         </div>
 
       </div>
@@ -94,108 +236,167 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
 
   </section>
 
-  <!-- QUICK ACCESS -->
-  <section>
+  <!-- =========================
+       CUENTA COMERCIAL
+  ========================= -->
 
-    <div class="mb-4 flex items-center justify-between gap-3">
-      <h2 class="text-2xl font-semibold">
-        Accesos rápidos
-      </h2>
+  <section
+    class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.05] via-white/[0.03] to-transparent p-6 sm:p-7"
+  >
 
-      <p class="text-sm text-white/40">
-        Todo lo importante en un clic
-      </p>
+    <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+
+      <div>
+
+        <p class="text-xs uppercase tracking-[0.38em] text-white/35">
+          Cuenta comercial
+        </p>
+
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight">
+          Estado financiero
+        </h2>
+
+        <p class="mt-3 max-w-xl text-sm leading-7 text-white/50">
+          Resumen de saldo pendiente, pedidos activos y condición comercial.
+        </p>
+
+      </div>
+
+      <div
+        id="commercialStatus"
+        class="inline-flex h-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-300"
+      >
+
+        <FiShield size={13} />
+
+        Cuenta al corriente
+
+      </div>
+
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <!-- GRID -->
+    <div class="mt-8 grid gap-4 lg:grid-cols-4">
 
-      <a
-        href="/portal/dashboard"
-        class="rounded-3xl border border-white/10 bg-white/3 p-5 transition hover:bg-white/5"
-      >
-        <p class="text-sm text-white/40">
-          Panel
+      <!-- POR PAGAR -->
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
+
+        <div class="flex items-center justify-between gap-3">
+
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Por pagar
+          </p>
+
+          <FiCreditCard
+            size={18}
+            className="text-white/40"
+          />
+
+        </div>
+
+        <p
+          id="commercialDue"
+          class="mt-4 text-3xl font-semibold"
+        >
+          $0.00
         </p>
 
-        <h3 class="mt-3 text-xl font-semibold">
-          Dashboard
-        </h3>
+      </div>
 
-        <p class="mt-2 text-sm text-white/50">
-          Métricas, pedidos y actividad.
-        </p>
-      </a>
+      <!-- ACTIVOS -->
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
 
-      <a
-        href="/portal/orders"
-        class="rounded-3xl border border-white/10 bg-white/3 p-5 transition hover:bg-white/5"
-      >
-        <p class="text-sm text-white/40">
-          Compras
-        </p>
+        <div class="flex items-center justify-between gap-3">
 
-        <h3 class="mt-3 text-xl font-semibold">
-          Pedidos
-        </h3>
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Pedidos activos
+          </p>
 
-        <p class="mt-2 text-sm text-white/50">
-          Historial y nuevos pedidos.
-        </p>
-      </a>
+          <FiPackage
+            size={18}
+            className="text-white/40"
+          />
 
-      <a
-        href="/portal/profile"
-        class="rounded-3xl border border-white/10 bg-white/3 p-5 transition hover:bg-white/5"
-      >
-        <p class="text-sm text-white/40">
-          Cuenta
+        </div>
+
+        <p
+          id="activeOrders"
+          class="mt-4 text-3xl font-semibold"
+        >
+          0
         </p>
 
-        <h3 class="mt-3 text-xl font-semibold">
-          Mi perfil
-        </h3>
+      </div>
 
-        <p class="mt-2 text-sm text-white/50">
-          Datos comerciales y contacto.
+      <!-- CONDICIÓN -->
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
+
+        <div class="flex items-center justify-between gap-3">
+
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Condición comercial
+          </p>
+
+          <FiShield
+            size={18}
+            className="text-white/40"
+          />
+
+        </div>
+
+        <p
+          id="commercialType"
+          class="mt-4 text-xl font-semibold"
+        >
+          Contado
         </p>
-      </a>
 
-      <a
-        href="/grow"
-        class="rounded-3xl border border-white/10 bg-white/3 p-5 transition hover:bg-white/5"
-      >
-        <p class="text-sm text-white/40">
-          Catálogo
+      </div>
+
+      <!-- ÚLTIMO PEDIDO -->
+      <div class="rounded-2xl border border-white/10 bg-black/30 p-5">
+
+        <div class="flex items-center justify-between gap-3">
+
+          <p class="text-xs uppercase tracking-[0.25em] text-white/35">
+            Último pedido
+          </p>
+
+          <FiClock
+            size={18}
+            className="text-white/40"
+          />
+
+        </div>
+
+        <p
+          id="lastOrderDate"
+          class="mt-4 text-xl font-semibold"
+        >
+          —
         </p>
 
-        <h3 class="mt-3 text-xl font-semibold">
-          Grow
-        </h3>
-
-        <p class="mt-2 text-sm text-white/50">
-          Productos y novedades premium.
-        </p>
-      </a>
+      </div>
 
     </div>
 
   </section>
 
-  <!-- LOWER -->
-  <section class="grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
+  <!-- LOWER GRID -->
+  <section class="grid gap-6 xl:grid-cols-[1.25fr_.75fr]">
 
-    <!-- LAST ORDERS -->
-    <div class="rounded-4xl border border-white/10 bg-white/3 p-6">
+    <!-- ORDERS -->
+    <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
       <div class="flex items-center justify-between gap-3">
 
         <h2 class="text-2xl font-semibold">
-          Últimos pedidos
+          Pedidos recientes
         </h2>
 
         <a
           href="/portal/orders"
-          class="text-sm text-white/45 hover:text-white"
+          class="text-sm text-white/45 transition hover:text-white"
         >
           Ver todos
         </a>
@@ -203,49 +404,73 @@ import PortalLayout from "../../layouts/PortalLayout.astro";
       </div>
 
       <div
-        id="portalOrders"
+        id="ordersList"
         class="mt-6 space-y-3"
       >
+
         <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/45">
-          Cargando...
+          Cargando pedidos...
         </div>
+
       </div>
 
-    </div>
+    </section>
 
-    <!-- STATS -->
-    <div class="space-y-6">
+    <!-- TERMS -->
+    <section class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
-      <div class="rounded-4xl border border-white/10 bg-black/35 p-6">
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Pedidos este mes
-        </p>
+      <p class="text-xs uppercase tracking-[0.4em] text-white/30">
+        Condiciones comerciales
+      </p>
 
-        <p
-          id="portalCount"
-          class="mt-4 text-5xl font-semibold"
-        >
-          0
-        </p>
+      <div class="mt-6 space-y-3">
+
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+
+          <p class="font-semibold">
+            $0 - $1,499
+          </p>
+
+          <p class="mt-1 text-sm text-white/45">
+            Pago de contado total.
+          </p>
+
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+
+          <p class="font-semibold">
+            $1,500 - $9,999
+          </p>
+
+          <p class="mt-1 text-sm text-white/45">
+            50% entrega + 50% a 15 días.
+          </p>
+
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+
+          <p class="font-semibold">
+            $10,000+
+          </p>
+
+          <p class="mt-1 text-sm text-white/45">
+            50% entrega + 50% a 30 días.
+          </p>
+
+        </div>
+
       </div>
 
-      <div class="rounded-4xl border border-white/10 bg-black/35 p-6">
-        <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-          Compras este mes
-        </p>
-
-        <p
-          id="portalMonth"
-          class="mt-4 text-4xl font-semibold"
-        >
-          $0
-        </p>
-      </div>
-
-    </div>
+    </section>
 
   </section>
 
 </section>
 
-<script type="module" src="/src/scripts/portal-home.ts"></script>
+<script>
+  import "../../scripts/dashboard.ts";
+</script>
+
+</PortalLayout>

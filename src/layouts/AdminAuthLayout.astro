@@ -1,0 +1,116 @@
+---
+// src/layouts/AdminAuthLayout.astro
+
+import "../styles/global.css";
+import "../styles/auth.css";
+
+import { APP } from "../config/app";
+
+const {
+  title = "Admin Access",
+  subtitle = "Panel administrativo protegido."
+} = Astro.props;
+---
+
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>{title}</title>
+
+</head>
+
+<body class="auth-scope min-h-screen overflow-hidden bg-black text-white antialiased">
+
+  <!-- BG -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+
+    <!-- BASE -->
+    <div class="absolute inset-0 bg-black"></div>
+
+    <!-- GRID -->
+    <div
+      class="absolute inset-0 opacity-[0.03]"
+      style="
+        background-image:
+          linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+        background-size: 42px 42px;
+      "
+    ></div>
+
+    <!-- LIGHT -->
+    <div class="absolute left-[-10%] top-[-10%] h-[32rem] w-[32rem] rounded-full bg-white/[0.04] blur-3xl"></div>
+
+    <div class="absolute bottom-[-20%] right-[-10%] h-[34rem] w-[34rem] rounded-full bg-white/[0.03] blur-3xl"></div>
+
+    <!-- VIGNETTE -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(0,0,0,0.82)_100%)]"></div>
+
+  </div>
+
+  <main class="relative flex min-h-screen items-center justify-center p-4">
+
+    <!-- BACK -->
+    <a
+      href="/"
+      class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/60 backdrop-blur-xl transition hover:bg-white/[0.06] hover:text-white sm:left-6 sm:top-6"
+    >
+      ← Volver
+    </a>
+
+    <!-- CARD -->
+    <div class="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] shadow-2xl backdrop-blur-2xl">
+
+      <!-- TOP GLOW -->
+      <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
+
+      <!-- CONTENT -->
+      <div class="relative p-6 sm:p-8">
+
+        <!-- BADGE -->
+        <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-white/40">
+
+          <div class="h-2 w-2 rounded-full bg-white/70"></div>
+
+          Restricted Area
+
+        </div>
+
+        <!-- TITLE -->
+        <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+          {title}
+        </h1>
+
+        <!-- SUB -->
+        <p class="mt-3 text-sm leading-relaxed text-white/45">
+          {subtitle}
+        </p>
+
+        <!-- SLOT -->
+        <div class="mt-8">
+          <slot />
+        </div>
+
+      </div>
+
+      <!-- BOTTOM LINE -->
+      <div class="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/10 to-transparent"></div>
+
+    </div>
+
+    <!-- FOOT -->
+    <div class="absolute bottom-5 text-center text-[11px] tracking-[0.2em] text-white/20">
+  {APP.name} · {APP.version}
+</div>
+
+  </main>
+
+</body>
+</html>

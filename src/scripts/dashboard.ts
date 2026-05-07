@@ -4,6 +4,10 @@ import { supabase } from "../lib/supabase";
 import { money } from "./helpers";
 import { startCountdown } from "./countdown";
 
+import {
+  properCase
+} from "../scripts/helpers";
+
 document.addEventListener("DOMContentLoaded", async () => {
   startCountdown();
 
@@ -54,8 +58,8 @@ if (authError || !user) {
       await supabase
         .from("profiles")
         .select(
-          "first_name,status"
-        )
+  "first_name,status,payment_type"
+)
         .eq("id", user.id)
         .maybeSingle();
 
@@ -77,9 +81,9 @@ if (profile.status !== "active") {
 }
 
     setText(
-      "welcomeName",
-      `Hola, ${profile.first_name || "Cliente"}`
-    );
+  "welcomeName",
+  `Hola, ${properCase(profile.first_name || "Cliente")}`
+);
 
     /* =========================
        ORDERS
@@ -91,7 +95,7 @@ if (profile.status !== "active") {
       await supabase
         .from("orders")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("client_id", user.id)
         .order("created_at", {
           ascending: false
         });
@@ -145,17 +149,17 @@ if (profile.status !== "active") {
       );
 
     const pending =
-      list.reduce(
-        (
-          acc: number,
-          item: any
-        ) =>
-          acc +
-          Number(
-            item.balance || 0
-          ),
-        0
-      );
+  list.reduce(
+    (
+      acc: number,
+      item: any
+    ) =>
+      acc +
+      Number(
+        item.amount_due || 0
+      ),
+    0
+  );
 
     setText(
       "monthTotal",
@@ -167,90 +171,95 @@ if (profile.status !== "active") {
       String(list.length)
     );
 
-    setText(
-      "pendingBalance",
-      money(pending)
-    );
+    const avgTicket =
+  list.length > 0
+    ? monthTotal / list.length
+    : 0;
+
+setText(
+  "avgTicket",
+  money(avgTicket)
+);
 
     /* =========================
-       LAST ORDER SUMMARY
-    ========================= */
-    const last =
-      list[0];
+   COMMERCIAL ACCOUNT
+========================= */
 
-    if (last) {
-      setText(
-        "simTotal",
-        money(last.total || 0)
-      );
+const activeOrders =
+  list.filter((item: any) => {
 
-      const total =
-        Number(
-          last.total || 0
-        );
+    const status =
+      String(
+        item.delivery_status || ""
+      ).toLowerCase();
 
-      let label =
-        "Contado total";
+    return (
+      status !== "delivered" &&
+      status !== "cancelled"
+    );
 
-      let down =
-        total;
+  });
 
-      let balance =
-        0;
+const overdue =
+  list.some((item: any) => {
 
-      if (
-        total >= 1500 &&
-        total < 10000
-      ) {
-        label =
-          "50% hoy + 50% a 15 días";
+    if (!item.due_date) return false;
 
-        down =
-          total * 0.5;
+    return (
+      Number(item.amount_due || 0) > 0 &&
+      new Date(item.due_date).getTime() < Date.now()
+    );
 
-        balance =
-          total * 0.5;
-      }
+  });
 
-      if (
-        total >= 10000
-      ) {
-        label =
-          "50% hoy + 50% a 30 días";
+setText(
+  "commercialDue",
+  money(pending)
+);
 
-        down =
-          total * 0.5;
+setText(
+  "activeOrders",
+  String(activeOrders.length)
+);
 
-        balance =
-          total * 0.5;
-      }
+setText(
+  "commercialType",
 
-      setText(
-        "simLabel",
-        label
-      );
+  profile.payment_type === "credit"
+    ? "Crédito comercial"
+    : "Pago de contado"
+);
 
-      setText(
-        "simDown",
-        money(down)
-      );
+const last =
+  list[0];
 
-      setText(
-        "simBalance",
-        money(balance)
-      );
+setText(
+  "lastOrderDate",
 
-      setText(
-        "nextDue",
-        last.due_date
-          ? new Date(
-              last.due_date
-            ).toLocaleDateString(
-              "es-MX"
-            )
-          : "Sin saldo"
-      );
-    }
+  last?.created_at
+    ? new Date(last.created_at)
+        .toLocaleDateString("es-MX")
+    : "—"
+);
+
+/* STATUS */
+
+const commercialStatus =
+  $("commercialStatus");
+
+if (commercialStatus) {
+
+  if (overdue) {
+
+    commercialStatus.textContent =
+      "Saldo vencido";
+
+    commercialStatus.className =
+      "inline-flex h-fit rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs font-medium text-red-300";
+
+  }
+
+}
 
     /* =========================
        LIST RENDER

@@ -2,53 +2,57 @@
 // src/components/admin/AdminTable.astro
 ---
 
-<table class="min-w-full text-left">
+<div class="table-wrap">
 
-  <thead class="border-b border-white/10">
+  <table class="admin-table text-left">
 
-    <tr class="text-xs uppercase tracking-[0.35em] text-white/40">
+    <thead class="border-b border-white/10">
 
-      <th class="px-6 py-5">
-        Pedido
-      </th>
+      <tr class="text-xs uppercase tracking-[0.35em] text-white/40">
 
-      <th class="px-6 py-5">
-        Cliente
-      </th>
+        <th class="px-6 py-5">
+          Pedido
+        </th>
 
-      <th class="px-6 py-5">
-        Estatus
-      </th>
+        <th class="px-6 py-5">
+          Cliente
+        </th>
 
-      <th class="px-6 py-5">
-        Total
-      </th>
+        <th class="px-6 py-5">
+          Estatus
+        </th>
 
-      <th class="px-6 py-5">
-        Fecha
-      </th>
+        <th class="px-6 py-5">
+          Total
+        </th>
 
-      <th class="px-6 py-5 text-right">
-        Acción
-      </th>
+        <th class="px-6 py-5">
+          Fecha
+        </th>
 
-    </tr>
+        <th class="px-6 py-5 text-right">
+          Acción
+        </th>
 
-  </thead>
+      </tr>
 
-  <tbody id="ordersTable">
+    </thead>
 
-    <tr>
+    <tbody id="ordersTable">
 
-      <td
-        colspan="6"
-        class="py-16 text-center text-sm text-white/45"
-      >
-        Cargando pedidos...
-      </td>
+      <tr>
 
-    </tr>
+        <td
+          colspan="6"
+          class="py-16 text-center text-sm text-white/45"
+        >
+          Cargando pedidos...
+        </td>
 
-  </tbody>
+      </tr>
 
-</table>
+    </tbody>
+
+  </table>
+
+</div>

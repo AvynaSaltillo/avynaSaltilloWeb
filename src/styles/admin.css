@@ -1,231 +1,505 @@
-.badge {
-  padding:4px 10px;
+/* ========================================
+   TABLE
+======================================== */
+
+.table-wrap {
+
+  width:100%;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  -webkit-overflow-scrolling:touch;
+
+  position:relative;
+}
+
+.admin-table {
+
+  width:100%;
+
+  border-collapse:collapse;
+}
+
+.admin-table th,
+.admin-table td {
+
+  white-space:nowrap;
+}
+
+/* ========================================
+   MODAL INPUTS
+======================================== */
+
+.modal-input {
+
+  width:100%;
+
+  border-radius:16px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+
+  padding:0 14px;
+
+  color:white;
+
+  outline:none;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+input.modal-input,
+select.modal-input {
+
+  height:48px;
+}
+
+textarea.modal-input {
+
+  min-height:110px;
+
+  padding:14px;
+
+  resize:none;
+}
+
+.modal-input:focus {
+
+  border-color:rgba(255,255,255,.18);
+
+  background:rgba(255,255,255,.05);
+
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.03);
+}
+
+.modal-input::placeholder {
+
+  color:rgba(255,255,255,.25);
+}
+
+/* ========================================
+   SELECT OPTIONS
+======================================== */
+
+select.modal-input option {
+
+  background:#111 !important;
+
+  color:white !important;
+}
+
+/* ========================================
+   AUTOFILL FIX
+======================================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+
+  -webkit-box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  -webkit-text-fill-color:
+    white !important;
+
+  caret-color:white;
+
+  border-color:
+    rgba(255,255,255,.08) !important;
+
+  transition:
+    background-color 9999s ease-in-out 0s;
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR
+======================================== */
+
+::-webkit-scrollbar {
+
+  width:10px;
+  height:10px;
+}
+
+::-webkit-scrollbar-track {
+
+  background:transparent;
+}
+
+::-webkit-scrollbar-thumb {
+
+  background:rgba(255,255,255,.08);
+
   border-radius:999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background:rgba(255,255,255,.14);
+}
+
+/* ========================================
+   BADGES
+======================================== */
+
+.badge {
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:6px;
+
+  padding:5px 10px;
+
+  border-radius:999px;
+
   font-size:11px;
+  font-weight:600;
+
+  white-space:nowrap;
 }
 
 .badge.green {
-  background:rgba(34,197,94,.15);
-  color:#4ade80;
-}
 
-.badge.yellow {
-  background:rgba(234,179,8,.15);
-  color:#facc15;
+  background:rgba(34,197,94,.14);
+
+  color:#4ade80;
+
+  border:1px solid rgba(34,197,94,.2);
 }
 
 .badge.red {
-  background: rgba(239,68,68,.15);
+
+  background:rgba(239,68,68,.12);
+
   color:#f87171;
+
+  border:1px solid rgba(239,68,68,.2);
 }
 
-.btn-action {
-  padding:6px 12px;
-  border-radius:10px;
+.badge.yellow {
+
+  background:rgba(234,179,8,.12);
+
+  color:#facc15;
+
+  border:1px solid rgba(234,179,8,.2);
+}
+
+.badge.cash {
+
+  background:rgba(255,255,255,.06);
+
+  color:rgba(255,255,255,.8);
+
   border:1px solid rgba(255,255,255,.1);
-  font-size:12px;
 }
 
-.btn-action:hover {
-  background:rgba(255,255,255,.08);
-}
+/* ========================================
+   BUTTONS
+======================================== */
 
-/* BOTONES ADMIN */
-
-.btn-approve {
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  background: rgba(34,197,94,0.15);
-  color:#4ade80;
-  border:1px solid rgba(34,197,94,0.25);
-  transition:.2s;
-}
-
-.btn-approve:hover {
-  background: rgba(34,197,94,0.25);
-}
-
-/* crédito más neutro */
-.btn-credit {
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(255,255,255,0.15);
-  color:rgba(255,255,255,0.7);
-  transition:.2s;
-}
-
-.btn-credit:hover {
-  background: rgba(255,255,255,0.08);
-  color:#fff;
-}
-
-.btn-edit {
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(255,255,255,0.15);
-  color:rgba(255,255,255,0.8);
-}
-
-.btn-edit:hover {
-  background:rgba(255,255,255,0.08);
-  color:#fff;
-}
-
+.btn-approve,
+.btn-block,
+.btn-activate,
+.btn-edit,
 .btn-delete {
-  padding:6px 12px;
+
+  height:36px;
+
+  padding:0 14px;
+
   border-radius:999px;
+
   font-size:12px;
-  border:1px solid rgba(239,68,68,0.3);
-  color:#f87171;
+  font-weight:500;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .15s ease,
+    opacity .2s ease;
+
+  white-space:nowrap;
 }
 
-.btn-delete:hover {
-  background:rgba(239,68,68,0.15);
-}
+/* APPROVE */
 
 .btn-approve {
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  background: rgba(34,197,94,0.15);
+
+  background:rgba(34,197,94,.12);
+
   color:#4ade80;
-  border:1px solid rgba(34,197,94,0.25);
+
+  border:1px solid rgba(34,197,94,.2);
 }
 
 .btn-approve:hover {
-  background: rgba(34,197,94,0.25);
+
+  background:rgba(34,197,94,.2);
 }
+
+/* BLOCK */
 
 .btn-block {
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(234,179,8,0.3);
+
+  background:rgba(234,179,8,.08);
+
   color:#facc15;
+
+  border:1px solid rgba(234,179,8,.2);
 }
 
 .btn-block:hover {
-  background: rgba(234,179,8,0.15);
+
+  background:rgba(234,179,8,.14);
 }
+
+/* ACTIVATE */
 
 .btn-activate {
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
 
-  color: #38bdf8; /* sky-400 */
-  border: 1px solid rgba(56,189,248,0.35);
-  background: rgba(56,189,248,0.08);
+  background:rgba(56,189,248,.08);
 
-  transition: all 0.2s ease;
+  color:#38bdf8;
+
+  border:1px solid rgba(56,189,248,.2);
 }
 
-/* hover */
 .btn-activate:hover {
-  background: rgba(56,189,248,0.18);
-  border-color: rgba(56,189,248,0.55);
-  transform: translateY(-1px);
+
+  background:rgba(56,189,248,.14);
 }
 
-/* active click */
-.btn-activate:active {
-  transform: scale(0.96);
+/* EDIT */
+
+.btn-edit {
+
+  background:rgba(255,255,255,.03);
+
+  color:rgba(255,255,255,.82);
+
+  border:1px solid rgba(255,255,255,.1);
 }
 
-/* disabled (por si lo usas después) */
-.btn-activate:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.btn-edit:hover {
+
+  background:rgba(255,255,255,.07);
+
+  color:white;
 }
 
-.modal-card {
-  width: 100%;
-  max-width: 620px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: linear-gradient(180deg, #0f1115, #0b0c10);
-  padding: 20px;
+/* DELETE */
+
+.btn-delete {
+
+  background:rgba(239,68,68,.06);
+
+  color:#f87171;
+
+  border:1px solid rgba(239,68,68,.16);
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.btn-delete:hover {
+
+  background:rgba(239,68,68,.14);
 }
 
-.modal-body {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+/* CLICK */
+
+.btn-approve:active,
+.btn-block:active,
+.btn-activate:active,
+.btn-edit:active,
+.btn-delete:active {
+
+  transform:scale(.97);
 }
 
-.modal-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ========================================
+   CARD
+======================================== */
+
+.card {
+
+  border-radius:28px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.02)
+    );
+
+  backdrop-filter:blur(20px);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.35);
 }
 
-.section-title {
-  font-size: 11px;
-  letter-spacing: .2em;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
+/* ========================================
+   TABLE
+======================================== */
+
+.table-wrap {
+
+  width:100%;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  -webkit-overflow-scrolling:touch;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+.admin-table {
+
+  width:100%;
+
+  border-collapse:collapse;
 }
 
-input, select {
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-  padding: 0 12px;
-  font-size: 14px;
+.admin-table th,
+.admin-table td {
+
+  white-space:nowrap;
 }
 
-.modal-footer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+/* ========================================
+   MODAL INPUTS
+======================================== */
+
+.modal-input {
+
+  width:100%;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+
+  padding:0 14px;
+
+  color:white;
+
+  outline:none;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
 }
 
-.btn-save {
-  background: #22c55e;
-  color: black;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-weight: 600;
+input.modal-input,
+select.modal-input {
+
+  height:50px;
 }
 
-.btn-ghost {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 10px 16px;
-  border-radius: 999px;
+textarea.modal-input {
+
+  min-height:120px;
+
+  padding:14px;
+
+  resize:none;
 }
 
-.status-badge.active { color: #22c55e; }
-.status-badge.blocked { color: #ef4444; }
-.status-badge.pending { color: #eab308; }
+.modal-input:focus {
 
-input, select {
-  transition: all 0.2s ease;
+  border-color:rgba(255,255,255,.16);
+
+  background:rgba(255,255,255,.05);
+
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.03);
 }
 
-input:focus, select:focus {
-  outline: none;
-  border-color: rgba(34,197,94,0.5);
-  box-shadow: 0 0 0 2px rgba(34,197,94,0.15);
-  background: rgba(255,255,255,0.06);
+.modal-input::placeholder {
+
+  color:rgba(255,255,255,.25);
 }
 
+/* ========================================
+   SELECT OPTIONS
+======================================== */
+
+select.modal-input option {
+
+  background:#111 !important;
+
+  color:white !important;
+}
+
+/* ========================================
+   AUTOFILL FIX
+======================================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+
+  -webkit-box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  box-shadow:
+    0 0 0 1000px rgba(255,255,255,.03) inset !important;
+
+  -webkit-text-fill-color:
+    white !important;
+
+  caret-color:white;
+
+  border-color:
+    rgba(255,255,255,.08) !important;
+
+  transition:
+    background-color 9999s ease-in-out 0s;
+}
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+::-webkit-scrollbar {
+
+  width:10px;
+  height:10px;
+}
+
+::-webkit-scrollbar-track {
+
+  background:transparent;
+}
+
+::-webkit-scrollbar-thumb {
+
+  background:rgba(255,255,255,.08);
+
+  border-radius:999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background:rgba(255,255,255,.14);
+}
