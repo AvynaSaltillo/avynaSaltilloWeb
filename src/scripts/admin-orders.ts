@@ -2,6 +2,10 @@
 
 import { supabase } from "../lib/supabase";
 
+import {
+  getBusinessWeek
+} from "../lib/business-week";
+
 document.addEventListener("DOMContentLoaded", async () => {
 
   const table = document.getElementById("ordersTable");
@@ -303,16 +307,16 @@ function badge(status = "") {
     let query = supabase
   .from("orders")
   .select(`
-    id,
-    client_name,
-    business_name,
-    total,
-    amount_paid,
-    delivery_status,
-    status,
-    created_at,
-    advisor_id
-  `)
+  id,
+  client_name,
+  business_name,
+  total,
+  amount_paid,
+  payment_status,
+  delivery_status,
+  created_at,
+  advisor_id
+`)
   .order("created_at", {
     ascending: false
   });
@@ -417,11 +421,23 @@ const {
       return a + Number(b.total || 0);
     }, 0);
 
-    const pending = filtered
-      .filter((o) => o.status === "pending")
-      .reduce((a, b) => {
-        return a + Number(b.balance || 0);
-      }, 0);
+   const pending = filtered
+  .filter(
+    (o) =>
+      o.payment_status !== "paid"
+  )
+  .reduce((a, b) => {
+
+    return (
+      a +
+      (
+        Number(b.total || 0) -
+        Number(b.amount_paid || 0)
+      )
+
+    );
+
+  }, 0);
 
     const avg =
       totalOrders > 0

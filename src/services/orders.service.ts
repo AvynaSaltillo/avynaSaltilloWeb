@@ -2,6 +2,10 @@
 
 import { supabase } from "../lib/supabase";
 
+import {
+  getCurrentWeekKey
+} from "../scripts/helpers";
+
 /* ========================================
    TYPES
 ======================================== */
@@ -78,7 +82,9 @@ function resolveDueDate(
   payment_type: string
 ) {
 
-  if (payment_type !== "credit") {
+  if (
+    payment_type !== "credit"
+  ) {
     return null;
   }
 
@@ -102,35 +108,91 @@ export async function createOrder({
   cart
 }: CreateOrderParams) {
 
-  /* =========================
-     VALIDATIONS
-  ========================= */
-
   if (!user?.id) {
+
     throw new Error(
       "Usuario inválido"
     );
+
   }
 
   if (!cart?.length) {
+
     throw new Error(
       "El carrito está vacío"
     );
+
   }
 
-  /* =========================
+  const weekKey =
+    getCurrentWeekKey();
+
+/* ========================================
+   BUSCAR PEDIDO SEMANAL
+======================================== */
+
+const {
+  data: existingOrder
+} = await supabase
+  .from("orders")
+  .select(`
+    *,
+    order_items (*)
+  `)
+  .eq(
+    "client_id",
+    user.id
+  )
+  .eq(
+    "week_key",
+    weekKey
+  )
+  .order(
+    "created_at",
+    {
+      ascending: false
+    }
+  )
+  .limit(1)
+  .maybeSingle();
+
+/* ========================================
+   YA EXISTE PEDIDO
+======================================== */
+
+if (existingOrder) {
+
+  const editableStatuses = [
+    "waiting_supplier"
+  ];
+
+  const isEditable =
+    editableStatuses.includes(
+      existingOrder.delivery_status
+    );
+
+  /* ========================================
+     BLOQUEADO
+  ======================================== */
+
+  if (!isEditable) {
+
+    throw new Error(
+      "Ya tienes un pedido registrado para esta semana."
+    );
+
+  }
+
+}
+  /* ========================================
      TOTALS
-  ========================= */
+  ======================================== */
 
   const subtotal =
     calculateSubtotal(cart);
 
   const total =
     subtotal;
-
-  /* =========================
-     PAYMENT RULES
-  ========================= */
 
   const payment_type =
     resolvePaymentType(total);
@@ -141,18 +203,162 @@ export async function createOrder({
       payment_type
     );
 
-  /* =========================
-     PAYMENT STATUS
-  ========================= */
-const amount_paid = 0;
+  const amount_paid = 0;
 
-const amount_due = total;
+  const amount_due = total;
 
-const payment_status = "pending";
+  const payment_status =
+    "pending";
 
-  /* =========================
-     CREATE ORDER
-  ========================= */
+  /* ========================================
+     UPDATE EXISTING
+  ======================================== */
+
+  if (existingOrder) {
+
+    const {
+      data: updatedRows,
+      error: updateError
+    } = await supabase
+      .from("orders")
+      .update({
+
+        subtotal,
+
+        total,
+
+        amount_due,
+
+        payment_type,
+
+        due_date,
+
+        updated_at:
+          new Date()
+            .toISOString()
+
+      })
+      .eq(
+        "id",
+        existingOrder.id
+      )
+      .eq(
+        "client_id",
+        user.id
+      )
+      .select();
+
+    if (updateError) {
+      throw updateError;
+    }
+
+    if (
+      !updatedRows?.length
+    ) {
+
+      throw new Error(
+        "No se pudo actualizar el pedido."
+      );
+
+    }
+
+    /* ========================================
+       DELETE OLD ITEMS
+    ======================================== */
+
+    const {
+      error: deleteError
+    } = await supabase
+      .from("order_items")
+      .delete()
+      .eq(
+        "order_id",
+        existingOrder.id
+      );
+
+    if (deleteError) {
+      throw deleteError;
+    }
+
+    /* ========================================
+       NEW ITEMS
+    ======================================== */
+
+    const items =
+      cart.map((item) => ({
+
+        order_id:
+          existingOrder.id,
+
+        product_id:
+          item.id,
+
+        product_name:
+          item.name,
+
+        family:
+          item.family || "",
+
+        quantity:
+          Number(item.qty || 0),
+
+        unit_price:
+          Number(item.priceSalon || 0),
+
+        public_price:
+          Number(item.pricePublic || 0),
+
+        subtotal:
+          Number(item.priceSalon || 0) *
+          Number(item.qty || 0)
+
+      }));
+
+    const {
+      error: itemsError
+    } = await supabase
+      .from("order_items")
+      .insert(items);
+
+    if (itemsError) {
+      throw itemsError;
+    }
+
+    const {
+      data: freshOrder,
+      error: freshError
+    } = await supabase
+      .from("orders")
+      .select(`
+        *,
+        order_items (*)
+      `)
+      .eq(
+        "id",
+        existingOrder.id
+      )
+      .maybeSingle();
+
+    if (freshError) {
+      throw freshError;
+    }
+
+    return {
+
+      order:
+        freshOrder,
+
+      subtotal,
+
+      total
+
+    };
+
+  }
+
+  /* ========================================
+     CREATE NEW ORDER
+  ======================================== */
 
   const {
     data: order,
@@ -175,22 +381,25 @@ const payment_status = "pending";
       business_name:
         profile.business_name || "",
 
+      week_key:
+        weekKey,
+
       subtotal,
+
       total,
 
       amount_paid,
+
       amount_due,
 
       payment_type,
+
       payment_status,
 
       due_date,
 
-      status:
-        "pending",
-
       delivery_status:
-  "waiting_supplier",
+        "waiting_supplier",
 
       delivery_week:
         null,
@@ -225,18 +434,13 @@ const payment_status = "pending";
     !order
   ) {
 
-    console.error(
-      "ORDER ERROR",
-      error
-    );
-
     throw error;
 
   }
 
-  /* =========================
-     ORDER ITEMS
-  ========================= */
+  /* ========================================
+     INSERT ITEMS
+  ======================================== */
 
   const items =
     cart.map((item) => ({
@@ -257,15 +461,14 @@ const payment_status = "pending";
         Number(item.qty || 0),
 
       unit_price:
-        Number(
-          item.priceSalon || 0
-        ),
+        Number(item.priceSalon || 0),
+
+      public_price:
+        Number(item.pricePublic || 0),
 
       subtotal:
-        (
-          Number(item.priceSalon || 0) *
-          Number(item.qty || 0)
-        )
+        Number(item.priceSalon || 0) *
+        Number(item.qty || 0)
 
     }));
 
@@ -276,15 +479,6 @@ const payment_status = "pending";
     .insert(items);
 
   if (itemsError) {
-
-    console.error(
-      "ITEMS ERROR",
-      itemsError
-    );
-
-    /* =========================
-       ROLLBACK
-    ========================= */
 
     await supabase
       .from("orders")
@@ -298,23 +492,13 @@ const payment_status = "pending";
 
   }
 
-  /* =========================
-     RETURN
-  ========================= */
-
   return {
 
     order,
 
     subtotal,
-    total,
 
-    payment_type,
-
-    amount_paid,
-    amount_due,
-
-    due_date
+    total
 
   };
 
@@ -335,14 +519,13 @@ export async function getOrderById(
     .from("orders")
     .select(`
       *,
-      order_items (
-        *
-      ),
-      order_payments (
-        *
-      )
+      order_items (*),
+      order_payments (*)
     `)
-    .eq("id", id)
+    .eq(
+      "id",
+      id
+    )
     .single();
 
   if (error) {

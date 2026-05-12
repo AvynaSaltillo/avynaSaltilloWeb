@@ -53,7 +53,7 @@ export const products = [
   type: "Shampoo",
   description:
     "Formato profesional de alto rendimiento para salón. Nutre, limpia y protege la fibra capilar.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 357,
   pricePublic: 510,
   saving: 153,
@@ -95,7 +95,7 @@ export const products = [
   type: "Mascarilla",
   description:
     "Formato salón para protocolos intensivos de hidratación y reparación.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 343,
   pricePublic: 490,
   saving: 147,
@@ -165,7 +165,7 @@ export const products = [
   type: "Protector Térmico",
   description:
     "Formato salón para brushing y secado profesional con protección térmica y brillo.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 721,
   pricePublic: 1030,
   saving: 309,
@@ -211,7 +211,7 @@ export const products = [
   type: "Shampoo",
   description:
     "Formato profesional para salón con protección intensa del color.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 364,
   pricePublic: 520,
   saving: 156,
@@ -253,7 +253,7 @@ export const products = [
   type: "Mascarilla",
   description:
     "Formato salón para tratamientos post-color y mantenimiento técnico.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 395.5,
   pricePublic: 565,
   saving: 169.5,
@@ -323,7 +323,7 @@ export const products = [
   type: "Loción Estabilizadora",
   description:
     "Ideal después de procesos químicos. Regula pH, elimina residuos alcalinos y calma sensibilidad.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 427,
   pricePublic: 610,
   saving: 183,
@@ -337,7 +337,7 @@ export const products = [
   type: "Sellador pH",
   description:
     "Tratamiento ácido equilibrante del pH con acción estabilizadora y selladora.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 189,
   pricePublic: 270,
   saving: 81,
@@ -353,7 +353,7 @@ export const products = [
     "",
   extra:
     "",
-  tag: "Pro",
+  tag: "",
   priceSalon: 301,
   pricePublic: 430,
   saving: 129,
@@ -399,7 +399,7 @@ export const products = [
   type: "Shampoo Matizador",
   description:
     "Formato profesional para salón. Ideal para mantenimiento continuo de rubios y platinados.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 392,
   pricePublic: 560,
   saving: 168,
@@ -528,7 +528,7 @@ export const products = [
   type: "Shampoo Reparador",
   description:
     "Formato profesional de alto rendimiento para protocolos reconstructivos.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 360.5,
   pricePublic: 515,
   saving: 154.5,
@@ -570,7 +570,7 @@ export const products = [
   type: "Mascarilla Reparadora",
   description:
     "Formato salón ideal para protocolos intensivos post decoloración.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 364,
   pricePublic: 520,
   saving: 156,
@@ -659,7 +659,7 @@ export const products = [
   type: "Shampoo Anticaída",
   description:
     "Formato profesional de alto rendimiento para cabellos débiles, con caída o poca densidad.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 357,
   pricePublic: 510,
   saving: 153,
@@ -707,7 +707,7 @@ export const products = [
   type: "Shampoo Purificante",
   description:
     "Formato salón con extracto de agave y aceites esenciales. Limpieza profunda y balanceada.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 451.5,
   pricePublic: 645,
   saving: 193.5,
@@ -735,7 +735,7 @@ export const products = [
   type: "Mascarilla Purificante",
   description:
     "Formato profesional con extracto de agave, menta y lavanda para uso continuo.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 381.5,
   pricePublic: 545,
   saving: 163.5,
@@ -801,7 +801,7 @@ export const products = [
     "Con ácido hialurónico, plex, queratina y proteína de arroz. Regenera cabello dañado y quebradizo.",
   extra:
     "Para cabellos muy dañados se recomienda dejar de medios a puntas sin enjuagar.",
-  tag: "Pro",
+  tag: "Cabina",
   priceSalon: 231,
   pricePublic: 330,
   saving: 99,
@@ -981,7 +981,7 @@ export const products = [
     "Línea diseñada para crear rubios fríos, cenizos y matices pastel personalizados. Puede usarse solo o mezclado.",
   extra:
     "Mezcla 1:1.5 efecto intenso / 1:2 efecto pastel.",
-  tag: "Trend",
+  tag: "Pro",
   priceSalon: 165,
   pricePublic: 0,
   saving: 0,
@@ -1061,7 +1061,7 @@ export const products = [
     "Polvo decolorante profesional que ayuda a neutralizar reflejos naranjas y reduce volatilidad durante la mezcla.",
   extra:
     "Aclara de forma uniforme y controlada.",
-  tag: "Salon",
+  tag: "Pro",
   priceSalon: 340,
   pricePublic: 0,
   saving: 0,
@@ -1077,7 +1077,7 @@ export const products = [
     "Decolorante de alto poder aclarante que respeta la estructura del cabello logrando hasta 9 niveles de aclaración.",
   extra:
     "Ayuda a neutralizar amarillos no deseados.",
-  tag: "Top",
+  tag: "Pro",
   priceSalon: 382,
   pricePublic: 0,
   saving: 0,
@@ -1093,7 +1093,7 @@ export const products = [
     "Decolorante vegano de aclaración gradual hasta 9 tonos que ayuda a preservar la fibra capilar durante procesos técnicos.",
   extra:
     "35% menos rotura. Tecnología Plex. Vegano y sin aroma.",
-  tag: "Nuevo",
+  tag: "Pro",
   priceSalon: 427,
   pricePublic: 0,
   saving: 0,
@@ -1189,7 +1189,7 @@ export const products = [
     "Tratamiento para alisar y controlar cabellos rebeldes. Protege del calor de herramientas térmicas y humedad.",
   extra:
     "Efecto anti-humedad hasta 24 horas.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 406,
   pricePublic: 580,
   saving: 174,
@@ -1221,7 +1221,7 @@ export const products = [
     "Cera de fijación flexible con brillo natural. Define peinados con precisión y textura profesional.",
   extra:
     "Ideal para estilos estructurados.",
-  tag: "Barber",
+  tag: "",
   priceSalon: 269.5,
   pricePublic: 385,
   saving: 115.5,
@@ -1285,7 +1285,7 @@ export const products = [
     "Formato profesional de fijación intensa para uso frecuente en salón o barbería.",
   extra:
     "Control prolongado sin resecar.",
-  tag: "Pro",
+  tag: "Strong",
   priceSalon: 287,
   pricePublic: 410,
   saving: 123,
@@ -1370,9 +1370,9 @@ export const products = [
   extra:
     "Prácticas para uso diario.",
   tag: "Skin",
-  priceSalon: 154,
-  pricePublic: 220,
-  saving: 66,
+  priceSalon: 175,
+  pricePublic: 250,
+  saving: 75,
   image: "/images/products/skin/cleansing-wipes.png"
 },
 
@@ -1405,7 +1405,7 @@ export const products = [
     "Polvo compacto matificante de larga duración. Reduce brillo e imperfecciones dejando acabado uniforme.",
   extra:
     "Tonos disponibles: Light, Medium, Dark y Deep.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 196,
   pricePublic: 280,
   saving: 84,
@@ -1469,7 +1469,7 @@ export const products = [
     "Polvo suelto de acabado perfeccionador. Minimiza brillo, fija maquillaje y suaviza líneas finas.",
   extra:
     "Textura ligera y sedosa.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 168,
   pricePublic: 240,
   saving: 72,
@@ -1517,7 +1517,7 @@ export const products = [
     "Base para sombras que mejora adherencia, duración e intensidad del color.",
   extra:
     "Ayuda a evitar pliegues.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 126,
   pricePublic: 180,
   saving: 54,
@@ -1773,7 +1773,7 @@ export const products = [
     "Brocha densa ideal para base líquida, polvo o bronceador con acabado profesional.",
   extra:
     "Cerdas suaves de alta densidad.",
-  tag: "Pro",
+  tag: "",
   priceSalon: 140,
   pricePublic: 200,
   saving: 60,

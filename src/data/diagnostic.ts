@@ -87,7 +87,7 @@ export const questions = {
       multi: false,
       options: [
         { label: "Diario", value: "lavadodiario", icon: "bubble" },
-        { label: "Cada 2 días", value: "lavado2dias", icon: "calendar" },
+        { label: "1 día sí, 1 día no", value: "lavado2dias", icon: "calendar" },
         { label: "2 veces semana", value: "lavado2x", icon: "calendar" },
         { label: "1 vez semana", value: "lavado1x", icon: "calendar" }
       ]
@@ -198,7 +198,7 @@ export const questions = {
       multi: false,
       options: [
         { label: "Diario", value: "lavadodiario", icon: "bubble" },
-        { label: "Cada 2 días", value: "lavado2dias", icon: "calendar" },
+        { label: "1 día sí, 1 día no", value: "lavado2dias", icon: "calendar" },
         { label: "2 veces semana", value: "lavado2x", icon: "calendar" },
         { label: "1 vez semana", value: "lavado1x", icon: "calendar" }
       ]

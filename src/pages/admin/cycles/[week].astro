@@ -1,0 +1,605 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+import {
+  getBusinessWeek
+} from "../../../lib/business-week";
+
+import {
+  Package2,
+  DollarSign,
+  Truck,
+  Boxes,
+  LayoutGrid
+} from "lucide-react";
+
+const { week } =
+  Astro.params;
+
+  
+---
+
+<AdminLayout title="Semana">
+
+  <section class="space-y-8">
+
+    <!-- HERO -->
+    <section
+      class="
+        rounded-[2rem]
+
+        border border-white/10
+
+        bg-gradient-to-br
+        from-zinc-900
+        via-black
+        to-zinc-950
+
+        p-8
+      "
+    >
+
+      <div
+        class="
+          flex items-start
+          justify-between
+          gap-6
+        "
+      >
+
+        <div>
+
+          <p
+            class="
+              text-xs
+              uppercase
+              tracking-[0.4em]
+              text-white/30
+            "
+          >
+            Pedidos agrupados
+          </p>
+
+          <h1
+            id="cycleTitle"
+            class="
+              mt-4
+              text-4xl
+              font-semibold
+              tracking-tight
+            "
+          >
+            Cargando semana...
+          </h1>
+
+          <p
+            id="cycleDates"
+            class="
+              mt-4
+              text-sm
+              text-white/45
+            "
+          ></p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- KPIS -->
+    <section
+      class="
+        grid gap-4
+
+        md:grid-cols-2
+        xl:grid-cols-4
+      "
+    >
+
+      <!-- PEDIDOS -->
+      <div
+        class="
+          rounded-[2rem]
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          p-6
+        "
+      >
+
+        <div
+          class="
+            flex items-center
+            justify-between
+            gap-4
+          "
+        >
+
+          <p
+            class="
+              text-sm
+              text-white/40
+            "
+          >
+            Pedidos
+          </p>
+
+          <div
+            class="
+              flex h-11 w-11
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border border-white/10
+
+              bg-white/[0.03]
+            "
+          >
+
+            <Package2
+              size={18}
+              className="text-white/70"
+            />
+
+          </div>
+
+        </div>
+
+        <h2
+          id="kpiOrders"
+          class="
+            mt-5
+            text-3xl
+            font-semibold
+          "
+        >
+          —
+        </h2>
+
+      </div>
+
+      <!-- TOTAL -->
+      <div
+        class="
+          rounded-[2rem]
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          p-6
+        "
+      >
+
+        <div
+          class="
+            flex items-center
+            justify-between
+            gap-4
+          "
+        >
+
+          <p
+            class="
+              text-sm
+              text-white/40
+            "
+          >
+            Total
+          </p>
+
+          <div
+            class="
+              flex h-11 w-11
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border border-white/10
+
+              bg-white/[0.03]
+            "
+          >
+
+            <DollarSign
+              size={18}
+              className="text-white/70"
+            />
+
+          </div>
+
+        </div>
+
+        <h2
+          id="kpiRevenue"
+          class="
+            mt-5
+            text-3xl
+            font-semibold
+          "
+        >
+          —
+        </h2>
+
+      </div>
+
+      <!-- DISTRIBUIDOR -->
+      <div
+        class="
+          rounded-[2rem]
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          p-6
+        "
+      >
+
+        <div
+          class="
+            flex items-center
+            justify-between
+            gap-4
+          "
+        >
+
+          <p
+            class="
+              text-sm
+              text-white/40
+            "
+          >
+            Distribuidor
+          </p>
+
+          <div
+            class="
+              flex h-11 w-11
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border border-cyan-500/20
+
+              bg-cyan-500/10
+            "
+          >
+
+            <Boxes
+              size={18}
+              className="text-cyan-300"
+            />
+
+          </div>
+
+        </div>
+
+        <h2
+          id="kpiDistributor"
+          class="
+            mt-5
+            text-3xl
+            font-semibold
+            text-cyan-300
+          "
+        >
+          —
+        </h2>
+
+      </div>
+
+      <!-- ENTREGADOS -->
+      <div
+        class="
+          rounded-[2rem]
+
+          border border-white/10
+
+          bg-white/[0.04]
+
+          p-6
+        "
+      >
+
+        <div
+          class="
+            flex items-center
+            justify-between
+            gap-4
+          "
+        >
+
+          <p
+            class="
+              text-sm
+              text-white/40
+            "
+          >
+            Entregados
+          </p>
+
+          <div
+            class="
+              flex h-11 w-11
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border border-emerald-500/20
+
+              bg-emerald-500/10
+            "
+          >
+
+            <Truck
+              size={18}
+              className="text-emerald-300"
+            />
+
+          </div>
+
+        </div>
+
+        <h2
+          id="kpiDelivered"
+          class="
+            mt-5
+            text-3xl
+            font-semibold
+            text-emerald-300
+          "
+        >
+          —
+        </h2>
+
+      </div>
+
+    </section>
+
+    <!-- ORDERS -->
+    <section class="space-y-5">
+
+      <div
+        class="
+          flex flex-col gap-4
+
+          lg:flex-row
+          lg:items-center
+          lg:justify-between
+        "
+      >
+
+        <div
+          class="
+            flex items-center
+            gap-3
+          "
+        >
+
+          <div
+            class="
+              flex h-11 w-11
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border border-white/10
+
+              bg-white/[0.04]
+            "
+          >
+
+            <LayoutGrid
+              size={18}
+              className="text-white/70"
+            />
+
+          </div>
+
+          <div>
+
+            <h2
+              class="
+                text-2xl
+                font-semibold
+                tracking-tight
+              "
+            >
+              Pedidos
+            </h2>
+
+            <p
+              class="
+                mt-1
+                text-sm
+                text-white/40
+              "
+            >
+              Flujo semanal
+            </p>
+
+          </div>
+
+        </div>
+
+        <select
+          id="perPage"
+          class="
+            h-11
+
+            rounded-xl
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            px-4
+
+            text-sm text-white
+
+            outline-none
+          "
+        >
+
+          <option value="4">
+            Mostrar 4
+          </option>
+
+          <option value="8">
+            Mostrar 8
+          </option>
+
+          <option value="12">
+            Mostrar 12
+          </option>
+
+          <option value="16">
+            Mostrar 16
+          </option>
+
+          <option value="20">
+            Mostrar 20
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- GRID -->
+      <div
+        id="cycleOrders"
+        class="
+          grid gap-4
+
+          md:grid-cols-2
+          xl:grid-cols-4
+        "
+      >
+
+        <div
+          class="
+            rounded-[1.25rem]
+
+            border border-white/10
+
+            bg-white/[0.04]
+
+            p-4
+          "
+        >
+          Cargando pedidos...
+        </div>
+
+      </div>
+
+      <!-- PAGINATION -->
+      <div
+        id="ordersPagination"
+        class="
+          flex items-center
+          justify-center
+          gap-2
+        "
+      ></div>
+
+    </section>
+
+    <!-- CONSOLIDATED -->
+    <section
+      class="
+        rounded-[2rem]
+
+        border border-white/10
+
+        bg-white/[0.04]
+
+        p-6
+      "
+    >
+
+      <div
+        class="
+          flex items-center
+          gap-3
+        "
+      >
+
+        <div
+          class="
+            flex h-11 w-11
+            items-center
+            justify-center
+
+            rounded-2xl
+
+            border border-white/10
+
+            bg-white/[0.04]
+          "
+        >
+
+          <Boxes
+            size={18}
+            className="text-white/70"
+          />
+
+        </div>
+
+        <div>
+
+          <h2
+            class="
+              text-2xl
+              font-semibold
+            "
+          >
+            Consolidado semanal
+          </h2>
+
+          <p
+            class="
+              mt-1
+              text-sm
+              text-white/40
+            "
+          >
+            Productos agrupados automáticamente
+          </p>
+
+        </div>
+
+      </div>
+
+      <div
+        id="consolidatedProducts"
+        class="
+          mt-8
+
+          grid gap-3
+
+          md:grid-cols-2
+          xl:grid-cols-3
+        "
+      ></div>
+
+    </section>
+
+  </section>
+
+  <script define:vars={{ week }}>
+    window.__WEEK_KEY__ = week;
+  </script>
+
+  <script src="/src/scripts/admin-cycle-detail.ts"></script>
+
+</AdminLayout>

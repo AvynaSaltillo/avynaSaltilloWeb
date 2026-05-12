@@ -2,6 +2,40 @@
 
 import { supabase } from "../lib/supabase";
 
+const editIcon = `
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h9"/>
+  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+</svg>
+`;
+
+const eyeIcon = `
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+  <circle cx="12" cy="12" r="3"/>
+</svg>
+`;
+
 type OrderItem = {
   id: string;
 
@@ -34,6 +68,8 @@ type Order = {
   order_items?: OrderItem[];
 
   due_date?: string;
+
+  week_key?: string;
 };
 
 document.addEventListener(
@@ -431,6 +467,8 @@ p-4
 
     </div>
 
+    
+
     <button
       id="closeOrderModal"
       class="h-10 w-10 shrink-0 rounded-xl border border-white/10 text-white/70 transition hover:bg-white/10"
@@ -646,9 +684,8 @@ p-4
       </p>
 
       <p class="mt-1 text-xs text-white/40">
-        Pedido registrado
-      </p>
-
+  ${item.week_key || "Sin semana"}
+</p>
     </div>
 
   </td>
@@ -691,17 +728,80 @@ p-4
 
   </td>
 
-  <td class="px-4 py-5 text-right">
+<td class="px-4 py-5 text-right">
 
-    <button
-      data-id="${item.id}"
-      class="view-order rounded-2xl border border-white/10 px-4 py-2 text-sm text-white/75 transition hover:bg-white/10 hover:text-white"
-    >
-      Ver detalle
-    </button>
+  ${
+    item.delivery_status ===
+    "waiting_supplier"
 
-  </td>
+      ? `
 
+<a
+  href="/portal/new-order?order=${item.id}"
+
+  class="
+    inline-flex items-center gap-2
+
+    rounded-2xl
+
+    border border-cyan-500/20
+
+    bg-cyan-500/10
+
+    px-4 py-2
+
+    text-sm text-cyan-200
+
+    transition
+
+    hover:bg-cyan-500/20
+  "
+>
+
+  ${editIcon}
+
+  Editar
+
+</a>
+
+`
+
+      : `
+
+<button
+  data-id="${item.id}"
+
+  class="
+    view-order
+
+    inline-flex items-center gap-2
+
+    rounded-2xl
+
+    border border-white/10
+
+    px-4 py-2
+
+    text-sm text-white/75
+
+    transition
+
+    hover:bg-white/10
+    hover:text-white
+  "
+>
+
+  ${eyeIcon}
+
+  Ver detalle
+
+</button>
+
+`
+
+  }
+
+</td>
 </tr>
 
 `;
@@ -781,6 +881,11 @@ p-4
               (item.delivery_status || "")
                 .toLowerCase()
                 .includes(search)
+                ||
+
+(item.week_key || "")
+  .toLowerCase()
+  .includes(search)
 
             );
 
@@ -973,24 +1078,27 @@ async function loadOrders() {
       error
     } =
       await supabase
+      
         .from("orders")
-        .select(`
-          id,
-          created_at,
+.select(`
+  id,
+  created_at,
 
-          total,
+  total,
 
-          amount_due,
-          amount_paid,
+  amount_due,
+  amount_paid,
 
-          payment_type,
-          payment_status,
+  payment_type,
+  payment_status,
 
-          delivery_status,
+  delivery_status,
 
-          due_date,
+  due_date,
 
-          order_items (
+  week_key,
+
+  order_items (
             id,
             product_name,
             quantity,

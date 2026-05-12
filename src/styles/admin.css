@@ -503,3 +503,37 @@ select:-webkit-autofill {
 
   background:rgba(255,255,255,.14);
 }
+
+#timelineContainer{
+
+  scrollbar-width:thin;
+
+  scrollbar-color:
+    rgba(255,255,255,.14)
+    transparent;
+
+}
+
+#timelineContainer::-webkit-scrollbar{
+  width:6px;
+}
+
+#timelineContainer::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+#timelineContainer::-webkit-scrollbar-thumb{
+
+  background:
+    rgba(255,255,255,.12);
+
+  border-radius:999px;
+
+}
+
+#timelineContainer::-webkit-scrollbar-thumb:hover{
+
+  background:
+    rgba(255,255,255,.22);
+
+}

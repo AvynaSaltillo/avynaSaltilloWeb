@@ -50,6 +50,24 @@ Compra profesional con precios distribuidor. Agrega productos rápido y envía p
 </div>
 </section>
 
+<!-- WEEKLY LOCK -->
+<div
+  id="weeklyOrderBanner"
+  class="hidden rounded-[2rem] border border-red-500/20 bg-red-950/40 px-5 py-4"
+>
+  <div class="flex flex-col gap-1">
+
+    <p class="text-sm font-semibold text-red-200">
+      Pedido semanal bloqueado
+    </p>
+
+    <p class="text-sm text-red-200/70">
+      Tu pedido ya fue enviado al proveedor y no puede editarse.
+    </p>
+
+  </div>
+</div>
+
 <!-- GRID -->
 <section class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_390px]">
 
@@ -174,9 +192,10 @@ Sin artículos
 </div>
 </div>
 
-<div class="sticky bottom-0 left-0 right-0 mt-3 pt-4 bg-gradient-to-t from-black/80 to-transparent space-y-2">
+<div class="bottom-0 left-0 right-0 mt-3 pt-4 bg-gradient-to-t from-black/80 to-transparent space-y-2">
 
-  <div id="desktopMinText" class="text-sm text-white/60">
+  <div id="desktopMinText"
+class="text-sm text-white/60 leading-relaxed min-h-[42px]">
     Agrega $1,500 para completar pedido mínimo
   </div>
 
@@ -326,7 +345,8 @@ class="absolute inset-x-0 bottom-0 translate-y-full transition-transform duratio
 
 <div class="mt-5 space-y-3">
 
-  <div id="modalMinText" class="text-sm text-white/60">
+  <div id="modalMinText"
+class="text-sm text-white/60 leading-relaxed min-h-[42px]">
     Agrega $1,500 para completar pedido mínimo
   </div>
 

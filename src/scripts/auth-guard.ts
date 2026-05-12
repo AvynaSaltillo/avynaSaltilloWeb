@@ -1,6 +1,6 @@
 // src/scripts/auth-guard.ts
 
-import { supabase } from "../lib/supabase";
+import { supabase } from "../pages/admin/cycles/lib/supabase";
 
 (async () => {
   try {

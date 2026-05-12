@@ -1,5 +1,5 @@
 ---
-// src/pages/admin/order/[id].astro
+// src/pages/admin/order/[week].astro
 
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 
@@ -9,7 +9,11 @@ import {
   RiMoneyDollarCircleLine,
   RiTruckLine,
   RiCheckLine,
-  RiCloseCircleLine
+  RiCloseCircleLine,
+  RiTimeLine,
+  RiShoppingBag3Line,
+  RiBox3Line,
+  RiRoadMapLine
 } from "react-icons/ri";
 
 const { id } = Astro.params;
@@ -63,61 +67,268 @@ const { id } = Astro.params;
 
       </div>
 
-      <!-- ACTIONS -->
-      <div class="grid gap-3 sm:grid-cols-2 xl:flex">
+<!-- MOBILE STATUS -->
+<div class="block xl:hidden">
 
-        <button
-          id="markPreparing"
-          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-sky-500/20 bg-sky-500/10 px-5 text-sm text-sky-300 transition hover:bg-sky-500/20"
-        >
+  <button
+    id="mobileStatusTrigger"
+    class="
+      flex h-14 w-full items-center justify-between gap-4
 
-          <RiTruckLine size={18}/>
+      rounded-2xl
 
-          Preparando
+      border border-white/10
 
-        </button>
+      bg-white/[0.04]
 
-        <button
-          id="markDelivered"
-          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 text-sm text-emerald-300 transition hover:bg-emerald-500/20"
-        >
+      px-5
 
-          <RiCheckLine size={18}/>
+      backdrop-blur-xl
+    "
+  >
 
-          Entregado
+    <div class="flex items-center gap-3">
 
-        </button>
+      <div
+        id="mobileStatusDot"
+        class="h-3 w-3 rounded-full bg-cyan-400"
+      ></div>
 
-        <button
-          id="registerPayment"
-          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
-        >
+      <span
+        id="mobileStatusLabel"
+        class="text-sm font-medium text-white"
+      >
+        Esperando proveedor
+      </span>
 
-          <RiMoneyDollarCircleLine size={18}/>
+    </div>
 
-          Registrar pago
+    <svg
+      id="mobileStatusArrow"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 text-white/45 transition"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
 
-        </button>
+  </button>
 
-        <button
-          id="cancelOrder"
-          class="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-red-500/20 px-5 text-sm text-red-300 transition hover:bg-red-500/10"
-        >
+  <div
+    id="mobileStatusDropdown"
+    class="
+      mt-3 hidden
 
-          <RiCloseCircleLine size={18}/>
+      space-y-2
 
-          Cancelar
+      rounded-[1.75rem]
 
-        </button>
+      border border-white/10
 
-      </div>
+      bg-zinc-950/95
+
+      p-3
+
+      backdrop-blur-2xl
+    "
+  >
+
+<button
+  data-status="waiting_supplier"
+  class="
+    status-btn
+    mobile-status-btn
+  "
+>
+
+      <RiTimeLine size={18}/>
+
+      Esperando proveedor
+
+    </button>
+
+    <button
+      data-status="ordered_supplier"
+      class="status-btn mobile-status-btn"
+    >
+
+      <RiShoppingBag3Line size={18}/>
+
+      Pedido realizado
+
+    </button>
+
+    <button
+      data-status="ready_delivery"
+      class="status-btn mobile-status-btn"
+    >
+
+      <RiBox3Line size={18}/>
+
+      Pedido listo
+
+    </button>
+
+    <button
+      data-status="on_route"
+      class="status-btn mobile-status-btn"
+    >
+
+      <RiTruckLine size={18}/>
+
+      En ruta
+
+    </button>
+
+    <button
+      data-status="delivered"
+      class="status-btn mobile-status-btn"
+    >
+
+      <RiCheckLine size={18}/>
+
+      Entregado
+
+    </button>
+
+    <button
+      data-status="cancelled"
+      class="
+        status-btn
+        mobile-status-btn
+      "
+    >
+
+      <RiCloseCircleLine size={18}/>
+
+      Cancelado
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- DESKTOP ACTIONS -->
+<div
+  id="statusActions"
+  class="
+    hidden flex-wrap gap-3
+
+    xl:flex
+  "
+>
+
+<button
+  data-status="waiting_supplier"
+  class="status-btn"
+>
+
+    <RiTimeLine size={18}/>
+
+    Esperando proveedor
+
+  </button>
+
+  <button
+    data-status="ordered_supplier"
+    class="status-btn"
+  >
+
+    <RiShoppingBag3Line size={18}/>
+
+    Pedido realizado
+
+  </button>
+
+  <button
+    data-status="ready_delivery"
+    class="status-btn"
+  >
+
+    <RiBox3Line size={18}/>
+
+    Pedido listo
+
+  </button>
+
+  <button
+    data-status="on_route"
+    class="status-btn"
+  >
+
+    <RiTruckLine size={18}/>
+
+    En ruta
+
+  </button>
+
+  <button
+    data-status="delivered"
+    class="status-btn"
+  >
+
+    <RiCheckLine size={18}/>
+
+    Entregado
+
+  </button>
+
+  <button
+    data-status="cancelled"
+    class="status-btn"
+  >
+
+    <RiCloseCircleLine size={18}/>
+
+    Cancelado
+
+  </button>
+
+  <button
+    id="registerPayment"
+    class="
+      inline-flex h-12 items-center justify-center gap-2
+
+      rounded-2xl
+
+      bg-white
+
+      px-5
+
+      text-sm font-semibold text-black
+
+      transition hover:scale-[1.02]
+    "
+  >
+
+    <RiMoneyDollarCircleLine size={18}/>
+
+    Registrar pago
+
+  </button>
+
+</div>
 
     </div>
 
   </section>
 
   <!-- GRID -->
-  <section class="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_420px]">
+  <section
+  class="
+    grid gap-6
+
+    xl:grid-cols-[minmax(0,1fr)_420px]
+  "
+>
 
     <!-- LEFT -->
     <div class="space-y-6">
@@ -241,39 +452,65 @@ const { id } = Astro.params;
 
       </section>
 
-      <!-- TIMELINE -->
-      <section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+<!-- TIMELINE -->
+<section
+  class="
+    overflow-hidden
 
-        <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
-          Timeline
-        </p>
+    rounded-[2rem]
 
-        <div
-          id="timelineContainer"
-          class="mt-7 space-y-5"
-        >
+    border border-white/10
 
-          <div class="flex gap-4">
+    bg-white/[0.04]
+  "
+>
 
-            <div class="mt-1 h-3 w-3 rounded-full bg-yellow-400"></div>
+  <!-- HEADER -->
+  <div
+    class="
+      flex items-center justify-between
 
-            <div>
+      border-b border-white/10
 
-              <p class="text-sm font-medium">
-                Pedido registrado
-              </p>
+      px-6 py-5
+    "
+  >
 
-              <p class="mt-1 text-xs text-white/40">
-                Esperando preparación
-              </p>
+    <div>
 
-            </div>
+      <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+        Timeline
+      </p>
 
-          </div>
+      <p class="mt-2 text-sm text-white/40">
+        Últimos movimientos del pedido
+      </p>
 
-        </div>
+    </div>
 
-      </section>
+  </div>
+
+  <!-- BODY -->
+  <div
+    id="timelineContainer"
+    class="
+      max-h-[340px]
+
+      space-y-5
+
+      overflow-y-auto
+
+      p-6
+    "
+  >
+
+    <div class="text-sm text-white/45">
+      Cargando timeline...
+    </div>
+
+  </div>
+
+</section>
 
     </div>
 
@@ -389,10 +626,29 @@ const { id } = Astro.params;
 
       </section>
 
-      <!-- PAYMENTS -->
-<section class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7">
+<!-- PAYMENTS -->
+<section
+  class="
+    overflow-hidden
 
-  <div class="flex items-center justify-between gap-4">
+    rounded-[2rem]
+
+    border border-white/10
+
+    bg-white/[0.04]
+  "
+>
+
+  <!-- HEADER -->
+  <div
+    class="
+      flex items-center justify-between gap-4
+
+      border-b border-white/10
+
+      px-6 py-5
+    "
+  >
 
     <div>
 
@@ -406,11 +662,43 @@ const { id } = Astro.params;
 
     </div>
 
+    <button
+      id="registerPaymentCard"
+      class="
+        hidden h-11 items-center justify-center gap-2
+
+        rounded-2xl
+
+        bg-white
+
+        px-5
+
+        text-sm font-semibold text-black
+
+        transition hover:scale-[1.02]
+
+        sm:inline-flex
+      "
+    >
+
+      <RiMoneyDollarCircleLine size={18}/>
+
+      Registrar
+
+    </button>
+
   </div>
 
+  <!-- BODY -->
   <div
     id="paymentsContainer"
-    class="mt-7 space-y-3"
+    class="
+      max-h-[420px]
+
+      overflow-y-auto
+
+      p-4
+    "
   >
 
     <div class="text-sm text-white/45">
@@ -449,7 +737,7 @@ const { id } = Astro.params;
 
         <button
           id="saveNotes"
-          class="mt-4 inline-flex h-11 items-center justify-center rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
+          class="relative z-10 mt-4 inline-flex h-11 items-center justify-center rounded-2xl bg-white px-5 text-sm font-semibold text-black transition hover:scale-[1.02]"
         >
           Guardar notas
         </button>
@@ -475,7 +763,13 @@ const { id } = Astro.params;
 <!-- PAYMENT MODAL -->
 <div
   id="paymentModal"
-  class="fixed inset-0 z-[9999] hidden"
+  class="
+  pointer-events-none
+
+  fixed inset-0 z-[9999]
+
+  hidden
+"
 >
 
   <!-- OVERLAY -->
@@ -485,14 +779,48 @@ const { id } = Astro.params;
   ></div>
 
   <!-- WRAPPER -->
-  <div class="relative z-10 flex min-h-screen items-end justify-center p-0 sm:items-center sm:p-4">
+  <div
+    class="
+      relative z-10
+
+      flex min-h-screen
+
+      items-end justify-center
+
+      overflow-y-auto
+
+      p-0
+
+      sm:items-center
+      sm:p-4
+    "
+  >
 
     <!-- CARD -->
     <div
       id="paymentCard"
-      class="w-full rounded-t-[2.5rem] border border-white/10 bg-zinc-950 p-6 shadow-[0_0_80px_rgba(0,0,0,0.8)] sm:max-w-lg sm:rounded-[2rem]"
+      class="
+        w-full
+
+        max-h-[92vh]
+        overflow-y-auto
+
+        rounded-t-[2.5rem]
+
+        border border-white/10
+
+        bg-zinc-950
+
+        p-6
+
+        shadow-[0_0_80px_rgba(0,0,0,0.8)]
+
+        sm:max-w-lg
+        sm:rounded-[2rem]
+      "
     >
 
+      <!-- HEADER -->
       <div class="flex items-start justify-between gap-4">
 
         <div>
@@ -509,7 +837,18 @@ const { id } = Astro.params;
 
         <button
           id="closePaymentModal"
-          class="h-11 w-11 rounded-2xl border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
+          class="
+            h-11 w-11 rounded-2xl
+
+            border border-white/10
+
+            text-white/60
+
+            transition
+
+            hover:bg-white/10
+            hover:text-white
+          "
         >
           ✕
         </button>
@@ -517,7 +856,7 @@ const { id } = Astro.params;
       </div>
 
       <!-- FORM -->
-      <div class="mt-8 space-y-5">
+      <div class="mt-8 space-y-5 pb-24">
 
         <!-- AMOUNT -->
         <div>
@@ -529,8 +868,24 @@ const { id } = Astro.params;
           <input
             id="paymentAmount"
             type="number"
-            placeholder="0.00"
-            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+            placeholder="Saldo pendiente"
+            class="
+              h-14 w-full rounded-2xl
+
+              border border-white/10
+
+              bg-black/40
+
+              px-4
+
+              text-sm
+
+              outline-none
+
+              transition
+
+              focus:border-white/20
+            "
           />
 
         </div>
@@ -544,7 +899,23 @@ const { id } = Astro.params;
 
           <select
             id="paymentMethod"
-            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+            class="
+              h-14 w-full rounded-2xl
+
+              border border-white/10
+
+              bg-black/40
+
+              px-4
+
+              text-sm
+
+              outline-none
+
+              transition
+
+              focus:border-white/20
+            "
           >
 
             <option value="transfer">
@@ -574,7 +945,23 @@ const { id } = Astro.params;
             id="paymentReference"
             type="text"
             placeholder="Folio / referencia"
-            class="h-14 w-full rounded-2xl border border-white/10 bg-black/40 px-4 text-sm outline-none transition focus:border-white/20"
+            class="
+              h-14 w-full rounded-2xl
+
+              border border-white/10
+
+              bg-black/40
+
+              px-4
+
+              text-sm
+
+              outline-none
+
+              transition
+
+              focus:border-white/20
+            "
           />
 
         </div>
@@ -590,29 +977,86 @@ const { id } = Astro.params;
             id="paymentNotes"
             rows="4"
             placeholder="Notas internas..."
-            class="w-full rounded-2xl border border-white/10 bg-black/40 p-4 text-sm outline-none transition focus:border-white/20"
+            class="
+              w-full rounded-2xl
+
+              border border-white/10
+
+              bg-black/40
+
+              p-4
+
+              text-sm
+
+              outline-none
+
+              transition
+
+              focus:border-white/20
+            "
           ></textarea>
 
         </div>
 
-        <!-- ACTIONS -->
-        <div class="flex gap-3 pt-2">
+      </div>
 
-          <button
-            id="cancelPaymentBtn"
-            class="flex-1 h-12 rounded-2xl border border-white/10 text-sm text-white/70 transition hover:bg-white/10"
-          >
-            Cancelar
-          </button>
+      <!-- ACTIONS -->
+      <div
+        class="
+          sticky bottom-0
 
-          <button
-            id="submitPaymentBtn"
-            class="flex-1 h-12 rounded-2xl bg-white text-sm font-semibold text-black transition hover:scale-[1.02]"
-          >
-            Registrar pago
-          </button>
+          -mx-6
+          mt-2
 
-        </div>
+          flex gap-3
+
+          border-t border-white/10
+
+          bg-gradient-to-t
+          from-zinc-950
+          via-zinc-950
+          to-transparent
+
+          px-6
+          pt-5
+          pb-1
+        "
+      >
+
+        <button
+          id="cancelPaymentBtn"
+          class="
+            h-12 flex-1 rounded-2xl
+
+            border border-white/10
+
+            text-sm text-white/70
+
+            transition
+
+            hover:bg-white/10
+            hover:text-white
+          "
+        >
+          Cancelar
+        </button>
+
+        <button
+          id="submitPaymentBtn"
+          class="
+            h-12 flex-1 rounded-2xl
+
+            bg-white
+
+            text-sm font-semibold text-black
+
+            transition
+
+            hover:scale-[1.02]
+          "
+        >
+          Registrar pago
+        </button>
 
       </div>
 
@@ -621,3 +1065,356 @@ const { id } = Astro.params;
   </div>
 
 </div>
+
+<!-- STATUS MODAL -->
+<div
+  id="statusModal"
+  class="fixed inset-0 z-[99999] hidden"
+>
+
+  <!-- OVERLAY -->
+  <div
+    id="statusOverlay"
+    class="absolute inset-0 bg-black/70 backdrop-blur-md"
+  ></div>
+
+  <!-- CARD -->
+  <div class="relative z-10 flex min-h-screen items-center justify-center p-4">
+
+    <div
+      class="
+        w-full max-w-md
+
+        rounded-[2rem]
+
+        border border-white/10
+
+        bg-zinc-950
+
+        p-7
+      "
+    >
+
+      <p class="text-[11px] uppercase tracking-[0.35em] text-white/35">
+        Confirmar cambio
+      </p>
+
+      <h3
+        id="statusModalTitle"
+        class="mt-4 text-2xl font-semibold"
+      >
+        —
+      </h3>
+
+      <p class="mt-3 text-sm text-white/45">
+        Esto actualizará el flujo operativo del pedido.
+      </p>
+
+      <div class="mt-8 flex gap-3">
+
+        <button
+          id="cancelStatusBtn"
+          class="
+            flex-1 h-12 rounded-2xl
+
+            border border-white/10
+
+            text-sm text-white/70
+
+            transition hover:bg-white/10
+          "
+        >
+          Cancelar
+        </button>
+
+        <button
+          id="confirmStatusBtn"
+          class="
+            flex-1 h-12 rounded-2xl
+
+            bg-white
+
+            text-sm font-semibold text-black
+
+            transition hover:scale-[1.02]
+          "
+        >
+          Confirmar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style is:global>
+
+#statusActions{
+
+  width:100%;
+
+  overflow-x:auto;
+
+  padding-bottom:4px;
+
+  scrollbar-width:none;
+
+}
+
+#statusActions::-webkit-scrollbar{
+  display:none;
+}
+
+.status-btn{
+
+  position:relative;
+
+  overflow:hidden;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  height:48px;
+
+  padding:0 20px;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.03);
+
+  backdrop-filter:blur(20px);
+
+  color:rgba(255,255,255,.72);
+
+  font-size:14px;
+  font-weight:500;
+
+  white-space:nowrap;
+
+  transition:
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease,
+    transform .25s ease,
+    opacity .25s ease,
+    box-shadow .25s ease;
+
+    gap:10px;
+
+}
+
+.status-btn::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,.12),
+      transparent 70%
+    );
+
+  opacity:0;
+
+  transition:.25s ease;
+
+}
+
+.status-btn:hover{
+
+  border-color:rgba(255,255,255,.14);
+
+  background:rgba(255,255,255,.06);
+
+  color:white;
+
+  transform:translateY(-1px);
+
+}
+
+.status-btn:hover::before{
+  opacity:1;
+}
+
+/* =========================================
+   ACTIVE CURRENT STATUS
+========================================= */
+
+.status-btn.active{
+
+  border-color:rgba(34,211,238,.30);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(34,211,238,.16),
+      rgba(34,211,238,.08)
+    );
+
+  color:#67e8f9;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 0 30px rgba(34,211,238,.08);
+
+  pointer-events: none;
+
+}
+
+/* =========================================
+   DELIVERED
+========================================= */
+
+.status-btn.completed{
+
+  border-color:rgba(16,185,129,.34) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16,185,129,.22),
+      rgba(16,185,129,.10)
+    ) !important;
+
+  color:#6ee7b7 !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 0 40px rgba(16,185,129,.14);
+
+}
+
+/* =========================================
+   CANCELLED
+========================================= */
+
+.status-btn.cancelled{
+
+  border-color:rgba(239,68,68,.24);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(239,68,68,.16),
+      rgba(239,68,68,.07)
+    );
+
+  color:#fca5a5;
+
+}
+
+/* =========================================
+   DISABLED
+========================================= */
+
+.status-btn:disabled{
+
+  cursor:not-allowed;
+
+  pointer-events:none;
+
+}
+
+/* =========================================
+   DISABLED NORMAL
+========================================= */
+
+.status-btn:disabled:not(.completed):not(.cancelled){
+
+  opacity:.22 !important;
+
+  filter:saturate(.5);
+
+}
+
+/* =========================================
+   DELIVERED ACTIVE
+========================================= */
+
+.status-btn.completed{
+
+  opacity:1 !important;
+
+  pointer-events:none;
+
+  border-color:rgba(16,185,129,.55) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16,185,129,.30),
+      rgba(16,185,129,.14)
+    ) !important;
+
+  color:#6ee7b7 !important;
+
+  box-shadow:
+    0 0 30px rgba(16,185,129,.18),
+    inset 0 1px 0 rgba(255,255,255,.05);
+
+}
+
+/* =========================================
+   CANCELLED ACTIVE
+========================================= */
+
+.status-btn.cancelled{
+
+  opacity:1 !important;
+
+  border-color:rgba(239,68,68,.35);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(239,68,68,.20),
+      rgba(239,68,68,.08)
+    );
+
+  color:#fca5a5;
+
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width:768px){
+
+  #statusActions{
+
+    flex-wrap:nowrap;
+
+    overflow-x:auto;
+
+    width:calc(100vw - 64px);
+
+  }
+
+  .status-btn{
+
+    height:46px;
+
+    padding:0 18px;
+
+    font-size:13px;
+
+    border-radius:16px;
+
+  }
+
+}
+
+</style>

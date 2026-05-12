@@ -15,6 +15,8 @@ type Product = {
   priceSalon?: number;
 
   pricePublic?: number;
+
+  tag?: string;
 };
 
 type CartItem = {
@@ -27,6 +29,8 @@ type CartItem = {
   priceSalon: number;
 
   pricePublic: number;
+
+  tag?: string;
 
   qty: number;
 };
@@ -47,10 +51,61 @@ declare global {
   }
 }
 
+import {
+  getCurrentWeekKey
+} from "./helpers";
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const products = window.__PRODUCTS__ || [];
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+let products: Product[] = [];
+
+/* ========================================
+   WAIT PRODUCTS
+======================================== */
+
+async function waitProducts() {
+
+  return new Promise<Product[]>(
+    (resolve) => {
+
+      const check = () => {
+
+        if (
+          window.__PRODUCTS__ &&
+          window.__PRODUCTS__.length
+        ) {
+
+          resolve(
+            window.__PRODUCTS__
+          );
+
+          return;
+
+        }
+
+        setTimeout(
+          check,
+          100
+        );
+
+      };
+
+      check();
+
+    }
+  );
+
+}
+
+products =
+  await waitProducts();
+
+/* ========================================
+   LOAD ORDER
+======================================== */
 
   const $ = (id: string) =>
   document.getElementById(id);
@@ -119,10 +174,16 @@ const modalItems = $("modalItems");
 let lastLevel = 0; // 0 = base, 1 = mínimo, 2 = pro
 
   let filtered = [...products];
-  let cart: CartItem[] = [];
 
-  let page = 1;
-  let limit = 10;
+let cart: CartItem[] = [];
+
+let existingWeeklyOrder: any = null;
+
+let orderLocked = false;
+
+let page = 1;
+
+let limit = 10;
 
   const isMobile = () => window.innerWidth < 1024;
 
@@ -148,14 +209,28 @@ function money(v = 0) {
     return cart.find((x) => String(x.id) === String(id))?.qty || 0;
   }
 
-  function removeItem(
+
+
+function removeItem(
   id: string | number
 ) {
-    cart = cart.filter((x) => String(x.id) !== id);
-    renderAll();
-  }
 
-  function updateQty(id: string, step: number) {
+  if (orderLocked) return;
+
+  cart = cart.filter(
+    (x) => String(x.id) !== id
+  );
+
+  renderAll();
+
+}
+
+function updateQty(
+  id: string,
+  step: number
+) {
+
+  if (orderLocked) return;
     const found = cart.find((x) => String(x.id) === id);
 
     if (!found && step > 0) {
@@ -168,6 +243,9 @@ function money(v = 0) {
   name: item.name,
 
   family: item.family || "",
+
+  tag:
+    item.tag || "",
 
   priceSalon:
     Number(item.priceSalon || 0),
@@ -197,7 +275,13 @@ function money(v = 0) {
   }
   
 
-  function updateQtyDirect(id: string, qty: number) {
+function updateQtyDirect(
+  id: string,
+  qty: number
+) {
+
+  if (orderLocked) return;
+    
     qty = Math.max(0, Math.floor(qty || 0));
 
     const found = cart.find((x) => String(x.id) === id);
@@ -218,13 +302,16 @@ function money(v = 0) {
 
   family: item.family || "",
 
+  tag:
+    item.tag || "",
+
   priceSalon:
     Number(item.priceSalon || 0),
 
   pricePublic:
     Number(item.pricePublic || 0),
 
-  qty
+  qty: 1
 });
 
       animateItem(id);
@@ -235,6 +322,243 @@ function money(v = 0) {
     found.qty = qty;
     renderAll();
   }
+
+  
+
+  async function loadExistingWeeklyOrder() {
+
+    
+  const {
+    data: userData
+  } = await supabase.auth.getUser();
+
+  const user =
+    userData?.user;
+
+  if (!user?.id) return;
+
+/* ========================================
+   CICLO ACTUAL REAL
+======================================== */
+
+const now =
+  new Date();
+  /* ========================================
+     BUSCAR PEDIDO ACTIVO
+  ======================================== */
+
+const {
+  data: order
+} = await supabase
+  .from("orders")
+  .select(`
+    *,
+    order_items (*)
+  `)
+  .eq(
+    "client_id",
+    user.id
+  )
+  .eq(
+    "week_key",
+    getCurrentWeekKey()
+  )
+  .order(
+    "created_at",
+    {
+      ascending: false
+    }
+  )
+  .limit(1)
+  .maybeSingle();
+
+  if (!order) return;
+
+  existingWeeklyOrder =
+    order;
+
+  /* ========================================
+     🔒 SI YA ESTÁ BLOQUEADO
+  ======================================== */
+
+  const lockedStatuses = [
+    "ordered_supplier",
+    "ready_delivery",
+    "on_route",
+    "delivered"
+  ];
+
+  const locked =
+    lockedStatuses.includes(
+      order.delivery_status
+    );
+
+    orderLocked = locked;
+
+    clearBtn?.classList.toggle(
+  "pointer-events-none",
+  locked
+);
+
+clearBtn?.classList.toggle(
+  "opacity-40",
+  locked
+);
+
+mobileClearBtn?.classList.toggle(
+  "pointer-events-none",
+  locked
+);
+
+mobileClearBtn?.classList.toggle(
+  "opacity-40",
+  locked
+);
+
+modalClearBtn?.classList.toggle(
+  "pointer-events-none",
+  locked
+);
+
+modalClearBtn?.classList.toggle(
+  "opacity-40",
+  locked
+);
+
+  /* ========================================
+     CARGAR ITEMS
+  ======================================== */
+
+cart =
+  (order.order_items || [])
+    .map((item: any) => {
+
+      const original =
+        products.find(
+          (p) =>
+            String(p.id) ===
+            String(item.product_id)
+        );
+
+      return {
+
+        id:
+          item.product_id,
+
+        name:
+          item.product_name,
+
+        family:
+          original?.family || "",
+
+        tag:
+          original?.tag || "",
+
+        priceSalon:
+          Number(
+            item.unit_price || 0
+          ),
+
+        pricePublic:
+          Number(
+            original?.pricePublic || 0
+          ),
+
+        qty:
+          Number(
+            item.quantity || 0
+          )
+
+      };
+
+    });
+
+  renderAll();
+
+/* ========================================
+   BANNER
+======================================== */
+
+const banner =
+  document.getElementById(
+    "weeklyOrderBanner"
+  );
+
+if (banner) {
+
+  banner.classList.remove(
+    "hidden"
+  );
+
+  banner.className = `
+    mt-5
+    rounded-[2rem]
+    border
+    px-5
+    py-4
+    text-sm
+    ${
+      locked
+        ? "border-red-500/20 bg-red-500/10 text-red-200"
+        : "border-cyan-500/20 bg-cyan-500/10 text-cyan-100"
+    }
+  `;
+
+  banner.innerHTML =
+    locked
+
+      ? `
+<div class="flex flex-col gap-1">
+
+  <p class="font-semibold">
+    Pedido semanal bloqueado
+  </p>
+
+  <p class="text-sm text-red-200/70">
+    Tu pedido ya fue enviado al proveedor y no puede editarse.
+  </p>
+
+</div>
+`
+
+      : `
+<div class="flex flex-col gap-1">
+
+  <p class="font-semibold">
+    Continuando pedido semanal
+  </p>
+
+  <p class="text-sm text-cyan-100/70">
+    Puedes seguir editando tu pedido hasta que sea enviado al proveedor.
+  </p>
+
+</div>
+`;
+
+}
+
+  /* ========================================
+     BLOQUEAR BOTÓN
+  ======================================== */
+
+  if (
+    locked &&
+    sendBtn
+  ) {
+
+    sendBtn.disabled = true;
+
+    sendBtn.textContent =
+      "Pedido enviado";
+
+    sendBtn.classList.add(
+      "opacity-50",
+      "cursor-not-allowed"
+    );
+
+  }
+
+}
 
   function loadFamilies() {
     if (!family) return;
@@ -302,7 +626,7 @@ function money(v = 0) {
   ${item.name}
 
   ${
-    !(item.pricePublic && Number(item.pricePublic) > 0)
+    item.tag === "Pro"
       ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-sky-600 text-sky-600">
           PRO
         </span>`
@@ -326,15 +650,16 @@ function money(v = 0) {
       <div class="flex items-center gap-2 self-end">
 
         <button
-          class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300"
+          class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300 ${orderLocked ? "disabled" : ""}"
           data-id="${item.id}">
           ✕
         </button>
 
         <button
-          class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+          class="qty-btn h-9 w-9 rounded-xl border border-white/10    ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
           data-id="${item.id}"
           data-step="-1">
+
           -
         </button>
 
@@ -344,12 +669,14 @@ function money(v = 0) {
           value="${qtyOf(item.id)}"
           data-id="${item.id}"
           class="qty-input h-9 w-10 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+          ${orderLocked ? "disabled" : ""}
         />
 
         <button
-          class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+          class="qty-btn h-9 w-9 rounded-xl border border-white/10  ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
           data-id="${item.id}"
           data-step="1">
+
           +
         </button>
 
@@ -382,9 +709,10 @@ ${money(item.priceSalon || 0)}
 <div class="flex items-center justify-end gap-2">
 
 <button
-class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+class="qty-btn h-9 w-9 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
 data-id="${item.id}"
 data-step="-1">
+
 -
 </button>
 
@@ -394,17 +722,19 @@ min="0"
 value="${qtyOf(item.id)}"
 data-id="${item.id}"
 class="qty-input h-9 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+${orderLocked ? "disabled" : ""}
 />
 
 <button
-class="qty-btn h-9 w-9 rounded-xl border border-white/10"
+class="qty-btn h-9 w-9 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
 data-id="${item.id}"
 data-step="1">
+
 +
 </button>
 
 <button
-class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300"
+class="remove-btn h-9 w-9 rounded-xl border border-red-400/20 text-red-300 ${orderLocked ? "disabled" : ""}"
 data-id="${item.id}">
 ✕
 </button>
@@ -452,7 +782,7 @@ data-id="${item.id}">
   ${item.name}
 
   ${
-    !(item.pricePublic && Number(item.pricePublic) > 0)
+    item.tag === "Pro"
       ? `<span class="text-[10px] px-2 py-0.5 rounded-full border border-sky-500/30 text-sky-400">
           PRO
         </span>`
@@ -462,7 +792,7 @@ data-id="${item.id}">
 </p>
 
 <button
-class="remove-btn h-8 w-8 rounded-xl border border-red-400/20 text-red-300 shrink-0"
+class="remove-btn h-8 w-8 rounded-xl border border-red-400/20 text-red-300 shrink-0 ${orderLocked ? "disabled" : ""}"
 data-id="${item.id}">
 ✕
 </button>
@@ -474,9 +804,10 @@ data-id="${item.id}">
 <div class="flex items-center gap-1">
 
 <button
-class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+class="qty-btn h-8 w-8 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
 data-id="${item.id}"
 data-step="-1">
+
 -
 </button>
 
@@ -486,12 +817,14 @@ min="0"
 value="${item.qty}"
 data-id="${item.id}"
 class="qty-input h-8 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+ ${orderLocked ? "disabled" : ""}
 />
 
 <button
-class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+class="qty-btn h-8 w-8 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
 data-id="${item.id}"
 data-step="1">
+
 +
 </button>
 
@@ -540,7 +873,7 @@ ${item.name}
 </p>
 
 <button
-class="remove-btn h-8 w-8 rounded-xl border border-red-400/20 text-red-300 shrink-0 flex items-center justify-center"
+class="remove-btn h-8 w-8 rounded-xl border border-red-400/20 text-red-300 shrink-0 flex items-center justify-center ${orderLocked ? "disabled" : ""}"
 data-id="${item.id}">
 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -554,9 +887,10 @@ data-id="${item.id}">
 <div class="flex items-center gap-1">
 
   <button
-    class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+    class="qty-btn h-8 w-8 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
     data-id="${item.id}"
     data-step="-1">
+
     -
   </button>
 
@@ -566,12 +900,14 @@ data-id="${item.id}">
     value="${item.qty}"
     data-id="${item.id}"
     class="qty-input h-8 w-12 rounded-xl border border-white/10 bg-transparent text-center text-[12px] outline-none"
+    ${orderLocked ? "disabled" : ""}
   />
 
   <button
-    class="qty-btn h-8 w-8 rounded-xl border border-white/10"
+    class="qty-btn h-8 w-8 rounded-xl border border-white/10 ${orderLocked ? "opacity-40 pointer-events-none" : ""}"
     data-id="${item.id}"
     data-step="1">
+    
     +
   </button>
 
@@ -735,8 +1071,17 @@ if (desktopMinText) {
     {
   const remainingPlus = 10000 - salonRounded;
 
-  desktopMinText.textContent =
-    `Pedido mínimo alcanzado. Agrega ${money(remainingPlus)} para pedido plus`;
+  desktopMinText.innerHTML = `
+<div class="flex flex-col leading-tight">
+  <span>Pedido mínimo alcanzado.</span>
+
+  <span class="text-white/60 text-[12px] mt-1">
+    Agrega <span class="text-purple-500 font-semibold">
+      ${money(remainingPlus)}
+    </span> para pedido plus
+  </span>
+</div>
+`;
   
   desktopMinText.classList.add("text-green-400");
 }
@@ -867,8 +1212,17 @@ if (modalMinText) {
     const remainingPlus =
       10000 - salonRounded;
 
-    modalMinText.textContent =
-      `Pedido mínimo alcanzado. Agrega ${money(remainingPlus)} para pedido plus`;
+    modalMinText.innerHTML = `
+<div class="flex flex-col leading-tight">
+  <span>Pedido mínimo alcanzado.</span>
+
+  <span class="text-white/60 text-[12px] mt-1">
+    Agrega <span class="text-green-400 font-semibold">
+      ${money(remainingPlus)}
+    </span> para pedido plus
+  </span>
+</div>
+`;
 
     modalMinText.classList.add(
       "text-green-400"
@@ -1325,7 +1679,7 @@ await supabase
   .update({
     whatsapp_sent: true
   })
-  .eq("id", order.id.slice(0,8).toUpperCase());
+  .eq("id", order.id);
 
     // ======================
     // RESET
@@ -1339,13 +1693,19 @@ await supabase
 
     showSuccess();
 
-  } catch (err) {
+  }catch (err: any) {
 
-    console.error(err);
+  console.error(
+    "ORDER ERROR",
+    err
+  );
 
-    alert("Error inesperado.");
+  alert(
+    err?.message ||
+    "Error inesperado"
+  );
 
-  } finally {
+} finally {
 
     if (sendBtn) {
       sendBtn.disabled = false;
@@ -1364,7 +1724,10 @@ await supabase
       clone.addEventListener("click", () => {
   const el = clone as HTMLElement;
 
+  
+
   updateQty(
+    
     el.dataset.id || "",
     Number(el.dataset.step || 0)
   );
@@ -1393,6 +1756,7 @@ await supabase
 
       const save = () => {
         updateQtyDirect(
+          
           clone.dataset.id || "",
           Number(clone.value)
         );
@@ -1438,6 +1802,8 @@ function renderAll() {
   });
 
   clearBtn?.addEventListener("click", () => {
+
+      if (orderLocked) return;
     cart = [];
     renderAll();
   });
@@ -1453,6 +1819,12 @@ applyFilters();
 renderCart();
 totals();
 
+/* ========================================
+   LOAD EXISTING
+======================================== */
+
+await loadExistingWeeklyOrder();
+
   
   // MOBILE EVENTS
 mobileOpenModal?.addEventListener("click", openModal);
@@ -1461,11 +1833,13 @@ closeModal?.addEventListener("click", closeModalFn);
 
 // limpiar
 mobileClearBtn?.addEventListener("click", () => {
+    if (orderLocked) return;
   cart = [];
   renderAll();
 });
 
 modalClearBtn?.addEventListener("click", () => {
+    if (orderLocked) return;
   cart = [];
   renderAll();
   renderModal();
@@ -1564,35 +1938,21 @@ function showSuccess() {
       <!-- ACTION -->
       <div class="relative mt-7 grid gap-3">
 
-        <a
-          href="/portal/orders"
-          class="
-            flex h-12 items-center justify-center
-            rounded-2xl
-            bg-white
-            text-sm
-            font-semibold
-            text-black
-            transition
-            hover:scale-[1.02]
-          "
-        >
-          Ver pedidos
-        </a>
-
-        <button
-          id="closeSuccess"
-          class="
-            h-11 rounded-2xl
-            border border-white/10
-            bg-white/[0.03]
-            text-sm text-white/70
-            transition
-            hover:bg-white/10
-          "
-        >
-          Seguir comprando
-        </button>
+       <button
+  id="goOrders"
+  class="
+    flex h-12 items-center justify-center
+    rounded-2xl
+    bg-white
+    text-sm
+    font-semibold
+    text-black
+    transition
+    hover:scale-[1.02]
+  "
+>
+  Ver pedidos
+</button>
 
       </div>
 
@@ -1616,5 +1976,18 @@ function showSuccess() {
   div
     .querySelector("#closeSuccess")
     ?.addEventListener("click", close);
+
+    div
+  .querySelector("#goOrders")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "/portal/orders?refresh=" +
+        Date.now();
+
+    }
+  );
 
 }

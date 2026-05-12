@@ -12,7 +12,8 @@ import {
   RiUserLine,
   RiLogoutBoxRLine,
   RiMenu3Line,
-  RiCloseLine
+  RiCloseLine,
+  RiCalendarLine
 } from "react-icons/ri";
 
 const { title = "Admin AVYNA" } = Astro.props;
@@ -517,6 +518,49 @@ try {
         Clientes
 
       </a>
+
+      <!-- WEEKLY CYCLES -->
+<a
+  href="/admin/cycles"
+  class={`
+    group flex items-center gap-3
+
+    rounded-2xl
+
+    px-4 py-3
+
+    text-sm font-medium
+
+    transition-all duration-200
+
+    ${
+      path.startsWith("/admin/cycles")
+        ? `
+          bg-white
+          text-black
+          shadow-[0_10px_30px_rgba(255,255,255,0.12)]
+        `
+        : `
+          text-white/70
+          hover:bg-white/[0.05]
+          hover:text-white
+          hover:translate-x-1
+        `
+    }
+  `}
+>
+
+  <RiCalendarLine
+    size={18}
+    className="
+      transition
+      group-hover:scale-105
+    "
+  />
+
+  Semanas
+
+</a>
 
     </nav>
 
