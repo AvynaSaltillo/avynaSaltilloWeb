@@ -30,6 +30,8 @@ type CreateOrderParams = {
   profile: any;
 
   cart: CartItem[];
+
+  advisorName: string;
 };
 
 /* ========================================
@@ -57,44 +59,98 @@ function calculateSubtotal(
 
 }
 
-function resolvePaymentType(
+/* ========================================
+   PAYMENT TERMS
+======================================== */
+
+function resolveOrderTerms(
+  profile: any,
   total: number
 ) {
 
-  return total >= 1500
-    ? "credit"
-    : "cash";
+  const creditProfile =
+    profile?.credit_profile ||
+    "cash_only";
 
-}
-
-function resolveCreditDays(
-  total: number
-) {
-
-  return total >= 10000
-    ? 30
-    : 15;
-
-}
-
-function resolveDueDate(
-  total: number,
-  payment_type: string
-) {
+  /* ========================================
+     CONTADO FORZOSO
+  ======================================== */
 
   if (
-    payment_type !== "credit"
+    creditProfile ===
+    "cash_only"
   ) {
-    return null;
+
+    return {
+
+      payment_type:
+        "cash",
+
+      due_date:
+        null
+
+    };
+
+  }
+
+  /* ========================================
+     CREDITO ABIERTO
+  ======================================== */
+
+  if (
+    creditProfile ===
+    "open_credit"
+  ) {
+
+    return {
+
+      payment_type:
+        "open_credit",
+
+      due_date:
+        null
+
+    };
+
+  }
+
+  /* ========================================
+     CREDITO AUTOMATICO
+  ======================================== */
+
+  if (total < 1500) {
+
+    return {
+
+      payment_type:
+        "cash",
+
+      due_date:
+        null
+
+    };
+
   }
 
   const days =
-    resolveCreditDays(total);
+    total >= 10000
+      ? 30
+      : 15;
 
-  return new Date(
-    Date.now() +
-    days * 86400000
-  ).toISOString();
+  return {
+
+    payment_type:
+      days === 30
+        ? "credit_30"
+        : "credit_15",
+
+    due_date:
+      new Date(
+        Date.now() +
+        days * 86400000
+      ).toISOString()
+
+  };
 
 }
 
@@ -105,7 +161,8 @@ function resolveDueDate(
 export async function createOrder({
   user,
   profile,
-  cart
+  cart,
+  advisorName
 }: CreateOrderParams) {
 
   if (!user?.id) {
@@ -194,22 +251,68 @@ if (existingOrder) {
   const total =
     subtotal;
 
-  const payment_type =
-    resolvePaymentType(total);
+const {
+  payment_type,
+  due_date
+} = resolveOrderTerms(
+  profile,
+  total
+);
 
-  const due_date =
-    resolveDueDate(
-      total,
-      payment_type
-    );
+/* ========================================
+   PAYMENT STATE
+======================================== */
 
-  const amount_paid = 0;
+const previousPaid =
 
-  const amount_due = total;
+  existingOrder
 
-  const payment_status =
-    "pending";
+    ? Number(
+        existingOrder.amount_paid || 0
+      )
 
+    : 0;
+
+/* ========================================
+   OPEN CREDIT
+======================================== */
+
+const recalculatedDue =
+
+  Math.max(
+    0,
+    total - previousPaid
+  );
+/* ========================================
+   PAYMENT STATUS
+======================================== */
+
+let payment_status =
+  "pending";
+
+if (
+  recalculatedDue <= 0
+) {
+
+  payment_status =
+    "paid";
+
+}
+
+else if (
+  previousPaid > 0
+) {
+
+  payment_status =
+    "partial";
+
+}
+
+const amount_paid =
+  previousPaid;
+
+const amount_due =
+  recalculatedDue;
   /* ========================================
      UPDATE EXISTING
   ======================================== */
@@ -228,6 +331,10 @@ if (existingOrder) {
         total,
 
         amount_due,
+
+        amount_paid,
+
+payment_status,
 
         payment_type,
 
@@ -371,7 +478,11 @@ if (existingOrder) {
         user.id,
 
       advisor_id:
-        profile.advisor_id || null,
+        profile.advisor_id || null, 
+        
+advisor_name:
+  advisorName,
+        
 
       client_name:
         profile.name ||
@@ -426,6 +537,7 @@ if (existingOrder) {
         false
 
     })
+    
     .select()
     .single();
 
@@ -437,6 +549,8 @@ if (existingOrder) {
     throw error;
 
   }
+
+  
 
   /* ========================================
      INSERT ITEMS

@@ -3,6 +3,9 @@ import "../styles/global.css";
 
 import { APP } from "../config/app"
 
+import GlobalToaster
+from "../components/shared/GlobalToaster";
+
 import {
   RiHome5Line,
   RiAddCircleLine,
@@ -392,8 +395,12 @@ white-space:normal !important;
 }
 </style>
 
+<GlobalToaster client:load />
+
 <script>
   import "../scripts/portal.ts";
+
+  
 </script>
 
 </body>

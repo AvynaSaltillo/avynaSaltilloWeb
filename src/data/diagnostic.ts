@@ -1,7 +1,14 @@
+
 // src/data/diagnostic.ts
 
 export const questions = {
+
+  /* ========================================
+     SALON
+  ======================================== */
+
   salon: [
+
     {
       id: "hairType",
       title: "Tipo de cabello de la clienta",
@@ -12,6 +19,38 @@ export const questions = {
         { label: "Lacio", value: "lacio", icon: "sleek" },
         { label: "Afro", value: "afro", icon: "volume" }
       ]
+    },
+
+    {
+      id: "keep_shape",
+
+      title:
+        "¿Quieres mantener su forma natural?",
+
+      conditional: "non_lacio",
+
+      multi: false,
+
+      options: [
+
+        {
+          label:
+            "Sí, mantener rizos/ondas",
+
+          value:
+            "mantener_forma"
+        },
+
+        {
+          label:
+            "No, quiere efecto lacio",
+
+          value:
+            "quiero_lacio"
+        }
+
+      ]
+
     },
 
     {
@@ -109,16 +148,73 @@ export const questions = {
 
     {
       id: "chemical",
-      title: "Historial químico últimos 2 años",
+
+      title:
+        "¿Has tenido procesos químicos en los últimos 3 a 6 meses?",
+
       multi: true,
+
       max: 2,
+
       options: [
-        { label: "Decoloración", value: "decolorado", icon: "ice" },
-        { label: "Alaciado", value: "alaciado", icon: "sleek" },
-        { label: "Tinte global", value: "tinte", icon: "palette" },
-        { label: "Ondulado permanente", value: "permanente", icon: "curl" },
-        { label: "Sin procesos", value: "virgen", icon: "leaf" }
+
+        {
+          label:
+            "Diseño de color",
+
+          value:
+            "diseno_color",
+
+          icon:
+            "palette"
+        },
+
+        {
+          label:
+            "Decoloración global",
+
+          value:
+            "decoloracion_global",
+
+          icon:
+            "ice"
+        },
+
+        {
+          label:
+            "Tinte",
+
+          value:
+            "tinte",
+
+          icon:
+            "palette"
+        },
+
+        {
+          label:
+            "Alaciado",
+
+          value:
+            "alaciado",
+
+          icon:
+            "sleek"
+        },
+
+        {
+          label:
+            "Ninguno",
+
+          value:
+            "virgen",
+
+          icon:
+            "leaf"
+        }
+
       ]
+
     },
 
     {
@@ -132,9 +228,15 @@ export const questions = {
         { label: "Nunca", value: "sincalor", icon: "snow" }
       ]
     }
+
   ],
 
+  /* ========================================
+     CLIENT
+  ======================================== */
+
   client: [
+
     {
       id: "hairType",
       title: "¿Cómo es tu cabello?",
@@ -145,6 +247,38 @@ export const questions = {
         { label: "Lacio", value: "lacio", icon: "sleek" },
         { label: "Afro", value: "afro", icon: "volume" }
       ]
+    },
+
+    {
+      id: "keep_shape",
+
+      title:
+        "¿Quieres mantener tu forma natural?",
+
+      conditional: "non_lacio",
+
+      multi: false,
+
+      options: [
+
+        {
+          label:
+            "Sí, mantener rizos/ondas",
+
+          value:
+            "mantener_forma"
+        },
+
+        {
+          label:
+            "No, quiero efecto lacio",
+
+          value:
+            "quiero_lacio"
+        }
+
+      ]
+
     },
 
     {
@@ -221,15 +355,73 @@ export const questions = {
 
     {
       id: "chemical",
-      title: "¿Has tenido procesos químicos?",
+
+      title:
+        "¿Has tenido procesos químicos en los últimos 3 a 6 meses?",
+
       multi: true,
+
       max: 2,
+
       options: [
-        { label: "Decoloración", value: "decolorado", icon: "ice" },
-        { label: "Alaciado", value: "alaciado", icon: "sleek" },
-        { label: "Tinte", value: "tinte", icon: "palette" },
-        { label: "Ninguno", value: "virgen", icon: "leaf" }
+
+        {
+          label:
+            "Diseño de color",
+
+          value:
+            "diseno_color",
+
+          icon:
+            "palette"
+        },
+
+        {
+          label:
+            "Decoloración global",
+
+          value:
+            "decoloracion_global",
+
+          icon:
+            "ice"
+        },
+
+        {
+          label:
+            "Tinte",
+
+          value:
+            "tinte",
+
+          icon:
+            "palette"
+        },
+
+        {
+          label:
+            "Alaciado",
+
+          value:
+            "alaciado",
+
+          icon:
+            "sleek"
+        },
+
+        {
+          label:
+            "Ninguno",
+
+          value:
+            "virgen",
+
+          icon:
+            "leaf"
+        }
+
       ]
+
     },
 
     {
@@ -243,16 +435,59 @@ export const questions = {
         { label: "Nunca", value: "sincalor", icon: "snow" }
       ]
     }
+
   ]
+
 };
 
+/* ========================================
+   FAMILY SCORES
+======================================== */
+
 export const familyScores = {
-  argan: ["virgen", "rizado", "ondulado", "poroso"],
-  ialuronico: ["decolorado", "quiebre", "elastico"],
-  goji: ["tinte", "alaciado"],
-  agave: ["sensible", "graso", "caspa"],
-  abbondanza: ["caida"],
-  xtyling: ["rizado", "ondulado", "permanente"],
-  especiales: ["quiebre", "poroso"],
-  profesional: ["decolorado", "quiebre"]
+
+  argan: [
+    "virgen",
+    "rizado",
+    "ondulado",
+    "poroso"
+  ],
+
+  ialuronico: [
+    "decoloracion_global",
+    "quiebre",
+    "elastico"
+  ],
+
+  goji: [
+    "tinte",
+    "diseno_color"
+  ],
+
+  agave: [
+    "sensible",
+    "graso",
+    "caspa"
+  ],
+
+  abbondanza: [
+    "caida"
+  ],
+
+  xtyling: [
+    "rizado",
+    "ondulado",
+    "mantener_forma"
+  ],
+
+  especiales: [
+    "quiebre",
+    "poroso"
+  ],
+
+  profesional: [
+    "decoloracion_global",
+    "quiebre"
+  ]
+
 };

@@ -5,6 +5,10 @@ import { supabase } from "../lib/supabase";
 
 import { createOrder } from "../services/orders.service";
 
+import {
+  createActivityLog
+} from "../services/activity.service";
+
 type Product = {
   id: string | number;
 
@@ -170,8 +174,17 @@ const modalClearBtn = $("modalClearBtn");
 const modalSendBtn = $("modalSendBtn");
 
 const modalItems = $("modalItems");
+
+let creditProfile =
+  "cash_only";
+
+
+let profileData: any = null;
   
 let lastLevel = 0; // 0 = base, 1 = mínimo, 2 = pro
+
+let plusActivated =
+  false;
 
   let filtered = [...products];
 
@@ -184,6 +197,57 @@ let orderLocked = false;
 let page = 1;
 
 let limit = 10;
+
+/* ========================================
+   LOAD PROFILE
+======================================== */
+
+async function loadProfile() {
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const {
+    data: profile
+  } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      role,
+      status,
+      credit_profile,
+      advisor_id,
+      name,
+      first_name,
+      last_name,
+      business_name,
+      address_line,
+      colony,
+      postal_code,
+      city,
+      state
+    `)
+    .eq("id", user.id)
+    .single();
+
+  if (!profile) return;
+
+  profileData =
+    profile;
+
+  creditProfile =
+    profile.credit_profile ||
+    "cash_only";
+
+  console.log(
+    "CREDIT PROFILE:",
+    creditProfile
+  );
+
+}
 
   const isMobile = () => window.innerWidth < 1024;
 
@@ -1238,74 +1302,195 @@ if (modalMinText) {
 
 }
 
-// ======================
-// CREDIT (DESKTOP)
-// ======================
+/* ======================
+   CREDIT (DESKTOP)
+====================== */
 
-if (salonRounded < 1500) {
+const isCashOnly =
+  creditProfile ===
+  "cash_only";
 
-  creditTitleText && (creditTitleText.textContent = "Contado total");
-  creditText && (creditText.textContent = "Pedido menor a $1,500");
+const isOpenCredit =
+  creditProfile ===
+  "open_credit";
 
-  creditGiftIcon?.classList.add("hidden");
-  creditGiftIcon?.classList.remove(
-    "gift-pop",
+const isAutoTerms =
+  creditProfile ===
+  "auto_terms";
+
+/* ======================
+   RESET ICON
+====================== */
+
+creditGiftIcon?.classList.add(
+  "hidden"
+);
+
+creditGiftIcon?.classList.remove(
+  "gift-pop",
+  "gift-glow",
+  "gift-pulse",
+  "gift-enter"
+);
+
+/* ======================
+   CONTADO FORZOSO
+====================== */
+
+if (isCashOnly) {
+
+  if (creditTitleText) {
+    creditTitleText.textContent =
+      "Pago de contado";
+  }
+
+  if (creditText) {
+    creditText.textContent =
+      "Tu cuenta opera únicamente de contado.";
+  }
+
+}
+
+/* ======================
+   CREDITO ABIERTO
+====================== */
+
+else if (isOpenCredit) {
+
+  if (creditTitleText) {
+    creditTitleText.textContent =
+      "Crédito abierto";
+  }
+
+  if (creditText) {
+    creditText.textContent =
+      "Tu cuenta maneja pagos flexibles sin vencimiento fijo.";
+  }
+
+}
+
+/* ======================
+   CREDITO AUTOMATICO
+====================== */
+
+else if (isAutoTerms) {
+
+  /* ======================
+     MENOR A 1500
+  ====================== */
+
+  if (salonRounded < 1500) {
+
+    if (creditTitleText) {
+      creditTitleText.textContent =
+        "Contado total";
+    }
+
+    if (creditText) {
+      creditText.textContent =
+        "Pedido menor a $1,500";
+    }
+
+  }
+
+  /* ======================
+     15 DIAS
+  ====================== */
+
+  else if (salonRounded < 10000) {
+
+    if (creditTitleText) {
+      creditTitleText.textContent =
+        "50% entrega + 50% a 15 días";
+    }
+
+    if (creditText) {
+      creditText.textContent =
+        `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+    }
+
+  }
+
+  /* ======================
+     30 DIAS
+  ====================== */
+
+  else {
+
+    if (creditTitleText) {
+      creditTitleText.textContent =
+        "50% entrega + 50% a 30 días + ";
+    }
+
+    if (creditText) {
+      creditText.textContent =
+        `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+    }
+
+if (creditGiftIcon) {
+
+  creditGiftIcon.classList.remove(
+    "hidden"
+  );
+
+  creditGiftIcon.classList.add(
     "gift-glow",
-    "gift-pulse",
-    "gift-enter"
+    "gift-pulse"
   );
 
-} else if (salonRounded < 10000) {
+  /* ======================
+     SOLO AL ENTRAR A PLUS
+  ====================== */
 
-  creditTitleText && (creditTitleText.textContent = "50% entrega + 50% a 15 días");
-  creditText && (creditText.textContent =
-    `${money(salon / 2)} entrega y ${money(salon / 2)} después`
-  );
+  if (!plusActivated) {
 
-  creditGiftIcon?.classList.add("hidden");
-  creditGiftIcon?.classList.remove(
-    "gift-pop",
-    "gift-glow",
-    "gift-pulse",
-    "gift-enter"
-  );
+    plusActivated = true;
 
-} else {
-
-  creditTitleText && (creditTitleText.textContent = "50% entrega + 50% a 30 días + ");
-  creditText && (creditText.textContent =
-    `${money(salon / 2)} entrega y ${money(salon / 2)} después`
-  );
-
-  if (creditGiftIcon) {
-    creditGiftIcon.classList.remove("hidden");
-
-    // 🔥 fuerza reflow (CLAVE)
     void creditGiftIcon.offsetWidth;
 
-    // estado inicial
-    creditGiftIcon.classList.remove("gift-enter");
-    creditGiftIcon.style.opacity = "0";
-    creditGiftIcon.style.transform = "translateX(14px) scale(0.92)";
+    creditGiftIcon.classList.remove(
+      "gift-enter"
+    );
+
+    creditGiftIcon.style.opacity =
+      "0";
+
+    creditGiftIcon.style.transform =
+      "translateX(14px) scale(0.92)";
 
     requestAnimationFrame(() => {
-      creditGiftIcon.style.opacity = "";
-      creditGiftIcon.style.transform = "";
 
-      creditGiftIcon.classList.add("gift-enter");
+      creditGiftIcon.style.opacity =
+        "";
+
+      creditGiftIcon.style.transform =
+        "";
+
+      creditGiftIcon.classList.add(
+        "gift-enter"
+      );
+
     });
 
-    // glow constante
-    creditGiftIcon.classList.add("gift-glow", "gift-pulse");
+    creditGiftIcon.classList.remove(
+      "gift-pop"
+    );
 
-    // pop solo si cambia nivel
-    if (currentLevel !== lastLevel) {
-      creditGiftIcon.classList.remove("gift-pop");
-      void creditGiftIcon.offsetWidth;
-      creditGiftIcon.classList.add("gift-pop");
-    }
+    void creditGiftIcon.offsetWidth;
+
+    creditGiftIcon.classList.add(
+      "gift-pop"
+    );
+
   }
+
 }
+
+    }
+
+  }
+
+
 
   const itemsText =
   units === 0
@@ -1417,70 +1602,188 @@ if (modalTotal && modalCreditTitle) {
   }
 }
 
-// ======================
-// MODAL CREDIT
-// ======================
+/* ======================
+   MODAL CREDIT
+====================== */
 
-if (salonRounded < 1500) {
+modalCreditGiftIcon?.classList.add(
+  "hidden"
+);
 
-  modalCreditTitleText && (modalCreditTitleText.textContent = "Contado total");
-  modalCreditText && (modalCreditText.textContent = "Pedido menor a $1,500");
+modalCreditGiftIcon?.classList.remove(
+  "gift-pop",
+  "gift-glow",
+  "gift-pulse",
+  "gift-enter"
+);
 
-  modalCreditGiftIcon?.classList.add("hidden");
-  modalCreditGiftIcon?.classList.remove(
-    "gift-pop",
+/* ======================
+   CONTADO FORZOSO
+====================== */
+
+if (isCashOnly) {
+
+  if (modalCreditTitleText) {
+    modalCreditTitleText.textContent =
+      "Pago de contado";
+  }
+
+  if (modalCreditText) {
+    modalCreditText.textContent =
+      "Tu cuenta opera únicamente de contado.";
+  }
+
+}
+
+/* ======================
+   CREDITO ABIERTO
+====================== */
+
+else if (isOpenCredit) {
+
+  if (modalCreditTitleText) {
+    modalCreditTitleText.textContent =
+      "Crédito abierto";
+  }
+
+  if (modalCreditText) {
+    modalCreditText.textContent =
+      "Tu cuenta maneja pagos flexibles sin vencimiento fijo.";
+  }
+
+}
+
+/* ======================
+   CREDITO AUTOMATICO
+====================== */
+
+else if (isAutoTerms) {
+
+  /* ======================
+     MENOR A 1500
+  ====================== */
+
+  if (salonRounded < 1500) {
+
+    if (modalCreditTitleText) {
+      modalCreditTitleText.textContent =
+        "Contado total";
+    }
+
+    if (modalCreditText) {
+      modalCreditText.textContent =
+        "Pedido menor a $1,500";
+    }
+
+  }
+
+  /* ======================
+     15 DIAS
+  ====================== */
+
+  else if (salonRounded < 10000) {
+
+    if (modalCreditTitleText) {
+      modalCreditTitleText.textContent =
+        "50% entrega + 50% a 15 días";
+    }
+
+    if (modalCreditText) {
+      modalCreditText.textContent =
+        `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+    }
+
+  }
+
+  /* ======================
+     30 DIAS
+  ====================== */
+
+  else {
+
+    if (modalCreditTitleText) {
+      modalCreditTitleText.textContent =
+        "50% entrega + 50% a 30 días + ";
+    }
+
+    if (modalCreditText) {
+      modalCreditText.textContent =
+        `${money(salon / 2)} hoy y ${money(salon / 2)} después`;
+    }
+
+if (modalCreditGiftIcon) {
+
+  modalCreditGiftIcon.classList.remove(
+    "hidden"
+  );
+
+  modalCreditGiftIcon.classList.add(
     "gift-glow",
-    "gift-pulse",
-    "gift-enter"
+    "gift-pulse"
   );
 
-} else if (salonRounded < 10000) {
+  /* ======================
+     SOLO AL ENTRAR A PLUS
+  ====================== */
 
-  modalCreditTitleText && (modalCreditTitleText.textContent = "50% entrega + 50% a 15 días");
-  modalCreditText && (modalCreditText.textContent =
-    `${money(salon / 2)} entrega y ${money(salon / 2)} después`
-  );
+  if (!plusActivated) {
 
-  modalCreditGiftIcon?.classList.add("hidden");
-  modalCreditGiftIcon?.classList.remove(
-    "gift-pop",
-    "gift-glow",
-    "gift-pulse",
-    "gift-enter"
-  );
+    plusActivated = true;
 
-} else {
-
-  modalCreditTitleText && (modalCreditTitleText.textContent = "50% entrega + 50% a 30 días + ");
-  modalCreditText && (modalCreditText.textContent =
-    `${money(salon / 2)} entrega y ${money(salon / 2)} después`
-  );
-
-  if (modalCreditGiftIcon) {
-    modalCreditGiftIcon.classList.remove("hidden");
-
-    // 🔥 CLAVE: fuerza reflow
     void modalCreditGiftIcon.offsetWidth;
 
-    modalCreditGiftIcon.classList.remove("gift-enter");
-    modalCreditGiftIcon.style.opacity = "0";
-    modalCreditGiftIcon.style.transform = "translateX(14px) scale(0.92)";
+    modalCreditGiftIcon.classList.remove(
+      "gift-enter"
+    );
+
+    modalCreditGiftIcon.style.opacity =
+      "0";
+
+    modalCreditGiftIcon.style.transform =
+      "translateX(14px) scale(0.92)";
 
     requestAnimationFrame(() => {
-      modalCreditGiftIcon.style.opacity = "";
-      modalCreditGiftIcon.style.transform = "";
 
-      modalCreditGiftIcon.classList.add("gift-enter");
+      modalCreditGiftIcon.style.opacity =
+        "";
+
+      modalCreditGiftIcon.style.transform =
+        "";
+
+      modalCreditGiftIcon.classList.add(
+          "gift-enter"
+        );
+
     });
 
-    modalCreditGiftIcon.classList.add("gift-glow", "gift-pulse");
+    modalCreditGiftIcon.classList.remove(
+      "gift-pop"
+    );
 
-    if (currentLevel !== lastLevel) {
-      modalCreditGiftIcon.classList.remove("gift-pop");
-      void modalCreditGiftIcon.offsetWidth;
-      modalCreditGiftIcon.classList.add("gift-pop");
-    }
+    void modalCreditGiftIcon.offsetWidth;
+
+    modalCreditGiftIcon.classList.add(
+      "gift-pop"
+    );
+
   }
+
+}
+
+}
+
+}
+
+/* ======================
+   RESET PLUS STATE
+====================== */
+
+if (
+  salonRounded < 10000
+) {
+
+  plusActivated = false;
+
 }
 
 lastLevel = currentLevel;
@@ -1521,10 +1824,11 @@ async function sendOrder() {
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select(`
+     .select(`
   id,
   role,
   status,
+  credit_profile,
   advisor_id,
   name,
   first_name,
@@ -1609,13 +1913,54 @@ const phone =
 // ======================
 console.log(profile);
 
+const wasEditingExistingOrder =
+  !!existingWeeklyOrder;
+
 const {
   order,
   total
 } = await createOrder({
+
   user,
+
   profile,
-  cart
+
+  cart,
+
+  advisorName
+
+});
+
+await createActivityLog({
+
+  client_id: user.id,
+
+  order_id: order.id,
+
+  type:
+
+    wasEditingExistingOrder
+      ? "order_updated"
+      : "order_created",
+
+  title:
+
+    wasEditingExistingOrder
+      ? "Pedido actualizado"
+      : "Pedido creado",
+
+  amount: total,
+
+  metadata: {
+
+    delivery_status:
+      order.delivery_status,
+
+    payment_type:
+      order.payment_type
+
+  }
+
 });
 
     // ======================
@@ -1812,11 +2157,14 @@ function renderAll() {
 
   window.addEventListener("resize", renderProducts);
 
- loadFamilies();
+await loadProfile();
+
+loadFamilies();
+
 applyFilters();
 
-// 👇 AGREGA ESTO
 renderCart();
+
 totals();
 
 /* ========================================

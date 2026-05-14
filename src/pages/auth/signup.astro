@@ -76,7 +76,21 @@ import {
 
       <div class="relative">
         <Hash className="input-icon" size={18} />
-        <input id="postalCode" placeholder="Código postal" class="input" required />
+        <input
+  id="postalCode"
+
+  inputmode="numeric"
+
+  maxlength="5"
+
+  pattern="[0-9]{5}"
+
+  placeholder="Código postal"
+
+  class="input"
+
+  required
+/>
       </div>
 
     </div>

@@ -1,15 +1,41 @@
 // src/scripts/dashboard.ts
 
 import { supabase } from "../lib/supabase";
+
 import { money } from "./helpers";
+
 import { startCountdown } from "./countdown";
+
+import { toast } from "sonner";
 
 import {
   properCase
 } from "../scripts/helpers";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  startCountdown();
+import {
+  getClientAnalytics
+} from "../services/analytics.service";
+
+/* =========================
+   INIT
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    startCountdown();
+
+    await loadDashboard();
+
+  }
+);
+
+/* =========================
+   DASHBOARD LOADER
+========================= */
+
+async function loadDashboard() {
 
   const $ = (id: string) =>
     document.getElementById(id);
@@ -18,302 +44,504 @@ document.addEventListener("DOMContentLoaded", async () => {
     id: string,
     value: string
   ) => {
+
     const el = $(id);
-    if (el) el.textContent = value;
+
+    if (el) {
+      el.textContent = value;
+    }
+
   };
 
-  const ordersBox = $("ordersList");
+  const ordersBox =
+    $("ordersList");
 
   /* =========================
-     LOADING STATE
+     LOADING
   ========================= */
+
   if (ordersBox) {
+
     ordersBox.innerHTML = `
       <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-sm text-white/45 animate-pulse">
         Cargando pedidos...
       </div>
     `;
+
   }
 
   try {
+
     /* =========================
        SESSION
     ========================= */
-const {
-  data: { user },
-  error: authError
-} = await supabase.auth.getUser();
 
-if (authError || !user) {
-  location.href = "/auth/login";
-  return;
-}
+    const {
+      data: { user },
+      error: authError
+    } =
+      await supabase.auth.getUser();
+
+    if (
+      authError ||
+      !user
+    ) {
+
+      location.href =
+        "/auth/login";
+
+      return;
+
+    }
 
     /* =========================
        PROFILE
     ========================= */
+
     const {
       data: profile
     } =
       await supabase
+
         .from("profiles")
-        .select(
-  "first_name,status,payment_type"
-)
+
+        .select(`
+          first_name,
+          status,
+          credit_profile
+        `)
+
         .eq("id", user.id)
+
         .maybeSingle();
 
     if (!profile) {
+
       location.href =
         "/auth/signup";
+
       return;
+
     }
 
-   if (profile.status === "blocked") {
-  await supabase.auth.signOut();
-  location.href = "/auth/blocked";
-  return;
-}
+    if (
+      profile.status ===
+      "blocked"
+    ) {
 
-if (profile.status !== "active") {
-  location.href = "/auth/login";
-  return;
-}
+      await supabase.auth.signOut();
+
+      location.href =
+        "/auth/blocked";
+
+      return;
+
+    }
+
+    if (
+      profile.status !==
+      "active"
+    ) {
+
+      location.href =
+        "/auth/login";
+
+      return;
+
+    }
 
     setText(
-  "welcomeName",
-  `Hola, ${properCase(profile.first_name || "Cliente")}`
-);
+
+      "welcomeName",
+
+      `Hola, ${
+        properCase(
+          profile.first_name ||
+          "Cliente"
+        )
+      }`
+
+    );
 
     /* =========================
        ORDERS
     ========================= */
+
     const {
       data: orders,
-      error
+      error: ordersError
     } =
       await supabase
-        .from("orders")
-        .select("*")
-        .eq("client_id", user.id)
-        .order("created_at", {
-          ascending: false
-        });
 
-    if (error) {
-      throw error;
+        .from("orders")
+
+        .select("*")
+
+        .eq(
+          "client_id",
+          user.id
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (ordersError) {
+      throw ordersError;
     }
 
-    const list = orders || [];
+    const list =
+      orders || [];
 
     /* =========================
-       METRICS
+       ACTIVITY LOGS
     ========================= */
-    const now =
-      new Date();
 
-    const month =
-      now.getMonth();
+    const {
+      data: activityLogs,
+      error: activityError
+    } =
+      await supabase
 
-    const year =
-      now.getFullYear();
+        .from("activity_logs")
 
-    const monthOrders =
-      list.filter(
-        (item: any) => {
-          const d =
-            new Date(
-              item.created_at
-            );
+        .select("*")
 
-          return (
-            d.getMonth() ===
-              month &&
-            d.getFullYear() ===
-              year
-          );
-        }
+        .eq(
+          "client_id",
+          user.id
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        )
+
+        .limit(15);
+
+    if (activityError) {
+      throw activityError;
+    }
+
+    /* =========================
+       ANALYTICS
+    ========================= */
+
+    const analytics =
+      getClientAnalytics(
+        list,
+        profile
       );
 
-    const monthTotal =
-      monthOrders.reduce(
-        (
-          acc: number,
-          item: any
-        ) =>
-          acc +
-          Number(
-            item.total || 0
-          ),
-        0
-      );
+    analytics.recentActivity =
+      activityLogs || [];
 
-    const pending =
-  list.reduce(
+    /* =========================
+       GLOBAL ANALYTICS
+    ========================= */
+
     (
-      acc: number,
-      item: any
-    ) =>
-      acc +
-      Number(
-        item.amount_due || 0
-      ),
-    0
-  );
+      window as any
+    ).portalAnalytics =
+      analytics;
+
+    window.dispatchEvent(
+
+      new CustomEvent(
+        "portal-analytics-ready"
+      )
+
+    );
+
+    /* =========================
+       KPI RENDER
+    ========================= */
 
     setText(
       "monthTotal",
-      money(monthTotal)
+
+      money(
+        analytics.kpis
+          .monthTotal
+      )
     );
 
     setText(
       "ordersCount",
-      String(list.length)
-    );
 
-    const avgTicket =
-  list.length > 0
-    ? monthTotal / list.length
-    : 0;
-
-setText(
-  "avgTicket",
-  money(avgTicket)
-);
-
-    /* =========================
-   COMMERCIAL ACCOUNT
-========================= */
-
-const activeOrders =
-  list.filter((item: any) => {
-
-    const status =
       String(
-        item.delivery_status || ""
-      ).toLowerCase();
-
-    return (
-      status !== "delivered" &&
-      status !== "cancelled"
+        analytics.kpis
+          .totalOrders
+      )
     );
 
-  });
+    setText(
+      "avgTicket",
 
-const overdue =
-  list.some((item: any) => {
-
-    if (!item.due_date) return false;
-
-    return (
-      Number(item.amount_due || 0) > 0 &&
-      new Date(item.due_date).getTime() < Date.now()
+      money(
+        analytics.kpis
+          .averageTicket
+      )
     );
-
-  });
-
-setText(
-  "commercialDue",
-  money(pending)
-);
-
-setText(
-  "activeOrders",
-  String(activeOrders.length)
-);
-
-setText(
-  "commercialType",
-
-  profile.payment_type === "credit"
-    ? "Crédito comercial"
-    : "Pago de contado"
-);
-
-const last =
-  list[0];
-
-setText(
-  "lastOrderDate",
-
-  last?.created_at
-    ? new Date(last.created_at)
-        .toLocaleDateString("es-MX")
-    : "—"
-);
-
-/* STATUS */
-
-const commercialStatus =
-  $("commercialStatus");
-
-if (commercialStatus) {
-
-  if (overdue) {
-
-    commercialStatus.textContent =
-      "Saldo vencido";
-
-    commercialStatus.className =
-      "inline-flex h-fit rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs font-medium text-red-300";
-
-  }
-
-}
 
     /* =========================
-       LIST RENDER
+       COMMERCIAL ACCOUNT
     ========================= */
-    if (!ordersBox) return;
+
+    setText(
+      "commercialDue",
+
+      money(
+        analytics.kpis
+          .pendingBalance
+      )
+    );
+
+    setText(
+      "activeOrders",
+
+      String(
+        analytics.kpis
+          .activeOrders
+      )
+    );
+
+    setText(
+
+      "commercialType",
+
+      analytics.commercial
+        .profile ===
+        "auto_terms"
+
+        ? "Crédito automático"
+
+      : analytics.commercial
+          .profile ===
+          "open_credit"
+
+        ? "Crédito abierto"
+
+        : "Pago de contado"
+
+    );
+
+    setText(
+
+      "lastOrderDate",
+
+      analytics.kpis
+        .lastOrderDate
+
+        ? new Date(
+            analytics.kpis
+              .lastOrderDate
+          ).toLocaleDateString(
+            "es-MX"
+          )
+
+        : "—"
+
+    );
+
+    /* =========================
+       COMMERCIAL STATUS
+    ========================= */
+
+    const commercialStatus =
+      $("commercialStatus");
+
+    if (commercialStatus) {
+
+      if (
+        analytics.kpis.overdue
+      ) {
+
+        commercialStatus.textContent =
+          "Saldo vencido";
+
+        commercialStatus.className =
+          "inline-flex h-fit rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs font-medium text-red-300";
+
+      } else {
+
+        commercialStatus.textContent =
+          "Cuenta al corriente";
+
+        commercialStatus.className =
+          "inline-flex h-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-300";
+
+      }
+
+    }
+
+    /* =========================
+       RECENT ORDERS
+    ========================= */
+
+    if (!ordersBox) {
+      return;
+    }
 
     if (!list.length) {
+
       ordersBox.innerHTML = `
         <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-white/45">
           Aún no tienes pedidos registrados.
         </div>
       `;
+
       return;
+
     }
 
     ordersBox.innerHTML =
+
       list
-        .slice(0, 5)
-        .map(
-          (item: any) => `
-          <a
-            href="/portal/orders"
-            class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 transition hover:bg-white/[0.05]"
-          >
-            <div>
-              <p class="font-medium">
-                #${item.id}
-              </p>
 
-              <p class="mt-1 text-xs text-white/45">
-                ${
-                  item.status ||
-                  "Registrado"
-                }
-              </p>
-            </div>
+        .slice(0, 3)
 
-            <div class="text-right">
-              <p class="font-semibold">
-                ${money(
-                  item.total || 0
-                )}
-              </p>
+        .map((item: any) => {
 
-              <p class="mt-1 text-xs text-white/35 group-hover:text-white/55">
-                Ver detalle
-              </p>
-            </div>
-          </a>
-        `
-        )
+          const paymentLabel =
+
+            item.payment_type ===
+            "cash"
+
+              ? "Contado"
+
+            : item.payment_type ===
+                "credit_15"
+
+              ? "Crédito 15 días"
+
+            : item.payment_type ===
+                "credit_30"
+
+              ? "Crédito 30 días"
+
+            : item.payment_type ===
+                "open_credit"
+
+              ? "Crédito abierto"
+
+              : "Registrado";
+
+          return `
+
+            <a
+              href="/portal/orders"
+              class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 transition hover:bg-white/[0.05]"
+            >
+
+              <div>
+
+                <p class="font-medium">
+                  #${item.id.toUpperCase()}
+                </p>
+
+                <p class="mt-1 text-xs text-white/45">
+                  ${paymentLabel}
+                </p>
+
+              </div>
+
+              <div class="text-right">
+
+                <p class="font-semibold">
+                  ${money(
+                    item.total || 0
+                  )}
+                </p>
+
+                <p class="mt-1 text-xs text-white/35 group-hover:text-white/55">
+                  Ver detalle
+                </p>
+
+              </div>
+
+            </a>
+
+          `;
+
+        })
+
         .join("");
 
+        /* =========================
+   REALTIME ACTIVITY FEED
+========================= */
+
+supabase
+
+  .channel(
+    "portal-activity-feed"
+  )
+
+  .on(
+    "postgres_changes",
+
+    {
+      event: "INSERT",
+
+      schema: "public",
+
+      table: "activity_logs"
+    },
+
+    (payload) => {
+
+      const activity =
+        payload.new as any;
+
+      if (!activity) {
+        return;
+      }
+
+      if (
+        activity.client_id !==
+        user.id
+      ) {
+        return;
+      }
+
+      const analytics =
+        (window as any)
+          .portalAnalytics;
+
+      if (!analytics) {
+        return;
+      }
+
+      analytics.recentActivity = [
+
+        activity,
+
+        ...(analytics
+          .recentActivity || [])
+
+      ].slice(0, 15);
+
+      window.dispatchEvent(
+
+        new CustomEvent(
+          "portal-analytics-ready"
+        )
+
+      );
+
+    }
+  )
+
+  .subscribe();
+
   } catch (error) {
+
     console.error(error);
 
     setText(
@@ -332,16 +560,30 @@ if (commercialStatus) {
     );
 
     setText(
-      "pendingBalance",
+      "avgTicket",
       "$0"
     );
 
+    setText(
+      "commercialDue",
+      "$0"
+    );
+
+    setText(
+      "activeOrders",
+      "0"
+    );
+
     if (ordersBox) {
+
       ordersBox.innerHTML = `
         <div class="rounded-2xl border border-red-400/20 bg-red-400/10 p-4 text-sm text-red-300">
           No se pudo cargar tu información.
         </div>
       `;
+
     }
+
   }
-});
+
+}

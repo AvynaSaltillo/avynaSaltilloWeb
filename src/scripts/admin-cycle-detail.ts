@@ -462,10 +462,6 @@ if (title || dates) {
         ${order.client_name || "—"}
       </p>
 
-      <p class="mt-2 text-xs text-white/60">
-        ${order.business_name || "—"}
-      </p>
-
     </div>
 
     <div class="shrink-0">

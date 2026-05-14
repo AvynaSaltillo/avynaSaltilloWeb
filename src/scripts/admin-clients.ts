@@ -99,25 +99,57 @@ document.addEventListener("DOMContentLoaded", async () => {
      BADGES
   ========================= */
 
- const badge = (type = "") => {
+const badge = (
+  type = ""
+) => {
 
-  if (type === "credit") {
+  /* =========================
+     CONTADO
+  ========================= */
+
+  if (
+    type ===
+    "cash_only"
+  ) {
 
     return `
-      <span class="badge green">
-        Crédito
+      <span class="badge cash">
+        Contado
       </span>
     `;
   }
 
-if (type === "cash") {
+  /* =========================
+     AUTO TERMS
+  ========================= */
 
-  return `
-    <span class="badge cash">
-      Contado
-    </span>
-  `;
-}
+  if (
+    type ===
+    "auto_terms"
+  ) {
+
+    return `
+      <span class="badge green">
+        Crédito automático
+      </span>
+    `;
+  }
+
+  /* =========================
+     OPEN CREDIT
+  ========================= */
+
+  if (
+    type ===
+    "open_credit"
+  ) {
+
+    return `
+      <span class="badge purple">
+        Crédito abierto
+      </span>
+    `;
+  }
 
   return `
     <span class="badge yellow">
@@ -180,7 +212,7 @@ if (type === "cash") {
   email,
   city,
   business_name,
-  payment_type,
+  credit_profile,
   official_client_id,
   status,
 
@@ -315,7 +347,7 @@ function render(list: any[]) {
         </td>
 
         <td class="px-6 py-4">
-          ${badge(client.payment_type)}
+          ${badge(client.credit_profile)}
         </td>
 
         <td class="px-6 py-4">
@@ -452,7 +484,7 @@ function render(list: any[]) {
                 </p>
 
                 <div class="mt-1">
-                  ${badge(client.payment_type)}
+                  ${badge(client.credit_profile)}
                 </div>
 
               </div>
@@ -791,26 +823,51 @@ modalContent.innerHTML = `
         Tipo de cliente
       </label>
 
-      <select
-        id="editPaymentType"
-        class="modal-input"
-      >
+<select
+  id="editPaymentType"
+  class="modal-input"
+>
 
-        <option
-          value="credit"
-          ${client.payment_type === "credit" ? "selected" : ""}
-        >
-          Crédito
-        </option>
+  <option
+    value="cash_only"
+    ${
+      client.credit_profile ===
+      "cash_only"
 
-        <option
-          value="cash"
-          ${client.payment_type === "cash" ? "selected" : ""}
-        >
-          Contado
-        </option>
+        ? "selected"
+        : ""
+    }
+  >
+    Contado
+  </option>
 
-      </select>
+  <option
+    value="auto_terms"
+    ${
+      client.credit_profile ===
+      "auto_terms"
+
+        ? "selected"
+        : ""
+    }
+  >
+    Crédito automático
+  </option>
+
+  <option
+    value="open_credit"
+    ${
+      client.credit_profile ===
+      "open_credit"
+
+        ? "selected"
+        : ""
+    }
+  >
+    Crédito abierto
+  </option>
+
+</select>
 
     </div>
 
@@ -999,12 +1056,12 @@ modalContent.innerHTML = `
           ) as HTMLInputElement
         )?.value || "",
 
-      payment_type:
-        (
-          document.getElementById(
-            "editPaymentType"
-          ) as HTMLSelectElement
-        )?.value || "cash"
+      credit_profile:
+(
+  document.getElementById(
+    "editPaymentType"
+  ) as HTMLSelectElement
+)?.value || "cash_only"
     };
 
     /* ========================================

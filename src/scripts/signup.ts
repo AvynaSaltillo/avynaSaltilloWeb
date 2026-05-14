@@ -277,6 +277,38 @@ console.log("ADVISOR:", advisorVal);
 
     }
 
+    /* =========================
+   POSTAL CODE
+========================= */
+
+if (
+  postalCodeVal.length !== 5
+) {
+
+  msg.textContent =
+    "El código postal debe tener 5 dígitos.";
+
+  loading(false);
+
+  return;
+
+}
+
+if (
+  !/^\d+$/.test(
+    postalCodeVal
+  )
+) {
+
+  msg.textContent =
+    "El código postal debe ser numérico.";
+
+  loading(false);
+
+  return;
+
+}
+
     loading(true);
 
     let uid = "";
@@ -354,11 +386,15 @@ console.log("ADVISOR:", advisorVal);
             state: "Coahuila",
             country: "MX",
 
-            /* CORE */
+           /* CORE */
 
-            role: "client",
-            status: "pending",
-            payment_type: "credit",
+role: "client",
+
+status: "pending",
+
+credit_profile:
+
+  "auto_terms",
 
             /* IDS */
 
@@ -369,13 +405,24 @@ console.log("ADVISOR:", advisorVal);
 
       if (profileError) {
 
-        console.error(profileError);
-        console.log(profileError);
+       console.error(
+  "PROFILE ERROR:",
+  profileError
+);
 
-        await supabase.auth.signOut();
+msg.textContent =
 
-        msg.textContent =
-          "Cuenta creada parcialmente. Contacta soporte.";
+  profileError?.message ||
+
+  JSON.stringify(
+    profileError,
+    null,
+    2
+  );
+
+loading(false);
+
+return;
 
         loading(false);
 

@@ -149,12 +149,14 @@ document.addEventListener(
         supabase
           .from("orders")
           .select(`
-            id,
-            total,
-            status,
-            payment_type,
-            created_at
-          `)
+  id,
+  total,
+  amount_due,
+  payment_status,
+  status,
+  payment_type,
+  created_at
+`)
           .gte(
             "created_at",
             from
@@ -214,28 +216,60 @@ document.addEventListener(
          KPIS
       ========================= */
 
-      const totalSales =
-        list.reduce(
-          (a, b) =>
-            a + Number(b.total || 0),
-          0
-        );
+const totalSales =
+  list.reduce(
+    (a, b) => {
+
+      return (
+        a +
+        Number(
+          b.total || 0
+        )
+      );
+
+    },
+    0
+  );
 
       const totalOrders =
         list.length;
 
-      const pendingCredit =
-        list
-          .filter(
-            o =>
-              o.payment_type ===
-              "credit"
+const pendingCredit =
+  list
+
+    .filter((o) => {
+
+      return (
+
+        [
+          "credit_15",
+          "credit_30"
+        ].includes(
+          o.payment_type
+        )
+
+        &&
+
+        o.payment_status !==
+        "paid"
+
+      );
+
+    })
+
+    .reduce(
+      (a, b) => {
+
+        return (
+          a +
+          Number(
+            b.amount_due || 0
           )
-          .reduce(
-            (a, b) =>
-              a + Number(b.total || 0),
-            0
-          );
+        );
+
+      },
+      0
+    );
 
       const totalClients =
         clients?.length || 0;

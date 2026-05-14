@@ -35,7 +35,7 @@ export function getTerms(
 
     return {
       label:
-        "50% hoy + 50% a 15 días",
+        "50% entrega + 50% a 15 días",
 
       down:
         total / 2,
@@ -49,7 +49,7 @@ export function getTerms(
   return {
 
     label:
-      "50% hoy + 50% a 30 días",
+      "50% entrega + 50% a 30 días",
 
     down:
       total / 2,
@@ -191,3 +191,129 @@ export const FLOW = [
   "delivered"
 
 ];
+
+
+/* ========================================
+   PAYMENT HELPERS
+======================================== */
+
+export function isFormalCredit(
+  type = ""
+) {
+
+  return [
+    "credit_15",
+    "credit_30"
+  ].includes(type);
+
+}
+
+export function isOpenCredit(
+  type = ""
+) {
+
+  return (
+    type ===
+    "open_credit"
+  );
+
+}
+
+export function isCash(
+  type = ""
+) {
+
+  return (
+    type ===
+    "cash"
+  );
+
+}
+
+export function isOverdue(
+  order: any
+) {
+
+  if (
+    isOpenCredit(
+      order?.payment_type
+    )
+  ) {
+
+    return false;
+
+  }
+
+  if (
+    !order?.due_date
+  ) {
+
+    return false;
+
+  }
+
+  return (
+
+    Number(
+      order.amount_due || 0
+    ) > 0
+
+    &&
+
+    new Date(
+      order.due_date
+    ).getTime() < Date.now()
+
+  );
+
+}
+
+export function paymentTypeLabel(
+  type = ""
+) {
+
+  switch(type){
+
+    case "cash":
+      return "Contado";
+
+    case "credit_15":
+      return "50% entrega + 50% a 15 días";
+
+    case "credit_30":
+      return "50% entrega + 50% a 30 días";
+
+    case "open_credit":
+      return "Crédito abierto";
+
+    default:
+      return "Sin definir";
+
+  }
+
+}
+
+export function paymentTypeClass(
+  type = ""
+) {
+
+  switch(type){
+
+    case "cash":
+      return "cash";
+
+    case "credit_15":
+      return "credit15";
+
+    case "credit_30":
+      return "credit30";
+
+    case "open_credit":
+      return "open";
+
+    default:
+      return "";
+
+  }
+
+}

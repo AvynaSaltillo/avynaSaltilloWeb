@@ -3,8 +3,11 @@
 import { supabase } from "../lib/supabase";
 
 import {
-  getBusinessWeek
-} from "../lib/business-week";
+  paymentTypeLabel,
+  paymentTypeClass,
+  isOverdue,
+  isFormalCredit
+} from "./helpers";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -313,6 +316,8 @@ function badge(status = "") {
   total,
   amount_paid,
   payment_status,
+  payment_type,
+amount_due,
   delivery_status,
   created_at,
   advisor_id
@@ -388,8 +393,10 @@ const {
 
     if (status) {
       filtered = filtered.filter(
-        (o) => o.status === status
-      );
+  (o) =>
+    o.delivery_status ===
+    status
+);
     }
 
     // SORT
@@ -421,20 +428,37 @@ const {
       return a + Number(b.total || 0);
     }, 0);
 
-   const pending = filtered
-  .filter(
-    (o) =>
-      o.payment_status !== "paid"
-  )
+const pending = filtered
+
+  .filter((o) => {
+
+    /* =========================
+       OPEN CREDIT NO VENCE
+    ========================= */
+
+    if (
+      o.payment_type ===
+      "open_credit"
+    ) {
+
+      return false;
+
+    }
+
+    return (
+      o.payment_status !==
+      "paid"
+    );
+
+  })
+
   .reduce((a, b) => {
 
     return (
       a +
-      (
-        Number(b.total || 0) -
-        Number(b.amount_paid || 0)
+      Number(
+        b.amount_due || 0
       )
-
     );
 
   }, 0);
@@ -482,6 +506,8 @@ const {
 table.innerHTML = filtered.map((order) => {
 
   const initials =
+
+  
     (
       order.business_name ||
       order.client_name ||
@@ -493,7 +519,87 @@ table.innerHTML = filtered.map((order) => {
     .slice(0, 2)
     .toUpperCase();
 
+      /* =========================
+   PAYMENT STATUS
+========================= */
+
+const paymentBadge =
+
+  order.payment_status ===
+  "paid"
+
+    ? `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-emerald-500/20
+
+          bg-emerald-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-emerald-300
+        "
+      >
+        Pagado
+      </span>
+    `
+
+  : order.payment_status ===
+    "partial"
+
+    ? `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-orange-500/20
+
+          bg-orange-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-orange-300
+        "
+      >
+        Parcial
+      </span>
+    `
+
+  : `
+      <span
+        class="
+          inline-flex whitespace-nowrap
+
+          rounded-full
+
+          border border-yellow-500/20
+
+          bg-yellow-500/10
+
+          px-3 py-1
+
+          text-xs
+
+          text-yellow-300
+        "
+      >
+        Pendiente
+      </span>
+    `;
+
   return `
+
+  
 
     <tr
       class="
@@ -510,29 +616,10 @@ table.innerHTML = filtered.map((order) => {
 
         <div class="flex items-center gap-4">
 
-          <!-- AVATAR -->
-          <div
-            class="
-              grid h-12 w-12 shrink-0 place-items-center
-
-              rounded-2xl
-
-              border border-white/10
-
-              bg-white/[0.04]
-
-              text-sm
-              font-semibold
-              text-white/80
-            "
-          >
-            ${initials}
-          </div>
-
           <!-- INFO -->
           <div class="min-w-0">
 
-            <p class="font-medium text-white">
+            <p class="font-medium text- white">
               #${String(order.id)
                 .slice(0, 8)
                 .toUpperCase()}
@@ -570,26 +657,47 @@ table.innerHTML = filtered.map((order) => {
   ${badge(order.delivery_status)}
 </td>
 
-      <!-- TOTAL -->
-      <td class="px-6 py-5">
+<!-- PAYMENT -->
+<td class="px-6 py-5 whitespace-nowrap">
 
-        <div class="flex flex-col">
+  <div class="flex flex-col gap-2">
 
-          <span class="text-lg font-semibold text-white">
-            ${money(order.total)}
-          </span>
+    ${paymentBadge}
 
-          <span class="mt-1 text-xs text-white/35">
-            Balance:
-            ${money((
-  Number(order.total || 0) -
-  Number(order.amount_paid || 0)
-) || 0)}
-          </span>
+    <span
+      class="
+        text-xs
+        text-white/40
+      "
+    >
+      ${paymentTypeLabel(
+        order.payment_type
+      )}
+    </span>
 
-        </div>
+  </div>
 
-      </td>
+</td>
+
+<!-- TOTAL -->
+<td class="px-6 py-5">
+
+  <div class="flex flex-col">
+
+    <span class="text-lg font-semibold text-white">
+      ${money(order.total)}
+    </span>
+
+    <span class="mt-1 text-xs text-white/35">
+      Saldo:
+      ${money(
+        Number(order.amount_due || 0)
+      )}
+    </span>
+
+  </div>
+
+</td>
 
       <!-- DATE -->
       <td class="px-6 py-5">

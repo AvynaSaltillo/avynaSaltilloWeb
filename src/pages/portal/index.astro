@@ -1,6 +1,13 @@
 ---
 import PortalLayout from "../../layouts/PortalLayout.astro";
 
+import MiniRevenueChartIsland
+from "../../components/portal/charts/MiniRevenueChartIsland.astro";
+
+import ActivityFeedIsland
+from "../../components/portal/feed/ActivityFeedIsland.astro";
+
+
 import {
   FiShoppingBag,
   FiTrendingUp,
@@ -10,6 +17,7 @@ import {
   FiShield,
   FiArrowRight
 } from "react-icons/fi";
+
 ---
 
 <PortalLayout title="Dashboard | AVYNA Saltillo">
@@ -142,37 +150,40 @@ import {
   </section>
 
   <!-- KPI GRID -->
-  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-[1.4fr_.8fr_.8fr]">
 
-    <!-- ESTE MES -->
-    <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+<!-- ESTE MES -->
+<div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
 
-      <div class="flex items-center justify-between gap-3">
+  <div class="flex items-center justify-between gap-3">
 
-        <div>
+    <div>
 
-          <p class="text-xs uppercase tracking-[0.35em] text-white/35">
-            Este mes
-          </p>
+      <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+        Este mes
+      </p>
 
-          <p
-            id="monthTotal"
-            class="mt-4 text-4xl font-semibold"
-          >
-            $0.00
-          </p>
-
-        </div>
-
-        <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70">
-
-          <FiTrendingUp size={20} />
-
-        </div>
-
-      </div>
+      <p
+        id="monthTotal"
+        class="mt-4 text-4xl font-semibold"
+      >
+        $0.00
+      </p>
 
     </div>
+
+    <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-white/70">
+
+      <FiTrendingUp size={20} />
+
+    </div>
+
+  </div>
+
+  <MiniRevenueChartIsland
+  />
+
+</div>
 
     <!-- PEDIDOS -->
     <div class="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
@@ -466,6 +477,7 @@ import {
     </section>
 
   </section>
+  <ActivityFeedIsland />
 
 </section>
 

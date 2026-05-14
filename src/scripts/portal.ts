@@ -2,6 +2,17 @@
 
 import { supabase } from "../lib/supabase";
 
+import {
+  FiShoppingBag,
+  FiCreditCard,
+  FiTruck,
+  FiRefreshCw
+} from "react-icons/fi";
+
+import { toast }
+from "sonner";
+
+
 document.addEventListener("DOMContentLoaded", async () => {
 
   const $ = (id: string) =>
@@ -211,7 +222,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* 🔥 AUTO VALIDACIÓN */
   setInterval(() => {
     validateStatus();
-  }, 15000);
+  }, 60000);
 
   /* 🔥 VALIDAR AL VOLVER */
   window.addEventListener("focus", () => {
@@ -238,60 +249,6 @@ document.addEventListener("visibilitychange", () => {
   }
 
 });
-
-/* =========================
-   🔥 GLOBAL SECURITY CLICK GUARD
-========================= */
-
-window.addEventListener(
-  "click",
-  async (e) => {
-
-    try {
-
-      const { data: latestProfile } = await supabase
-        .from("profiles")
-        .select("status")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (!latestProfile) return;
-
-      /* 🚫 BLOCKED */
-      if (latestProfile.status === "blocked") {
-
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-
-        await supabase.auth.signOut();
-
-        window.location.href = "/auth/blocked";
-
-        return false;
-      }
-
-      /* ⏳ PENDING */
-      if (latestProfile.status === "pending") {
-
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-
-        await supabase.auth.signOut();
-
-        window.location.href = "/auth/pending";
-
-        return false;
-      }
-
-    } catch (err) {
-      console.error(err);
-    }
-
-  },
-  true
-);
 
   /* =========================
      PROFILE LOAD
@@ -568,3 +525,243 @@ class="h-full w-full rounded-2xl object-cover"
   mobileLogout?.addEventListener("click", logout);
 
 });
+
+/* =========================
+   GLOBAL REALTIME
+========================= */
+
+setupRealtime();
+
+async function setupRealtime() {
+
+  const {
+    data: { user }
+  } =
+    await supabase.auth.getUser();
+
+  if (!user) return;
+
+/* =========================
+   ORDERS REALTIME
+========================= */
+
+supabase
+
+  .channel(
+    `orders-${user.id}`
+  )
+
+  .on(
+
+    "postgres_changes",
+
+    {
+
+      event: "*",
+
+      schema: "public",
+
+      table: "orders",
+
+      filter:
+        `client_id=eq.${user.id}`
+
+    },
+
+    async (payload) => {
+
+      /* =========================
+         INSERT
+      ========================= */
+
+      if (
+        payload.eventType ===
+        "INSERT"
+      ) {
+
+        toast.success(
+
+          "Nuevo pedido creado",
+
+          {
+
+            icon:
+              FiShoppingBag({
+                size: 18
+              }),
+
+            id:
+              "order-created"
+
+          }
+
+        );
+
+      }
+
+      /* =========================
+         UPDATE
+      ========================= */
+
+      if (
+        payload.eventType ===
+        "UPDATE"
+      ) {
+
+        const oldRow =
+          payload.old as any;
+
+        const newRow =
+          payload.new as any;
+
+        /* =========================
+           PAYMENT
+        ========================= */
+
+        if (
+
+          oldRow.payment_status !==
+          newRow.payment_status
+
+          &&
+
+          newRow.payment_status ===
+          "paid"
+
+        ) {
+
+          toast.success(
+
+            "Pago registrado",
+
+            {
+
+              icon:
+                FiCreditCard({
+                  size: 18
+                }),
+
+              id:
+                "payment-received"
+
+            }
+
+          );
+
+          return;
+
+        }
+
+        /* =========================
+           DELIVERED
+        ========================= */
+
+        if (
+
+          oldRow.delivery_status !==
+          newRow.delivery_status
+
+          &&
+
+          newRow.delivery_status ===
+          "delivered"
+
+        ) {
+
+          toast.success(
+
+            "Pedido entregado",
+
+            {
+
+              icon:
+                FiTruck({
+                  size: 18
+                }),
+
+              id:
+                "order-delivered"
+
+            }
+
+          );
+
+          return;
+
+        }
+
+/* =========================
+   GENERAL UPDATE
+========================= */
+
+const importantChanged =
+
+  oldRow.total !==
+    newRow.total
+
+  ||
+
+  oldRow.amount_due !==
+    newRow.amount_due
+
+  ||
+
+  oldRow.delivery_status !==
+    newRow.delivery_status
+
+  ||
+
+  oldRow.payment_status !==
+    newRow.payment_status;
+
+/* 🚫 IGNORAR CREACIÓN INICIAL */
+
+const justCreated =
+
+  Math.abs(
+    new Date(
+      newRow.created_at
+    ).getTime()
+
+    -
+
+    new Date(
+      newRow.updated_at
+    ).getTime()
+
+  ) < 5000;
+
+if (
+  importantChanged &&
+  !justCreated
+) {
+
+  toast(
+
+    "Pedido actualizado",
+
+    {
+
+      icon:
+        FiRefreshCw({
+          size: 18
+        }),
+
+      id:
+        "order-updated"
+
+    }
+
+  );
+
+}
+
+      }
+
+    }
+
+  )
+
+  .subscribe();
+
+}

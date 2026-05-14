@@ -2,6 +2,10 @@
 
   import { supabase } from "../lib/supabase";
 
+  import {
+  createActivityLog
+} from "../services/activity.service";
+
   declare global {
 
     interface Window {
@@ -185,22 +189,65 @@ const STATUS_LABELS: Record<string, string> = {
 
       }
 
-      function paymentTypeLabel(
-        type: string,
-        total: number
-      ) {
+function paymentTypeLabel(
+  type = ""
+) {
 
-        if (type === "cash") {
-          return "Contado";
-        }
+  /* =========================
+     CONTADO
+  ========================= */
 
-        if (total >= 10000) {
-          return "50% entrega + 50% a 30 días";
-        }
+  if (
+    type ===
+    "cash"
+  ) {
 
-        return "50% entrega + 50% a 15 días";
+    return "Contado";
 
-      }
+  }
+
+  /* =========================
+     15 DIAS
+  ========================= */
+
+  if (
+    type ===
+    "credit_15"
+  ) {
+
+    return "50% entrega + 50% a 15 días";
+
+  }
+
+  /* =========================
+     30 DIAS
+  ========================= */
+
+  if (
+    type ===
+    "credit_30"
+  ) {
+
+    return "50% entrega + 50% a 30 días";
+
+  }
+
+  /* =========================
+     OPEN CREDIT
+  ========================= */
+
+  if (
+    type ===
+    "open_credit"
+  ) {
+
+    return "Crédito abierto";
+
+  }
+
+  return "Sin definir";
+
+}
 
       function paymentMethodLabel(
   method = ""
@@ -660,9 +707,8 @@ function timelineDot(
 
           paymentType.textContent =
             paymentTypeLabel(
-              data.payment_type,
-              data.total
-            );
+  data.payment_type
+);
 
         }
 
@@ -703,10 +749,19 @@ function timelineDot(
       data.amount_due || 0
     );
 
+if (
+  data.payment_type !==
+  "open_credit"
+) {
+
   paymentAmount.max =
     String(
-      Number(data.amount_due || 0)
+      Number(
+        data.amount_due || 0
+      )
     );
+
+}
 
 }
 
@@ -1018,7 +1073,24 @@ if (timelineContainer) {
     type: "created",
 
     label:
-      "Pedido registrado",
+
+  data.payment_type === "cash"
+
+    ? "Pedido registrado como contado"
+
+  : data.payment_type === "credit_15"
+
+    ? "Pedido registrado con crédito a 15 días"
+
+  : data.payment_type === "credit_30"
+
+    ? "Pedido registrado con crédito a 30 días"
+
+  : data.payment_type === "open_credit"
+
+    ? "Pedido registrado bajo crédito abierto"
+
+  : "Pedido registrado",
 
     date:
       data.created_at
@@ -1240,38 +1312,147 @@ function updateButtons(
   /* ========================================
     UPDATE DELIVERY
   ======================================== */
+async function updateDelivery(
+  status: string
+) {
 
-  async function updateDelivery(
-    status: string
-  ) {
+  /* =========================
+     CURRENT ORDER
+  ========================= */
 
-    const {
-      error
-    } =
-      await supabase
-        .from("orders")
-        .update({
+  const {
+    data: currentOrder
+  } =
+    await supabase
+      .from("orders")
+      .select(`
+        id,
+        client_id,
+        total,
+        delivery_status
+      `)
+      .eq(
+        "id",
+        orderId
+      )
+      .single();
 
-          delivery_status:
-            status
+  /* =========================
+     UPDATE ORDER
+  ========================= */
 
-        })
-        .eq(
-          "id",
-          orderId
-        );
+  const {
+    error
+  } =
+    await supabase
+      .from("orders")
+      .update({
 
-    if (error) {
+        delivery_status:
+          status
 
-      console.error(error);
+      })
+      .eq(
+        "id",
+        orderId
+      );
 
-      return;
+  if (error) {
+
+    console.error(error);
+
+    showToast(
+      "Error actualizando estado",
+      "error"
+    );
+
+    return;
+
+  }
+
+  /* =========================
+     STATUS LABELS
+  ========================= */
+
+  const labels: Record<
+    string,
+    string
+  > = {
+
+    waiting_supplier:
+      "Esperando proveedor",
+
+    ordered_supplier:
+      "Pedido confirmado",
+
+    ready_delivery:
+      "Listo para entrega",
+
+    on_route:
+      "Pedido en ruta",
+
+    delivered:
+      "Pedido entregado"
+
+  };
+
+  /* =========================
+     SAVE ACTIVITY LOG
+  ========================= */
+
+if (currentOrder) {
+
+  console.log(
+  "saving delivery log",
+  status
+);
+
+  const logResult =
+  await createActivityLog({
+
+    client_id:
+      currentOrder.client_id,
+
+    order_id:
+      currentOrder.id,
+
+    type:
+      "delivery_status_changed",
+
+    title:
+      labels[status] ||
+      "Estado actualizado",
+
+    amount:
+      currentOrder.total,
+
+    metadata: {
+
+      status
 
     }
 
-    await loadOrder();
+  });
 
-  }
+  console.log(
+  "logResult",
+  logResult
+);
+
+}
+
+  /* =========================
+     RELOAD
+  ========================= */
+
+  await loadOrder();
+
+  showToast(
+    "Estado actualizado",
+    "success"
+  );
+
+}
 
   /* ========================================
     EVENTS

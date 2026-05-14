@@ -2,7 +2,10 @@
 
 import { supabase } from "../lib/supabase";
 
-type PaymentType = "credit" | "cash";
+type CreditProfile =
+  | "cash_only"
+  | "auto_terms"
+  | "open_credit";
 
 type Profile = {
   id: string;
@@ -23,7 +26,7 @@ status?: string | null;
   official_client_id?: string | null;
   local_client_id?: string | null;
 
-  payment_type?: PaymentType | null;
+credit_profile?: CreditProfile | null;
 
   created_at?: string | null;
   
@@ -297,41 +300,78 @@ if (
     /* =========================
        CREDIT BADGE
     ========================= */
+const creditBadge =
+  $("creditBadge");
 
-    const creditBadge =
-      $("creditBadge");
+if (creditBadge) {
 
-    if (creditBadge) {
+  const type =
+    profile.credit_profile ||
+    "cash_only";
 
-      const type =
-        profile.payment_type || "cash";
+  creditBadge.classList.remove(
+    "hidden",
+    "contado"
+  );
 
-      creditBadge.classList.remove(
-        "hidden",
-        "contado"
-      );
+  /* =========================
+     CONTADO
+  ========================= */
 
-      if (type === "credit") {
+  if (
+    type ===
+    "cash_only"
+  ) {
 
-        creditBadge.textContent =
-          "Cliente con crédito";
+    creditBadge.textContent =
+      "Pago de contado";
 
-      } else {
+    creditBadge.classList.add(
+      "contado"
+    );
 
-        creditBadge.textContent =
-          "Pago de contado";
+  }
 
-        creditBadge.classList.add(
-          "contado"
-        );
+  /* =========================
+     CREDITO AUTOMATICO
+  ========================= */
 
-      }
+  else if (
+    type ===
+    "auto_terms"
+  ) {
 
-      creditBadge.classList.remove(
-        "hidden"
-      );
+    creditBadge.textContent =
+      "Crédito automático";
 
-    }
+  }
+
+  /* =========================
+     CREDITO ABIERTO
+  ========================= */
+
+  else if (
+    type ===
+    "open_credit"
+  ) {
+
+    creditBadge.textContent =
+      "Crédito abierto";
+
+  }
+
+  else {
+
+    creditBadge.textContent =
+      "Sin definir";
+
+  }
+
+  creditBadge.classList.remove(
+    "hidden"
+  );
+
+}
 
     /* =========================
        INFO
@@ -424,7 +464,7 @@ if (emailInput) {
           count: "exact",
           head: true
         })
-        .eq("user_id", user.id);
+        .eq("client_id", user.id);
 
     setText(
       "ordersTotal",

@@ -385,7 +385,41 @@ function slug(t=""){
 }
 
 function currentSteps(){
-  return questions[mode] || [];
+
+  return (questions[mode] || [])
+    .filter(q => {
+
+      /* ======================
+         NO CONDICIONAL
+      ====================== */
+
+      if(!q.conditional){
+        return true;
+      }
+
+      /* ======================
+         SOLO NO LACIO
+      ====================== */
+
+      if(
+        q.conditional ===
+        "non_lacio"
+      ){
+
+        const hair =
+          answers.hairType?.[0];
+
+        return (
+          hair &&
+          hair !== "lacio"
+        );
+
+      }
+
+      return true;
+
+    });
+
 }
 
 function progress(){
@@ -714,30 +748,73 @@ document.querySelectorAll(".optionCard").forEach(btn=>{
 
 });
 
-  document.getElementById("backBtn")
-    ?.addEventListener("click", ()=>{
-      step--;
-      render();
-    });
+document.getElementById("nextBtn")
+  ?.addEventListener("click", ()=>{
 
-  document.getElementById("nextBtn")
-    ?.addEventListener("click", ()=>{
+    const current =
+      currentSteps()[step];
 
-      const count = selected.length;
+    if(!current){
 
-      if(q.multi && count < 1){
-        alert("Selecciona al menos una opción.");
-        return;
-      }
+      try {
 
-      if(!q.multi && count !== 1){
-        alert("Selecciona una opción.");
-        return;
-      }
+  renderResults();
 
-      step++;
-      render();
-    });
+} catch(err) {
+
+  console.error(err);
+
+}
+      return;
+
+    }
+
+    const selectedNow =
+      answers[current.id] || [];
+
+    const count =
+      selectedNow.length;
+
+    if(
+      current.multi &&
+      count < 1
+    ){
+
+      alert(
+        "Selecciona al menos una opción."
+      );
+
+      return;
+
+    }
+
+    if(
+      !current.multi &&
+      count !== 1
+    ){
+
+      alert(
+        "Selecciona una opción."
+      );
+
+      return;
+
+    }
+
+    step++;
+
+    if(
+      step >= currentSteps().length
+    ){
+
+      renderResults();
+      return;
+
+    }
+
+    render();
+
+  });
 }
 
 /* =========================
@@ -763,9 +840,7 @@ function add(list,item){
 
 function buildRecommendations(){
 
-  const rec = [];
-
-  const all =
+    const all =
     Object.values(answers)
       .flat()
       .map(slug);
@@ -773,11 +848,31 @@ function buildRecommendations(){
   const has = (v)=>
     all.includes(slug(v));
 
+  const usesHeat =
+  !has("sincalor");
+
+
+
+  const rec = [];
+
+
+
   const pick = (text)=>{
 
-    const allMatches = products.filter(p =>
-      slug(p.name).includes(slug(text))
-    );
+const search =
+  slug(text)
+    .replace(/[-\s]/g,"");
+
+const allMatches =
+  products.filter(p => {
+
+    const name =
+      slug(p.name)
+        .replace(/[-\s]/g,"");
+
+    return name.includes(search);
+
+  });
 
     /* cliente final = chico */
     if(mode === "client"){
@@ -803,32 +898,162 @@ function buildRecommendations(){
     });
   };
 
-  const hasAlaciado = has("alaciado");
-  const hasTinte = has("tinte");
+/* ======================
+   PERFIL CAPILAR
+====================== */
 
-  /* ======================
-     BASE
-  ====================== */
+const wantsStraight =
+  has("quiero_lacio");
 
-  if(hasAlaciado || has("meta_color")){
-    add(pick("Shampoo Di Goji"));
-    add(pick("Maschera Di Goji"));
-  }
+const keepShape =
+  has("mantener_forma");
 
-  else if(
-    has("decolorado") ||
-    has("quiebre") ||
-    has("meta_reparar")
-  ){
-    add(pick("Shampoo Ialuronico"));
-    add(pick("Maschera Ialuronico"));
-  }
+const texturedHair =
+  has("rizado") ||
+  has("ondulado") ||
+  has("afro");
 
-  else{
-    add(pick("Shampoo Di Argan"));
-    add(pick("Maschera Di Argan"));
-  }
+const hasAlaciado =
+  has("alaciado");
 
+const hasTinte =
+  has("tinte");
+
+const hasColor =
+  has("diseno_color");
+
+const hasBleach =
+  has("decoloracion_global");
+
+/* ======================
+   FINALE-X
+====================== */
+
+if(
+
+  usesHeat &&
+
+  !keepShape &&
+
+  (
+    wantsStraight ||
+    hasAlaciado
+  )
+
+){
+
+  add(
+    pick("Finale-X"),
+    "Ayuda a mantener un acabado más lacio y controlado."
+  );
+
+}
+/* ======================
+   CURLY
+====================== */
+
+if(
+
+  texturedHair &&
+  keepShape &&
+
+  !wantsStraight
+
+){
+
+  add(
+    pick("Xtyling Curly"),
+    "Ayuda a definir y mantener la forma natural."
+  );
+
+}
+
+/* ======================
+   GOJI
+====================== */
+
+if(
+
+  hasTinte ||
+  hasColor ||
+
+  (
+    hasAlaciado &&
+    !keepShape
+  )
+
+){
+
+  add(
+    pick("Shampoo Di Goji"),
+    "Protección para cabello procesado químicamente."
+  );
+
+  add(
+    pick("Maschera Di Goji"),
+    "Ayuda a mantener brillo y suavidad."
+  );
+
+}
+
+/* ======================
+   IALURONICO
+====================== */
+
+if(
+  hasBleach ||
+  has("quiebre") ||
+  has("elastico") ||
+  has("meta_reparar")
+){
+
+  add(
+    pick("Shampoo Ialuronico"),
+    "Reconstrucción e hidratación profunda."
+  );
+
+  add(
+    pick("Maschera Ialuronico"),
+    "Apoyo intensivo para fibra sensibilizada."
+  );
+
+}
+
+/* ======================
+   HIDRATACION BASE
+====================== */
+
+if(
+
+  texturedHair &&
+  keepShape &&
+
+  !hasBleach &&
+  !wantsStraight
+
+){
+
+  add(
+    pick("Shampoo Di Argan")
+  );
+
+  add(
+    pick("Maschera Di Argan")
+  );
+
+}
+
+/* ======================
+   DEFAULT
+====================== */
+
+if(rec.length < 2){
+
+  add(pick("Shampoo Di Argan"));
+
+  add(pick("Maschera Di Argan"));
+
+}
   /* ======================
      CRECIMIENTO
   ====================== */
@@ -852,42 +1077,103 @@ function buildRecommendations(){
      FRIZZ
   ====================== */
 
-  if(has("meta_frizz")){
+if(has("meta_frizz")){
 
-    if(has("sincalor")){
-      add(pick("Fluido Di Argan"));
-    }else{
-      add(pick("Liss Di Lino"));
-    }
+  if(
+    keepShape &&
+    texturedHair
+  ){
+
+    add(
+      pick("Fluido Di Argan")
+    );
+
   }
+
+  else if(has("sincalor")){
+
+    add(
+      pick("Fluido Di Argan")
+    );
+
+  }
+
+  else{
+
+    add(
+      pick("Liss Di Lino")
+    );
+
+  }
+
+}
 
   /* ======================
      RIZOS
   ====================== */
 
-  if(
+if(
+
+  !wantsStraight &&
+
+  (
     has("meta_rizos") ||
-    has("rizado") ||
-    has("ondulado")
+
+    (
+      texturedHair &&
+      keepShape
+    )
+  )
+
+){
+
+  add(
+    pick("Xtyling Curly")
+  );
+
+}
+
+/* ======================
+   CALOR
+====================== */
+
+if(usesHeat){
+
+  add(
+    pick("Liquid Silk")
+  );
+
+  if(
+    has("decoloracion_global") ||
+    has("quiebre")
   ){
-    add(pick("Xtyling Curly"));
+
+    add(
+      pick("Finale Ialuronico")
+    );
+
   }
 
-  /* ======================
-     CALOR
-  ====================== */
+}
 
-  if(!has("sincalor")){
+/* ======================
+   REPARACION SIN CALOR
+====================== */
 
-    add(pick("Liquid Silk"));
+else{
 
-    if(
-      has("decolorado") ||
-      has("quiebre")
-    ){
-      add(pick("Finale Ialuronico"));
-    }
+  if(
+    has("decoloracion_global") ||
+    has("quiebre")
+  ){
+
+    add(
+      pick("Refill Ialuronico")
+    );
+
   }
+
+}
 
   /* ======================
      ELASTICIDAD
@@ -947,38 +1233,54 @@ function buildRecommendations(){
     if(rec.length < 4) add(x);
   });
 
-  return rec.slice(0,7);
+  return rec.slice(0,8);
 }
 
 function buildDiagnosisText(){
 
-  let damage = 15;
-  let hydration = 82;
-  let frizz = 20;
-  let heatRisk = 10;
-  let scalp = 85;
+  const all =
+    Object.values(answers)
+      .flat()
+      .map(slug);
+
+  const has = (v)=>
+    all.includes(slug(v));
+
+  const usesHeat =
+    !has("sincalor");
+
+  let health = 100;
+
+let damage = 0;
+let hydration = 100;
+let frizz = 0;
+let heatRisk = 0;
+let scalp = 100;
 
   const priorities = [];
   const reasons = [];
   const tips = [];
   const notes = [];
 
-  if(has("decolorado")){
-    damage += 35;
-    hydration -= 28;
-    frizz += 18;
+  if(has("decoloracion_global")){
+    damage += 28;
+hydration -= 20;
+frizz += 12;
+health -= 22;
     notes.push("procesos decolorantes previos");
   }
 
   if(has("tinte")){
-    damage += 18;
-    hydration -= 10;
+    damage += 10;
+hydration -= 6;
+health -= 8;
     notes.push("cabello procesado con color");
   }
 
   if(has("quiebre")){
-    damage += 30;
-    hydration -= 15;
+    damage += 22;
+hydration -= 10;
+health -= 18;
     notes.push("quiebre visible");
   }
 
@@ -989,24 +1291,56 @@ function buildDiagnosisText(){
   }
 
   if(has("frizz")){
-    frizz += 30;
+    frizz += 18;
+health -= 6;
     notes.push("cutícula abierta y frizz");
   }
 
-  if(!has("sincalor")){
-    heatRisk += 45;
-    damage += 12;
-    notes.push("uso frecuente de calor");
-  }
+ if(has("caloralto")){
+
+  heatRisk += 40;
+  damage += 14;
+  hydration -= 10;
+  health -= 18;
+
+}
+
+else if(has("calormedio")){
+
+  heatRisk += 24;
+  damage += 8;
+  hydration -= 5;
+  health -= 10;
+
+}
+
+else if(has("calorbajo")){
+
+  heatRisk += 10;
+  damage += 3;
+  health -= 3;
+
+}
 
   if(has("caida")){
-    scalp -= 20;
+    scalp -= 14;
+health -= 10;
     notes.push("debilidad capilar");
   }
 
-  if(has("rizado") || has("ondulado")){
-    hydration -= 8;
-    frizz += 10;
+if(
+
+  !has("quiero_lacio") &&
+
+  (
+    has("rizado") ||
+    has("ondulado") ||
+    has("afro")
+  )
+
+){
+    hydration -= 4;
+frizz += 5;
     priorities.push("Definir forma natural");
   }
 
@@ -1043,13 +1377,69 @@ function buildDiagnosisText(){
   if(scalp < 70){
     priorities.push("Fortalecer raíz");
     reasons.push("Señales de debilitamiento capilar");
-    tips.push("Masajea cuero cabelludo 3 min diarios con Abbondanza");
+    tips.push("Masajea cuero cabelludo 3 min diarios con Abbondanza ");
   }
 
-  const health =
-    Math.round(
-      (100 - damage + hydration + (100-frizz) + scalp) / 4
-    );
+
+  if(!usesHeat){
+  heatRisk = 0;
+}
+
+    /* ======================
+   NORMALIZAR
+====================== */
+
+damage =
+  Math.max(
+    0,
+    Math.min(100, damage)
+  );
+
+hydration =
+  Math.max(
+    0,
+    Math.min(100, hydration)
+  );
+
+frizz =
+  Math.max(
+    0,
+    Math.min(100, frizz)
+  );
+
+heatRisk =
+  Math.max(
+    0,
+    Math.min(100, heatRisk)
+  );
+
+scalp =
+  Math.max(
+    0,
+    Math.min(100, scalp)
+  );
+
+health =
+  Math.round(
+
+    (
+      (100 - damage) * 0.4 +
+
+      hydration * 0.3 +
+
+      (100 - frizz) * 0.15 +
+
+      scalp * 0.15
+
+    )
+
+  );
+
+health =
+  Math.max(
+    35,
+    Math.min(100, health)
+  );
 
   const finalPriorities =
   [...new Set(priorities)];
@@ -1077,12 +1467,38 @@ if(!finalReasons.length){
 }
 
 if(!finalTips.length){
+
+  if(usesHeat){
+
+    finalTips.push(
+      "Usa protector térmico antes de calor"
+    );
+
+  }
+
   finalTips.push(
-    "Usa protector térmico antes de calor",
     "Recorta puntas regularmente",
     "Aplica mascarilla semanalmente"
   );
 }
+
+health =
+  Math.round(health);
+
+damage =
+  Math.round(damage);
+
+hydration =
+  Math.round(hydration);
+
+frizz =
+  Math.round(frizz);
+
+heatRisk =
+  Math.round(heatRisk);
+
+scalp =
+  Math.round(scalp);
 
 return {
   summary:
@@ -1396,6 +1812,8 @@ step = 0;
 answers = {};
 render();
 };
+
+
 
 }
 

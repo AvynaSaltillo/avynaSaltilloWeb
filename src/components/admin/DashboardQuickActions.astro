@@ -1,3 +1,4 @@
+
 ---
 import {
   Sparkles,
@@ -119,7 +120,7 @@ import {
             "
           ></div>
 
-          System Live
+          Sistema activo
 
         </div>
 
@@ -186,7 +187,8 @@ import {
         "
       >
         Monitorea ventas, actividad comercial, pedidos,
-        clientes y comportamiento operativo desde un solo panel centralizado.
+        clientes, cartera activa y comportamiento operativo
+        desde un solo panel centralizado.
       </p>
 
       <!-- INSIGHTS -->
@@ -199,13 +201,13 @@ import {
 
             rounded-2xl
 
-            border border-white/10
+            border border-emerald-500/15
 
-            bg-black/25
+            bg-emerald-500/10
 
             px-4 py-3
 
-            text-sm text-white/70
+            text-sm text-emerald-300
           "
         >
 
@@ -214,7 +216,7 @@ import {
             className="text-emerald-300"
           />
 
-          +18% crecimiento semanal
+          Crecimiento comercial activo
 
         </div>
 
@@ -225,13 +227,13 @@ import {
 
             rounded-2xl
 
-            border border-white/10
+            border border-yellow-500/15
 
-            bg-black/25
+            bg-yellow-500/10
 
             px-4 py-3
 
-            text-sm text-white/70
+            text-sm text-yellow-300
           "
         >
 
@@ -240,7 +242,7 @@ import {
             className="text-yellow-300"
           />
 
-          2 alertas pendientes
+          Seguimiento financiero pendiente
 
         </div>
 
@@ -251,13 +253,13 @@ import {
 
             rounded-2xl
 
-            border border-white/10
+            border border-sky-500/15
 
-            bg-black/25
+            bg-sky-500/10
 
             px-4 py-3
 
-            text-sm text-white/70
+            text-sm text-sky-300
           "
         >
 
@@ -266,7 +268,7 @@ import {
             className="text-sky-300"
           />
 
-          Actividad en tiempo real
+          Actividad operativa en tiempo real
 
         </div>
 
@@ -397,6 +399,7 @@ import {
             transition-all duration-300
 
             hover:-translate-y-1
+            hover:shadow-[0_20px_60px_rgba(255,255,255,0.08)]
           "
         >
 
@@ -435,7 +438,7 @@ import {
             </h3>
 
             <p class="mt-2 text-sm text-black/55">
-              Gestiona actividad comercial y flujo operativo.
+              Gestión comercial, pedidos y flujo operativo.
             </p>
 
           </div>
@@ -488,7 +491,7 @@ import {
             </h3>
 
             <p class="mt-2 text-sm text-white/45">
-              CRM comercial y administración de cuentas.
+              CRM comercial y administración financiera.
             </p>
 
           </div>
@@ -496,15 +499,19 @@ import {
         </a>
 
         <!-- CREDIT -->
-        <button
+        <a
+          href="/admin/orders"
           class="
             group/action relative overflow-hidden
 
             rounded-[1.75rem]
 
-            border border-white/10
+            border border-yellow-500/10
 
-            bg-white/[0.04]
+            bg-gradient-to-br
+            from-yellow-500/[0.12]
+            via-yellow-500/[0.04]
+            to-black
 
             p-5
 
@@ -513,9 +520,23 @@ import {
             transition-all duration-300
 
             hover:-translate-y-1
-            hover:bg-white/[0.06]
+            hover:border-yellow-400/20
           "
         >
+
+          <div
+            class="
+              absolute -right-10 -top-10
+
+              h-36 w-36
+
+              rounded-full
+
+              bg-yellow-500/10
+
+              blur-3xl
+            "
+          ></div>
 
           <div class="relative">
 
@@ -538,16 +559,16 @@ import {
             </div>
 
             <h3 class="mt-5 text-lg font-semibold">
-              Créditos
+              Cartera activa
             </h3>
 
             <p class="mt-2 text-sm text-white/45">
-              Balance financiero y saldos pendientes.
+              Crédito formal, saldos pendientes y seguimiento financiero.
             </p>
 
           </div>
 
-        </button>
+        </a>
 
         <!-- INVENTORY -->
         <button
@@ -596,7 +617,7 @@ import {
             </h3>
 
             <p class="mt-2 text-sm text-white/45">
-              Actividad, entregas y coordinación interna.
+              Actividad logística, entregas y coordinación interna.
             </p>
 
           </div>

@@ -2,6 +2,14 @@
 
 import { supabase } from "../lib/supabase";
 
+import {
+  getDeliveryEstimate
+} from "../utils/delivery-estimates";
+
+import {
+  getOrderTimeline
+} from "../utils/order-timeline";
+
 const editIcon = `
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +78,8 @@ type Order = {
   due_date?: string;
 
   week_key?: string;
+
+  advisor_name?: string;
 };
 
 document.addEventListener(
@@ -321,6 +331,31 @@ const perPage = 5;
 `;
 
     }
+  
+    function paymentTypeLabel(
+  type = ""
+){
+
+  switch(type){
+
+    case "cash":
+      return "Contado";
+
+    case "credit_15":
+      return "Crédito 15 días";
+
+    case "credit_30":
+      return "Crédito 30 días";
+
+    case "open_credit":
+      return "Crédito abierto";
+
+    default:
+      return "Sin definir";
+
+  }
+
+}
 
     /* =========================
        KPIS
@@ -404,7 +439,7 @@ const perPage = 5;
         items.map((item) => {
 
           return `
-<div class="flex items-center justify-between gap-4 border-b border-white/5 py-3 last:border-0">
+<div class="flex items-center justify-between gap-4 border-b border-white/5 py-3 last:border-0 px-5 py-5">
 
   <div class="min-w-0 flex-1">
 
@@ -431,12 +466,29 @@ const perPage = 5;
 
         }).join("");
 
-      const overdue =
-        order.due_date
-        && Number(order.amount_due || 0) > 0
-        && new Date(order.due_date).getTime() < Date.now();
 
-      const modal =
+
+     const overdue =
+
+  order.payment_type !==
+  "open_credit"
+
+  &&
+
+  order.due_date
+
+  &&
+
+  Number(order.amount_due || 0) > 0
+
+  &&
+
+  new Date(
+    order.due_date
+  ).getTime() < Date.now();
+
+  
+  const modal =
         document.createElement("div");
 
       modal.id =
@@ -449,138 +501,1015 @@ bg-black/70 backdrop-blur-sm
 p-4
 `;
 
-      modal.innerHTML = `
+/* =========================
+   DELIVERY TRACKER
+========================= */
 
-<div class="w-full max-w-2xl rounded-[2rem] border border-white/10 bg-zinc-950 p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+const steps = [
 
-  <div class="flex items-start justify-between gap-4">
+  {
+    key:
+      "waiting_supplier",
+
+    label:
+      "Proveedor",
+
+    icon:
+      "🕓"
+  },
+
+  {
+    key:
+      "ordered_supplier",
+
+    label:
+      "Pedido",
+
+    icon:
+      "📦"
+  },
+
+  {
+    key:
+      "ready_delivery",
+
+    label:
+      "Listo",
+
+    icon:
+      "✅"
+  },
+
+  {
+    key:
+      "on_route",
+
+    label:
+      "Ruta",
+
+    icon:
+      "🚚"
+  },
+
+  {
+    key:
+      "delivered",
+
+    label:
+      "Entregado",
+
+    icon:
+      "✔"
+  }
+
+];
+
+const currentIndex =
+  steps.findIndex(
+    step =>
+      step.key ===
+      order.delivery_status
+  );
+
+  const estimate =
+  getDeliveryEstimate(
+    order
+  );
+
+modal.innerHTML = `
+
+<div
+  class="
+    w-full
+    max-w-4xl
+
+    overflow-hidden
+
+    rounded-[2rem]
+
+    border
+    border-white/10
+
+    bg-[#09090B]/95
+
+    shadow-[0_20px_80px_rgba(0,0,0,0.65)]
+
+    backdrop-blur-2xl
+  "
+>
+
+  <!-- HEADER -->
+
+  <div
+    class="
+      flex
+      items-start
+      justify-between
+      gap-4
+
+      border-b
+      border-white/5
+
+      px-5
+      py-5
+
+      md:px-7
+    "
+  >
 
     <div>
 
-      <p class="text-xs uppercase tracking-[0.3em] text-white/40">
+      <p
+        class="
+          text-[11px]
+          uppercase
+          tracking-[0.32em]
+          text-white/35
+        "
+      >
         Pedido
       </p>
 
-      <h2 class="mt-2 text-2xl font-semibold break-all">
+      <h2
+        class="
+          mt-2
+
+          text-3xl
+          font-semibold
+          tracking-tight
+
+          md:text-4xl
+        "
+      >
         #${order.id.slice(0, 8).toUpperCase()}
       </h2>
 
     </div>
 
-    
-
     <button
       id="closeOrderModal"
-      class="h-10 w-10 shrink-0 rounded-xl border border-white/10 text-white/70 transition hover:bg-white/10"
+
+      class="
+        flex
+        h-11
+        w-11
+
+        shrink-0
+
+        items-center
+        justify-center
+
+        rounded-2xl
+
+        border
+        border-white/10
+
+        text-lg
+        text-white/60
+
+        transition
+
+        hover:bg-white/10
+        hover:text-white
+      "
     >
       ✕
     </button>
 
   </div>
 
-  <div class="mt-6 grid gap-4 sm:grid-cols-4">
+  <!-- BODY -->
 
-    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+  <div
+    class="
+      max-h-[82vh]
 
-      <p class="text-xs text-white/40">
-        Fecha
-      </p>
+      overflow-y-auto
 
-      <p class="mt-2 text-sm font-medium">
-        ${date(order.created_at)}
-      </p>
+      px-5
+py-4
 
-    </div>
+md:px-8
+md:py-8
+    "
+  >
 
-    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+    <!-- TOP GRID -->
 
-      <p class="text-xs text-white/40">
-        Delivery
-      </p>
+    <div
+      class="
+        grid
+        grid-cols-1
+        gap-4
 
-      <div class="mt-2">
-        ${badge(order.delivery_status || "")}
+        lg:grid-cols-3
+      "
+    >
+
+      <!-- DATE -->
+
+      <div
+        class="
+          rounded-[1.5rem]
+
+          border
+          border-white/10
+
+          bg-white/[0.03]
+
+          p-4
+        "
+      >
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="
+              flex
+              h-11
+              w-11
+
+              shrink-0
+
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border
+              border-emerald-500/20
+
+              bg-emerald-500/10
+
+              text-lg
+            "
+          >
+            📅
+          </div>
+
+          <div class="min-w-0">
+
+            <p class="text-sm text-white/45">
+              Fecha
+            </p>
+
+            <p
+              class="
+                mt-1
+
+                text-base
+                font-medium
+                leading-relaxed
+              "
+            >
+              ${date(order.created_at)}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PAYMENT -->
+
+      <div
+        class="
+          rounded-[1.5rem]
+
+          border
+          border-white/10
+
+          bg-white/[0.03]
+
+          p-4
+        "
+      >
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="
+              flex
+              h-11
+              w-11
+
+              shrink-0
+
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border
+              border-yellow-500/20
+
+              bg-yellow-500/10
+
+              text-lg
+            "
+          >
+            💳
+          </div>
+
+          <div>
+
+            <p class="text-sm text-white/45">
+              Pago
+            </p>
+
+            <div class="mt-2">
+              ${paymentBadge(order.payment_status || "")}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- TERMS -->
+
+      <div
+        class="
+          rounded-[1.5rem]
+
+          border
+          border-white/10
+
+          bg-white/[0.03]
+
+          p-4
+        "
+      >
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="
+              flex
+              h-11
+              w-11
+
+              shrink-0
+
+              items-center
+              justify-center
+
+              rounded-2xl
+
+              border
+              border-violet-500/20
+
+              bg-violet-500/10
+
+              text-lg
+            "
+          >
+            %
+          </div>
+
+          <div class="min-w-0">
+
+            <p class="text-sm text-white/45">
+              Condición
+            </p>
+
+            <p
+              class="
+                mt-1
+
+                text-base
+                font-medium
+                leading-relaxed
+              "
+            >
+
+              ${
+                order.payment_type ===
+                "cash"
+
+                  ? "Contado"
+
+                : order.payment_type ===
+                  "credit_15"
+
+                  ? "50% entrega + 50% a 15 días"
+
+                : order.payment_type ===
+                  "credit_30"
+
+                  ? "50% entrega + 50% a 30 días"
+
+                : order.payment_type ===
+                  "open_credit"
+
+                  ? "Crédito abierto"
+
+                : "Sin definir"
+              }
+
+            </p>
+
+          </div>
+
+        </div>
+
       </div>
 
     </div>
 
-    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+<!-- STATUS HEADER -->
 
-      <p class="text-xs text-white/40">
-        Pago
-      </p>
+<div
+  class="
+    mb-8
+    mt-8
 
-      <div class="mt-2">
-        ${paymentBadge(order.payment_status || "")}
-      </div>
+    flex
 
-    </div>
+    flex-col
 
-    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+    gap-4
 
-      <p class="text-xs text-white/40">
-        Condición
-      </p>
+    md:flex-row
+    md:items-end
+    md:justify-between
+  "
+>
 
-      <p class="mt-2 text-sm font-medium">
+  <!-- LEFT -->
+
+  <div>
+
+    <p
+      class="
+        text-[11px]
+
+        uppercase
+
+        tracking-[0.22em]
+
+        text-white/30
+      "
+    >
+      Estado actual
+    </p>
+
+    <h3
+      class="
+        mt-2
+
+        text-[22px]
+
+md:text-[28px]
+
+        font-semibold
+
+        tracking-[-0.03em]
+
+        text-white
+      "
+    >
+      ${estimate.title}
+    </h3>
+
+    <p
+      class="
+        mt-2
+
+        max-w-[480px]
+
+        text-sm
+
+        leading-relaxed
+
+        text-white/55
+      "
+    >
+      ${estimate.description}
+    </p>
+
+  </div>
+
+  <!-- ETA -->
+
+<div
+  class="
+    max-w-[240px]
+
+    rounded-[1.5rem]
+
+    border
+    border-white/8
+
+    bg-white/[0.02]
+
+    px-5
+    py-4
+  "
+>
+
+    <p
+      class="
+        text-[10px]
+
+        uppercase
+
+        tracking-[0.22em]
+
+        text-white/30
+      "
+    >
+      Entrega estimada
+    </p>
+
+    <p
+      class="
+        mt-2
+
+        text-[16px]
+
+        font-semibold
+
+        tracking-[-0.02em]
+
+        text-white
+      "
+    >
+      ${estimate.description}
+    </p>
+
+    <p
+      class="
+        mt-1
+
+        text-xs
+
+        text-white/40
+      "
+    >
+      ${
+  order.delivery_status ===
+  "delivered"
+
+    ? "Entrega completada exitosamente"
+
+  : order.delivery_status ===
+    "on_route"
+
+    ? "Tu pedido llegará pronto"
+
+  : order.delivery_status ===
+    "ready_delivery"
+
+    ? (
+        order.advisor_name
+          ? `${order.advisor_name} está coordinando tu entrega`
+          : "Tu asesor está coordinando tu entrega"
+      )
+
+  : order.delivery_status ===
+    "ordered_supplier"
+
+    ? "Tu pedido está siendo preparado en Guadalajara"
+
+  : "Esperando confirmación de proveedor"
+}
+    </p>
+
+  </div>
+
+</div>
+
+<!-- CLEAN PREMIUM TRACKER -->
+
+<div
+  class="
+    mt-10
+
+    overflow-x-auto
+  
+
+bg-transparent
+
+    scrollbar-none
+  "
+>
+
+  <div
+    class="
+      relative
+
+      flex
+
+      min-w-[680px]
+
+md:min-w-[760px]
+
+      items-center
+
+      justify-between
+    "
+  >
+
+    ${steps.map((step, index) => {
+
+      const active =
+        index <= currentIndex;
+
+      const current =
+        index === currentIndex;
+
+      const timeline =
+        getOrderTimeline(order);
+
+      const event =
+        timeline.find(
+          item =>
+            item.key === step.key
+        );
+
+      const titles: Record<
+        string,
+        string
+      > = {
+
+        waiting_supplier:
+          "Confirmado",
+
+        ordered_supplier:
+          "Preparación",
+
+        ready_delivery:
+          "Listo",
+
+        on_route:
+          "En camino",
+
+        delivered:
+          "Entregado"
+
+      };
+
+      const descriptions: Record<
+        string,
+        string
+      > = {
+
+        waiting_supplier:
+          "Pedido recibido",
+
+        ordered_supplier:
+          "Solicitado al proveedor",
+
+        ready_delivery:
+          "Disponible para entrega",
+
+        on_route:
+          "Tu pedido va en camino",
+
+        delivered:
+          "Entrega completada"
+
+      };
+
+      return `
+
+<div
+  class="
+    relative
+
+    flex
+    w-full
+    flex-col
+    max-w-[170px]
+
+    items-center
+  "
+>
+
+  <!-- LINE -->
+
+  ${
+    index !== steps.length - 1
+
+      ? `
+
+<div
+  class="
+    absolute
+
+    left-[50%]
+    top-[5.5px]
+
+    h-[2.5px]
+    w-full
+
+    ${
+      active
+
+        ? `
+      bg-gradient-to-r
+from-emerald-400/70
+to-white/5
+        `
+
+        : `
+          bg-white/10
+        `
+    }
+  "
+></div>
+
+`
+
+      : ""
+  }
+
+  <!-- DOT -->
+
+  <div
+    class="
+      relative
+      z-10
+
+      h-[13px]
+w-[13px]
+
+      rounded-full
+
+      transition-all
+
+      ${
+        current
+
+          ? `
+            bg-emerald-400
+
+            shadow-[0_0_0_4px_rgba(16,185,129,0.12)]
+          `
+
+          : active
+
+          ? `
+            bg-emerald-500/80
+          `
+
+          : `
+            bg-white/20
+          `
+      }
+    "
+  >
+
+    ${
+      current
+
+        ? `
+
+<div
+  class="
+    absolute
+
+    inset-[-5px]
+
+    rounded-full
+
+    border
+    border-emerald-400/20
+  "
+></div>
+
+`
+
+        : ""
+    }
+
+  </div>
+
+  <!-- CONTENT -->
+
+  <div
+    class="
+      mt-4
+
+      flex
+      h-[72px]
+
+      flex-col
+
+      items-center
+
+      text-center
+    "
+  >
+
+    <p
+      class="
+       text-[12px]
+
+md:text-[13px]
+        font-medium
 
         ${
-          order.payment_type === "cash"
-
-            ? "Contado"
-
-            : Number(order.total || 0) >= 10000
-
-            ? "50% entrega + 50% a 30 días"
-
-            : "50% entrega + 50% a 15 días"
+          active
+            ? "text-white"
+            : "text-white/30"
         }
+      "
+    >
+      ${titles[step.key]}
+    </p>
 
-      </p>
+    ${
+      current
 
-    </div>
+        ? `
+
+<div class="mt-2">
+
+  <p
+    class="
+      text-[12px]
+
+      leading-relaxed
+
+      text-white/50
+    "
+  >
+    ${descriptions[step.key]}
+  </p>
+
+  ${
+    event
+
+      ? `
+
+<p
+  class="
+    mt-3
+
+    text-[9px]
+
+md:text-[10px]
+
+    uppercase
+
+    tracking-[0.22em]
+
+    text-white/20
+  "
+>
+  ${event.time}
+</p>
+
+`
+
+      : ""
+  }
+
+</div>
+
+`
+
+        : ""
+    }
 
   </div>
 
-  <div class="mt-6 max-h-[340px] overflow-y-auto rounded-2xl border border-white/10 bg-white/[0.02] px-4">
+</div>
 
-    ${lines}
+`;
+
+    }).join("")}
 
   </div>
 
-  <div class="mt-6 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+</div>
+    <!-- ITEMS -->
 
-    <div>
+    <div
+      class="
+        mt-6
 
-      <p class="text-xs text-white/40">
-        Total
-      </p>
+        overflow-hidden
 
-      <p class="mt-2 text-2xl font-semibold">
-        ${money(order.total || 0)}
-      </p>
+        rounded-[1.75rem]
+
+        border
+        border-white/10
+
+        bg-white/[0.02]
+      "
+    >
+
+      ${lines}
 
     </div>
 
-    <div class="text-right">
+    <!-- TOTALS -->
 
-      <p class="text-xs text-white/40">
-        Saldo pendiente
-      </p>
+    <div
+      class="
+        mt-6
 
-      <p class="mt-2 text-xl font-semibold ${
-        Number(order.amount_due || 0) > 0
-          ? "text-yellow-300"
-          : "text-white"
-      }">
-        ${money(order.amount_due || 0)}
-      </p>
+        flex
+        flex-col
+        gap-5
 
-      ${overdue ? `
-<div class="mt-3 inline-flex rounded-full border border-red-500/20 bg-red-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-red-300">
+        rounded-[1.75rem]
+
+        border
+        border-white/10
+
+        bg-white/[0.03]
+
+        p-5
+
+        md:flex-row
+        md:items-center
+        md:justify-between
+      "
+    >
+
+      <div>
+
+        <p class="text-sm text-white/45">
+          Total
+        </p>
+
+        <p
+          class="
+            mt-2
+
+            text-4xl
+            font-semibold
+            tracking-tight
+          "
+        >
+          ${money(order.total || 0)}
+        </p>
+
+      </div>
+
+      <div class="text-left md:text-right">
+
+        <p class="text-sm text-white/45">
+          Saldo pendiente
+        </p>
+
+        <p
+          class="
+            mt-2
+
+            text-4xl
+            font-semibold
+            tracking-tight
+
+            ${
+              Number(order.amount_due || 0) > 0
+                ? "text-yellow-300"
+                : "text-white"
+            }
+          "
+        >
+          ${money(order.amount_due || 0)}
+        </p>
+
+        ${overdue ? `
+
+<div
+  class="
+    mt-3
+
+    inline-flex
+
+    rounded-full
+
+    border
+    border-red-500/20
+
+    bg-red-500/10
+
+    px-3
+    py-1
+
+    text-[10px]
+
+    uppercase
+
+    tracking-[0.25em]
+
+    text-red-300
+  "
+>
   Vencido
 </div>
+
 ` : ""}
+
+      </div>
 
     </div>
 
@@ -666,10 +1595,24 @@ p-4
       table.innerHTML =
         list.map((item) => {
 
-          const overdue =
-            item.due_date
-            && Number(item.amount_due || 0) > 0
-            && new Date(item.due_date).getTime() < Date.now();
+         const overdue =
+
+  item.payment_type !==
+  "open_credit"
+
+  &&
+
+  item.due_date
+
+  &&
+
+  Number(item.amount_due || 0) > 0
+
+  &&
+
+  new Date(
+    item.due_date
+  ).getTime() < Date.now();
 
           return `
 
@@ -680,7 +1623,7 @@ p-4
     <div>
 
       <p>
-        #${item.id.slice(0, 8)}
+       #${item.id.slice(0, 8).toUpperCase()}
       </p>
 
       <p class="mt-1 text-xs text-white/40">
@@ -730,6 +1673,41 @@ p-4
 
 <td class="px-4 py-5 text-right">
 
+<div class="flex items-center justify-end gap-2">
+
+  <!-- VER -->
+
+  <button
+    data-id="${item.id}"
+
+    class="
+      view-order
+
+      inline-flex items-center gap-2
+
+      rounded-2xl
+
+      border border-white/10
+
+      px-4 py-2
+
+      text-sm text-white/75
+
+      transition
+
+      hover:bg-white/10
+      hover:text-white
+    "
+  >
+
+    ${eyeIcon}
+
+    Ver
+
+  </button>
+
+  <!-- EDIT -->
+
   ${
     item.delivery_status ===
     "waiting_supplier"
@@ -766,40 +1744,11 @@ p-4
 
 `
 
-      : `
-
-<button
-  data-id="${item.id}"
-
-  class="
-    view-order
-
-    inline-flex items-center gap-2
-
-    rounded-2xl
-
-    border border-white/10
-
-    px-4 py-2
-
-    text-sm text-white/75
-
-    transition
-
-    hover:bg-white/10
-    hover:text-white
-  "
->
-
-  ${eyeIcon}
-
-  Ver detalle
-
-</button>
-
-`
+      : ""
 
   }
+
+</div>
 
 </td>
 </tr>
@@ -1033,6 +1982,7 @@ if (nextPage) {
 
 async function loadOrders() {
 
+
   try {
 
     if (table) {
@@ -1083,7 +2033,7 @@ async function loadOrders() {
 .select(`
   id,
   created_at,
-
+  advisor_name,
   total,
 
   amount_due,
@@ -1104,7 +2054,10 @@ async function loadOrders() {
             quantity,
             unit_price,
             subtotal
-          )
+          ),
+          activity_logs (
+  *
+)
         `)
         .eq(
           "client_id",
@@ -1143,6 +2096,7 @@ async function loadOrders() {
     }
 
   }
+
 
 }
 
@@ -1201,6 +2155,63 @@ nextPage?.addEventListener(
     ========================= */
 
     loadOrders();
+
+    /* =========================
+   REALTIME ORDERS
+========================= */
+
+const {
+  data: { user }
+} =
+  await supabase.auth.getUser();
+
+if (user?.id) {
+
+  supabase
+
+    .channel(
+      "portal-orders-live"
+    )
+
+    .on(
+      "postgres_changes",
+
+      {
+        event: "*",
+
+        schema: "public",
+
+        table: "orders"
+      },
+
+      async (payload) => {
+
+        const row =
+          payload.new as any;
+
+        if (!row) {
+          return;
+        }
+
+        if (
+          row.client_id !==
+          user.id
+        ) {
+          return;
+        }
+
+        /* =========================
+           LIVE REFRESH
+        ========================= */
+
+        await loadOrders();
+
+      }
+    )
+
+    .subscribe();
+
+}
 
   }
 );
