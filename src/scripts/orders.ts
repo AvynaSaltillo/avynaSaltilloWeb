@@ -2,6 +2,8 @@
 
 import { supabase } from "../lib/supabase";
 
+import "../scripts/tracking-map";
+
 import {
   getDeliveryEstimate
 } from "../utils/delivery-estimates";
@@ -105,6 +107,9 @@ document.addEventListener(
     const sortFilter =
       $("sortFilter") as HTMLSelectElement | null;
 
+      const cancelledToggle =
+  $("showCancelled") as HTMLInputElement | null;
+
     const refreshBtn =
     
       $("refreshOrders") as HTMLButtonElement | null;
@@ -126,6 +131,8 @@ const paginationInfo =
     ========================= */
 
     let allOrders: Order[] = [];
+
+    let showCancelled = false;
 
     let currentPage = 1;
 
@@ -324,6 +331,16 @@ const perPage = 5;
 
       }
 
+      if (s === "cancelled") {
+
+  return `
+<span class="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs text-red-300">
+  Cancelado
+</span>
+`;
+
+}
+
       return `
 <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
   Sin definir
@@ -361,56 +378,64 @@ const perPage = 5;
        KPIS
     ========================= */
 
-    function renderStats(
-      list: Order[]
-    ) {
+function renderStats(
+  list: Order[]
+) {
 
-      const totalOrders =
-        list.length;
+  const validOrders =
 
-        const totalAmount =
-  list.reduce(
-    (acc, item) => {
+    list.filter(
+      item =>
 
-      return (
-        acc +
-        Number(item.total || 0)
-      );
+        item.delivery_status !==
+        "cancelled"
+    );
 
-    },
-    0
-  );
+  const totalOrders =
+    validOrders.length;
 
-      const totalBalance =
-        list.reduce(
-          (acc, item) => {
+  const totalAmount =
+    validOrders.reduce(
+      (acc, item) => {
 
-            return (
-              acc +
-              Number(item.amount_due || 0)
-            );
-
-          },
-          0
+        return (
+          acc +
+          Number(item.total || 0)
         );
 
-      setText(
-        "ordersTotal",
-        String(totalOrders)
-      );
+      },
+      0
+    );
 
-      setText(
-        "ordersAmount",
-        money(totalAmount)
-      );
+  const totalBalance =
+    validOrders.reduce(
+      (acc, item) => {
 
-      setText(
-        "ordersBalance",
-        money(totalBalance)
-      );
+        return (
+          acc +
+          Number(item.amount_due || 0)
+        );
 
-    }
+      },
+      0
+    );
 
+  setText(
+    "ordersTotal",
+    String(totalOrders)
+  );
+
+  setText(
+    "ordersAmount",
+    money(totalAmount)
+  );
+
+  setText(
+    "ordersBalance",
+    money(totalBalance)
+  );
+
+}
     /* =========================
        MODAL
     ========================= */
@@ -505,17 +530,14 @@ p-4
    DELIVERY TRACKER
 ========================= */
 
-const steps = [
+const defaultSteps = [
 
   {
     key:
       "waiting_supplier",
 
     label:
-      "Proveedor",
-
-    icon:
-      "🕓"
+      "Confirmado"
   },
 
   {
@@ -523,10 +545,7 @@ const steps = [
       "ordered_supplier",
 
     label:
-      "Pedido",
-
-    icon:
-      "📦"
+      "Preparación"
   },
 
   {
@@ -534,10 +553,7 @@ const steps = [
       "ready_delivery",
 
     label:
-      "Listo",
-
-    icon:
-      "✅"
+      "Listo"
   },
 
   {
@@ -545,10 +561,7 @@ const steps = [
       "on_route",
 
     label:
-      "Ruta",
-
-    icon:
-      "🚚"
+      "En camino"
   },
 
   {
@@ -556,13 +569,35 @@ const steps = [
       "delivered",
 
     label:
-      "Entregado",
-
-    icon:
-      "✔"
+      "Entregado"
   }
 
 ];
+
+const steps =
+
+  order.delivery_status ===
+  "cancelled"
+
+    ? [
+
+        ...defaultSteps,
+
+        {
+          key:
+            "cancelled",
+
+          label:
+            "Cancelado"
+        }
+
+      ]
+
+    : defaultSteps;
+
+const isCancelled =
+  order.delivery_status ===
+  "cancelled";
 
 const currentIndex =
   steps.findIndex(
@@ -588,7 +623,7 @@ modal.innerHTML = `
     rounded-[2rem]
 
     border
-    border-white/10
+    border-white/6
 
     bg-[#09090B]/95
 
@@ -617,13 +652,17 @@ modal.innerHTML = `
     "
   >
 
+  
     <div>
 
       <p
         class="
           text-[11px]
+
           uppercase
+
           tracking-[0.32em]
+
           text-white/35
         "
       >
@@ -636,6 +675,7 @@ modal.innerHTML = `
 
           text-3xl
           font-semibold
+
           tracking-tight
 
           md:text-4xl
@@ -662,7 +702,7 @@ modal.innerHTML = `
         rounded-2xl
 
         border
-        border-white/10
+        border-white/6
 
         text-lg
         text-white/60
@@ -687,19 +727,21 @@ modal.innerHTML = `
       overflow-y-auto
 
       px-5
-py-4
+      py-5
 
-md:px-8
-md:py-8
+      md:px-8
+      md:py-8
     "
   >
 
-    <!-- TOP GRID -->
+      <!-- INFO GRID -->
 
     <div
       class="
+
         grid
         grid-cols-1
+
         gap-4
 
         lg:grid-cols-3
@@ -710,64 +752,40 @@ md:py-8
 
       <div
         class="
-          rounded-[1.5rem]
+          rounded-[1.75rem]
 
           border
-          border-white/10
+          border-white/6
 
-          bg-white/[0.03]
+          bg-white/[0.02]
 
           p-4
         "
       >
 
-        <div class="flex items-center gap-3">
+        <p
+          class="
+            text-sm
 
-          <div
-            class="
-              flex
-              h-11
-              w-11
+            text-white/45
+          "
+        >
+          Fecha
+        </p>
 
-              shrink-0
+        <p
+          class="
+            mt-2
 
-              items-center
-              justify-center
+            text-lg
 
-              rounded-2xl
+            font-medium
 
-              border
-              border-emerald-500/20
-
-              bg-emerald-500/10
-
-              text-lg
-            "
-          >
-            📅
-          </div>
-
-          <div class="min-w-0">
-
-            <p class="text-sm text-white/45">
-              Fecha
-            </p>
-
-            <p
-              class="
-                mt-1
-
-                text-base
-                font-medium
-                leading-relaxed
-              "
-            >
-              ${date(order.created_at)}
-            </p>
-
-          </div>
-
-        </div>
+            text-white
+          "
+        >
+          ${date(order.created_at)}
+        </p>
 
       </div>
 
@@ -775,406 +793,426 @@ md:py-8
 
       <div
         class="
-          rounded-[1.5rem]
+          rounded-[1.75rem]
 
           border
-          border-white/10
+          border-white/6
 
-          bg-white/[0.03]
+          bg-white/[0.02]
 
           p-4
         "
       >
 
-        <div class="flex items-center gap-3">
+        <p
+          class="
+            text-sm
 
-          <div
-            class="
-              flex
-              h-11
-              w-11
+            text-white/45
+          "
+        >
+          Pago
+        </p>
 
-              shrink-0
+        <div class="mt-3">
+          ${
+  order.delivery_status ===
+  "cancelled"
 
-              items-center
-              justify-center
+    ? paymentBadge("cancelled")
 
-              rounded-2xl
-
-              border
-              border-yellow-500/20
-
-              bg-yellow-500/10
-
-              text-lg
-            "
-          >
-            💳
-          </div>
-
-          <div>
-
-            <p class="text-sm text-white/45">
-              Pago
-            </p>
-
-            <div class="mt-2">
-              ${paymentBadge(order.payment_status || "")}
-            </div>
-
-          </div>
-
+    : paymentBadge(
+        order.payment_status || ""
+      )
+}
         </div>
 
       </div>
 
       <!-- TERMS -->
 
+      ${
+order.delivery_status ===
+"cancelled"
+
+    ? ""
+
+    : `
+
       <div
         class="
-          rounded-[1.5rem]
+          rounded-[1.75rem]
 
           border
-          border-white/10
+          border-white/6
 
-          bg-white/[0.03]
+          bg-white/[0.02]
 
           p-4
         "
       >
 
-        <div class="flex items-center gap-3">
+        <p
+          class="
+            text-sm
 
-          <div
-            class="
-              flex
-              h-11
-              w-11
+            text-white/45
+          "
+        >
+          Condición comercial
+        </p>
 
-              shrink-0
+        <p
+          class="
+            mt-2
 
-              items-center
-              justify-center
+            text-base
 
-              rounded-2xl
+            font-medium
 
-              border
-              border-violet-500/20
+            leading-relaxed
 
-              bg-violet-500/10
+            text-white
+          "
+        >
 
-              text-lg
-            "
-          >
-            %
-          </div>
+          ${
+            order.payment_type ===
+            "cash"
 
-          <div class="min-w-0">
+              ? "Contado"
 
-            <p class="text-sm text-white/45">
-              Condición
-            </p>
+            : order.payment_type ===
+              "credit_15"
 
-            <p
-              class="
-                mt-1
+              ? "50% entrega + 50% a 15 días"
 
-                text-base
-                font-medium
-                leading-relaxed
-              "
-            >
+            : order.payment_type ===
+              "credit_30"
 
-              ${
-                order.payment_type ===
-                "cash"
+              ? "50% entrega + 50% a 30 días"
 
-                  ? "Contado"
+            : order.payment_type ===
+              "open_credit"
 
-                : order.payment_type ===
-                  "credit_15"
+              ? "Crédito abierto"
 
-                  ? "50% entrega + 50% a 15 días"
+            : "Sin definir"
+          }
 
-                : order.payment_type ===
-                  "credit_30"
+        </p>
 
-                  ? "50% entrega + 50% a 30 días"
+      </div>
 
-                : order.payment_type ===
-                  "open_credit"
+          `
+        }
 
-                  ? "Crédito abierto"
+    </div>
 
-                : "Sin definir"
-              }
 
-            </p>
 
-          </div>
 
-        </div>
+    <!-- STATUS HERO -->
+
+    <div
+      class="
+      mt-10
+        flex
+
+        flex-col
+
+        gap-6
+
+        md:flex-row
+        md:items-end
+        md:justify-between
+      "
+    >
+
+      <!-- LEFT -->
+
+      <div>
+
+        <p
+          class="
+            text-[11px]
+
+            uppercase
+
+            tracking-[0.22em]
+
+            text-white/30
+          "
+        >
+          Estado actual
+        </p>
+
+        <h3
+          class="
+            mt-3
+
+            text-[32px]
+
+            font-semibold
+
+            tracking-[-0.04em]
+
+            text-white
+
+            md:text-[44px]
+          "
+        >
+          ${
+  isCancelled
+
+    ? "Pedido cancelado"
+
+    : estimate.title
+}
+
+        </h3>
+
+        <p
+          class="
+            mt-3
+
+            max-w-[560px]
+
+            text-sm
+
+            leading-relaxed
+
+            text-white/55
+          "
+        >
+         ${
+  isCancelled
+
+    ? "Cancelado."
+
+    : estimate.description
+}
+        </p>
+
+      </div>
+
+      <!-- ETA -->
+
+      <div
+        class="
+          flex
+          flex-col
+
+          items-start
+
+          md:items-end
+        "
+      >
+
+<p
+  class="
+    text-[10px]
+
+    uppercase
+
+    tracking-[0.24em]
+
+    text-white/25
+  "
+>
+  ${
+    isCancelled
+      ? "Estado"
+      : "Ventana estimada"
+  }
+</p>
+
+        <p
+          class="
+            mt-2
+
+            text-[18px]
+
+            font-semibold
+
+            tracking-[-0.03em]
+
+            text-white
+          "
+        >
+          ${
+  isCancelled
+
+    ? "Cancelado."
+
+    : estimate.description
+}
+        </p>
+
+        <p
+          class="
+            mt-2
+
+            max-w-[240px]
+
+            text-sm
+
+            leading-relaxed
+
+            text-white/40
+
+            md:text-right
+          "
+        >
+          ${
+order.delivery_status ===
+"cancelled"
+
+  ? "El pedido fue cancelado"
+
+:
+
+            order.delivery_status ===
+            "delivered"
+
+              ? "Entrega completada exitosamente"
+
+            : order.delivery_status ===
+              "on_route"
+
+              ? "Tu pedido llegará pronto"
+
+              
+
+              
+
+            : order.delivery_status ===
+              "ready_delivery"
+
+              ? (
+                  order.advisor_name
+                    ? `${order.advisor_name} está coordinando tu entrega`
+                    : "Tu asesor está coordinando tu entrega"
+                )
+
+            : order.delivery_status ===
+              "ordered_supplier"
+
+              ? "Tu pedido está siendo preparado en Guadalajara"
+
+            : "Esperando confirmación de proveedor"
+          }
+        </p>
 
       </div>
 
     </div>
+    
+    <!-- TRACKER -->
 
-<!-- STATUS HEADER -->
-
-<div
-  class="
-    mb-8
-    mt-8
-
-    flex
-
-    flex-col
-
-    gap-4
-
-    md:flex-row
-    md:items-end
-    md:justify-between
-  "
->
-
-  <!-- LEFT -->
-
-  <div>
-
-    <p
+    <div
       class="
-        text-[11px]
+      pb-2
+      mt-8
+        pt-2
 
-        uppercase
+        overflow-x-auto
+        overflow-y-visible
 
-        tracking-[0.22em]
-
-        text-white/30
+        scrollbar-none
       "
     >
-      Estado actual
-    </p>
 
-    <h3
-      class="
-        mt-2
+      <div
+        class="
+          relative
 
-        text-[22px]
+          flex
 
-md:text-[28px]
+          min-w-[680px]
 
-        font-semibold
+          items-center
 
-        tracking-[-0.03em]
+          justify-between
 
-        text-white
-      "
-    >
-      ${estimate.title}
-    </h3>
+          md:min-w-[760px]
+        "
+      >
 
-    <p
-      class="
-        mt-2
+        ${steps.map((step, index) => {
 
-        max-w-[480px]
+          const active =
 
-        text-sm
+  isCancelled
 
-        leading-relaxed
+    ? step.key ===
+      "cancelled"
 
-        text-white/55
-      "
-    >
-      ${estimate.description}
-    </p>
+    : index <= currentIndex;
 
-  </div>
+          const current =
+            index === currentIndex;
 
-  <!-- ETA -->
+          const timeline =
+            getOrderTimeline(order);
 
-<div
-  class="
-    max-w-[240px]
+          const event =
+            timeline.find(
+              item =>
+                item.key === step.key
+            );
 
-    rounded-[1.5rem]
+          const titles: Record<
+            string,
+            string
+          > = {
 
-    border
-    border-white/8
+            waiting_supplier:
+              "Recibido",
 
-    bg-white/[0.02]
+            ordered_supplier:
+              "Confirmado",
 
-    px-5
-    py-4
-  "
->
+            ready_delivery:
+              "Listo",
 
-    <p
-      class="
-        text-[10px]
+            on_route:
+              "En camino",
 
-        uppercase
+            delivered:
+              "Entregado",
 
-        tracking-[0.22em]
+            cancelled:
+              "Cancelado",
 
-        text-white/30
-      "
-    >
-      Entrega estimada
-    </p>
+          };
 
-    <p
-      class="
-        mt-2
+          const descriptions: Record<
+            string,
+            string
+          > = {
 
-        text-[16px]
+            waiting_supplier:
+              "Pedido recibido",
 
-        font-semibold
+            ordered_supplier:
+              "Solicitado al proveedor",
 
-        tracking-[-0.02em]
+            ready_delivery:
+              "Disponible para entrega",
 
-        text-white
-      "
-    >
-      ${estimate.description}
-    </p>
+            on_route:
+              "Tu pedido va en camino",
 
-    <p
-      class="
-        mt-1
+            delivered:
+              "Entrega completada",
 
-        text-xs
+            cancelled:
+              "El pedido fue cancelado",
 
-        text-white/40
-      "
-    >
-      ${
-  order.delivery_status ===
-  "delivered"
+          };
 
-    ? "Entrega completada exitosamente"
-
-  : order.delivery_status ===
-    "on_route"
-
-    ? "Tu pedido llegará pronto"
-
-  : order.delivery_status ===
-    "ready_delivery"
-
-    ? (
-        order.advisor_name
-          ? `${order.advisor_name} está coordinando tu entrega`
-          : "Tu asesor está coordinando tu entrega"
-      )
-
-  : order.delivery_status ===
-    "ordered_supplier"
-
-    ? "Tu pedido está siendo preparado en Guadalajara"
-
-  : "Esperando confirmación de proveedor"
-}
-    </p>
-
-  </div>
-
-</div>
-
-<!-- CLEAN PREMIUM TRACKER -->
-
-<div
-  class="
-    mt-10
-
-    overflow-x-auto
-  
-
-bg-transparent
-
-    scrollbar-none
-  "
->
-
-  <div
-    class="
-      relative
-
-      flex
-
-      min-w-[680px]
-
-md:min-w-[760px]
-
-      items-center
-
-      justify-between
-    "
-  >
-
-    ${steps.map((step, index) => {
-
-      const active =
-        index <= currentIndex;
-
-      const current =
-        index === currentIndex;
-
-      const timeline =
-        getOrderTimeline(order);
-
-      const event =
-        timeline.find(
-          item =>
-            item.key === step.key
-        );
-
-      const titles: Record<
-        string,
-        string
-      > = {
-
-        waiting_supplier:
-          "Confirmado",
-
-        ordered_supplier:
-          "Preparación",
-
-        ready_delivery:
-          "Listo",
-
-        on_route:
-          "En camino",
-
-        delivered:
-          "Entregado"
-
-      };
-
-      const descriptions: Record<
-        string,
-        string
-      > = {
-
-        waiting_supplier:
-          "Pedido recibido",
-
-        ordered_supplier:
-          "Solicitado al proveedor",
-
-        ready_delivery:
-          "Disponible para entrega",
-
-        on_route:
-          "Tu pedido va en camino",
-
-        delivered:
-          "Entrega completada"
-
-      };
-
-      return `
+          return `
 
 <div
   class="
@@ -1182,8 +1220,9 @@ md:min-w-[760px]
 
     flex
     w-full
-    flex-col
     max-w-[170px]
+
+    flex-col
 
     items-center
   "
@@ -1200,25 +1239,61 @@ md:min-w-[760px]
   class="
     absolute
 
-    left-[50%]
-    top-[5.5px]
+    left-[calc(50%+20px)]
+right-[calc(-50%+20px)]
 
-    h-[2.5px]
-    w-full
+    top-[5px]
 
-    ${
-      active
+    h-[3px]
 
-        ? `
-      bg-gradient-to-r
-from-emerald-400/70
-to-white/5
-        `
+    rounded-full
 
-        : `
-          bg-white/10
-        `
-    }
+${
+  active
+
+    ? current
+
+      ? `
+        ${
+          isCancelled
+
+            ? `
+              bg-gradient-to-r
+              from-red-400
+              via-red-400/60
+              to-transparent
+            `
+
+            : `
+            bg-[linear-gradient(to_right,_rgb(52_211_153)_0%,_rgb(52_211_153/.25)_40%,_transparent_80%)]
+
+before:absolute
+before:inset-0
+
+before:rounded-full
+
+before:bg-[linear-gradient(90deg,transparent,rgba(52,211,153,0.25),transparent)]
+
+before:animate-[shimmer_3.2s_linear_infinite]
+
+overflow-hidden
+             
+            `
+        }
+      `
+
+      : `
+        ${
+          isCancelled
+            ? "bg-red-400/75"
+            : "bg-emerald-400"
+        }
+      `
+
+    : `
+      bg-white/12
+    `
+}
   "
 ></div>
 
@@ -1234,32 +1309,46 @@ to-white/5
       relative
       z-10
 
-      h-[13px]
-w-[13px]
+      h-[14px]
+      w-[14px]
 
       rounded-full
 
       transition-all
 
       ${
-        current
+  current
 
-          ? `
-            bg-emerald-400
+    ? isCancelled
 
-            shadow-[0_0_0_4px_rgba(16,185,129,0.12)]
-          `
+      ? `
+        bg-red-400
 
-          : active
+        shadow-[0_0_0_3px_rgba(248,113,113,0.12)]
+      `
 
-          ? `
-            bg-emerald-500/80
-          `
+      : `
+        bg-emerald-400
+        animate-[breathe_2.6s_ease-in-out_infinite]
+        shadow-[0_0_0_4px_rgba(16,185,129,0.22)]
+      `
 
-          : `
-            bg-white/20
-          `
-      }
+    : active
+
+    ? isCancelled
+
+      ? `
+        bg-red-400/80
+      `
+
+      : `
+        bg-emerald-500/80
+      `
+
+    : `
+      bg-white/20
+    `
+}
     "
   >
 
@@ -1271,13 +1360,17 @@ w-[13px]
 <div
   class="
     absolute
-
-    inset-[-5px]
+animate-[ripple_2s_ease-out_infinite]
+    inset-[-8px]
 
     rounded-full
 
     border
-    border-emerald-400/20
+   ${
+  isCancelled
+    ? "border-red-400/10"
+    : "border-emerald-400/40"
+}
   "
 ></div>
 
@@ -1307,9 +1400,8 @@ w-[13px]
 
     <p
       class="
-       text-[12px]
+        text-[12px]
 
-md:text-[13px]
         font-medium
 
         ${
@@ -1352,8 +1444,6 @@ md:text-[13px]
 
     text-[9px]
 
-md:text-[10px]
-
     uppercase
 
     tracking-[0.22em]
@@ -1382,23 +1472,25 @@ md:text-[10px]
 
 `;
 
-    }).join("")}
+        }).join("")}
 
-  </div>
+      </div>
 
-</div>
+    </div>
+
+
     <!-- ITEMS -->
 
     <div
       class="
-        mt-6
+        mt-10
 
         overflow-hidden
 
-        rounded-[1.75rem]
+        rounded-[2rem]
 
         border
-        border-white/10
+        border-white/6
 
         bg-white/[0.02]
       "
@@ -1408,80 +1500,137 @@ md:text-[10px]
 
     </div>
 
-    <!-- TOTALS -->
+        
+
+    <!-- SUMMARY -->
 
     <div
       class="
-        mt-6
+        mt-12
 
-        flex
-        flex-col
-        gap-5
-
-        rounded-[1.75rem]
+        rounded-[2rem]
 
         border
-        border-white/10
+        border-white/6
 
-        bg-white/[0.03]
+        bg-white/[0.02]
 
-        p-5
+        p-6
 
-        md:flex-row
-        md:items-center
-        md:justify-between
+        md:p-7
       "
     >
 
-      <div>
+      <div
+        class="
+          flex
 
-        <p class="text-sm text-white/45">
-          Total
-        </p>
+          flex-col
 
-        <p
+          gap-8
+
+          md:flex-row
+          md:items-end
+          md:justify-between
+        "
+      >
+
+        <div>
+
+          <p
+            class="
+              text-sm
+
+              text-white/40
+            "
+          >
+            Total del pedido
+          </p>
+
+          <p
+            class="
+              mt-3
+
+              text-[48px]
+
+              font-semibold
+
+              tracking-[-0.05em]
+
+              text-white
+            "
+          >
+           ${money(order.total || 0)}
+          </p>
+
+        </div>
+
+        <div
           class="
-            mt-2
+            flex
 
-            text-4xl
-            font-semibold
-            tracking-tight
+            flex-col
+
+            items-start
+
+            md:items-end
           "
         >
-          ${money(order.total || 0)}
-        </p>
 
-      </div>
+          <p
+            class="
+              text-sm
 
-      <div class="text-left md:text-right">
+              text-white/40
+            "
+          >
+            Saldo pendiente
+          </p>
 
-        <p class="text-sm text-white/45">
-          Saldo pendiente
-        </p>
+          <p
+            class="
+              mt-3
 
-        <p
-          class="
-            mt-2
+              text-[48px]
 
-            text-4xl
-            font-semibold
-            tracking-tight
+              font-semibold
 
-            ${
-              Number(order.amount_due || 0) > 0
-                ? "text-yellow-300"
-                : "text-white"
-            }
-          "
-        >
-          ${money(order.amount_due || 0)}
-        </p>
+              tracking-[-0.05em]
 
-        ${overdue ? `
+              ${
+                order.delivery_status ===
+"cancelled"
+
+  ? "text-white/30"
+
+  : Number(order.amount_due || 0) > 0
+
+    ? "text-yellow-300"
+
+    : "text-white"
+              }
+            "
+          >
+           ${
+  order.delivery_status ===
+  "cancelled"
+
+    ? "$0.00"
+
+    : money(order.amount_due || 0)
+}
+          </p>
+
+          ${
+  overdue &&
+  order.delivery_status !==
+    "cancelled"
+
+    ? `
 
 <div
   class="
-    mt-3
+    mt-4
 
     inline-flex
 
@@ -1507,7 +1656,12 @@ md:text-[10px]
   Vencido
 </div>
 
-` : ""}
+`
+
+              : ""
+          }
+
+        </div>
 
       </div>
 
@@ -1616,7 +1770,23 @@ md:text-[10px]
 
           return `
 
-<tr class="border-b border-white/5 transition hover:bg-white/[0.03]">
+<tr class="
+  border-b
+  border-white/5
+
+  transition
+
+  hover:bg-white/[0.03]
+
+  ${
+    item.delivery_status ===
+    "cancelled"
+
+      ? "opacity-50"
+
+      : ""
+  }
+">
 
   <td class="px-4 py-5 font-medium">
 
@@ -1642,34 +1812,66 @@ md:text-[10px]
   </td>
 
   <td class="px-4 py-5">
-    ${paymentBadge(item.payment_status || "")}
+    ${
+  item.delivery_status ===
+  "cancelled"
+
+    ? paymentBadge("cancelled")
+
+    : paymentBadge(
+        item.payment_status || ""
+      )
+}
   </td>
 
   <td class="px-4 py-5 font-semibold">
     ${money(item.total || 0)}
   </td>
 
-  <td class="px-4 py-5 ${
+  <td class="px-4 py-5">
+
+  ${
+    item.delivery_status ===
+    "cancelled"
+
+      ? `
+
+<span class="text-white/30">
+  —
+</span>
+
+`
+
+      : `
+
+<div class="
+  ${
     Number(item.amount_due || 0) > 0
       ? "text-yellow-300"
       : "text-white/70"
-  }">
+  }
+">
 
-    <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2">
 
-      <span>
-        ${money(item.amount_due || 0)}
-      </span>
+    <span>
+      ${money(item.amount_due || 0)}
+    </span>
 
-      ${overdue ? `
+    ${overdue ? `
 <div class="inline-flex w-fit rounded-full border border-red-500/20 bg-red-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-red-300">
   Vencido
 </div>
 ` : ""}
 
-    </div>
+  </div>
 
-  </td>
+</div>
+
+`
+  }
+
+</td>
 
 <td class="px-4 py-5 text-right">
 
@@ -1801,6 +2003,17 @@ md:text-[10px]
       let list = [
         ...allOrders
       ];
+
+      if (!showCancelled) {
+
+  list = list.filter(
+    item =>
+
+      item.delivery_status !==
+      "cancelled"
+  );
+
+}
 
       const search =
         searchInput?.value
@@ -2117,7 +2330,22 @@ async function loadOrders() {
     sortFilter?.addEventListener(
       "change",
       applyFilters
+      
     );
+  
+    cancelledToggle?.addEventListener(
+  "change",
+  () => {
+
+    showCancelled =
+      cancelledToggle.checked;
+
+    currentPage = 1;
+
+    applyFilters();
+
+  }
+);
 
     refreshBtn?.addEventListener(
       "click",

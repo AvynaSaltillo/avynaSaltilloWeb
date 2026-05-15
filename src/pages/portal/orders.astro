@@ -80,7 +80,14 @@ import {
   </section>
 
   <!-- FILTERS -->
-  <section class="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
+  <section
+  class="
+    grid
+    gap-4
+
+    lg:grid-cols-[1fr_220px_220px_220px]
+  "
+>
 
     <!-- SEARCH -->
     <div class="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/[0.05] px-4 transition focus-within:border-white/40 focus-within:ring-1 focus-within:ring-white/20">
@@ -137,6 +144,55 @@ import {
 
     </select>
 
+    <!-- CANCELLED TOGGLE -->
+
+<label
+  class="
+    flex
+    h-14
+
+    items-center
+    justify-between
+
+    rounded-2xl
+
+    border
+    border-white/20
+
+    bg-zinc-900
+
+    px-4
+
+    text-sm
+    text-white/70
+
+    transition
+
+    hover:border-white/30
+  "
+>
+
+  <span class="truncate">
+    Mostrar cancelados
+  </span>
+
+  <input
+    id="showCancelled"
+
+    type="checkbox"
+
+    class="
+      h-4
+      w-4
+
+      shrink-0
+
+      accent-white
+    "
+  />
+
+</label>
+
     <!-- SORT -->
     <select
       id="sortFilter"
@@ -156,6 +212,7 @@ import {
       </option>
 
     </select>
+    
 
   </section>
 
@@ -375,6 +432,16 @@ import {
   </section>
 
 </section>
+
+<script define:vars={{
+  MAPBOX_TOKEN:
+    import.meta.env.PUBLIC_MAPBOX_TOKEN
+}}>
+
+  window.MAPBOX_TOKEN =
+    MAPBOX_TOKEN;
+
+</script>
 
 <script>
   import "../../scripts/orders.ts";

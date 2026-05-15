@@ -188,6 +188,18 @@ export async function createOrder({
    BUSCAR PEDIDO SEMANAL
 ======================================== */
 
+const activeStatuses = [
+
+  "waiting_supplier",
+
+  "ordered_supplier",
+
+  "ready_delivery",
+
+  "on_route"
+
+];
+
 const {
   data: existingOrder
 } = await supabase
@@ -203,6 +215,10 @@ const {
   .eq(
     "week_key",
     weekKey
+  )
+  .in(
+    "delivery_status",
+    activeStatuses
   )
   .order(
     "created_at",

@@ -427,19 +427,46 @@ const {
     "week_key",
     getCurrentWeekKey()
   )
+  .neq(
+  "delivery_status",
+  "cancelled"
+)
   .order(
     "created_at",
     {
       ascending: false
     }
   )
+  
   .limit(1)
   .maybeSingle();
 
-  if (!order) return;
+if (!order) return;
+
+/* ========================================
+   IGNORAR CANCELADOS
+======================================== */
+
+if (
+  order.delivery_status ===
+  "cancelled"
+) {
 
   existingWeeklyOrder =
-    order;
+    null;
+
+  orderLocked = false;
+
+  cart = [];
+
+  renderAll();
+
+  return;
+
+}
+
+existingWeeklyOrder =
+  order;
 
   /* ========================================
      🔒 SI YA ESTÁ BLOQUEADO

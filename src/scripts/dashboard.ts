@@ -174,19 +174,20 @@ async function loadDashboard() {
       await supabase
 
         .from("orders")
-
-        .select("*")
-
-        .eq(
-          "client_id",
-          user.id
-        )
-
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
+.select("*")
+.eq(
+  "client_id",
+  user.id
+)
+.neq(
+  "delivery_status",
+  "cancelled"
+)
+.order(
+  "created_at",
+  {
+    ascending: false
+  }
         );
 
     if (ordersError) {
