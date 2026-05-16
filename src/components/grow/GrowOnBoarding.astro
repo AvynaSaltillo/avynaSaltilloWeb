@@ -1,0 +1,137 @@
+---
+// src/components/grow/GrowOnBoarding.astro
+
+import {
+  CalendarCheck,
+  Sparkles,
+  UserPlus,
+  PackageCheck,
+  ArrowRight
+} from "lucide-react";
+
+const steps = [
+  {
+    icon: CalendarCheck,
+    step: "01",
+    title: "Agenda una cita",
+    text:
+      "Conocemos tu salón, necesidades y objetivos para validar el perfil comercial AVYNA."
+  },
+  {
+    icon: Sparkles,
+    step: "02",
+    title: "Descubre beneficios",
+    text:
+      "Te mostramos catálogo profesional, precios salón, beneficios y condiciones comerciales."
+  },
+  {
+    icon: UserPlus,
+    step: "03",
+    title: "Activa tu acceso",
+    text:
+      "Registramos tu salón dentro del Portal AVYNA para comenzar a trabajar contigo."
+  },
+  {
+    icon: PackageCheck,
+    step: "04",
+    title: "Realiza tu pedido",
+    text:
+      "Comienza a comprar productos AVYNA y recibe atención cercana con entregas rápidas."
+  }
+];
+---
+
+<section
+  id="como-funciona"
+  class="relative overflow-hidden bg-black px-6 py-24 text-white"
+>
+
+  <!-- BG -->
+  <div class="pointer-events-none absolute inset-0">
+
+    <div class="absolute left-0 top-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+
+    <div class="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_35%)]"></div>
+
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl">
+
+    <!-- HEADER -->
+    <div class="mx-auto max-w-4xl text-center">
+
+      <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+        <Sparkles size={15} />
+        Cómo comenzar
+      </div>
+
+      <h2 class="mt-6 text-4xl font-bold tracking-tight md:text-6xl">
+        Empieza a trabajar
+        <span class="block text-zinc-400">
+          con AVYNA Grow
+        </span>
+      </h2>
+
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
+        Un proceso cercano, profesional y diseñado para ayudarte
+        a crecer con estructura real.
+      </p>
+
+    </div>
+
+    <!-- STEPS -->
+    <div class="relative mt-18 grid gap-6 lg:grid-cols-4">
+
+      {steps.map((item, i) => {
+
+        const Icon = item.icon;
+
+        return (
+
+          <div class="relative">
+
+            {/* line desktop */}
+            {i !== steps.length - 1 && (
+              <div class="absolute left-[calc(100%-1rem)] top-16 hidden h-px w-[calc(100%-2rem)] bg-white/10 lg:block"></div>
+            )}
+
+            <article class="group relative h-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-7 backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/8">
+
+              <!-- glow -->
+              <div class="absolute right-0 top-0 h-40 w-40 rounded-full bg-white/5 blur-3xl opacity-0 transition duration-500 group-hover:opacity-100"></div>
+
+              <!-- step -->
+              <div class="mb-6 flex items-center justify-between">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+                  <Icon size={22} />
+                </div>
+
+                <span class="text-sm font-semibold tracking-[0.25em] text-white/25">
+                  {item.step}
+                </span>
+
+              </div>
+
+              <h3 class="text-2xl font-bold">
+                {item.title}
+              </h3>
+
+              <p class="mt-4 leading-relaxed text-white/60">
+                {item.text}
+              </p>
+
+            </article>
+
+          </div>
+
+        );
+      })}
+
+    </div>
+
+  </div>
+
+</section>
