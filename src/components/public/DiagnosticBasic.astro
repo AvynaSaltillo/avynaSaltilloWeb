@@ -638,28 +638,84 @@ return `
           </div>
 
         </div>
+<div class="mt-8 rounded-3xl border border-white/10 bg-black/40 p-5">
 
-        <div class="mt-8 rounded-3xl border border-white/10 bg-black/40 p-5">
+  <p class="text-sm font-semibold text-white/80">
+    Perfil detectado
+  </p>
 
-          <p class="font-semibold text-sm">
-            Datos detectados
-          </p>
+  <div class="mt-4 flex flex-wrap gap-2">
 
-          <div class="mt-4 flex flex-wrap gap-2">
+    ${
+      Object.values(answers).flat().length
 
-            ${
-              Object.values(answers).flat().length
-              ? Object.values(answers).flat().map(v=>`
-                <span class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/70">
-                  ${v}
-                </span>
-              `).join("")
-              : `<span class="text-sm text-white/35">Sin respuestas aún</span>`
-            }
+      ? Object.entries(answers)
 
-          </div>
+        .flatMap(([questionId, values]) => {
 
-        </div>
+          const question =
+            currentSteps().find(
+              q => q.id === questionId
+            );
+
+          if (!question) return [];
+
+          return values.map(value => {
+
+            const option =
+              question.options.find(
+                opt => opt.value === value
+              );
+
+            const cleanTitle =
+  question.title
+    .replace("¿", "")
+    .replace("?", "")
+    .replace("...", "")
+    .trim();
+
+return `${cleanTitle}: ${option?.label || value}`;
+
+          });
+
+        })
+
+        .map(label => `
+
+          <span
+            class="
+              inline-flex
+              items-center
+              rounded-full
+              border
+              border-white/10
+              bg-white/[0.04]
+              px-3.5
+              py-1.5
+              text-xs
+              font-medium
+              tracking-wide
+              text-white/75
+              backdrop-blur-xl
+            "
+          >
+            ${label}
+          </span>
+
+        `)
+
+        .join("")
+
+      : `
+        <span class="text-sm text-white/35">
+          Sin respuestas aún
+        </span>
+      `
+    }
+
+  </div>
+
+</div>
 
       </div>
 
@@ -747,6 +803,16 @@ document.querySelectorAll(".optionCard").forEach(btn=>{
   };
 
 });
+
+document.getElementById("backBtn")
+  ?.addEventListener("click", ()=>{
+
+    if(step > 0){
+      step--;
+      render();
+    }
+
+  });
 
 document.getElementById("nextBtn")
   ?.addEventListener("click", ()=>{
@@ -1535,10 +1601,154 @@ function scoreColor(num, reverse = false){
   return "text-rose-300";
 }
 
+function getHeroBanner(){
+
+  const all =
+    Object.values(answers)
+      .flat()
+      .map(slug);
+
+  const has = (v)=>
+    all.includes(slug(v));
+
+  /* ======================
+     GOJI
+     COLOR / TINTE
+  ====================== */
+
+  if(
+    has("tinte") ||
+    has("diseno_color")
+  ){
+    return {
+      image: "/images/products/goji/goji-banner.jpg",
+      title: "Color protegido y brillo intenso",
+      subtitle:
+        "Detectamos necesidades de protección para cabello procesado químicamente."
+    };
+  }
+
+  /* ======================
+     IALURONICO
+     DECOLORACION / QUIEBRE
+  ====================== */
+
+  if(
+    has("decoloracion_global") ||
+    has("quiebre") ||
+    has("elastico")
+  ){
+    return {
+      image: "/images/products/ialuronico/ialuronico-banner.jpg",
+      title: "Reconstrucción y recuperación profunda",
+      subtitle:
+        "Tu cabello necesita hidratación intensiva y apoyo para recuperar fuerza y elasticidad."
+    };
+  }
+
+  /* ======================
+     CURLY / XTYLING
+  ====================== */
+
+  if(
+    (
+      has("rizado") ||
+      has("ondulado") ||
+      has("afro")
+    ) &&
+    !has("quiero_lacio")
+  ){
+    return {
+      image: "/images/products/xtyling/xtyling-banner.jpg",
+      title: "Definición, hidratación y control",
+      subtitle:
+        "Seleccionamos una rutina ideal para mantener la forma natural y controlar frizz."
+    };
+  }
+
+  /* ======================
+     ALACIADO / CONTROL
+  ====================== */
+
+  if(
+    has("quiero_lacio") ||
+    has("alaciado")
+  ){
+    return {
+      image: "/images/products/argan/argan-banner.jpg",
+      title: "Cabello más suave y disciplinado",
+      subtitle:
+        "Detectamos una necesidad de control, brillo y reducción de frizz."
+    };
+  }
+
+  /* ======================
+     CRECIMIENTO
+  ====================== */
+
+  if(
+    has("caida") ||
+    has("meta_crecer")
+  ){
+    return {
+      image: "/images/products/abbondanza/abbondanza-banner.jpg",
+      title: "Fortalecimiento desde la raíz",
+      subtitle:
+        "Tu perfil muestra señales de debilitamiento capilar y necesidad de fortalecimiento."
+    };
+  }
+
+  /* ======================
+     RUBIOS / MATIZ
+  ====================== */
+
+  if(
+    has("rubio") ||
+    has("platino")
+  ){
+    return {
+      image: "/images/products/platino/platino-banner.jpg",
+      title: "Matiz y protección del tono",
+      subtitle:
+        "Seleccionamos productos para mantener luminosidad y neutralizar reflejos no deseados."
+    };
+  }
+
+  /* ======================
+     CUERO CABELLUDO
+  ====================== */
+
+  if(
+    has("graso") ||
+    has("sensibilidad")
+  ){
+    return {
+      image: "/images/products/agave/agave-banner.jpg",
+      title: "Equilibrio y frescura capilar",
+      subtitle:
+        "Detectamos necesidades de balance y cuidado del cuero cabelludo."
+    };
+  }
+
+  /* ======================
+     DEFAULT
+  ====================== */
+
+  return {
+    image: "/images/products/argan/argan-banner.jpg",
+    title: "Cabello más sano y equilibrado",
+    subtitle:
+      "Seleccionamos una rutina enfocada en brillo, hidratación y mantenimiento saludable."
+  };
+
+}
+
 function renderResults(){
 
   const picks = buildRecommendations();
   const report = buildDiagnosisText();
+
+  const hero = getHeroBanner();
 
   const grouped = [];
 
@@ -1567,15 +1777,112 @@ function renderResults(){
 
   app.innerHTML = `
 
-<div class="text-center">
+<!-- HERO -->
+<div class="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.03]">
 
-  <h3 class="text-4xl font-bold leading-[0.95] md:text-6xl">
-    Tu Diagnóstico AVYNA
-  </h3>
+  <div class="relative isolate min-h-[480px] overflow-hidden md:min-h-[560px]">
 
-  <p class="mx-auto mt-4 max-w-3xl text-white/55">
-    ${report.summary}
-  </p>
+    <!-- BG -->
+    <img
+      src="${hero.image}"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+
+    <!-- OVERLAYS -->
+    <div class="absolute inset-0 bg-black/55"></div>
+
+    <div class="
+      absolute inset-0
+      bg-[linear-gradient(to_right,rgba(0,0,0,.88),rgba(0,0,0,.45),rgba(0,0,0,.15))]
+    "></div>
+
+    <div class="
+      absolute inset-0
+      bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.12),transparent_35%)]
+    "></div>
+
+    <!-- CONTENT -->
+    <div class="relative z-10 flex min-h-[480px] items-end p-7 md:min-h-[560px] md:p-14">
+
+      <div class="max-w-3xl">
+
+        <div class="
+          inline-flex
+          items-center
+          gap-2
+          rounded-full
+          border
+          border-white/10
+          bg-white/[0.05]
+          px-5
+          py-2
+          text-sm
+          text-white/75
+          backdrop-blur-xl
+        ">
+          ✨ Diagnóstico Inteligente AVYNA
+        </div>
+
+        <h3 class="
+          mt-6
+          text-4xl
+          font-bold
+          leading-[0.95]
+          tracking-[-0.04em]
+          text-white
+          md:text-7xl
+        ">
+          ${hero.title}
+        </h3>
+
+        <p class="
+          mt-6
+          max-w-2xl
+          text-base
+          leading-relaxed
+          text-white/72
+          md:text-xl
+        ">
+          ${hero.subtitle}
+        </p>
+
+        <p class="
+          mt-5
+          max-w-2xl
+          text-sm
+          leading-relaxed
+          text-white/48
+          md:text-base
+        ">
+          ${report.summary}
+        </p>
+
+        <!-- QUICK TAGS -->
+        <div class="mt-8 flex flex-wrap gap-3">
+
+          ${report.priorities.slice(0,3).map(x => `
+            <div class="
+              rounded-full
+              border
+              border-white/10
+              bg-white/[0.05]
+              px-4
+              py-2
+              text-sm
+              text-white/75
+              backdrop-blur-xl
+            ">
+              ${x}
+            </div>
+          `).join("")}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 

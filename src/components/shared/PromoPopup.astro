@@ -1,0 +1,284 @@
+---
+// src/components/shared/PromoPopup.astro
+
+interface PromoItem {
+  title: string;
+  subtitle: string;
+  image: string;
+  buttonText?: string;
+  buttonHref?: string;
+}
+
+interface Props {
+  items: PromoItem[];
+  delay?: number;
+  autoClose?: number;
+  interval?: number;
+}
+
+const {
+  items = [],
+  delay = 5000,
+  autoClose = 10000,
+  interval = 18000
+} = Astro.props;
+---
+
+<div
+  id="promoPopup"
+  class="
+    pointer-events-none
+    fixed
+    bottom-5
+    right-5
+    z-[9999]
+    w-[92vw]
+    max-w-sm
+    translate-y-10
+    opacity-0
+    transition-all
+    duration-500
+    sm:w-full
+  "
+>
+
+  <div
+    class="
+      relative
+      overflow-hidden
+      rounded-[2rem]
+      border
+      border-white/10
+      bg-black/90
+      shadow-[0_25px_80px_rgba(0,0,0,.55)]
+      backdrop-blur-3xl
+    "
+  >
+
+    <!-- IMAGE -->
+    <div class="relative h-44 overflow-hidden">
+
+      <img
+        id="promoImage"
+        src={items[0]?.image}
+        alt=""
+        class="h-full w-full object-cover transition duration-500"
+      />
+
+      <div
+        class="
+          absolute
+          inset-0
+          bg-[linear-gradient(to_top,rgba(0,0,0,.92),rgba(0,0,0,.2))]
+        "
+      ></div>
+
+      <!-- CLOSE -->
+      <button
+        id="promoClose"
+        class="
+          absolute
+          right-4
+          top-4
+          flex
+          h-9
+          w-9
+          items-center
+          justify-center
+          rounded-full
+          border
+          border-white/10
+          bg-black/50
+          text-white
+          backdrop-blur-xl
+          transition
+          hover:bg-white
+          hover:text-black
+        "
+      >
+        ✕
+      </button>
+
+      <!-- CONTENT -->
+      <div class="absolute bottom-0 left-0 right-0 p-5">
+
+        <p class="text-xs uppercase tracking-[0.25em] text-white/45">
+          AVYNA FEATURED
+        </p>
+
+        <h3
+          id="promoTitle"
+          class="mt-2 text-2xl font-bold leading-tight text-white"
+        >
+          {items[0]?.title}
+        </h3>
+
+        <p
+          id="promoSubtitle"
+          class="mt-2 text-sm leading-relaxed text-white/65"
+        >
+          {items[0]?.subtitle}
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="p-4">
+
+      <a
+        id="promoButton"
+        href={items[0]?.buttonHref}
+        class="
+          flex
+          h-12
+          items-center
+          justify-center
+          rounded-2xl
+          bg-white
+          text-sm
+          font-semibold
+          text-black
+          transition
+          hover:scale-[1.01]
+        "
+      >
+        {items[0]?.buttonText}
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script
+  is:inline
+  define:vars={{
+    items,
+    delay,
+    autoClose,
+    interval
+  }}
+>
+
+const popup =
+  document.getElementById("promoPopup");
+
+const closeBtn =
+  document.getElementById("promoClose");
+
+const image =
+  document.getElementById("promoImage");
+
+const title =
+  document.getElementById("promoTitle");
+
+const subtitle =
+  document.getElementById("promoSubtitle");
+
+const button =
+  document.getElementById("promoButton");
+
+let current = 0;
+
+function setPromo(index){
+
+  const item = items[index];
+
+  if(!item) return;
+
+  image.src =
+    item.image;
+
+  title.textContent =
+    item.title;
+
+  subtitle.textContent =
+    item.subtitle;
+
+  button.textContent =
+    item.buttonText;
+
+  button.href =
+    item.buttonHref;
+
+}
+
+function showPopup(){
+
+  popup.classList.remove(
+    "opacity-0",
+    "translate-y-10",
+    "pointer-events-none"
+  );
+
+  popup.classList.add(
+    "opacity-100",
+    "translate-y-0",
+    "pointer-events-auto"
+  );
+
+}
+
+function hidePopup(){
+
+  popup.classList.add(
+    "opacity-0",
+    "translate-y-10",
+    "pointer-events-none"
+  );
+
+  popup.classList.remove(
+    "opacity-100",
+    "translate-y-0",
+    "pointer-events-auto"
+  );
+
+}
+
+function cyclePromo(){
+
+  current =
+    Math.floor(
+      Math.random() * items.length
+    );
+
+  setPromo(current);
+
+  showPopup();
+
+  setTimeout(() => {
+
+    hidePopup();
+
+  }, autoClose);
+
+}
+
+if(
+  popup &&
+  items.length
+){
+
+  setTimeout(() => {
+
+    cyclePromo();
+
+    setInterval(() => {
+
+      cyclePromo();
+
+    }, interval);
+
+  }, delay);
+
+}
+
+closeBtn?.addEventListener(
+  "click",
+  hidePopup
+);
+
+</script>

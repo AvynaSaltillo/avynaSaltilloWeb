@@ -10,11 +10,86 @@ import Footer from "../components/shared/Footer.astro";
 /* PUBLIC */
 import Hero from "../components/public/Hero.astro";
 import Benefits from "../components/public/Benefits.astro";
-import DiagnosticBasic from "../components/public/DiagnosticBasic.astro";
+import DiagnosticTeaser from "../components/public/DiagnosticTeaser.astro";
 import SalonMap from "../components/public/SalonMap.astro";
 import FAQ from "../components/public/FAQ.astro";
+import PublicBanner from "../components/public/PublicBanner.astro";
+
+import PromoPopup from "../components/shared/PromoPopup.astro";
 
 import { ArrowRight, Sparkles, Store } from "lucide-react";
+
+const promoItems = [
+
+  {
+    title: "Prueba la  línea GOJI",
+    subtitle:
+      "Protección de color, brillo intenso y antioxidantes premium.",
+    image:
+      "/images/products/goji/goji-banner.jpg",
+    buttonText: "Ver línea",
+    buttonHref: "/catalogo"
+  },
+
+{
+  title: "POZIONE DUO",
+  subtitle:
+    "El dúo profesional de reparación intensiva para cabello sensibilizado, elástico o procesado químicamente.",
+  image:
+    "/images/products/tratamientos/pozione-duo-banner.webp",
+  buttonText: "Ver tratamiento",
+  buttonHref: "/catalogo"
+},
+
+{
+  title: "Tus clientas ya buscan AVYNA",
+  subtitle:
+    "Genera más ingresos ofreciendo productos profesionales que aumentan recompra, recomendación y fidelización.",
+  image:
+    "/images/grow/avyna-salon-5.jpg",
+  buttonText: "Convertirme en socio",
+  buttonHref: "/grow/login"
+},
+
+  {
+    title: "Top ventas Argán",
+    subtitle:
+      "La línea favorita para reparación y brillo profesional.",
+    image:
+      "/images/products/argan/argan-banner.jpg",
+    buttonText: "Descubrir",
+    buttonHref: "/catalogo"
+  },
+
+  {
+    title: "Diagnóstico inteligente AVYNA",
+    subtitle:
+      "Descubre la rutina ideal según las necesidades reales de tu cabello.",
+    image:
+      "/images/avyna/avyna-banner-2.jpg",
+    buttonText: "Comenzar",
+    buttonHref: "/diagnostico"
+  },
+
+  {
+    title: "Club Profesional AVYNA",
+    subtitle:
+      "Beneficios exclusivos para salones y profesionales afiliados.",
+    image:
+      "/images/grow/avyna-salon-3.jpg",
+    buttonText: "Conocer más",
+    buttonHref: "/grow/login"
+  }
+
+];
+
+const randomPromo =
+  promoItems[
+    Math.floor(
+      Math.random() *
+      promoItems.length
+    )
+  ];
 ---
 
 <Layout
@@ -36,9 +111,15 @@ import { ArrowRight, Sparkles, Store } from "lucide-react";
       <Benefits />
     </section>
 
+    <PublicBanner
+  image="/images/avyna/avyna-banner.jpg"
+  title="Cabello brillante, suave y lleno de vida."
+  subtitle="Rutinas profesionales diseñadas para transformar la apariencia del cabello."
+/>
+
     <!-- DIAGNÓSTICO -->
     <section id="diagnostico" class="relative reveal">
-      <DiagnosticBasic />
+      <DiagnosticTeaser />
     </section>
 
     <!-- MAPA -->
@@ -137,5 +218,12 @@ import { ArrowRight, Sparkles, Store } from "lucide-react";
 
   <!-- FOOTER -->
   <Footer />
+
+<PromoPopup
+  items={promoItems}
+  delay={5000}
+  autoClose={10000}
+  interval={18000}
+/>
 
 </Layout>

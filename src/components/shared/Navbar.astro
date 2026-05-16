@@ -1,15 +1,10 @@
 ---
 // src/components/shared/Navbar.astro
-import { Menu, LogOut } from "lucide-react";
 
+import { Menu, X } from "lucide-react";
 import { BiSolidBadgeDollar } from "react-icons/bi";
 
-
 const path = Astro.url.pathname;
-
-/* =========================
-   DETECTAR RUTA
-========================= */
 
 const isGrow =
   path === "/grow" ||
@@ -24,13 +19,8 @@ const isDiagnostico =
   path === "/diagnostico" ||
   path === "/diagnostico/";
 
-/* internas públicas */
 const isInnerPage =
   isCatalog || isDiagnostico;
-
-/* =========================
-   LINKS DINÁMICOS
-========================= */
 
 const linkTo = (id: string) => {
 
@@ -40,10 +30,6 @@ const linkTo = (id: string) => {
 
   return `#${id}`;
 };
-
-/* =========================
-   NAV ITEMS
-========================= */
 
 const navItems = isGrow
   ? [
@@ -62,210 +48,437 @@ const navItems = isGrow
     ];
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-2xl">
-  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+<header
+  class="
+    fixed
+    top-0
+    inset-x-0
+    z-50
+    border-b
+    border-white/10
+    bg-black/80
+    backdrop-blur-xl
+  "
+>
+
+  <div
+    class="
+      mx-auto
+      flex
+      h-20
+      max-w-7xl
+      items-center
+      justify-between
+      px-4
+      md:px-6
+    "
+  >
 
     <!-- LOGO -->
-    <a href={isGrow ? "/grow" : "/"} class="flex items-center gap-3">
+    <a
+      href={isGrow ? "/grow" : "/"}
+      class="flex items-center"
+    >
+
       <div>
+
         <img
           src="/images/logo-avyna-white.png"
           alt="AVYNA"
-          class="mt-2 h-5 w-auto"
+          class="h-4 md:h-5 w-auto"
         />
 
-        <p class="mt-1 text-[14px] text-white/55">
+        <p
+          class="
+            mt-1
+            hidden
+            text-xs
+            text-white/50
+            md:block
+          "
+        >
           {isGrow ? "Crece con AVYNA" : "Saltillo, Coahuila"}
         </p>
+
       </div>
+
     </a>
 
-    <!-- DESKTOP -->
-    <nav class="hidden items-center gap-8 text-sm font-medium text-white/75 lg:flex">
+    <!-- DESKTOP NAV -->
+    <nav
+      class="
+        hidden
+        items-center
+        gap-8
+        text-sm
+        font-medium
+        text-white/75
+        lg:flex
+      "
+    >
+
       {
         navItems.map(item => (
-          <a href={item.href} class="transition hover:text-white">
+          <a
+            href={item.href}
+            class="transition hover:text-white"
+          >
             {item.label}
           </a>
         ))
       }
+
     </nav>
 
-    <!-- ACTIONS -->
+    <!-- RIGHT -->
     <div class="flex items-center gap-3">
 
       {
-        isGrow ? (
-
-          <button
-            id="logoutBtn"
-            class="hidden h-11 items-center gap-2 rounded-full border border-white/10 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-black md:inline-flex"
+        !isGrow && (
+          <a
+            href="/grow/login"
+            class="
+              hidden
+              md:inline-flex
+              h-12
+              items-center
+              gap-2
+              rounded-full
+              border
+              border-white/10
+              bg-white/5
+              px-6
+              text-sm
+              font-semibold
+              text-white
+              transition
+              hover:bg-white
+              hover:text-black
+            "
           >
-            <LogOut size={16} />
-            Salir
-          </button>
-
-        ) : (
-
-          <>
-           <a
-  href="/grow/login"
-  class="hidden md:inline-flex h-12 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
->
-  <BiSolidBadgeDollar size={20} />
-  Quiero vender AVYNA
-</a>
-          </>
-
+            <BiSolidBadgeDollar size={18} />
+            Quiero vender AVYNA
+          </a>
         )
       }
 
       <!-- MOBILE BTN -->
       <button
         id="menuBtn"
-        class="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black lg:hidden"
-        aria-label="Menú"
+        class="
+          flex
+          h-11
+          w-11
+          items-center
+          justify-center
+          rounded-2xl
+          border
+          border-white/10
+          bg-white/5
+          text-white
+          lg:hidden
+        "
       >
-        <Menu size={18} />
+
+        <Menu
+          id="menuOpen"
+          size={18}
+        />
+
+        <X
+          id="menuClose"
+          size={18}
+          className="hidden"
+        />
+
       </button>
 
     </div>
 
   </div>
 
-  <!-- MOBILE MENU -->
+</header>
+
+<!-- MOBILE MENU -->
+<div
+  id="mobileMenu"
+  class="
+    fixed
+    inset-0
+    z-40
+    overflow-y-auto
+    bg-black/95
+    backdrop-blur-2xl
+    pt-24
+    opacity-0
+    pointer-events-none
+    translate-y-2
+    transition-all
+    duration-300
+    lg:hidden
+  "
+>
+
   <div
-    id="mobileMenu"
-    class="hidden border-t border-white/10 bg-black/95 px-6 py-6 lg:hidden"
+    id="mobileMenuContent"
+    class="
+      px-6
+      pb-10
+      transition-all
+      duration-500
+      translate-y-6
+      opacity-0
+    "
   >
-    <nav class="flex flex-col gap-5 font-medium text-white/80">
+
+    <nav class="flex flex-col">
 
       {
-        navItems.map(item => (
-          <a href={item.href} class="mobile-link">
+        navItems.map((item, index) => (
+          <a
+            href={item.href}
+            class="
+              mobile-link
+              border-b
+              border-white/5
+              py-5
+              text-4xl
+              font-bold
+              text-white
+              opacity-0
+              translate-y-4
+            "
+            style={`transition:
+              opacity .45s ease,
+              transform .45s ease;
+              transition-delay:${index * 80}ms;
+            `}
+          >
             {item.label}
           </a>
         ))
       }
 
-      {
-        isGrow ? (
-
-          <button
-            id="logoutBtnMobile"
-            class="mt-3 flex h-12 items-center justify-center rounded-2xl border border-white/10 text-white transition hover:bg-white hover:text-black"
-          >
-            Cerrar sesión
-          </button>
-
-        ) : (
-
-          <>
-<a
-  href="/grow/login"
-  class="mt-3 flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 font-semibold text-white"
->
-  <BiSolidBadgeDollar size={18} />
-  Quiero vender AVYNA
-</a>
-
-          </>
-
-        )
-      }
-
     </nav>
+
+    {
+      !isGrow && (
+
+        <a
+          href="/grow/login"
+          id="mobileCTA"
+          class="
+            mt-8
+            flex
+            h-14
+            items-center
+            justify-center
+            gap-2
+            rounded-2xl
+            bg-white
+            text-sm
+            font-semibold
+            text-black
+            opacity-0
+            translate-y-4
+            transition-all
+            duration-500
+          "
+        >
+          <BiSolidBadgeDollar size={18} />
+          Quiero vender AVYNA
+        </a>
+
+      )
+    }
+
   </div>
-</header>
+
+</div>
 
 <script is:inline>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const btn = document.getElementById("menuBtn");
-  const menu = document.getElementById("mobileMenu");
+  const btn =
+    document.getElementById("menuBtn");
 
-  if (!btn || !menu) return;
+  const menu =
+    document.getElementById("mobileMenu");
+
+  const content =
+    document.getElementById("mobileMenuContent");
+
+  const links =
+    document.querySelectorAll(".mobile-link");
+
+  const cta =
+    document.getElementById("mobileCTA");
+
+  const openIcon =
+    document.getElementById("menuOpen");
+
+  const closeIcon =
+    document.getElementById("menuClose");
+
+  if(
+    !btn ||
+    !menu ||
+    !openIcon ||
+    !closeIcon ||
+    !content
+  ) return;
 
   let open = false;
 
-  const isGrowRoute =
-    window.location.pathname.startsWith("/grow");
+  function openMenu(){
 
-  if (isGrowRoute) {
+    open = true;
 
-    const access =
-      localStorage.getItem("avyna_grow_access");
+    document.body.style.overflow =
+      "hidden";
 
-    const expire =
-      Number(
-        localStorage.getItem("avyna_grow_expire") || 0
+    menu.classList.remove(
+      "opacity-0",
+      "pointer-events-none",
+      "translate-y-2"
+    );
+
+    menu.classList.add(
+      "opacity-100",
+      "pointer-events-auto",
+      "translate-y-0"
+    );
+
+    setTimeout(()=>{
+
+      content.classList.remove(
+        "opacity-0",
+        "translate-y-6"
       );
 
-    if (
-      access !== "true" ||
-      Date.now() > expire
-    ) {
+      content.classList.add(
+        "opacity-100",
+        "translate-y-0"
+      );
 
-      localStorage.removeItem("avyna_grow_access");
-      localStorage.removeItem("avyna_grow_expire");
+      links.forEach(link => {
 
-      window.location.pathname = "/grow/login";
-      return;
+        link.classList.remove(
+          "opacity-0",
+          "translate-y-4"
+        );
+
+        link.classList.add(
+          "opacity-100",
+          "translate-y-0"
+        );
+
+      });
+
+      if(cta){
+
+        cta.classList.remove(
+          "opacity-0",
+          "translate-y-4"
+        );
+
+        cta.classList.add(
+          "opacity-100",
+          "translate-y-0"
+        );
+
+      }
+
+    }, 50);
+
+    openIcon.classList.add("hidden");
+
+    closeIcon.classList.remove("hidden");
+  }
+
+  function closeMenu(){
+
+    open = false;
+
+    document.body.style.overflow =
+      "";
+
+    content.classList.add(
+      "opacity-0",
+      "translate-y-6"
+    );
+
+    links.forEach(link => {
+
+      link.classList.add(
+        "opacity-0",
+        "translate-y-4"
+      );
+
+      link.classList.remove(
+        "opacity-100",
+        "translate-y-0"
+      );
+
+    });
+
+    if(cta){
+
+      cta.classList.add(
+        "opacity-0",
+        "translate-y-4"
+      );
+
+      cta.classList.remove(
+        "opacity-100",
+        "translate-y-0"
+      );
+
     }
+
+    setTimeout(()=>{
+
+      menu.classList.add(
+        "opacity-0",
+        "pointer-events-none",
+        "translate-y-2"
+      );
+
+      menu.classList.remove(
+        "opacity-100",
+        "pointer-events-auto",
+        "translate-y-0"
+      );
+
+    }, 150);
+
+    closeIcon.classList.add("hidden");
+
+    openIcon.classList.remove("hidden");
   }
 
   btn.addEventListener("click", () => {
 
-    open = !open;
+    if(open){
 
-    menu.classList.toggle("hidden");
+      closeMenu();
 
-    btn.innerHTML = open
-      ? `
-      <svg xmlns="http://www.w3.org/2000/svg"
-      width="18" height="18"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      viewBox="0 0 24 24">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-      `
-      : `
-      <svg xmlns="http://www.w3.org/2000/svg"
-      width="18" height="18"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      viewBox="0 0 24 24">
-        <path d="M4 12h16M4 6h16M4 18h16"/>
-      </svg>
-      `;
+    }else{
+
+      openMenu();
+
+    }
+
   });
 
-  document.querySelectorAll(".mobile-link")
-    .forEach(link => {
+  links.forEach(link => {
 
-      link.addEventListener("click", () => {
-        menu.classList.add("hidden");
-        open = false;
-      });
+    link.addEventListener(
+      "click",
+      closeMenu
+    );
 
-    });
-
-  function logout() {
-
-    localStorage.removeItem("avyna_grow_access");
-    localStorage.removeItem("avyna_grow_expire");
-
-    window.location.pathname = "/grow/login";
-  }
-
-  document.getElementById("logoutBtn")
-    ?.addEventListener("click", logout);
-
-  document.getElementById("logoutBtnMobile")
-    ?.addEventListener("click", logout);
+  });
 
 });
 </script>

@@ -16,11 +16,11 @@ import {
 
     <img
       src="/images/avyna/avyna-banner.jpg"
-      class="h-full w-full object-cover opacity-30 scale-105"
+      class="h-full w-full object-cover opacity-10 scale-105"
       alt="AVYNA Beauty"
     />
 
-    <div class="absolute inset-0 bg-black/65"></div>
+    <div class="absolute inset-0 bg-black/70"></div>
 
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.09),transparent_30%)] glow-pulse"></div>
 
@@ -145,90 +145,78 @@ import {
 
     </div>
 
-    <!-- RIGHT DESKTOP -->
-    <div class="reveal-right delay-2 relative hidden lg:block">
 
-      <!-- MAIN CARD -->
-      <div class="relative overflow-hidden rounded-[2.7rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,.6)] backdrop-blur-2xl">
+<!-- RIGHT DESKTOP -->
+<div class="reveal-right delay-2 relative hidden lg:block">
 
-        <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
+  <!-- FLOATING PRODUCTS -->
 
-        <img
-          src="/images/avyna/avyna-women-1.jpg"
-          class="relative z-10 mx-auto h-170 object-contain float-soft"
-          alt="Producto AVYNA"
-        />
+  <img
+    src="/images/products/ialuronico/ialu-shampoo-500ml.png"
+    alt="AVYNA Shampoo"
+    class="
+      pointer-events-none
+      absolute
+      -left-35
+      top-20
+      z-20
+      h-73
+      rotate-[-12deg]
+      object-contain
+      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
+      float-soft
+    "
+  />
 
-      </div>
+  <img
+    src="/images/products/argan/argan-fluido.png"
+    alt="AVYNA Fluido"
+    class="
+      pointer-events-none
+      absolute
+      -right-15
+      top-0
+      z-20
+      h-55
+      rotate-[3deg]
+      object-contain
+      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
+      float-soft-delayed
+    "
+  />
 
-      <!-- FLOAT TOP -->
-      <div class="reveal-scale delay-4 absolute -top-6 -left-6 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl xl:block">
+  <img
+    src="/images/products/platino/platino-shampoo-1000ml.png"
+    alt="AVYNA Platino"
+    class="
+      pointer-events-none
+      absolute
+      -right-30
+      -bottom-5
+      z-20
+      h-80
+      rotate-[8deg]
+      object-contain
+      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
+      float-soft
+    "
+  />
 
-        <div class="flex items-center gap-3">
+  <!-- MAIN CARD -->
+  <div class="relative overflow-hidden rounded-[2.8rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_30px_80px_rgba(0,0,0,.6)] backdrop-blur-2xl">
 
-          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
-            <Star size={22} />
-          </div>
+    <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
 
-          <div>
-            <p class="text-xs text-white/45">
-              Tus productos
-            </p>
+    <img
+      src="/images/avyna/avyna-women-1.jpg"
+      class="relative z-10 mx-auto h-170 object-contain "
+      alt="AVYNA Beauty"
+    />
 
-            <p class="font-semibold">
-              Favoritos AVYNA
-            </p>
-          </div>
+  </div>
 
-        </div>
 
-      </div>
-
-      <!-- FLOAT RIGHT -->
-      <div class="reveal-scale delay-5 absolute top-1/2 -right-6 hidden -translate-y-1/2 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl xl:block">
-
-        <div class="flex items-center gap-3">
-
-          <Droplets size={22} />
-
-          <div>
-            <p class="text-xs text-zinc-500">
-              Resultado
-            </p>
-
-            <p class="font-semibold">
-              Brillo intenso
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- FLOAT BOTTOM -->
-      <div class="reveal-scale delay-6 absolute -bottom-6 left-8 hidden rounded-3xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl xl:block">
-
-        <div class="flex items-center gap-3">
-
-          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
-            <ShieldCheck size={22} />
-          </div>
-
-          <div>
-            <p class="text-xs text-white/45">
-              Calidad
-            </p>
-
-            <p class="font-semibold">
-              Uso profesional
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
+</div>
 
   </div>
 
