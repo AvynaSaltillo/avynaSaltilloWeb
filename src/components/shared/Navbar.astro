@@ -130,70 +130,98 @@ const navItems = isGrow
 
     </nav>
 
-    <!-- RIGHT -->
-    <div class="flex items-center gap-3">
+<!-- RIGHT -->
+<div class="flex items-center gap-3">
 
-      {
-        !isGrow && (
-          <a
-            href="/grow/login"
-            class="
-              hidden
-              md:inline-flex
-              h-12
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-white/10
-              bg-white/5
-              px-6
-              text-sm
-              font-semibold
-              text-white
-              transition
-              hover:bg-white
-              hover:text-black
-            "
-          >
-            <BiSolidBadgeDollar size={18} />
-            Quiero vender AVYNA
-          </a>
-        )
-      }
+  {
+    isGrow ? (
 
-      <!-- MOBILE BTN -->
       <button
-        id="menuBtn"
+        id="logoutBtn"
         class="
-          flex
-          h-11
-          w-11
+          hidden
+          md:inline-flex
+          h-12
           items-center
           justify-center
-          rounded-2xl
+          rounded-full
           border
           border-white/10
           bg-white/5
+          px-6
+          text-sm
+          font-semibold
           text-white
-          lg:hidden
+          transition
+          hover:bg-white
+          hover:text-black
         "
       >
-
-        <Menu
-          id="menuOpen"
-          size={18}
-        />
-
-        <X
-          id="menuClose"
-          size={18}
-          className="hidden"
-        />
-
+        Cerrar sesión
       </button>
 
-    </div>
+    ) : (
+
+      <a
+        href="/grow/login"
+        class="
+          hidden
+          md:inline-flex
+          h-12
+          items-center
+          gap-2
+          rounded-full
+          border
+          border-white/10
+          bg-white/5
+          px-6
+          text-sm
+          font-semibold
+          text-white
+          transition
+          hover:bg-white
+          hover:text-black
+        "
+      >
+        <BiSolidBadgeDollar size={18} />
+        Quiero vender AVYNA
+      </a>
+
+    )
+  }
+
+  <!-- MOBILE BTN -->
+  <button
+    id="menuBtn"
+    class="
+      flex
+      h-11
+      w-11
+      items-center
+      justify-center
+      rounded-2xl
+      border
+      border-white/10
+      bg-white/5
+      text-white
+      lg:hidden
+    "
+  >
+
+    <Menu
+      id="menuOpen"
+      size={18}
+    />
+
+    <X
+      id="menuClose"
+      size={18}
+      className="hidden"
+    />
+
+  </button>
+
+</div>
 
   </div>
 
@@ -481,4 +509,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+function logout(){
+
+  localStorage.removeItem(
+    "avyna_grow_access"
+  );
+
+  localStorage.removeItem(
+    "avyna_grow_expire"
+  );
+
+  window.location.pathname =
+    "/grow/login";
+
+}
+
+logoutBtn?.addEventListener(
+  "click",
+  logout
+);
 </script>

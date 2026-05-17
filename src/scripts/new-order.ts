@@ -2041,8 +2041,19 @@ const msg = encodeURIComponent(
   lines.join("\n")
 );
 
+const isMobile =
+  /Android|iPhone|iPad|iPod/i
+  .test(navigator.userAgent);
+
+const whatsappUrl =
+  isMobile
+
+    ? `whatsapp://send?phone=${phone}&text=${msg}`
+
+    : `https://web.whatsapp.com/send?phone=${phone}&text=${msg}`;
+
 window.open(
-  `https://wa.me/${phone}?text=${msg}`,
+  whatsappUrl,
   "_blank"
 );
 

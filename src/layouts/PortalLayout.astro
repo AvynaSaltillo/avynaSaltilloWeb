@@ -403,5 +403,34 @@ white-space:normal !important;
   
 </script>
 
+<script is:inline>
+
+window.openWhatsapp = (
+  phone,
+  message
+) => {
+
+  const encoded =
+    encodeURIComponent(message);
+
+  const isMobile =
+    /Android|iPhone|iPad|iPod/i
+    .test(navigator.userAgent);
+
+  const url = isMobile
+
+    ? `whatsapp://send?phone=${phone}&text=${encoded}`
+
+    : `https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`;
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+};
+
+</script>
+
 </body>
 </html>

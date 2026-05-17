@@ -694,8 +694,29 @@ function timelineDot(
               data.profiles.phone
             ).replace(/\D/g, "");
 
-          whatsappBtn.href =
-            `https://wa.me/52${phone}`;
+          whatsappBtn.onclick = () => {
+
+  const encoded =
+    encodeURIComponent(
+      "Hola ✨"
+    );
+
+  const isMobile =
+    /Android|iPhone|iPad|iPod/i
+    .test(navigator.userAgent);
+
+  const url = isMobile
+
+    ? `whatsapp://send?phone=52${phone}&text=${encoded}`
+
+    : `https://web.whatsapp.com/send?phone=52${phone}&text=${encoded}`;
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+};
 
         }
 
