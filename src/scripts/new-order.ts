@@ -583,7 +583,7 @@ if (banner) {
 
   banner.className = `
     mt-5
-    rounded-[2rem]
+    rounded-4xl
     border
     px-5
     py-4
@@ -2272,7 +2272,7 @@ function showSuccess() {
     <div
       class="
         relative w-full max-w-md overflow-hidden
-        rounded-[2rem]
+        rounded-4xl
         border border-white/10
         bg-gradient-to-b from-zinc-900 to-black
         p-7

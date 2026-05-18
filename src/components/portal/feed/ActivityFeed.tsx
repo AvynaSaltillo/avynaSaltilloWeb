@@ -162,7 +162,7 @@ export default function ActivityFeed() {
 
         return `
           border-white/10
-          bg-white/[0.03]
+          bg-white/3
           text-white/70
         `;
 
@@ -237,7 +237,7 @@ export default function ActivityFeed() {
 
     return (
 
-      <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+      <div className="rounded-4xl border border-white/10 bg-white/3 p-6">
 
         <div className="flex items-center justify-between gap-3">
 
@@ -265,7 +265,7 @@ export default function ActivityFeed() {
 
   return (
 
-    <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
+    <div className="rounded-4xl border border-white/10 bg-white/3 p-6">
 
       <div className="flex items-center justify-between gap-3">
 
@@ -320,7 +320,7 @@ export default function ActivityFeed() {
 
                 transition
 
-                hover:bg-white/[0.03]
+                hover:bg-white/3
               "
             >
 

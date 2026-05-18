@@ -96,9 +96,9 @@ async function loadWeeks() {
     container.innerHTML = `
 <div
   class="
-    rounded-[2rem]
+    rounded-4xl
     border border-white/10
-    bg-white/[0.04]
+    bg-white/4
     p-10
     text-center text-white/45
   "
@@ -164,7 +164,7 @@ async function loadWeeks() {
     transition-all duration-300
 
     hover:border-white/20
-    hover:bg-white/[0.06]
+    hover:bg-white/6
   "
 >
 

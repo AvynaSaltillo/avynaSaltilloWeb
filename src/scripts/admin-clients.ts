@@ -318,7 +318,7 @@ function render(list: any[]) {
 
     return `
 
-      <tr class="border-b border-white/5 transition hover:bg-white/[0.03]">
+      <tr class="border-b border-white/5 transition hover:bg-white/3">
 
         <td class="px-6 py-4">
 
@@ -429,7 +429,7 @@ function render(list: any[]) {
           <!-- TOP -->
           <button
             data-expand="${client.id}"
-            class="flex w-full items-start justify-between gap-3 p-4 text-left transition hover:bg-white/[0.02]"
+            class="flex w-full items-start justify-between gap-3 p-4 text-left transition hover:bg-white/2"
           >
 
             <div class="min-w-0">
@@ -628,7 +628,7 @@ modalContent.innerHTML = `
 
       <button
         id="closeModal"
-        class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/40 transition hover:bg-white/[0.05] hover:text-white"
+        class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white/40 transition hover:bg-white/[0.05] hover:text-white"
       >
         ✕
       </button>
@@ -636,7 +636,7 @@ modalContent.innerHTML = `
     </div>
 
     <!-- PERSONAL -->
-    <div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+    <div class="rounded-3xl border border-white/5 bg-white/2 p-5">
 
       <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
         Información personal
@@ -691,7 +691,7 @@ modalContent.innerHTML = `
     </div>
 
     <!-- CONTACT -->
-<div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+<div class="rounded-3xl border border-white/5 bg-white/2 p-5">
 
   <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
     Dirección
@@ -781,7 +781,7 @@ modalContent.innerHTML = `
 </div>
 
     <!-- BUSINESS -->
-    <div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+    <div class="rounded-3xl border border-white/5 bg-white/2 p-5">
 
       <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
         Información comercial
@@ -809,7 +809,7 @@ modalContent.innerHTML = `
 
     <!-- SYSTEM -->
     <!-- SYSTEM -->
-<div class="rounded-3xl border border-white/5 bg-white/[0.02] p-5">
+<div class="rounded-3xl border border-white/5 bg-white/2 p-5">
 
   <p class="mb-4 text-[11px] uppercase tracking-[0.28em] text-white/30">
     Configuración del sistema
@@ -895,7 +895,7 @@ modalContent.innerHTML = `
 
       <button
         id="cancelEdit"
-        class="h-12 rounded-2xl border border-white/10 bg-white/[0.03] px-5 text-sm font-medium text-white transition hover:bg-white/[0.06]"
+        class="h-12 rounded-2xl border border-white/10 bg-white/3 px-5 text-sm font-medium text-white transition hover:bg-white/6"
       >
         Cancelar
       </button>

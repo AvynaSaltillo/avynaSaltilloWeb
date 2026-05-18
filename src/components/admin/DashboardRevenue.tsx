@@ -41,7 +41,7 @@ export default function DashboardRevenue({
         className="
           absolute left-0 top-0 h-px w-full
 
-          bg-gradient-to-r
+          bg-linear-to-r
           from-white/50
           via-white/10
           to-transparent
@@ -57,7 +57,7 @@ export default function DashboardRevenue({
 
           rounded-full
 
-          bg-white/[0.04]
+          bg-white/4
 
           blur-3xl
         "
@@ -92,7 +92,7 @@ export default function DashboardRevenue({
 
               border border-white/10
 
-              bg-white/[0.04]
+              bg-white/4
 
               px-4 py-2
 
@@ -188,7 +188,7 @@ export default function DashboardRevenue({
 
               border border-white/10
 
-              bg-white/[0.04]
+              bg-white/4
 
               px-4 py-3
             "
@@ -319,7 +319,7 @@ export default function DashboardRevenue({
 
           overflow-hidden
 
-          rounded-[2rem]
+          rounded-4xl
 
           border border-white/10
 

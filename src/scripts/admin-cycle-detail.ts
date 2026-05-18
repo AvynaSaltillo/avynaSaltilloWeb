@@ -135,7 +135,7 @@ function badge(
   }
 
   return `
-<span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
+<span class="rounded-full border border-white/10 bg-white/4 px-3 py-1 text-xs text-white/70">
   Esperando proveedor
 </span>
 `;
@@ -388,7 +388,7 @@ if (title || dates) {
         ([name, qty]) => {
 
           return `
-<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+<div class="rounded-2xl border border-white/10 bg-white/3 p-5">
 
   <p class="text-sm text-white/40">
     Producto
@@ -439,7 +439,7 @@ if (title || dates) {
 
     border border-white/10
 
-    bg-white/[0.04]
+    bg-white/4
 
     p-4
 
@@ -662,7 +662,7 @@ if (title || dates) {
     ${
       currentPage === page
       ? "bg-white text-black"
-      : "bg-white/[0.04] text-white hover:bg-white/10"
+      : "bg-white/4 text-white hover:bg-white/10"
     }
   "
 >

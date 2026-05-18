@@ -275,7 +275,7 @@ const perPage = 5;
       }
 
       return `
-<span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
+<span class="rounded-full border border-white/10 bg-white/4 px-3 py-1 text-xs text-white/70">
   Registrado
 </span>
 `;
@@ -342,7 +342,7 @@ const perPage = 5;
 }
 
       return `
-<span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/70">
+<span class="rounded-full border border-white/10 bg-white/4 px-3 py-1 text-xs text-white/70">
   Sin definir
 </span>
 `;
@@ -620,7 +620,7 @@ modal.innerHTML = `
 
     overflow-hidden
 
-    rounded-[2rem]
+    rounded-4xl
 
     border
     border-white/6
@@ -757,7 +757,7 @@ modal.innerHTML = `
           border
           border-white/6
 
-          bg-white/[0.02]
+          bg-white/2
 
           p-4
         "
@@ -798,7 +798,7 @@ modal.innerHTML = `
           border
           border-white/6
 
-          bg-white/[0.02]
+          bg-white/2
 
           p-4
         "
@@ -846,7 +846,7 @@ order.delivery_status ===
           border
           border-white/6
 
-          bg-white/[0.02]
+          bg-white/2
 
           p-4
         "
@@ -1258,7 +1258,7 @@ ${
           isCancelled
 
             ? `
-              bg-gradient-to-r
+              bg-linear-to-r
               from-red-400
               via-red-400/60
               to-transparent
@@ -1487,12 +1487,12 @@ animate-[ripple_2s_ease-out_infinite]
 
         overflow-hidden
 
-        rounded-[2rem]
+        rounded-4xl
 
         border
         border-white/6
 
-        bg-white/[0.02]
+        bg-white/2
       "
     >
 
@@ -1508,12 +1508,12 @@ animate-[ripple_2s_ease-out_infinite]
       class="
         mt-12
 
-        rounded-[2rem]
+        rounded-4xl
 
         border
         border-white/6
 
-        bg-white/[0.02]
+        bg-white/2
 
         p-6
 
@@ -1776,7 +1776,7 @@ animate-[ripple_2s_ease-out_infinite]
 
   transition
 
-  hover:bg-white/[0.03]
+  hover:bg-white/3
 
   ${
     item.delivery_status ===

@@ -607,7 +607,7 @@ const paymentBadge =
 
         transition-all duration-300
 
-        hover:bg-white/[0.03]
+        hover:bg-white/3
       "
     >
 
@@ -728,7 +728,7 @@ const paymentBadge =
 
             border border-white/10
 
-            bg-white/[0.04]
+            bg-white/4
 
             px-5
 

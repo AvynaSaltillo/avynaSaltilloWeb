@@ -67,7 +67,7 @@ p-4
 
     overflow-hidden
 
-    rounded-[2rem]
+    rounded-4xl
 
     border
     border-white/10

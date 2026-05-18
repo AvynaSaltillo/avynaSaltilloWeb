@@ -34,7 +34,7 @@ const families = [
       <!-- LEFT -->
       <div>
 
-        <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-sm backdrop-blur-xl">
+        <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-5 py-2 text-sm backdrop-blur-xl">
           <Sparkles size={15} className="shrink-0" />
           Catálogo Profesional
         </div>
@@ -64,7 +64,7 @@ const families = [
             id="searchInput"
             type="text"
             placeholder="Buscar producto..."
-            class="h-16 w-full rounded-full border border-white/[0.08] bg-white/[0.03] pl-14 pr-6 outline-none transition placeholder:text-white/30 focus:border-white/20"
+            class="h-16 w-full rounded-full border border-white/[0.08] bg-white/3 pl-14 pr-6 outline-none transition placeholder:text-white/30 focus:border-white/20"
           />
 
           <Search
@@ -78,7 +78,7 @@ const families = [
         <a
           href="/catalogos/catalogo_avyna_2025.pdf"
           download
-          class="flex h-14 items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] font-medium transition hover:bg-white hover:text-black"
+          class="flex h-14 items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-white/3 font-medium transition hover:bg-white hover:text-black"
         >
           <Download size={16} />
           Descargar catálogo PDF
@@ -91,7 +91,7 @@ const families = [
     <!-- FILTERS -->
     <div class="sticky top-18 z-20 mb-12">
 
-      <div class="overflow-x-auto rounded-full border border-white/[0.08] bg-white/[0.03] p-3 backdrop-blur-xl no-scrollbar">
+      <div class="overflow-x-auto rounded-full border border-white/[0.08] bg-white/3 p-3 backdrop-blur-xl no-scrollbar">
 
         <div class="flex min-w-max gap-3">
 
@@ -101,7 +101,7 @@ const families = [
               class={`family-btn h-11 whitespace-nowrap rounded-full px-6 text-sm font-medium transition ${
                 i === 0
                   ? "bg-white text-black"
-                  : "border border-white/[0.08] bg-white/[0.03] hover:bg-white hover:text-black"
+                  : "border border-white/[0.08] bg-white/3 hover:bg-white hover:text-black"
               }`}
             >
               {family}
@@ -123,7 +123,7 @@ const families = [
       {products.map((item) => (
 
         <article
-          class="product-card group relative cursor-pointer overflow-hidden rounded-[2rem] border border-white/[0.06] bg-white/[0.025] transition duration-500 hover:-translate-y-1 hover:border-white/12 hover:bg-white/[0.045]"
+          class="product-card group relative cursor-pointer overflow-hidden rounded-4xl border border-white/[0.06] bg-white/[0.025] transition duration-500 hover:-translate-y-1 hover:border-white/12 hover:bg-white/[0.045]"
           data-family={item.family}
           data-name={item.name.toLowerCase()}
           data-product={JSON.stringify(item)}
@@ -233,13 +233,13 @@ const families = [
             class="text-3xl font-bold leading-tight sm:text-4xl"
           ></h3>
 
-          <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2 text-sm text-white/70">
+          <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/3 px-4 py-2 text-sm text-white/70">
             <Layers3 size={15} />
             <span id="modalType"></span>
           </div>
 
           <!-- DESC -->
-          <div class="mt-6 rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-5">
+          <div class="mt-6 rounded-4xl border border-white/[0.08] bg-white/3 p-5">
 
             <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
               <Package size={16} />
@@ -256,7 +256,7 @@ const families = [
           <!-- EXTRA -->
           <div
             id="extraWrap"
-            class="mt-4 hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-5"
+            class="mt-4 hidden rounded-4xl border border-white/[0.08] bg-white/3 p-5"
           >
 
             <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
@@ -274,7 +274,7 @@ const families = [
           <!-- BENEFITS -->
           <div class="mt-4 grid grid-cols-2 gap-3">
 
-            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-4 text-sm">
+            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/3 p-4 text-sm">
 
               <div class="mb-2 flex items-center gap-2 font-semibold">
                 <Star size={15} />
@@ -285,7 +285,7 @@ const families = [
 
             </div>
 
-            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-4 text-sm">
+            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/3 p-4 text-sm">
 
               <div class="mb-2 flex items-center gap-2 font-semibold">
                 <Sparkles size={15} />

@@ -63,7 +63,7 @@ async function loadDashboard() {
   if (ordersBox) {
 
     ordersBox.innerHTML = `
-      <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-sm text-white/45 animate-pulse">
+      <div class="rounded-2xl border border-white/10 bg-white/2 p-4 text-sm text-white/45 animate-pulse">
         Cargando pedidos...
       </div>
     `;
@@ -392,7 +392,7 @@ async function loadDashboard() {
     if (!list.length) {
 
       ordersBox.innerHTML = `
-        <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-white/45">
+        <div class="rounded-2xl border border-white/10 bg-white/2 p-5 text-white/45">
           Aún no tienes pedidos registrados.
         </div>
       `;
@@ -437,7 +437,7 @@ async function loadDashboard() {
 
             <a
               href="/portal/orders"
-              class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 transition hover:bg-white/[0.05]"
+              class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/2 px-4 py-4 transition hover:bg-white/[0.05]"
             >
 
               <div>
