@@ -1,222 +1,756 @@
 ---
+
+
 import {
   ArrowRight,
   Sparkles,
-  Star,
+  BadgeCheck,
   ShieldCheck,
-  Droplets,
-  BadgeCheck
+  Gem,
+  Sparkle
 } from "lucide-react";
 ---
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+/>
 
-<section class="relative overflow-hidden bg-black text-white">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+/>
 
-  <!-- BACKGROUND -->
-  <div class="absolute inset-0">
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+  rel="stylesheet"
+/>
 
-    <img
-      src="/images/avyna/avyna-banner.jpg"
-      class="h-full w-full object-cover opacity-10 scale-105"
-      alt="AVYNA Beauty"
-    />
+<section
+  class="relative overflow-hidden bg-black text-white"
+>
 
-    <div class="absolute inset-0 bg-black/70"></div>
-
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.09),transparent_30%)] glow-pulse"></div>
-
-    <div class="absolute -top-24 left-0 h-128 w-lg rounded-full bg-white/10 blur-3xl"></div>
-
-    <div class="absolute bottom-0 right-0 h-120 w-120 rounded-full bg-zinc-300/10 blur-3xl"></div>
-
-  </div>
 
   <!-- CONTENT -->
-  <div class="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 pt-28 pb-20 lg:grid-cols-2 lg:gap-20 lg:pt-32 lg:pb-24">
+  <div class="relative z-10">
+
+</div>
+  <!-- CONTENT -->
+  <div
+    class="
+      relative
+      z-10
+
+      mx-auto
+      max-w-7xl
+
+      grid
+      items-center
+      gap-14
+
+      px-6
+      pt-20
+      
+
+      lg:grid-cols-[1.05fr_.95fr]
+      lg:gap-6
+    "
+  >
 
     <!-- LEFT -->
-    <div>
+    <div class="relative z-20">
 
       <!-- BADGE -->
-      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
-        <Sparkles size={15} className="text-white/80" />
+      <div
+        class="
+          inline-flex
+          items-center
+          gap-2
+
+          rounded-full
+          mt-5
+          border
+          border-white/10
+
+          bg-white/[0.03]
+
+          px-5
+          py-2.5
+
+          text-sm
+          text-white/80
+
+          backdrop-blur-2xl
+          lg:-mt-20
+        "
+      >
+        <Sparkles size={18} />
         Cabello más sano desde la primera rutina
       </div>
 
       <!-- TITLE -->
-      <h1 class="reveal delay-1 mt-7 max-w-3xl text-5xl font-bold leading-[0.9] tracking-tight md:text-7xl">
-        El cabello que sueñas,
-        <span class="mt-2 block text-zinc-400">
-          empieza hoy.
-        </span>
-      </h1>
+<h1
+  class="
+    mt-8
+
+    max-w-3xl
+
+    text-[4rem]
+    leading-[0.9]
+    tracking-[-0.07em]
+
+    font-normal
+
+    md:text-[5.6rem]
+  "
+  style="
+    font-family:
+      'Clash Display',
+      'Satoshi',
+      'Plus Jakarta Sans',
+      sans-serif;
+  "
+>
+  El cabello
+
+  <span class="xs:block text-white">
+    que sueñas,
+  </span>
+
+  <span
+    class="
+      
+
+      bg-gradient-to-r
+      from-red-200
+      via-white
+      to-red-200
+
+      font-light
+      bg-clip-text
+      text-transparent
+    "
+  >
+    empieza hoy.
+  </span>
+</h1>
 
       <!-- DESCRIPTION -->
-      <p class="reveal delay-2 mt-8 max-w-2xl text-lg leading-relaxed text-white/65 md:text-xl">
+     <p
+  class="
+    mt-8
+
+    max-w-xl
+
+    text-[1.05rem]
+    leading-[1.8]
+    text-white/48
+
+    md:text-[1.18rem]
+  "
+  style="
+    font-family:
+      'Plus Jakarta Sans',
+      'Inter',
+      sans-serif;
+  "
+>
         Rutinas inteligentes, brillo espectacular y reparación visible.
         Descubre productos profesionales AVYNA diseñados para elevar
         tu imagen desde la primera aplicación.
       </p>
 
       <!-- CTA -->
-      <div class="reveal delay-3 mt-10 flex flex-col gap-4 sm:flex-row">
+      <div class="mt-10 flex flex-col gap-4 sm:flex-row">
 
         <a
           href="/diagnostico"
-          class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black shadow-2xl transition duration-300 hover:scale-105"
+          class="
+            inline-flex
+            h-14
+            items-center
+            justify-center
+            gap-2
+
+            rounded-2xl
+
+            bg-[#B12D0B]
+
+            px-8
+
+            font-semibold
+            text-white
+
+            shadow-[0_10px_40px_rgba(177,45,11,.35)]
+
+            transition-all
+            duration-300
+
+            hover:bg-[#c63a15]
+          "
         >
-          Descubrir rutina
+          Hacer diagnóstico
           <ArrowRight size={18} />
         </a>
 
         <a
           href="/catalogo"
-          class="press inline-flex h-14 items-center justify-center rounded-full border border-white/15 bg-white/5 px-8 font-medium transition hover:bg-white hover:text-black"
+          class="
+            inline-flex
+            h-14
+            items-center
+            justify-center
+
+            rounded-2xl
+
+            border
+            border-white/10
+
+            bg-white/[0.03]
+
+            px-8
+
+            font-medium
+
+            backdrop-blur-xl
+
+            transition-all
+            duration-300
+
+            hover:border-white/20
+            hover:bg-white/[0.06]
+          "
         >
-          Ver catálogo
+          Explorar catálogo
         </a>
 
       </div>
 
       <!-- TRUST -->
-      <div class="reveal delay-4 mt-8 flex flex-wrap gap-5 text-sm text-white/55">
+      <div
+        class="
+          mt-8
+
+          flex
+          flex-wrap
+          gap-6
+
+          text-sm
+          text-white/45
+        "
+      >
 
         <div class="flex items-center gap-2">
-          <BadgeCheck size={16} />
+          <BadgeCheck size={18} />
           Uso profesional
         </div>
 
         <div class="flex items-center gap-2">
-          <BadgeCheck size={16} />
+          <BadgeCheck size={18} />
           Resultados visibles
         </div>
 
         <div class="flex items-center gap-2">
-          <BadgeCheck size={16} />
+          <BadgeCheck size={18} />
           Calidad premium
         </div>
 
       </div>
 
       <!-- MOBILE IMAGE -->
-      <div class="reveal-right delay-2 mt-12 block lg:hidden">
+      <div class="relative block lg:hidden">
 
-        <div class="relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/5 p-4 shadow-[0_20px_60px_rgba(0,0,0,.55)] backdrop-blur-2xl">
+        <div
+          class="
+            absolute
+            inset-0
 
-          <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
+            bg-[radial-gradient(circle,rgba(177,45,11,.20),transparent_70%)]
 
-          <img
-            src="/images/avyna/avyna-women-1.jpg"
-            class="relative z-10 mx-auto h-105 w-full object-cover object-top"
-            alt="AVYNA Beauty"
-          />
+            blur-3xl
+          "
+        ></div>
 
-        </div>
+        <img
+          src="/images/avyna/hero-model.png"
+          class="
+            relative
+            z-10
+
+            mx-auto
+
+            h-[34rem]
+            w-full
+
+            object-contain
+            object-bottom
+
+            opacity-[0.98]
+
+            pointer-events-none
+            select-none
+          "
+          style="
+            mask-image:
+              radial-gradient(
+                ellipse at center,
+                rgba(0,0,0,1) 48%,
+                rgba(0,0,0,.96) 68%,
+                rgba(0,0,0,.45) 84%,
+                transparent 100%
+              );
+
+            -webkit-mask-image:
+              radial-gradient(
+                ellipse at center,
+                rgba(0,0,0,1) 48%,
+                rgba(0,0,0,.96) 68%,
+                rgba(0,0,0,.45) 84%,
+                transparent 100%
+              );
+          "
+          alt="AVYNA Beauty"
+        />
 
       </div>
 
-      <!-- STATS -->
-      <div class="reveal-left delay-4 mt-12 grid max-w-xl grid-cols-3 gap-3 sm:gap-6">
+    </div>
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-2xl font-bold sm:text-3xl">+30k</h3>
-          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
-            Cabellos transformados con AVYNA
-          </p>
+<!-- RIGHT -->
+<div
+  class="
+    relative
+    hidden
+
+min-h-[680px]
+
+    items-center
+    justify-center
+
+    overflow-hidden
+
+    lg:flex
+  "
+>
+
+ <!-- LEFT FADE -->
+<div
+  class="
+    absolute
+    inset-y-0
+    left-0
+    w-37.5
+
+    bg-linear-to-r
+    from-black
+    via-black/10
+    to-transparent
+
+    z-20
+    pointer-events-none
+  "
+></div>
+
+<!-- RIGHT FADE -->
+<div
+  class="
+    absolute
+    inset-y-0
+    right-0
+
+    w-30
+
+    bg-linear-to-l
+    from-black
+    via-black/70
+    to-transparent
+
+    z-20
+  "
+></div>
+
+<!-- TOP FADE -->
+<div
+  class="
+    absolute
+    inset-x-0
+    top-0
+
+    h-[50px]
+
+    bg-linear-to-b
+    from-black
+    via-black/88
+    to-transparent
+
+    z-20
+    pointer-events-none
+  "
+></div>
+
+<!-- BOTTOM FADE -->
+<div
+  class="
+    absolute
+    inset-x-0
+    bottom-0
+
+    h-[70px]
+
+    bg-gradient-to-t
+    from-black
+    via-black/30
+    to-transparent
+
+    z-20
+    pointer-events-none
+  "
+></div>
+
+  <!-- IMAGE -->
+  <img
+    src="/images/avyna/hero-model.png"
+    class="
+      absolute
+      -right-1
+      -bottom-20
+
+      z-10
+
+      h-205
+      max-w-none
+      w-auto
+
+      object-contain
+      object-bottom
+
+      opacity-[1]
+
+      pointer-events-none
+      select-none
+
+      scale-x-[-1]
+     rotate-4
+    "
+style="
+  filter:
+    drop-shadow(0 0 18px rgba(120,20,0,.10));
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+
+      transparent 0%,
+      rgba(0,0,0,.55) 10%,
+      rgba(0,0,0,.96) 18%,
+      rgba(0,0,0,1) 60%,
+      rgba(0,0,0,.82) 82%,
+      rgba(0,0,0,.35) 92%,
+      transparent 100%
+    ),
+
+    linear-gradient(
+      to left,
+
+      transparent 0%,
+      rgba(0,0,0,.12) 8%,
+      rgba(0,0,0,.72) 18%,
+      rgba(0,0,0,1) 38%
+    );
+
+  mask-composite: intersect;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+
+      transparent 0%,
+      rgba(0,0,0,.55) 10%,
+      rgba(0,0,0,.96) 18%,
+      rgba(0,0,0,1) 60%,
+      rgba(0,0,0,.82) 82%,
+      rgba(0,0,0,.35) 92%,
+      transparent 100%
+    ),
+
+    linear-gradient(
+      to left,
+
+      transparent 0%,
+      rgba(0,0,0,.12) 8%,
+      rgba(0,0,0,.72) 18%,
+      rgba(0,0,0,1) 38%
+    );
+
+  -webkit-mask-composite: source-in;
+"
+    alt="AVYNA Beauty"
+  />
+
+</div>
+
+  </div>
+
+  <!-- PREMIUM STATS -->
+  <div
+    class="
+      relative
+      z-20
+
+      mx-auto
+      max-w-7xl
+
+      grid
+      grid-cols-1
+
+      gap-5
+
+      px-10
+      pb-10
+
+      md:grid-cols-3
+    "
+  >
+
+    <!-- CARD 1 -->
+    <div
+      class="
+        group
+        relative
+        overflow-hidden
+
+        place-content-center-safe
+
+        rounded-4xl
+        border
+        border-white/8
+
+        bg-white/2
+
+        p-5
+
+        backdrop-blur-xl
+
+        transition-all
+        duration-300
+
+        hover:border-white/15
+        hover:bg-white/[0.03]
+      "
+    >
+
+      <div
+        class="
+          absolute
+          inset-0
+
+          opacity-0
+          transition-opacity
+          duration-500
+
+          group-hover:opacity-100
+        "
+      ></div>
+
+      <div class="relative z-10 flex items-center gap-5">
+
+        <div
+          class="
+            flex
+            h-16
+            w-16
+            shrink-0
+            items-center
+            justify-center
+
+            rounded-2xl
+
+            border
+            border-white/10
+
+            bg-white/4
+          "
+        >
+          <Sparkle size={26} />
         </div>
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-2xl font-bold sm:text-3xl">Italia</h3>
-          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
-            Fórmulas de origen italiano
-          </p>
-        </div>
+        <div class="flex-1">
 
-        <div class="hover-lift rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-2xl bg-linear-to-br from-white/10 to-transparent shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-          <h3 class="text-lg font-bold leading-tight sm:text-3xl">
-            Cruelty
-            <span class="block">Free</span>
+          <h3
+            class="
+              text-3xl
+              font-semibold
+              tracking-tight
+            "
+          >
+            +30k
           </h3>
-          <p class="mt-2 text-xs leading-relaxed text-white/45 sm:text-sm">
-            Sin pruebas animales
+
+          <p class="mt-1 text-sm leading-relaxed text-white/50">
+            Cabellos transformados con rutinas AVYNA.
           </p>
+
         </div>
 
       </div>
 
     </div>
 
+    <!-- CARD 2 -->
+    <div
+      class="
+        group
+        relative
+        overflow-hidden
 
-<!-- RIGHT DESKTOP -->
-<div class="reveal-right delay-2 relative hidden lg:block">
+        place-content-center-safe
 
-  <!-- FLOATING PRODUCTS -->
+        rounded-4xl
+        border
+        border-white/8
+        bg-white/2
 
-  <img
-    src="/images/products/ialuronico/ialu-shampoo-500ml.png"
-    alt="AVYNA Shampoo"
-    class="
-      pointer-events-none
-      absolute
-      -left-35
-      top-20
-      z-20
-      h-73
-      rotate-[-12deg]
-      object-contain
-      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
-      float-soft
-    "
-  />
+        p-5
 
-  <img
-    src="/images/products/argan/argan-fluido.png"
-    alt="AVYNA Fluido"
-    class="
-      pointer-events-none
-      absolute
-      -right-15
-      top-0
-      z-20
-      h-55
-      rotate-[3deg]
-      object-contain
-      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
-      float-soft-delayed
-    "
-  />
+        backdrop-blur-xl
 
-  <img
-    src="/images/products/platino/platino-shampoo-1000ml.png"
-    alt="AVYNA Platino"
-    class="
-      pointer-events-none
-      absolute
-      -right-30
-      -bottom-5
-      z-20
-      h-80
-      rotate-[8deg]
-      object-contain
-      drop-shadow-[0_25px_45px_rgba(0,0,0,.55)]
-      float-soft
-    "
-  />
+        transition-all
+        duration-300
 
-  <!-- MAIN CARD -->
-  <div class="relative overflow-hidden rounded-[2.8rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_30px_80px_rgba(0,0,0,.6)] backdrop-blur-2xl">
+        hover:border-white/15
+        hover:bg-white/3
+      "
+    >
 
-    <div class="absolute inset-0 bg-linear-to-br from-white/6 to-transparent"></div>
+      <div
+        class="
+          absolute
+          inset-0
 
-    <img
-      src="/images/avyna/avyna-women-1.jpg"
-      class="relative z-10 mx-auto h-170 object-contain "
-      alt="AVYNA Beauty"
-    />
+          opacity-0
+          transition-opacity
+          duration-500
 
-  </div>
+          group-hover:opacity-100
+        "
+      ></div>
+
+      <div class="relative z-10 flex items-center gap-5">
+
+        <div
+          class="
+            flex
+            h-16
+            w-16
+            shrink-0
+            items-center
+            justify-center
+
+            rounded-2xl
+
+            border
+            border-white/10
+
+            bg-white/4
+          "
+        >
+          <Gem size={26} />
+        </div>
+
+        <div class="flex-1">
+
+          <h3
+            class="
+              text-3xl
+              font-semibold
+              tracking-tight
+            "
+          >
+            Italia
+          </h3>
+
+          <p class="mt-1 text-sm leading-relaxed text-white/50">
+            Fórmulas premium de origen italiano.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 3 -->
+    <div
+      class="
+      
+        group
+        relative
+        overflow-hidden
+
+        place-content-center-safe
+
+        rounded-4xl
+        border
+        border-white/8
+
+        bg-white/2
+
+        p-5
+
+        backdrop-blur-xl
+
+        transition-all
+        duration-300
+
+        hover:border-white/15
+        hover:bg-white/3
+      "
+    >
 
 
-</div>
+      <div class="relative z-10 flex items-center gap-5">
+
+        <div
+          class="
+            flex
+            h-16
+            w-16
+            shrink-0
+            items-center
+            justify-center
+
+            rounded-2xl
+
+            border
+            border-white/10
+
+            bg-white/4
+          "
+        >
+          <ShieldCheck size={26} />
+        </div>
+
+        <div class="flex-1">
+
+          <h3
+            class="
+              text-3xl
+              font-semibold
+              tracking-tight
+            "
+          >
+            Cruelty Free
+          </h3>
+
+          <p class="mt-1 text-sm leading-relaxed text-white/50">
+            Sin pruebas animales y cuidado responsable.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 

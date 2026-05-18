@@ -27,26 +27,35 @@ const {
 <div
   id="promoPopup"
   class="
-    pointer-events-none
     fixed
     bottom-5
     right-5
-    z-[9999]
+
+    z-[999999]
+
+    isolate
+
     w-[92vw]
     max-w-sm
+
     translate-y-10
     opacity-0
+
     transition-all
     duration-500
+
     sm:w-full
   "
 >
 
-  <div
-    class="
-      relative
-      overflow-hidden
-      rounded-[2rem]
+<div
+  class="
+    relative
+    overflow-hidden
+
+    pointer-events-auto
+
+    rounded-[2rem]
       border
       border-white/10
       bg-black/90
@@ -74,30 +83,49 @@ const {
       ></div>
 
       <!-- CLOSE -->
-      <button
-        id="promoClose"
-        class="
-          absolute
-          right-4
-          top-4
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-white/10
-          bg-black/50
-          text-white
-          backdrop-blur-xl
-          transition
-          hover:bg-white
-          hover:text-black
-        "
-      >
-        ✕
-      </button>
+<button
+  id="promoClose"
+  type="button"
+  aria-label="Cerrar popup"
+  class="
+    absolute
+    right-4
+    top-4
+
+    z-50
+
+    flex
+    h-10
+    w-10
+
+    cursor-pointer
+
+    items-center
+    justify-center
+
+    rounded-full
+
+    border
+    border-white/10
+
+    bg-black/60
+
+    text-white
+
+    backdrop-blur-xl
+
+    transition-all
+    duration-200
+
+    hover:scale-105
+    hover:bg-white
+    hover:text-black
+
+    active:scale-95
+  "
+>
+  ✕
+</button>
 
       <!-- CONTENT -->
       <div class="absolute bottom-0 left-0 right-0 p-5">
@@ -183,6 +211,12 @@ const button =
 
 let current = 0;
 
+let autoCloseTimeout;
+let intervalInstance;
+
+let isVisible = false;
+let isAnimating = false;
+
 function setPromo(index){
 
   const item = items[index];
@@ -199,46 +233,76 @@ function setPromo(index){
     item.subtitle;
 
   button.textContent =
-    item.buttonText;
+    item.buttonText || "Ver más";
 
   button.href =
-    item.buttonHref;
+    item.buttonHref || "#";
 
 }
 
 function showPopup(){
 
+  if(
+    !popup ||
+    isVisible ||
+    isAnimating
+  ) return;
+
+  isAnimating = true;
+
+
   popup.classList.remove(
     "opacity-0",
-    "translate-y-10",
-    "pointer-events-none"
+    "translate-y-10"
   );
 
   popup.classList.add(
     "opacity-100",
-    "translate-y-0",
-    "pointer-events-auto"
+    "translate-y-0"
   );
+
+  setTimeout(() => {
+
+    isVisible = true;
+    isAnimating = false;
+
+  }, 500);
 
 }
 
 function hidePopup(){
 
+  if(
+    !popup ||
+    !isVisible ||
+    isAnimating
+  ) return;
+
+  isAnimating = true;
+
   popup.classList.add(
     "opacity-0",
-    "translate-y-10",
-    "pointer-events-none"
+    "translate-y-10"
   );
 
   popup.classList.remove(
     "opacity-100",
-    "translate-y-0",
-    "pointer-events-auto"
+    "translate-y-0"
   );
+
+  setTimeout(() => {
+
+
+    isVisible = false;
+    isAnimating = false;
+
+  }, 500);
 
 }
 
 function cyclePromo(){
+
+  clearTimeout(autoCloseTimeout);
 
   current =
     Math.floor(
@@ -249,11 +313,12 @@ function cyclePromo(){
 
   showPopup();
 
-  setTimeout(() => {
+  autoCloseTimeout =
+    setTimeout(() => {
 
-    hidePopup();
+      hidePopup();
 
-  }, autoClose);
+    }, autoClose);
 
 }
 
@@ -266,11 +331,16 @@ if(
 
     cyclePromo();
 
-    setInterval(() => {
+    intervalInstance =
+      setInterval(() => {
 
-      cyclePromo();
+        if(!isVisible && !isAnimating){
 
-    }, interval);
+          cyclePromo();
+
+        }
+
+      }, interval);
 
   }, delay);
 
@@ -278,7 +348,16 @@ if(
 
 closeBtn?.addEventListener(
   "click",
-  hidePopup
+  (e) => {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    clearTimeout(autoCloseTimeout);
+
+    hidePopup();
+
+  }
 );
 
 </script>
