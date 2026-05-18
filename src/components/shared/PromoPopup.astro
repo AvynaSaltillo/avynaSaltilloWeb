@@ -7,6 +7,9 @@ interface PromoItem {
   image: string;
   buttonText?: string;
   buttonHref?: string;
+
+  badge?: string;
+  status?: string;
 }
 
 interface Props {
@@ -18,167 +21,135 @@ interface Props {
 
 const {
   items = [],
-  delay = 5000,
+  delay = 7000,
   autoClose = 10000,
-  interval = 18000
+  interval = 45000,
 } = Astro.props;
 ---
 
 <div
   id="promoPopup"
-  class="
-    fixed
-    bottom-5
-    right-5
-
-    z-[999999]
-
-    isolate
-
-    w-[92vw]
-    max-w-sm
-
-    translate-y-10
-    opacity-0
-
-    transition-all
-    duration-500
-
-    sm:w-full
-  "
+  class="right-5 lg:right-7 bottom-5 lg:bottom-7 z-[999999] fixed opacity-0 w-[92vw] sm:w-full max-w-[340px] transition-all translate-y-6 duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-none"
 >
+  <!-- STACK BACK -->
+  <div
+    class="absolute inset-0 bg-white/[0.025] opacity-40 blur-sm rounded-[2rem] translate-x-3 translate-y-3"
+  >
+  </div>
 
-<div
-  class="
-    relative
-    overflow-hidden
+  <div
+    class="absolute inset-0 bg-white/[0.02] border border-white/5 rounded-[2rem] translate-x-[6px] translate-y-[6px]"
+  >
+  </div>
 
-    pointer-events-auto
+  <div class="absolute inset-0 backdrop-blur-[1px]"></div>
 
-    rounded-4xl
-      border
-      border-white/10
-      bg-black/90
-      shadow-[0_25px_80px_rgba(0,0,0,.55)]
-      backdrop-blur-3xl
-    "
-    >
-
+  <!-- MAIN CARD -->
+  <div
+    class="relative bg-black/80 hover:bg-black/88 shadow-[0_30px_100px_rgba(0,0,0,.6)] backdrop-blur-3xl border border-white/10 hover:border-white/15 rounded-[2rem] overflow-hidden transition-all duration-500"
+  >
     <!-- IMAGE -->
-    <div class="relative h-44 overflow-hidden">
-
+    <div class="relative h-[260px] overflow-hidden">
       <img
         id="promoImage"
         src={items[0]?.image}
         alt=""
-        class="h-full w-full object-cover transition duration-500"
+        class="w-full h-full object-cover scale-[1] hover:scale-[1.04] transition-all duration-700 ease-out"
       />
 
+      <!-- DARK -->
       <div
-        class="
-          absolute
-          inset-0
-          bg-[linear-gradient(to_top,rgba(0,0,0,.92),rgba(0,0,0,.2))]
-        "
-      ></div>
+        class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.96),rgba(0,0,0,.38))]"
+      >
+      </div>
+
+      <!-- TOP GLOW -->
+      <div
+        class="top-0 absolute inset-x-0 bg-gradient-to-b from-black/60 to-transparent h-24"
+      >
+      </div>
 
       <!-- CLOSE -->
-<button
-  id="promoClose"
-  type="button"
-  aria-label="Cerrar popup"
-  class="
-    absolute
-    right-4
-    top-4
-
-    z-50
-
-    flex
-    h-10
-    w-10
-
-    cursor-pointer
-
-    items-center
-    justify-center
-
-    rounded-full
-
-    border
-    border-white/10
-
-    bg-black/60
-
-    text-white
-
-    backdrop-blur-xl
-
-    transition-all
-    duration-200
-
-    hover:scale-105
-    hover:bg-white
-    hover:text-black
-
-    active:scale-95
-  "
->
-  ✕
-</button>
+      <button
+        id="promoClose"
+        type="button"
+        aria-label="Cerrar popup"
+        class="top-4 right-4 z-50 absolute flex justify-center items-center bg-black/55 hover:bg-white backdrop-blur-xl border border-white/10 hover:border-white/20 rounded-full w-10 h-10 text-white/80 hover:text-black transition-all duration-300"
+      >
+        ✕
+      </button>
 
       <!-- CONTENT -->
-      <div class="absolute bottom-0 left-0 right-0 p-5">
+      <div class="bottom-0 absolute inset-x-0 px-5 pt-16 pb-5">
+        <!-- BADGES -->
+        <div class="flex items-center gap-2">
+          <div
+            id="promoBadge"
+            class="inline-flex items-center items-start gap-2 bg-white/[0.05] backdrop-blur-xl px-3 py-1.5 border border-white/10 rounded-full font-medium text-[10px] text-white/60 uppercase tracking-[0.24em]"
+          >
+            AVYNA FEATURED
+          </div>
 
-        <p class="text-xs uppercase tracking-[0.25em] text-white/45">
-          AVYNA FEATURED
-        </p>
+          <div
+            id="promoStatus"
+            class="inline-flex items-center gap-2 text-[11px] text-white/28"
+          >
+            <span
+              class="bg-[#B12D0B]/80 shadow-[0_0_14px_rgba(177,45,11,.9)] rounded-full w-2 h-2"
+            ></span>
 
+            Trending
+          </div>
+        </div>
+
+        <!-- TITLE -->
         <h3
           id="promoTitle"
-          class="mt-2 text-2xl font-bold leading-tight text-white"
+          class="mt-4 max-w-[85%] text-[1.65rem] text-white sm:text-[1.8rem] leading-[0.98] tracking-[-0.05em]"
+          style="
+            font-family:
+              'Clash Display',
+              'Satoshi',
+              sans-serif;
+          "
         >
           {items[0]?.title}
         </h3>
 
+        <!-- SUBTITLE -->
         <p
           id="promoSubtitle"
-          class="mt-2 text-sm leading-relaxed text-white/65"
+          class="mt-3 max-w-[95%] text-white/55 text-sm leading-[1.7]"
+          style="
+            font-family:
+              'Plus Jakarta Sans',
+              sans-serif;
+          "
         >
           {items[0]?.subtitle}
         </p>
-
       </div>
-
     </div>
 
     <!-- CTA -->
-    <div class="p-4">
-
+    <div class="p-4 pt-3">
       <a
         id="promoButton"
         href={items[0]?.buttonHref}
-        class="
-          flex
-          h-12
-          items-center
-          justify-center
-          rounded-2xl
-          bg-white
-          text-sm
-          font-semibold
-          text-black
-          transition
-          hover:scale-[1.01]
-        "
+        class="group flex justify-between items-center bg-white/[0.025] hover:bg-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,.04)] backdrop-blur-xl px-5 border border-white/10 hover:border-white/20 rounded-2xl h-12 font-medium text-white text-sm transition-all duration-300"
       >
-        {items[0]?.buttonText}
+        <span>
+          {items[0]?.buttonText}
+        </span>
+
+        <span
+          class="transition-transform group-hover:translate-x-1 duration-300"
+        >
+          →
+        </span>
       </a>
-
     </div>
-
   </div>
-
 </div>
 
 <script
@@ -187,177 +158,125 @@ const {
     items,
     delay,
     autoClose,
-    interval
+    interval,
   }}
 >
+  const popup = document.getElementById("promoPopup");
 
-const popup =
-  document.getElementById("promoPopup");
+  const closeBtn = document.getElementById("promoClose");
 
-const closeBtn =
-  document.getElementById("promoClose");
+  const image = document.getElementById("promoImage");
 
-const image =
-  document.getElementById("promoImage");
+  const title = document.getElementById("promoTitle");
 
-const title =
-  document.getElementById("promoTitle");
+  const subtitle = document.getElementById("promoSubtitle");
 
-const subtitle =
-  document.getElementById("promoSubtitle");
+  const button = document.getElementById("promoButton");
 
-const button =
-  document.getElementById("promoButton");
+  const badge = document.getElementById("promoBadge");
 
-let current = 0;
+  const status = document.getElementById("promoStatus");
 
-let autoCloseTimeout;
-let intervalInstance;
+  let current = 0;
 
-let isVisible = false;
-let isAnimating = false;
+  let autoCloseTimeout;
+  let intervalInstance;
 
-function setPromo(index){
+  let isVisible = false;
+  let isAnimating = false;
 
-  const item = items[index];
+  function setPromo(index) {
+    const item = items[index];
 
-  if(!item) return;
+    if (!item) return;
 
-  image.src =
-    item.image;
+    image.src = item.image;
 
-  title.textContent =
-    item.title;
+    title.textContent = item.title;
 
-  subtitle.textContent =
-    item.subtitle;
+    subtitle.textContent = item.subtitle;
 
-  button.textContent =
-    item.buttonText || "Ver más";
+    button.href = item.buttonHref || "#";
 
-  button.href =
-    item.buttonHref || "#";
+    button.querySelector("span").textContent = item.buttonText || "Ver más";
 
-}
+    badge.textContent = item.badge || "AVYNA FEATURED";
 
-function showPopup(){
+    status.innerHTML = `
+    <span
+      class="bg-[#B12D0B] shadow-[0_0_14px_rgba(177,45,11,.9)] rounded-full w-2 h-2"
+    ></span>
 
-  if(
-    !popup ||
-    isVisible ||
-    isAnimating
-  ) return;
+    ${item.status || "Trending"}
+  `;
+  }
 
-  isAnimating = true;
+  function showPopup() {
+    if (!popup || isVisible || isAnimating) return;
 
+    isAnimating = true;
 
-  popup.classList.remove(
-    "opacity-0",
-    "translate-y-10"
-  );
+    popup.classList.remove("opacity-0", "translate-y-6", "pointer-events-none");
 
-  popup.classList.add(
-    "opacity-100",
-    "translate-y-0"
-  );
+    popup.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
 
-  setTimeout(() => {
+    setTimeout(() => {
+      isVisible = true;
+      isAnimating = false;
+    }, 700);
+  }
 
-    isVisible = true;
-    isAnimating = false;
+  function hidePopup() {
+    if (!popup || !isVisible || isAnimating) return;
 
-  }, 500);
+    isAnimating = true;
 
-}
+    popup.classList.add("opacity-0", "translate-y-6", "pointer-events-none");
 
-function hidePopup(){
-
-  if(
-    !popup ||
-    !isVisible ||
-    isAnimating
-  ) return;
-
-  isAnimating = true;
-
-  popup.classList.add(
-    "opacity-0",
-    "translate-y-10"
-  );
-
-  popup.classList.remove(
-    "opacity-100",
-    "translate-y-0"
-  );
-
-  setTimeout(() => {
-
-
-    isVisible = false;
-    isAnimating = false;
-
-  }, 500);
-
-}
-
-function cyclePromo(){
-
-  clearTimeout(autoCloseTimeout);
-
-  current =
-    Math.floor(
-      Math.random() * items.length
+    popup.classList.remove(
+      "opacity-100",
+      "translate-y-0",
+      "pointer-events-auto",
     );
 
-  setPromo(current);
-
-  showPopup();
-
-  autoCloseTimeout =
     setTimeout(() => {
+      isVisible = false;
+      isAnimating = false;
+    }, 700);
+  }
 
+  function cyclePromo() {
+    clearTimeout(autoCloseTimeout);
+
+    current = Math.floor(Math.random() * items.length);
+
+    setPromo(current);
+
+    showPopup();
+
+    autoCloseTimeout = setTimeout(() => {
       hidePopup();
-
     }, autoClose);
+  }
 
-}
+  if (popup && items.length) {
+    setTimeout(() => {
+      cyclePromo();
 
-if(
-  popup &&
-  items.length
-){
-
-  setTimeout(() => {
-
-    cyclePromo();
-
-    intervalInstance =
-      setInterval(() => {
-
-        if(!isVisible && !isAnimating){
-
+      intervalInstance = setInterval(() => {
+        if (!isVisible && !isAnimating) {
           cyclePromo();
-
         }
-
       }, interval);
+    }, delay);
+  }
 
-  }, delay);
-
-}
-
-closeBtn?.addEventListener(
-  "click",
-  (e) => {
-
+  closeBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
     clearTimeout(autoCloseTimeout);
 
     hidePopup();
-
-  }
-);
-
+  });
 </script>

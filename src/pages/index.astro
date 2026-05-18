@@ -17,92 +17,72 @@ import PublicBanner from "../components/public/PublicBanner.astro";
 
 import PromoPopup from "../components/shared/PromoPopup.astro";
 
-import { ArrowRight, Sparkles, Store } from "lucide-react";
+import { ArrowRight, Store, Sparkles, Gem, ShieldCheck } from "lucide-react";
 
+/* PREMIUM POPUPS */
 const promoItems = [
-
   {
-    title: "Prueba la  línea GOJI",
-    subtitle:
-      "Protección de color, brillo intenso y antioxidantes premium.",
-    image:
-      "/images/products/goji/goji-banner.jpg",
-    buttonText: "Ver línea",
-    buttonHref: "/catalogo"
-  },
-
-{
-  title: "POZIONE DUO",
-  subtitle:
-    "El dúo profesional de reparación intensiva para cabello sensibilizado, elástico o procesado químicamente.",
-  image:
-    "/images/products/tratamientos/pozione-duo-banner.webp",
-  buttonText: "Ver tratamiento",
-  buttonHref: "/catalogo"
-},
-
-{
-  title: "Tus clientas ya buscan AVYNA",
-  subtitle:
-    "Genera más ingresos ofreciendo productos profesionales que aumentan recompra, recomendación y fidelización.",
-  image:
-    "/images/grow/avyna-salon-5.jpg",
-  buttonText: "Convertirme en socio",
-  buttonHref: "/grow/login"
-},
-
-  {
-    title: "Top ventas Argán",
-    subtitle:
-      "La línea favorita para reparación y brillo profesional.",
-    image:
-      "/images/products/argan/argan-banner.jpg",
-    buttonText: "Descubrir",
-    buttonHref: "/catalogo"
+    title: "Línea GOJI",
+    subtitle: "Protección antioxidante y brillo intenso para cabello tratado.",
+    image: "/images/avyna/avyna-banner-2.jpg",
+    buttonText: "Descubrir línea",
+    buttonHref: "/catalogo",
   },
 
   {
-    title: "Diagnóstico inteligente AVYNA",
+    title: "Pozione Duo",
+    subtitle: "El tratamiento profesional favorito para cabello procesado.",
+    image: "/images/products/tratamientos/pozione-duo-banner.webp",
+    buttonText: "Ver tratamiento",
+    buttonHref: "/catalogo",
+  },
+
+  {
+    title: "Argán Repair",
+    subtitle:
+      "Nutrición profunda y reparación visible desde la primera rutina.",
+    image: "/images/products/argan/argan-banner.jpg",
+    buttonText: "Explorar",
+    buttonHref: "/catalogo",
+  },
+
+  {
+    title: "AVYNA para profesionales",
+    subtitle: "Productos premium para salones que buscan diferenciarse.",
+    image: "/images/grow/avyna-salon-5.jpg",
+    buttonText: "Conocer Grow",
+    buttonHref: "/grow/login",
+  },
+
+  {
+    title: "AVYNA Grow",
+    subtitle:
+      "Beneficios exclusivos para profesionales y distribuidores afiliados.",
+    image: "/images/grow/avyna-salon-3.jpg",
+    buttonText: "Conocer más",
+    buttonHref: "/grow/login",
+  },
+
+  {
+    title: "Diagnóstico inteligente",
     subtitle:
       "Descubre la rutina ideal según las necesidades reales de tu cabello.",
-    image:
-      "/images/avyna/avyna-banner-2.jpg",
+    image: "/images/avyna/avyna-banner-2.jpg",
     buttonText: "Comenzar",
-    buttonHref: "/diagnostico"
+    buttonHref: "/diagnostico",
   },
-
-  {
-    title: "Club Profesional AVYNA",
-    subtitle:
-      "Beneficios exclusivos para salones y profesionales afiliados.",
-    image:
-      "/images/grow/avyna-salon-3.jpg",
-    buttonText: "Conocer más",
-    buttonHref: "/grow/login"
-  }
-
 ];
-
-const randomPromo =
-  promoItems[
-    Math.floor(
-      Math.random() *
-      promoItems.length
-    )
-  ];
 ---
 
 <Layout
   title="AVYNA Saltillo | Productos Profesionales de Belleza y Cuidado Capilar"
   description="Descubre productos profesionales AVYNA, diagnóstico capilar, catálogo premium y salones autorizados."
 >
-
   <!-- NAVBAR -->
   <Navbar />
 
   <!-- PAGE -->
-  <main class="overflow-hidden bg-black text-white">
-
+  <main class="bg-black overflow-hidden text-white">
     <!-- HERO -->
     <Hero />
 
@@ -111,18 +91,180 @@ const randomPromo =
       <Benefits />
     </section>
 
+    <!-- BANNER -->
     <PublicBanner
-  image="/images/avyna/avyna-banner.gif"
-  title="Cabello brillante, suave y lleno de vida."
-  subtitle="Rutinas profesionales diseñadas para transformar la apariencia del cabello."
-/>
+      image="/images/avyna/avyna-banner.gif"
+      title="Cabello brillante, suave y lleno de vida."
+      subtitle="Rutinas profesionales diseñadas para transformar la apariencia del cabello."
+    />
 
-    <!-- DIAGNÓSTICO -->
+    <!-- DIAGNOSTIC -->
     <section id="diagnostico" class="relative reveal">
       <DiagnosticTeaser />
     </section>
 
-    <!-- MAPA -->
+    <!-- GROW SECTION -->
+    <section id="grow" class="relative px-6 py-24 overflow-hidden">
+      <!-- BG -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(177,45,11,.10),transparent_30%)] pointer-events-none"
+      >
+      </div>
+
+      <div
+        class="bottom-[-180px] left-1/2 absolute bg-[#B12D0B]/10 blur-[160px] rounded-full w-[80%] h-[320px] -translate-x-1/2 pointer-events-none"
+      >
+      </div>
+
+      <div class="z-10 relative mx-auto max-w-7xl">
+        <!-- CARD -->
+        <div
+          class="relative bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.8rem] overflow-hidden"
+        >
+          <!-- INNER GLOW -->
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(177,45,11,.12),transparent_35%)] pointer-events-none"
+          >
+          </div>
+
+          <div
+            class="lg:items-center gap-16 grid lg:grid-cols-[1.15fr_.85fr] p-8 md:p-14"
+          >
+            <!-- LEFT -->
+            <div class="z-10 relative">
+              <!-- BADGE -->
+              <div
+                class="inline-flex items-center gap-2 bg-white/[0.04] backdrop-blur-xl px-5 py-2.5 border border-white/10 rounded-full text-white/75 text-sm"
+              >
+                <Store size={16} />
+                AVYNA Grow
+              </div>
+
+              <!-- TITLE -->
+              <h2
+                class="mt-7 max-w-2xl text-4xl md:text-6xl leading-[0.95] tracking-[-0.05em]"
+                style="
+                  font-family:
+                    'Clash Display',
+                    'Satoshi',
+                    sans-serif;
+                "
+              >
+                Convierte tu salón en una experiencia
+                <span class="text-white/45"> premium. </span>
+              </h2>
+
+              <!-- DESCRIPTION -->
+              <p
+                class="mt-7 max-w-xl text-white/55 text-lg leading-[1.9]"
+                style="
+                  font-family:
+                    'Plus Jakarta Sans',
+                    sans-serif;
+                "
+              >
+                Accede a productos exclusivos, mejores márgenes y acompañamiento
+                personalizado para elevar la experiencia de tus clientas.
+              </p>
+
+              <!-- CTA -->
+              <div class="flex sm:flex-row flex-col gap-4 mt-10">
+                <a
+                  href="/grow/login"
+                  class="inline-flex justify-center items-center gap-2 bg-[#B12D0B] hover:bg-[#c63a15] shadow-[0_10px_40px_rgba(177,45,11,.30)] px-8 rounded-2xl h-14 font-semibold text-white transition-all duration-300"
+                >
+                  Quiero vender AVYNA
+                  <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="relative gap-5 grid">
+              <!-- CARD -->
+              <div
+                class="group relative bg-white/[0.03] backdrop-blur-2xl p-6 border border-white/10 rounded-[2rem] overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(177,45,11,.18),transparent_45%)] opacity-0 group-hover:opacity-100 transition duration-500"
+                >
+                </div>
+
+                <div class="z-10 relative flex items-center gap-5">
+                  <div
+                    class="flex justify-center items-center bg-white/[0.04] border border-white/10 rounded-2xl w-14 h-14 shrink-0"
+                  >
+                    <Sparkles size={24} />
+                  </div>
+
+                  <div>
+                    <h3 class="font-semibold text-2xl">Más ganancias</h3>
+
+                    <p class="mt-1 text-white/50 text-sm leading-relaxed">
+                      Mejores márgenes y recompra constante.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD -->
+              <div
+                class="group relative bg-white/[0.03] backdrop-blur-2xl p-6 border border-white/10 rounded-[2rem] overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(177,45,11,.18),transparent_45%)] opacity-0 group-hover:opacity-100 transition duration-500"
+                >
+                </div>
+
+                <div class="z-10 relative flex items-center gap-5">
+                  <div
+                    class="flex justify-center items-center bg-white/[0.04] border border-white/10 rounded-2xl w-14 h-14 shrink-0"
+                  >
+                    <Gem size={24} />
+                  </div>
+
+                  <div>
+                    <h3 class="font-semibold text-2xl">Imagen premium</h3>
+
+                    <p class="mt-1 text-white/50 text-sm leading-relaxed">
+                      Productos que elevan la percepción de tu salón.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD -->
+              <div
+                class="group relative bg-white/[0.03] backdrop-blur-2xl p-6 border border-white/10 rounded-[2rem] overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(177,45,11,.18),transparent_45%)] opacity-0 group-hover:opacity-100 transition duration-500"
+                >
+                </div>
+
+                <div class="z-10 relative flex items-center gap-5">
+                  <div
+                    class="flex justify-center items-center bg-white/[0.04] border border-white/10 rounded-2xl w-14 h-14 shrink-0"
+                  >
+                    <ShieldCheck size={24} />
+                  </div>
+
+                  <div>
+                    <h3 class="font-semibold text-2xl">Atención cercana</h3>
+
+                    <p class="mt-1 text-white/50 text-sm leading-relaxed">
+                      Acompañamiento personalizado y soporte real.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
     <section id="salones" class="relative reveal">
       <SalonMap />
     </section>
@@ -131,99 +273,11 @@ const randomPromo =
     <section id="faq" class="relative reveal">
       <FAQ />
     </section>
-
-    <!-- GROW CARD -->
-    <section id="grow" class="relative px-6 pb-10">
-
-      <div class="mx-auto max-w-6xl">
-
-        <div class="reveal relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/3 p-8 backdrop-blur-2xl md:p-12">
-
-          <!-- glow -->
-          <div class="absolute inset-0 -z-10">
-            <div class="absolute right-0 top-0 h-60 w-60 rounded-full bg-white/5 blur-3xl"></div>
-          </div>
-
-          <div class="grid items-center gap-10 lg:grid-cols-2">
-
-            <!-- LEFT -->
-            <div>
-
-              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/75">
-                <Store size={15} />
-                Grow AVYNA
-              </div>
-
-              <h2 class="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl">
-                ¿Tienes salón o negocio?
-                <span class="block text-zinc-400">
-                  Vende AVYNA con nosotros
-                </span>
-              </h2>
-
-              <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/60">
-                Obtén acceso a precios especiales, productos premium y atención personalizada
-                para impulsar tus ventas en Saltillo.
-              </p>
-
-              <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-
-                <a
-                  href="/grow/login"
-                  class="press inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-8 font-semibold text-black transition duration-300 hover:scale-105"
-                >
-                  Quiero vender AVYNA
-                  <ArrowRight size={18} />
-                </a>
-
-              </div>
-
-            </div>
-
-            <!-- RIGHT -->
-            <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-
-              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
-                <p class="text-2xl font-bold">Más ganancias</p>
-                <p class="mt-1 text-sm text-white/45">
-                  Mejores márgenes por venta
-                </p>
-              </div>
-
-              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
-                <p class="text-2xl font-bold">Alta demanda</p>
-                <p class="mt-1 text-sm text-white/45">
-                  Productos que tus clientas buscan
-                </p>
-              </div>
-
-              <div class="rounded-3xl border border-white/10 bg-white/3 px-6 py-5">
-                <p class="text-2xl font-bold">Atención cercana</p>
-                <p class="mt-1 text-sm text-white/45">
-                  Acompañamiento personalizado
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
   </main>
 
   <!-- FOOTER -->
   <Footer />
 
-<PromoPopup
-  items={promoItems}
-  delay={7000}
-  autoClose={10000}
-  interval={45000}
-/>
-
+  <!-- PREMIUM POPUP -->
+  <PromoPopup items={promoItems} />
 </Layout>

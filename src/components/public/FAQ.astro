@@ -7,139 +7,135 @@ import {
   Sparkles,
   ShieldCheck,
   MapPin,
-  ScanSearch
+  ScanSearch,
 } from "lucide-react";
 
 const faqs = [
   {
     icon: MapPin,
     q: "¿Dónde puedo comprar productos AVYNA en Saltillo?",
-    a: "Puedes adquirir productos AVYNA en salones autorizados en Saltillo. Próximamente habrá más puntos disponibles."
+    a: "Puedes adquirir productos AVYNA en salones autorizados en Saltillo. Próximamente habrá más puntos disponibles.",
   },
-{
-  icon: ScanSearch,
-  q: "¿Cómo sé qué producto necesito?",
-  a: "La mejor opción es realizar un diagnóstico capilar presencial en un salón autorizado, donde un estilista puede evaluar tu cabello y recomendar la rutina ideal. También puedes hacer nuestro diagnóstico online como referencia aproximada, aunque para mejores resultados recomendamos valoración profesional."
-},
+  {
+    icon: ScanSearch,
+    q: "¿Cómo sé qué producto necesito?",
+    a: "La mejor opción es realizar un diagnóstico capilar presencial en un salón autorizado, donde un estilista puede evaluar tu cabello y recomendar la rutina ideal. También puedes hacer nuestro diagnóstico online como referencia aproximada, aunque para mejores resultados recomendamos valoración profesional.",
+  },
   {
     icon: ShieldCheck,
     q: "¿Los productos son de uso profesional?",
-    a: "Sí. AVYNA trabaja fórmulas desarrolladas con enfoque profesional, utilizadas por estilistas y también adaptadas para mantenimiento en casa."
+    a: "Sí. AVYNA trabaja fórmulas desarrolladas con enfoque profesional, utilizadas por estilistas y también adaptadas para mantenimiento en casa.",
   },
   {
     icon: Sparkles,
     q: "¿Sirven para cabello teñido o decolorado?",
-    a: "Sí. Existen líneas enfocadas en reparación, nutrición y protección de color para cabello procesado químicamente."
+    a: "Sí. Existen líneas enfocadas en reparación, nutrición y protección de color para cabello procesado químicamente.",
   },
   {
-  icon: ShieldCheck,
-  q: "¿Es importante usar shampoo AVYNA con los tratamientos?",
-  a: "Sí. Para obtener mejores resultados recomendamos utilizar shampoo AVYNA dentro de la rutina. Algunas marcas externas pueden dejar residuos, siliconas o saturar la fibra capilar, lo que puede impedir que mascarillas y tratamientos AVYNA actúen correctamente."
-},
+    icon: ShieldCheck,
+    q: "¿Es importante usar shampoo AVYNA con los tratamientos?",
+    a: "Sí. Para obtener mejores resultados recomendamos utilizar shampoo AVYNA dentro de la rutina. Algunas marcas externas pueden dejar residuos, siliconas o saturar la fibra capilar, lo que puede impedir que mascarillas y tratamientos AVYNA actúen correctamente.",
+  },
   {
     icon: HelpCircle,
     q: "¿Cada cuánto debo usar los productos?",
-    a: "Depende del producto y condición capilar. Shampoo y Maschera pueden usarse regularmente; Leave-in y tratamientos según necesidad."
+    a: "Depende del producto y condición capilar. Shampoo y Maschera pueden usarse regularmente; Leave-in y tratamientos según necesidad.",
   },
   {
     icon: ShieldCheck,
     q: "¿AVYNA realiza pruebas en animales?",
-    a: "La marca promueve estándares responsables y productos cruelty free."
+    a: "La marca promueve estándares responsables y productos cruelty free.",
   },
   {
     icon: Sparkles,
     q: "¿Puedo combinar las líneas de AVYNA?",
-    a: "Sí. Muchas rutinas combinan limpieza, tratamiento y acabado de nuestras distintas líneas para mejores resultados."
+    a: "Sí. Muchas rutinas combinan limpieza, tratamiento y acabado de nuestras distintas líneas para mejores resultados.",
   },
   {
     icon: HelpCircle,
     q: "¿Reciben asesoría personalizada?",
-    a: "Sí. Puedes solicitar orientación para elegir la mejor rutina según necesidades reales de tu cabello."
-  }
+    a: "Sí. Puedes solicitar orientación para elegir la mejor rutina según necesidades reales de tu cabello.",
+  },
 ];
 ---
 
-<section class="relative overflow-hidden bg-black px-6 py-28 text-white">
-
+<section class="relative bg-black px-6 py-15 overflow-hidden text-white">
   <!-- BG -->
-  <div class="pointer-events-none absolute inset-0">
+  <div class="absolute inset-0 pointer-events-none">
+    <div
+      class="top-20 left-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"
+    >
+    </div>
 
-    <div class="absolute left-0 top-20 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div
+      class="right-0 bottom-0 absolute bg-zinc-300/5 blur-3xl w-mdded-full h-112"
+    >
+    </div>
 
-    <div class="absolute right-0 bottom-0 h-112 w-mdded-full bg-zinc-300/5 blur-3xl"></div>
-
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.04),transparent_35%)]"></div>
-
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.04),transparent_35%)]"
+    >
+    </div>
   </div>
 
-  <div class="relative z-10 mx-auto max-w-5xl">
-
+  <div class="z-10 relative mx-auto max-w-5xl">
     <!-- HEADER -->
     <div class="text-center">
-
-      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+      <div
+        class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl px-5 py-2 border border-white/10 rounded-full text-sm reveal"
+      >
         <HelpCircle size={20} />
         Preguntas frecuentes
       </div>
 
-      <h2 class="reveal delay-1 mt-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+      <h2
+        class="mt-6 font-semibold text-4xl md:text-6xl tracking-tight delay-1 reveal"
+      >
         Todo lo que necesitas saber
-        <span class="block text-zinc-400">
-          antes de comenzar
-        </span>
+        <span class="block text-zinc-400"> antes de comenzar </span>
       </h2>
 
-      <p class="reveal delay-2 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
-        Resolvemos las dudas más comunes sobre productos,
-        diagnóstico, uso y puntos de compra AVYNA.
+      <p
+        class="mx-auto mt-3 max-w-2xl text-white/60 text-lg leading-relaxed delay-2 reveal"
+      >
+        Resolvemos las dudas más comunes sobre productos, diagnóstico, uso y
+        puntos de compra AVYNA.
       </p>
-
     </div>
 
     <!-- FAQ LIST -->
-    <div class="mt-16 space-y-4">
+    <div class="space-y-4 mt-8">
+      {
+        faqs.map((item, i) => {
+          const Icon = item.icon;
 
-      {faqs.map((item, i) => {
-        const Icon = item.icon;
+          return (
+            <details
+              class={`reveal delay-${(i % 5) + 1} group overflow-hidden rounded-4xl border border-white/10 bg-white/4 backdrop-blur-2xl transition duration-300 hover:border-white/20`}
+            >
+              <summary class="flex justify-between items-center gap-4 px-6 py-5 cursor-pointer list-none">
+                <div class="flex items-center gap-4">
+                  <div class="flex justify-center items-center bg-white shadow-xl rounded-2xl w-12 h-12 text-black shrink-0">
+                    <Icon size={20} />
+                  </div>
 
-        return (
-          <details
-            class={`reveal delay-${(i % 5) + 1} group overflow-hidden rounded-4xl border border-white/10 bg-white/4 backdrop-blur-2xl transition duration-300 hover:border-white/20`}
-          >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5">
-
-              <div class="flex items-center gap-4">
-
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
-                  <Icon size={20} />
+                  <h3 class="font-semibold text-base md:text-lg text-left">
+                    {item.q}
+                  </h3>
                 </div>
 
-                <h3 class="text-left text-base font-semibold md:text-lg">
-                  {item.q}
-                </h3>
+                <div class="flex justify-center items-center bg-white/5 border border-white/10 rounded-2xl w-10 h-10 group-open:rotate-45 transition duration-300 shrink-0">
+                  <Plus size={18} />
+                </div>
+              </summary>
 
+              <div class="px-6 pb-6 pl-22">
+                <p class="max-w-3xl text-white/60 leading-relaxed">{item.a}</p>
               </div>
-
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 transition duration-300 group-open:rotate-45">
-                <Plus size={18} />
-              </div>
-
-            </summary>
-
-            <div class="px-6 pb-6 pl-22">
-
-              <p class="max-w-3xl leading-relaxed text-white/60">
-                {item.a}
-              </p>
-
-            </div>
-
-          </details>
-        );
-      })}
-
+            </details>
+          );
+        })
+      }
     </div>
-
   </div>
-
 </section>

@@ -8,250 +8,251 @@ import {
   ScanSearch,
   ArrowRight,
   Star,
-  BadgeCheck
+  BadgeCheck,
 } from "lucide-react";
 ---
 
-<section class="relative overflow-hidden bg-black px-6 py-15 pt-15 text-white">
-
+<section class="relative bg-black px-6 py-15 pt-15 overflow-hidden text-white">
   <!-- BACKGROUND -->
-  <div class="pointer-events-none absolute inset-0">
+  <div class="absolute inset-0 pointer-events-none">
+    <div
+      class="top-0 left-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96 glow-pulse"
+    >
+    </div>
 
-    <div class="absolute left-0 top-0 h-96 w-96 rounded-full bg-white/5 blur-3xl glow-pulse"></div>
+    <div
+      class="right-0 bottom-0 absolute bg-zinc-300/5 blur-3xl rounded-full w-md h-112"
+    >
+    </div>
 
-    <div class="absolute right-0 bottom-0 h-112 w-md rounded-full bg-zinc-300/5 blur-3xl"></div>
-
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_35%)]"></div>
-
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_35%)]"
+    >
+    </div>
   </div>
 
-  <div class="relative z-10 mx-auto max-w-7xl">
-
+  <div class="z-10 relative mx-auto max-w-7xl">
     <!-- HEADER -->
     <div class="mx-auto max-w-4xl text-center">
-
-      <div class="reveal inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+      <div
+        class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl px-5 py-2 border border-white/10 rounded-full text-sm reveal"
+      >
         <Sparkles size={16} />
         ¿Por qué elegir AVYNA?
       </div>
 
-      <h2 class="reveal delay-1 mt-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+      <h2
+        class="mt-6 font-semibold text-4xl md:text-6xl tracking-tight delay-1 reveal"
+      >
         Resultados visibles,
-        <span class="block text-zinc-400">
-          experiencia profesional
-        </span>
+        <span class="block text-zinc-400"> experiencia profesional </span>
       </h2>
 
-      <p class="reveal delay-2 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
+      <p
+        class="mx-auto mt-6 max-w-2xl text-white/60 text-lg leading-relaxed delay-2 reveal"
+      >
         Cada línea AVYNA está diseñada para resolver necesidades reales:
         reparar, nutrir, proteger color, controlar frizz y elevar el brillo.
       </p>
-
     </div>
-<!-- BENEFITS -->
-<div class="mt-20 space-y-10">
-
-  <!-- BLOCK 1 -->
-  <div class="group relative overflow-hidden rounded-[3rem] border border-white/10 bg-white/3 p-8 md:p-12">
-
-    <!-- glow -->
-    <div class="absolute right-0 top-0 h-72 w-72 rounded-full bg-white/5 blur-3xl"></div>
-
-    <div class="grid items-center gap-12 lg:grid-cols-2">
-
-      <!-- LEFT -->
-      <div>
-
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.25em] text-white/45">
-          <Droplets size={14} />
-          Hidratación profunda
-        </div>
-
-        <h3 class="mt-6 text-4xl font-bold leading-tight md:text-5xl">
-          Brillo, suavidad
-          <span class="block text-zinc-400">
-            y nutrición visible
-          </span>
-        </h3>
-
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/60">
-          Fórmulas enfocadas en elasticidad, hidratación
-          y control de frizz para transformar la apariencia
-          del cabello desde las primeras aplicaciones.
-        </p>
-
-        <div class="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
-          <BadgeCheck size={15} />
-          Ideal para resequedad y opacidad
-        </div>
-
-      </div>
-
-      <!-- RIGHT -->
-      <div class="relative flex items-center justify-center">
-
-        <div class="absolute h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
-
-        <img
-          src="/images/products/argan/argan-shampoo-1000ml.png"
-          alt="AVYNA Hidratación"
-          class="relative z-10 h-104ect-contain drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] transition duration-700 group-hover:scale-105"
-        />
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- BLOCK 2 -->
-  <div class="group relative overflow-hidden rounded-[3rem] border border-white/10 bg-white/3 p-8 md:p-12">
-
-    <!-- glow -->
-    <div class="absolute left-0 bottom-0 h-72 w-72 rounded-full bg-white/5 blur-3xl"></div>
-
-    <div class="grid items-center gap-12 lg:grid-cols-2">
-
-      <!-- IMAGE -->
-      <div class="relative order-2 flex items-center justify-center lg:order-1">
-
-        <div class="absolute h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
-
-        <img
-          src="/images/products/ialuronico/ialu-ricostruttore.png"
-          alt="AVYNA Repair"
-          class="relative z-10 h-112 object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] transition duration-700 group-hover:scale-105"
-        />
-
-      </div>
-
-      <!-- TEXT -->
-      <div class="order-1 lg:order-2">
-
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.25em] text-white/45">
-          <ShieldCheck size={14} />
-          Reparación profesional
-        </div>
-
-        <h3 class="mt-6 text-4xl font-bold leading-tight md:text-5xl">
-          Recupera fuerza,
-          <span class="block text-zinc-400">
-            estructura y brillo
-          </span>
-        </h3>
-
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/60">
-          Líneas diseñadas para cabello procesado,
-          maltratado o sensibilizado por calor,
-          decoloración y procesos químicos.
-        </p>
-
-        <div class="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
-          <BadgeCheck size={15} />
-          Fortalece y mejora la hebra
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- BLOCK 3 -->
-  <div class="group relative overflow-hidden rounded-[3rem] border border-white/10 bg-white/3 p-8 md:p-12">
-
-    <div class="absolute right-0 top-0 h-72 w-72 rounded-full bg-white/5 blur-3xl"></div>
-
-    <div class="grid items-center gap-12 lg:grid-cols-2">
-
-      <!-- LEFT -->
-      <div>
-
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.25em] text-white/45">
-          <ScanSearch size={14} />
-          Smart Hair Care
-        </div>
-
-        <h3 class="mt-6 text-4xl font-bold leading-tight md:text-5xl">
-          Descubre tu
-          <span class="block text-zinc-400">
-            rutina ideal AVYNA
-          </span>
-        </h3>
-
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/60">
-          Nuestro diagnóstico inteligente analiza necesidades,
-          hábitos y objetivos para recomendar
-          una rutina personalizada.
-        </p>
-
-        <a
-          href="/diagnostic"
-          class="mt-8 inline-flex h-13 items-center gap-2 rounded-full bg-white px-7 font-medium text-black transition duration-300 hover:scale-105"
+    <!-- BENEFITS -->
+    <div class="space-y-10 mt-20">
+      <!-- BLOCK 1 -->
+      <div
+        class="group relative bg-white/3 p-8 md:p-12 border border-white/10 rounded-[3rem] overflow-hidden"
+      >
+        <!-- glow -->
+        <div
+          class="top-0 right-0 absolute bg-white/5 blur-3xl rounded-full w-72 h-72"
         >
-          Hacer diagnóstico
-          <ArrowRight size={16} />
-        </a>
+        </div>
 
+        <div class="items-center gap-12 grid lg:grid-cols-2">
+          <!-- LEFT -->
+          <div>
+            <div
+              class="inline-flex items-center gap-2 bg-white/5 px-4 py-2 border border-white/10 rounded-full text-white/45 text-xs uppercase tracking-[0.25em]"
+            >
+              <Droplets size={14} />
+              Hidratación profunda
+            </div>
+
+            <h3 class="mt-6 font-semibold text-4xl md:text-5xl leading-tight">
+              Brillo, suavidad
+              <span class="block text-zinc-400"> y nutrición visible </span>
+            </h3>
+
+            <p class="mt-6 max-w-xl text-white/60 text-lg leading-relaxed">
+              Fórmulas enfocadas en elasticidad, hidratación y control de frizz
+              para transformar la apariencia del cabello desde las primeras
+              aplicaciones.
+            </p>
+
+            <div
+              class="inline-flex items-center gap-2 bg-white/5 mt-8 px-4 py-2 border border-white/10 rounded-full text-white/70 text-sm"
+            >
+              <BadgeCheck size={15} />
+              Ideal para resequedad y opacidad
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="relative flex justify-center items-center">
+            <div class="absolute bg-white/10 blur-3xl rounded-full w-72 h-72">
+            </div>
+
+            <img
+              src="/images/products/argan/argan-shampoo-1000ml.png"
+              alt="AVYNA Hidratación"
+              class="z-10 relative drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] h-104ect-contain group-hover:scale-105 transition duration-700"
+            />
+          </div>
+        </div>
       </div>
 
-      <!-- RIGHT -->
-      <div class="relative flex items-center justify-center">
+      <!-- BLOCK 2 -->
+      <div
+        class="group relative bg-white/3 p-8 md:p-12 border border-white/10 rounded-[3rem] overflow-hidden"
+      >
+        <!-- glow -->
+        <div
+          class="bottom-0 left-0 absolute bg-white/5 blur-3xl rounded-full w-72 h-72"
+        >
+        </div>
 
-        <div class="absolute h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
+        <div class="items-center gap-12 grid lg:grid-cols-2">
+          <!-- IMAGE -->
+          <div
+            class="relative flex justify-center items-center order-2 lg:order-1"
+          >
+            <div class="absolute bg-white/10 blur-3xl rounded-full w-72 h-72">
+            </div>
 
-        <img
-          src="/images/avyna/products-float.png"
-          alt="AVYNA Smart Care"
-          class="relative z-10 h-96 object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] transition duration-700 group-hover:scale-105"
-        />
+            <img
+              src="/images/products/ialuronico/ialu-ricostruttore.png"
+              alt="AVYNA Repair"
+              class="z-10 relative drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] h-112 object-contain group-hover:scale-105 transition duration-700"
+            />
+          </div>
 
+          <!-- TEXT -->
+          <div class="order-1 lg:order-2">
+            <div
+              class="inline-flex items-center gap-2 bg-white/5 px-4 py-2 border border-white/10 rounded-full text-white/45 text-xs uppercase tracking-[0.25em]"
+            >
+              <ShieldCheck size={14} />
+              Reparación profesional
+            </div>
+
+            <h3 class="mt-6 font-semibold text-4xl md:text-5xl leading-tight">
+              Recupera fuerza,
+              <span class="block text-zinc-400"> estructura y brillo </span>
+            </h3>
+
+            <p class="mt-6 max-w-xl text-white/60 text-lg leading-relaxed">
+              Líneas diseñadas para cabello procesado, maltratado o
+              sensibilizado por calor, decoloración y procesos químicos.
+            </p>
+
+            <div
+              class="inline-flex items-center gap-2 bg-white/5 mt-8 px-4 py-2 border border-white/10 rounded-full text-white/70 text-sm"
+            >
+              <BadgeCheck size={15} />
+              Fortalece y mejora la hebra
+            </div>
+          </div>
+        </div>
       </div>
 
+      <!-- BLOCK 3 -->
+      <div
+        class="group relative bg-white/3 p-8 md:p-12 border border-white/10 rounded-[3rem] overflow-hidden"
+      >
+        <div
+          class="top-0 right-0 absolute bg-white/5 blur-3xl rounded-full w-72 h-72"
+        >
+        </div>
+
+        <div class="items-center gap-12 grid lg:grid-cols-2">
+          <!-- LEFT -->
+          <div>
+            <div
+              class="inline-flex items-center gap-2 bg-white/5 px-4 py-2 border border-white/10 rounded-full text-white/45 text-xs uppercase tracking-[0.25em]"
+            >
+              <ScanSearch size={14} />
+              Diagnóstico inteligente AVYNA
+            </div>
+
+            <h3 class="mt-6 font-semibold text-4xl md:text-5xl leading-tight">
+              Descubre tu
+              <span class="block text-zinc-400"> rutina ideal AVYNA </span>
+            </h3>
+
+            <p class="mt-6 max-w-xl text-white/60 text-lg leading-relaxed">
+              Nuestro diagnóstico inteligente analiza necesidades, hábitos y
+              objetivos para recomendar una rutina personalizada.
+            </p>
+
+            <a
+              href="/diagnostic"
+              class="inline-flex items-center gap-2 bg-white mt-8 px-7 rounded-full h-13 font-semibold text-black hover:scale-105 transition duration-300"
+            >
+              Hacer diagnóstico
+              <ArrowRight size={16} />
+            </a>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="relative flex justify-center items-center">
+            <div class="absolute bg-white/10 blur-3xl rounded-full w-72 h-72">
+            </div>
+
+            <img
+              src="/images/avyna/products-float.png"
+              alt="AVYNA Smart Care"
+              class="z-10 relative drop-shadow-[0_30px_60px_rgba(0,0,0,.55)] h-96 object-contain group-hover:scale-105 transition duration-700"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-
-  </div>
-
-</div>
 
     <!-- TRUST STRIP -->
-    <div class="mt-14 grid gap-5 rounded-4xl border border-white/10 bg-white/3 p-6 backdrop-blur-xl md:grid-cols-3">
-
-      <div class="reveal delay-1 hover-lift rounded-3xl bg-white/2 p-5">
+    <div
+      class="gap-5 grid md:grid-cols-3 bg-white/3 backdrop-blur-xl mt-14 p-6 border border-white/10 rounded-4xl"
+    >
+      <div class="bg-white/2 p-5 rounded-3xl delay-1 reveal hover-lift">
         <div class="flex items-center gap-2 text-white/35">
           <Star size={15} />
           Ingredientes premium
         </div>
 
-        <h4 class="mt-3 text-lg font-semibold">
+        <h4 class="mt-3 font-normal text-lg">
           Hecho en Italia, calidad garantizada
         </h4>
       </div>
 
-      <div class="reveal delay-2 hover-lift rounded-3xl bg-white/2 p-5">
+      <div class="bg-white/2 p-5 rounded-3xl delay-2 reveal hover-lift">
         <div class="flex items-center gap-2 text-white/35">
           <Star size={15} />
           Compra segura
         </div>
 
-        <h4 class="mt-3 text-lg font-semibold">
+        <h4 class="mt-3 font-normal text-lg">
           Salones autorizados por AVYNA
         </h4>
       </div>
 
-      <div class="reveal delay-3 hover-lift rounded-3xl bg-white/2 p-5">
+      <div class="bg-white/2 p-5 rounded-3xl delay-3 reveal hover-lift">
         <div class="flex items-center gap-2 text-white/35">
           <Star size={15} />
           Asesoría real
         </div>
 
-        <h4 class="mt-3 text-lg font-semibold">
+        <h4 class="mt-3 font-normal text-lg">
           Diagnóstico IA + expertos AVYNA
         </h4>
       </div>
-
     </div>
-
   </div>
-
 </section>
