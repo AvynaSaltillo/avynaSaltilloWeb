@@ -147,7 +147,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
       class="hidden z-9999 fixed inset-0 bg-black/75 backdrop-blur-md px-6 py-8 overflow-y-auto"
     >
       <div
-        class="bg-zinc-950 shadow-2xl mx-auto my-auto p-6 border border-white/10 rounded-4xl w-full max-w-lg"
+        class="bg-zinc-950 shadow-2xl mx-auto my-auto p-5 sm:p-6 border border-white/10 rounded-4xl w-full max-w-xl"
       >
         <!-- HEAD -->
         <div class="flex justify-between items-center">
@@ -174,7 +174,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
         <div class="gap-3 grid mt-6">
           <!-- ANGELES -->
           <button
-            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
+            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 sm:p-5 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
             data-phone="524521174729"
             data-name="Ángeles"
           >
@@ -184,32 +184,39 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
             >
             </div>
 
-            <div class="z-10 relative flex items-center gap-4">
+            <div
+              class="z-10 relative flex items-start sm:items-center gap-3 sm:gap-4"
+            >
               <!-- PHOTO -->
               <div class="relative shrink-0">
                 <img
                   src="/images/advisors/angeles-pp.png"
                   alt="Ángeles Encinas"
-                  class="rounded-full ring-3 ring-white/15 w-20 h-20 object-cover"
+                  class="rounded-full ring-3 ring-white/15 w-16 sm:w-20 h-16 sm:h-20 object-cover"
                 />
 
                 <!-- online -->
                 <span
-                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-4 h-4"
+                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-3.5 sm:w-4 h-3.5 sm:h-4"
                 ></span>
               </div>
 
               <!-- INFO -->
-              <div class="flex-1 ml-2 min-w-0">
+              <div class="flex-1 pt-1 sm:pt-0 min-w-0">
                 <h4
-                  class="flex items-center gap-2 font-normal text-[1.2rem] text-white"
+                  class="flex items-start sm:items-center gap-1.5 sm:gap-2 font-normal text-[1.05rem] text-white sm:text-[1.2rem] leading-[1.05] tracking-[-0.04em]"
                 >
                   Ángeles Encinas López
 
-                  <BadgeCheck size={16} className="text-sky-300/90 shrink-0" />
+                  <BadgeCheck
+                    size={14}
+                    className="mt-1 sm:mt-0 text-sky-300/90 shrink-0"
+                  />
                 </h4>
 
-                <div class="flex items-center gap-2 mt-2 text-white/45 text-sm">
+                <div
+                  class="flex items-center gap-2 mt-2 text-[13px] text-white/45 sm:text-sm leading-tight"
+                >
                   <Crown size={14} className="text-white/90 shrink-0" />
 
                   <span> Atención personalizada AVYNA </span>
@@ -220,7 +227,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 
           <!-- MICHELLE -->
           <button
-            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
+            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 sm:p-5 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
             data-phone="528445069238"
             data-name="Michelle"
           >
@@ -230,32 +237,39 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
             >
             </div>
 
-            <div class="z-10 relative flex items-center gap-4">
+            <div
+              class="z-10 relative flex items-start sm:items-center gap-3 sm:gap-4"
+            >
               <!-- PHOTO -->
               <div class="relative shrink-0">
                 <img
                   src="/images/advisors/airam-pp.png"
                   alt="Michelle Navarrete"
-                  class="rounded-full ring-3 ring-white/15 w-20 h-20 object-cover"
+                  class="rounded-full ring-3 ring-white/15 w-16 sm:w-20 h-16 sm:h-20 object-cover"
                 />
 
                 <!-- online -->
                 <span
-                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-4 h-4"
+                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-3.5 sm:w-4 h-3.5 sm:h-4"
                 ></span>
               </div>
 
               <!-- INFO -->
-              <div class="flex-1 ml-2 min-w-0">
+              <div class="flex-1 pt-1 sm:pt-0 min-w-0">
                 <h4
-                  class="flex items-center gap-2 font-normal text-[1.2rem] text-white leading-tight"
+                  class="flex items-start sm:items-center gap-1.5 sm:gap-2 font-normal text-[1.05rem] text-white sm:text-[1.2rem] leading-[1.05] tracking-[-0.04em]"
                 >
                   Michelle Navarrete Zúñiga
 
-                  <BadgeCheck size={16} className="text-sky-300/90 shrink-0" />
+                  <BadgeCheck
+                    size={14}
+                    className="mt-1 sm:mt-0 text-sky-300/90 shrink-0"
+                  />
                 </h4>
 
-                <div class="flex items-center gap-2 mt-2 text-white/45 text-sm">
+                <div
+                  class="flex items-center gap-2 mt-2 text-[13px] text-white/45 sm:text-sm leading-tight"
+                >
                   <MessageCircle size={14} className="text-white/55 shrink-0" />
 
                   <span> Atención personalizada AVYNA </span>
@@ -266,7 +280,7 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 
           <!-- BLANCA -->
           <button
-            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
+            class="group relative bg-white/[0.03] hover:bg-white/[0.05] p-4 sm:p-5 border border-white/10 hover:border-white/20 rounded-[1.7rem] overflow-hidden text-left active:scale-[0.985] transition-all hover:-translate-y-[2px] duration-300 hover:cursor-pointer repBtn"
             data-phone="528446620304"
             data-name="Blanca"
           >
@@ -276,32 +290,39 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
             >
             </div>
 
-            <div class="z-10 relative flex items-center gap-4">
+            <div
+              class="z-10 relative flex items-start sm:items-center gap-3 sm:gap-4"
+            >
               <!-- PHOTO -->
               <div class="relative shrink-0">
                 <img
                   src="/images/advisors/blanca-pp.png"
                   alt="Blanca Mejía"
-                  class="rounded-full ring-3 ring-white/15 w-20 h-20 object-cover"
+                  class="rounded-full ring-3 ring-white/15 w-16 sm:w-20 h-16 sm:h-20 object-cover"
                 />
 
                 <!-- online -->
                 <span
-                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-4 h-4"
+                  class="-right-0.5 -bottom-0.5 absolute bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,.95)] border-2 border-zinc-950 rounded-full w-3.5 sm:w-4 h-3.5 sm:h-4"
                 ></span>
               </div>
 
               <!-- INFO -->
-              <div class="flex-1 ml-2 min-w-0">
+              <div class="flex-1 pt-1 sm:pt-0 min-w-0">
                 <h4
-                  class="flex items-center gap-2 font-normal text-[1.2rem] text-white leading-tight"
+                  class="flex items-start sm:items-center gap-1.5 sm:gap-2 font-normal text-[1.05rem] text-white sm:text-[1.2rem] leading-[1.05] tracking-[-0.04em]"
                 >
                   Blanca Mejía Torres
 
-                  <BadgeCheck size={16} className="text-sky-300/90 shrink-0" />
+                  <BadgeCheck
+                    size={14}
+                    className="mt-1 sm:mt-0 text-sky-300/90 shrink-0"
+                  />
                 </h4>
 
-                <div class="flex items-center gap-2 mt-2 text-white/45 text-sm">
+                <div
+                  class="flex items-center gap-2 mt-2 text-[13px] text-white/45 sm:text-sm leading-tight"
+                >
                   <MessageCircle size={14} className="text-white/55 shrink-0" />
 
                   <span> Atención personalizada AVYNA </span>
