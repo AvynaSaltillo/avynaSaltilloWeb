@@ -4,8 +4,15 @@ import Navbar from "../components/shared/Navbar.astro";
 import Catalog from "../components/public/Catalog.astro";
 ---
 
-
-<Layout title="Catálogo AVYNA">
+<Layout
+  title="Catálogo AVYNA | Productos Profesionales para Cabello"
+  description="Explora las líneas profesionales AVYNA para reparación, brillo, hidratación y protección capilar. Productos premium para salón y cliente final."
+  image="/images/og-catalog.jpg"
+  url="https://avynasaltillo.beauty/catalogo"
+>
   <Navbar />
-  <Catalog/>
+
+  <main class="bg-black min-h-screen text-white">
+    <Catalog />
+  </main>
 </Layout>

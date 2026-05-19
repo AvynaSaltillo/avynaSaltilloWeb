@@ -1,16 +1,79 @@
 ---
+// src/layouts/GrowLayout.astro
+
 import "../styles/global.css";
-const { title = "AVYNA Saltillo" } = Astro.props;
+
+import { SEO } from "astro-seo";
+
+const {
+  title = "AVYNA Grow",
+  description = "Beneficios exclusivos para salones y profesionales afiliados a AVYNA.",
+  image = "/images/og-grow.jpg",
+  url = "https://avynasaltillo.beauty/grow",
+} = Astro.props;
 ---
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<title>{title}</title>
-</head>
-<body class="bg-black text-white antialiased">
-<slot />
-</body>
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <SEO
+      title={title}
+      description={description}
+      canonical={url}
+      openGraph={{
+        basic: {
+          title,
+          type: "website",
+          image,
+          url,
+        },
+
+        optional: {
+          description,
+          siteName: "AVYNA Saltillo",
+          locale: "es_MX",
+        },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title,
+        description,
+        image,
+      }}
+    />
+
+    <!-- EXTRA -->
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:image:width" content="1200" />
+
+    <meta property="og:image:height" content="630" />
+
+    <meta property="og:image:alt" content="AVYNA Grow para profesionales" />
+
+    <!-- ICON -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- RENDER -->
+    <style>
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+
+  <body class="bg-black text-white antialiased">
+    <slot />
+  </body>
 </html>
