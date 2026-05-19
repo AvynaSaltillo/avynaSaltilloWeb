@@ -3,12 +3,7 @@
 
 import { products } from "../../data/products";
 import { questions } from "../../data/diagnostic";
-import {
-  Sparkles,
-  Users,
-  User,
-  ShieldCheck
-} from "lucide-react";
+import { Sparkles, Users, User, ShieldCheck } from "lucide-react";
 
 const productsJSON = JSON.stringify(products);
 const questionsJSON = JSON.stringify(questions);
@@ -16,384 +11,391 @@ const questionsJSON = JSON.stringify(questions);
 
 <section
   id="diagnostico"
-  class="relative overflow-hidden bg-black px-6 py-24 text-white"
+  class="relative bg-black px-6 py-24 overflow-hidden text-white"
 >
   <!-- BG -->
   <div class="absolute inset-0">
-    <div class="absolute -left-40 top-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
-    <div class="absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_45%)]"></div>
+    <div
+      class="top-0 -left-40 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"
+    >
+    </div>
+    <div
+      class="-right-40 bottom-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_45%)]"
+    >
+    </div>
   </div>
 
-  <div class="relative z-10 mx-auto max-w-7xl">
-
+  <div class="z-10 relative mx-auto max-w-7xl">
     <!-- HEADER -->
     <div class="text-center">
-
-      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+      <div
+        class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl mb-6 px-5 py-2 border border-white/10 rounded-full text-sm"
+      >
         <Sparkles size={15} />
         Diagnóstico Inteligente AVYNA
       </div>
 
-      <h2 class="mx-auto max-w-5xl text-5xl font-bold leading-[0.92] md:text-7xl">
+      <h2
+        class="mx-auto max-w-5xl font-normal text-5xl md:text-5xl leading-[0.92] tracking-[-0.06em]"
+      >
         Descubre la rutina ideal para
-        <span class="block text-zinc-500">
-          tu cabello
-        </span>
+        <span class="block text-zinc-500"> tu cabello </span>
       </h2>
 
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
-        Diagnóstico profesional basado en estructura capilar,
-        historial químico y necesidades reales.
+      <p class="mx-auto mt-6 max-w-2xl text-white/60 text-lg leading-relaxed">
+        Diagnóstico profesional basado en estructura capilar, historial químico
+        y necesidades reales.
       </p>
-
     </div>
 
     <!-- APP -->
     <div
       id="diagApp"
-      class="mt-10 rounded-4xl border border-white/10 bg-white/3 p-5 shadow-2xl backdrop-blur-2xl md:p-10"
-    ></div>
-
+      class="bg-white/3 shadow-2xl backdrop-blur-2xl mt-10 p-5 md:p-10 border border-white/10 rounded-4xl"
+    >
+    </div>
   </div>
 </section>
 
 <style is:global>
-
-/* ===============================
+  /* ===============================
    MODE SELECTOR
 ================================ */
 
-.mode-btn{
-  height:58px;
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.7rem;
+  .mode-btn {
+    height: 58px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
 
-  font-weight:700;
-  font-size:.96rem;
+    font-weight: 700;
+    font-size: 0.96rem;
 
-  color:rgba(255,255,255,.68);
-  background:transparent;
+    color: rgba(255, 255, 255, 0.68);
+    background: transparent;
 
-  transition:
-    background .22s ease,
-    color .22s ease,
-    transform .22s ease,
-    box-shadow .22s ease;
-}
+    transition:
+      background 0.22s ease,
+      color 0.22s ease,
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
+  }
 
-/* hover oscuro, no blanco */
-.mode-btn:hover{
-  color:#fff;
-  background:rgba(255,255,255,.06);
-  transform:translateY(-1px);
-}
+  /* hover oscuro, no blanco */
+  .mode-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+  }
 
-/* activo */
-.activeMode{
-  background:#fff !important;
-  color:#000 !important;
-  box-shadow:0 10px 26px rgba(255,255,255,.12);
-}
+  /* activo */
+  .activeMode {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: 0 10px 26px rgba(255, 255, 255, 0.12);
+  }
 
-/* íconos dentro de botón */
-.mode-btn svg{
-  width:17px;
-  height:17px;
-  opacity:.9;
-}
+  /* íconos dentro de botón */
+  .mode-btn svg {
+    width: 17px;
+    height: 17px;
+    opacity: 0.9;
+  }
 
-/* cuando activo */
-.activeMode svg{
-  color:#000;
-  opacity:1;
-}
+  /* cuando activo */
+  .activeMode svg {
+    color: #000;
+    opacity: 1;
+  }
 
-/* ===============================
+  /* ===============================
    OPTION CARDS
 ================================ */
 
-.optionCard{
-  position:relative;
-  min-height:100px;
-  padding:10px 22px;
+  .optionCard {
+    position: relative;
+    min-height: 100px;
+    padding: 10px 22px;
 
-  border-radius:28px;
-  border:1px solid rgba(255,255,255,.06);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
-  background:
-    radial-gradient(circle at 85% 70%, rgba(255,255,255,.03), transparent 30%),
-    linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.008));
+    background:
+      radial-gradient(
+        circle at 85% 70%,
+        rgba(255, 255, 255, 0.03),
+        transparent 30%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.018),
+        rgba(255, 255, 255, 0.008)
+      );
 
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:flex-start;
-  gap:10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
 
-  text-align:left;
-  cursor:pointer;
+    text-align: left;
+    cursor: pointer;
 
-  transition:
-    transform .22s ease,
-    background .22s ease,
-    box-shadow .22s ease,
-    border-color .22s ease;
-}
-
-/* hover sutil */
-.optionCard:hover{
-  transform:translateY(-2px);
-
-  background:
-    radial-gradient(circle at 85% 70%, rgba(255,255,255,.045), transparent 32%),
-    linear-gradient(180deg, rgba(255,255,255,.026), rgba(255,255,255,.012));
-}
-
-/* activo */
-.optionActive{
-  border-color:rgba(255,255,255,.92);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.85),
-    0 14px 34px rgba(0,0,0,.28);
-}
-
-/* sin hover exagerado cuando activo */
-.optionActive:hover{
-  transform:none;
-}
-
-/* icon + title row */
-.optionHead{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-/* SOLO ICONO */
-.optionIcon{
-  width:25px;
-  height:25px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:rgba(255,255,255,.92);
-  flex-shrink:0;
-}
-
-/* svg */
-.optionIcon svg{
-  width:25px;
-  height:25px;
-  stroke:currentColor;
-}
-
-/* title */
-.optionTitle{
-  font-size:1.42rem;
-  line-height:1;
-  font-weight:700;
-  letter-spacing:-.02em;
-  color:#fff;
-}
-
-/* subtitle */
-.optionMeta{
-  font-size:1rem;
-  color:rgba(255,255,255,.42);
-  margin-left:32px;
-}
-
-/* seleccionado */
-.optionActive .optionMeta{
-  color:rgba(255,255,255,.72);
-}
-
-.optionActive::after{
-  content:"✓";
-  position:absolute;
-  top:12px;
-  right:12px;
-
-  width:35px;
-  height:35px;
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:#fff;
-  color:#000;
-  font-size:.82rem;
-  font-weight:900;
-}
-
-/* disabled */
-.optionCard:disabled,
-.optionCard[disabled]{
-  opacity:.3;
-  pointer-events:none;
-  filter:grayscale(1);
-}
-
-
-
-/* mobile */
-@media (max-width:640px){
-
-  .optionCard{
-    min-height:118px;
-    padding:18px 18px;
-    border-radius:22px;
+    transition:
+      transform 0.22s ease,
+      background 0.22s ease,
+      box-shadow 0.22s ease,
+      border-color 0.22s ease;
   }
 
-  .optionTitle{
-    font-size:1.18rem;
+  /* hover sutil */
+  .optionCard:hover {
+    transform: translateY(-2px);
+
+    background:
+      radial-gradient(
+        circle at 85% 70%,
+        rgba(255, 255, 255, 0.045),
+        transparent 32%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.026),
+        rgba(255, 255, 255, 0.012)
+      );
   }
 
-  .optionMeta{
-    font-size:.92rem;
-    margin-left:30px;
+  /* activo */
+  .optionActive {
+    border-color: rgba(255, 255, 255, 0.92);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.85),
+      0 14px 34px rgba(0, 0, 0, 0.28);
   }
 
-  .optionCheck{
-    width:30px;
-    height:30px;
-    top:12px;
-    right:12px;
+  /* sin hover exagerado cuando activo */
+  .optionActive:hover {
+    transform: none;
   }
 
-}
+  /* icon + title row */
+  .optionHead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-/* ===============================
-   RIGHT PANEL ICON
-================================ */
-.optionIcon{
-width:44px;
-height:44px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:14px;
-color:white;
-opacity:.9;
-}
+  /* SOLO ICONO */
+  .optionIcon {
+    width: 25px;
+    height: 25px;
 
-.optionIcon svg{
-width:22px;
-height:22px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-/* ===============================
+    color: rgba(255, 255, 255, 0.92);
+    flex-shrink: 0;
+  }
+
+  /* svg */
+  .optionIcon svg {
+    width: 25px;
+    height: 25px;
+    stroke: currentColor;
+  }
+
+  /* title */
+  .optionTitle {
+    font-size: 1.42rem;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #fff;
+  }
+
+  /* subtitle */
+  .optionMeta {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.42);
+    margin-left: 32px;
+  }
+
+  /* seleccionado */
+  .optionActive .optionMeta {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .optionActive::after {
+    content: "✓";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff;
+    color: #000;
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  /* disabled */
+  .optionCard:disabled,
+  .optionCard[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: grayscale(1);
+  }
+
+  /* mobile */
+  @media (max-width: 640px) {
+    .optionCard {
+      min-height: 118px;
+      padding: 18px 18px;
+      border-radius: 22px;
+    }
+
+    .optionTitle {
+      font-size: 1.18rem;
+    }
+
+    .optionMeta {
+      font-size: 0.92rem;
+      margin-left: 30px;
+    }
+
+    .optionCheck {
+      width: 30px;
+      height: 30px;
+      top: 12px;
+      right: 12px;
+    }
+  }
+
+  /* ===============================
    VARIANT BUTTONS
 ================================ */
 
-.variantBtn{
-  min-width:68px;
-  height:38px;
-  padding:0 14px;
+  .variantBtn {
+    min-width: 68px;
+    height: 38px;
+    padding: 0 14px;
 
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-  background:rgba(255,255,255,.025);
-  color:rgba(255,255,255,.75);
+    background: rgba(255, 255, 255, 0.025);
+    color: rgba(255, 255, 255, 0.75);
 
-  font-size:.8rem;
-  font-weight:700;
+    font-size: 0.8rem;
+    font-weight: 700;
 
-  transition:.22s ease;
-}
+    transition: 0.22s ease;
+  }
 
-.variantBtn:hover{
-  background:rgba(255,255,255,.06);
-  color:#fff;
-}
+  .variantBtn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
 
-.variantActive{
-  background:#fff;
-  color:#000;
-  border-color:#fff;
-}
+  .variantActive {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+  }
 
-/* ===============================
+  /* ===============================
    RESULT CARD
 ================================ */
 
-.resultCard{
-  overflow:hidden;
-  border-radius:26px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.025);
-}
+  .resultCard {
+    overflow: hidden;
+    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.025);
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
 
-/* ===============================
+  .resultCard:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(255, 255, 255, 0.16);
+
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* ===============================
    MOBILE
 ================================ */
 
-@media (max-width:640px){
+  @media (max-width: 640px) {
+    .mode-btn {
+      height: 52px;
+      font-size: 0.88rem;
+    }
 
-  .mode-btn{
-    height:52px;
-    font-size:.88rem;
+    .optionCard {
+      min-height: 95px;
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .optionCard .text-xl {
+      font-size: 0.94rem !important;
+    }
+
+    .optionCard .text-sm {
+      font-size: 0.76rem !important;
+    }
   }
-
-  .optionCard{
-    min-height:95px;
-    padding:14px;
-    border-radius:20px;
-  }
-
-  .optionCard .text-xl{
-    font-size:.94rem !important;
-  }
-
-  .optionCard .text-sm{
-    font-size:.76rem !important;
-  }
-
-}
-
 </style>
 
 <script
-is:inline
-define:vars={{
-  productsJSON,
-  questionsJSON
-}}
+  is:inline
+  define:vars={{
+    productsJSON,
+    questionsJSON,
+  }}
 >
-const products = JSON.parse(productsJSON);
-const questions = JSON.parse(questionsJSON);
+  const products = JSON.parse(productsJSON);
+  const questions = JSON.parse(questionsJSON);
 
-const app = document.getElementById("diagApp");
+  const app = document.getElementById("diagApp");
 
-let mode = "client";
-let step = 0;
-let answers = {};
+  let mode = "client";
+  let step = 0;
+  let answers = {};
 
-function slug(t=""){
-  return t.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"");
-}
+  function slug(t = "") {
+    return t
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
 
-function currentSteps(){
-
-  return (questions[mode] || [])
-    .filter(q => {
-
+  function currentSteps() {
+    return (questions[mode] || []).filter((q) => {
       /* ======================
          NO CONDICIONAL
       ====================== */
 
-      if(!q.conditional){
+      if (!q.conditional) {
         return true;
       }
 
@@ -401,108 +403,96 @@ function currentSteps(){
          SOLO NO LACIO
       ====================== */
 
-      if(
-        q.conditional ===
-        "non_lacio"
-      ){
+      if (q.conditional === "non_lacio") {
+        const hair = answers.hairType?.[0];
 
-        const hair =
-          answers.hairType?.[0];
-
-        return (
-          hair &&
-          hair !== "lacio"
-        );
-
+        return hair && hair !== "lacio";
       }
 
       return true;
-
     });
-
-}
-
-function progress(){
-
-  const total = currentSteps().length;
-
-  if(step === total) return 100;
-
-  return (step / total) * 100;
-}
-
-function render(){
-
-  const q = currentSteps()[step];
-
-  if(!q){
-    renderResults();
-    return;
   }
 
-  const selected = answers[q.id] || [];
+  function progress() {
+    const steps = currentSteps();
 
-  app.innerHTML = `
+    const total = steps.length;
+
+    let completed = 0;
+
+    steps.forEach((q, index) => {
+      const selected = answers[q.id] || [];
+
+      if (selected.length > 0) {
+        completed++;
+      }
+    });
+
+    return Math.min(100, (completed / total) * 100);
+  }
+
+  function render() {
+    const q = currentSteps()[step];
+
+    if (!q) {
+      renderResults();
+      return;
+    }
+
+    const selected = answers[q.id] || [];
+
+    app.innerHTML = `
     <div class="mb-8">
 
-      <div class="mb-3 flex items-center justify-between text-sm text-white/45">
-        <span>Paso ${step+1} de ${currentSteps().length}</span>
+      <div class="flex justify-between items-center mb-3 text-white/45 text-sm">
+        <span>Paso ${step + 1} de ${currentSteps().length}</span>
         <span>${Math.round(progress())}%</span>
       </div>
 
-      <div class="h-2 overflow-hidden rounded-full bg-white/5">
+      <div class="bg-white/5 rounded-full h-2 overflow-hidden">
         <div
-          class="h-full rounded-full bg-white transition-all duration-500"
+          class="bg-[linear-gradient(to_right,#fff,rgba(255,255,255,.72))] shadow-[0_0_18px_rgba(255,255,255,.18)] h-full transition-all duration-500"
           style="width:${progress()}%"
         ></div>
       </div>
 
     </div>
 
-    <div class="grid gap-10 lg:grid-cols-[1.1fr_.9fr]">
+    <div class="gap-10 grid lg:grid-cols-[1.1fr_.9fr]">
 
       <!-- LEFT -->
       <div>
 
-        <h3 class="text-3xl font-bold leading-tight md:text-5xl">
+        <h3 class="font-medium text-3xl md:text-5xl leading-tight">
           ${q.title}
         </h3>
 
         <p class="mt-4 text-white/50">
           ${
             q.multi
-            ? `Selecciona mínimo 1 y máximo ${q.max || 2}`
-            : `Selecciona una opción`
+              ? `Selecciona mínimo 1 y máximo ${q.max || 2}`
+              : `Selecciona una opción`
           }
         </p>
 
-        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="gap-4 grid sm:grid-cols-2 mt-8">
 
-${q.options.map(opt=>{
+${q.options
+  .map((opt) => {
+    const active = selected.includes(opt.value);
 
-  const active =
-    selected.includes(opt.value);
+    const isChemical = q.id === "chemical";
 
-  const isChemical =
-    q.id === "chemical";
+    const hasOtherChem = selected.some((v) => v !== "virgen");
 
-  const hasOtherChem =
-    selected.some(v => v !== "virgen");
+    const disableVirgin = isChemical && opt.value === "virgen" && hasOtherChem;
 
-  const disableVirgin =
-    isChemical &&
-    opt.value === "virgen" &&
-    hasOtherChem;
+    const disableOthers =
+      isChemical && opt.value !== "virgen" && selected.includes("virgen");
 
-  const disableOthers =
-    isChemical &&
-    opt.value !== "virgen" &&
-    selected.includes("virgen");
+    const disabled = disableVirgin || disableOthers;
 
-  const disabled =
-    disableVirgin || disableOthers;
-
-return `
+    return `
 <button
   type="button"
   data-value="${opt.value}"
@@ -519,28 +509,28 @@ return `
   <div class="optionTop">
     ${
       active
-      ? `
+        ? `
       <div class="optionCheck">
       </div>
       `
-      : ``
+        : ``
     }
 
   </div>
 
   <div class="optionBody">
 
-    <h4 class="optionTitle font-bold tracking-[0.1em]">
+    <h4 class="font-normal tracking-[0.1em] optionTitle">
       ${opt.label}
     </h4>
 
-    <p class="optionSub opacity-35">
+    <p class="opacity-35 optionSub">
       ${
         disabled
-        ? "No disponible"
-        : active
-        ? "Seleccionado"
-        : "Toca para elegir"
+          ? "No disponible"
+          : active
+            ? "Seleccionado"
+            : "Toca para elegir"
       }
     </p>
 
@@ -548,33 +538,34 @@ return `
 
 </button>
 `;
-}).join("")}
+  })
+  .join("")}
 
         </div>
 
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 mt-8">
 
           ${
             step > 0
-            ? `
+              ? `
             <button
               id="backBtn"
-              class="h-12 rounded-2xl border border-white/10 px-6 transition hover:bg-white hover:text-black"
+              class="hover:bg-white px-6 border border-white/10 rounded-2xl h-12 hover:text-black transition"
             >
               ← Anterior
             </button>
             `
-            : ""
+              : ""
           }
 
           <button
             id="nextBtn"
-            class="h-12 rounded-2xl bg-white px-7 font-semibold text-black transition hover:scale-[1.02]"
+            class="bg-white px-7 rounded-2xl h-12 font-semibold text-black hover:scale-[1.02] transition"
           >
             ${
               step === currentSteps().length - 1
-              ? "Ver diagnóstico ✨"
-              : "Continuar →"
+                ? "Ver diagnóstico ✨"
+                : "Continuar →"
             }
           </button>
 
@@ -583,131 +574,55 @@ return `
       </div>
 
       <!-- RIGHT -->
-      <div class="rounded-4xl border border-white/10 bg-white/[0.05] p-6">
-
-        <div class="flex items-center gap-3">
-
-<div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black shadow-lg">
-
-  ${
-    mode === "salon"
-    ? `
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M3 8l4.5 4L12 4l4.5 8L21 8l-2 10H5L3 8z"/>
-        <path d="M5 18h14"/>
-      </svg>
-    `
-    : `
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6l8-3 8 3z"/>
-        <path d="m9 12 2 2 4-4"/>
-      </svg>
-    `
-  }
-
-</div>
-
-          <div>
-            <p class="text-sm text-white/45">
-              Modo activo
-            </p>
-
-            <h4 class="font-semibold">
-              ${mode === "salon" ? "Profesional Salón" : "Cliente Final"}
-            </h4>
-          </div>
-
-        </div>
-<div class="mt-8 rounded-3xl border border-white/10 bg-black/40 p-5">
-
-  <p class="text-sm font-semibold text-white/80">
+      <div class="bg-white/[0.05] p-6 border border-white/10 rounded-4xl">
+  <p class="font-semibold text-white/80 text-sm">
     Perfil detectado
   </p>
+<div class="bg-black/40 mt-3 p-5 border border-white/10 rounded-2xl">
 
-  <div class="mt-4 flex flex-wrap gap-2">
+
+
+  <div class="flex flex-wrap gap-2 mt-1">
 
     ${
       Object.values(answers).flat().length
+        ? Object.entries(answers)
 
-      ? Object.entries(answers)
+            .flatMap(([questionId, values]) => {
+              const question = currentSteps().find((q) => q.id === questionId);
 
-        .flatMap(([questionId, values]) => {
+              if (!question) return [];
 
-          const question =
-            currentSteps().find(
-              q => q.id === questionId
-            );
+              return values.map((value) => {
+                const option = question.options.find(
+                  (opt) => opt.value === value,
+                );
 
-          if (!question) return [];
+                const cleanTitle = question.title
+                  .replace("¿", "")
+                  .replace("?", "")
+                  .replace("...", "")
+                  .trim();
 
-          return values.map(value => {
+                return `${cleanTitle}: ${option?.label || value}`;
+              });
+            })
 
-            const option =
-              question.options.find(
-                opt => opt.value === value
-              );
-
-            const cleanTitle =
-  question.title
-    .replace("¿", "")
-    .replace("?", "")
-    .replace("...", "")
-    .trim();
-
-return `${cleanTitle}: ${option?.label || value}`;
-
-          });
-
-        })
-
-        .map(label => `
+            .map(
+              (label) => `
 
           <span
-            class="
-              inline-flex
-              items-center
-              rounded-full
-              border
-              border-white/10
-              bg-white/4
-              px-3.5
-              py-1.5
-              text-xs
-              font-medium
-              tracking-wide
-              text-white/75
-              backdrop-blur-xl
-            "
+            class="inline-flex items-center bg-white/4 backdrop-blur-xl px-3.5 py-1.5 border border-white/10 rounded-full font-medium text-white/75 text-xs tracking-wide"
           >
             ${label}
           </span>
 
-        `)
+        `,
+            )
 
-        .join("")
-
-      : `
-        <span class="text-sm text-white/35">
+            .join("")
+        : `
+        <span class="text-white/35 text-sm">
           Sin respuestas aún
         </span>
       `
@@ -722,1159 +637,788 @@ return `${cleanTitle}: ${option?.label || value}`;
     </div>
   `;
 
-document.querySelectorAll(".optionCard").forEach(btn=>{
+    document.querySelectorAll(".optionCard").forEach((btn) => {
+      btn.onclick = () => {
+        const val = btn.dataset.value;
 
-  btn.onclick = ()=>{
-
-    const val = btn.dataset.value;
-
-    /* =========================
+        /* =========================
        MULTI OPCIONES
     ========================= */
 
-    if(q.multi){
+        if (q.multi) {
+          if (!answers[q.id]) {
+            answers[q.id] = [];
+          }
 
-      if(!answers[q.id]){
-        answers[q.id] = [];
-      }
+          let arr = [...answers[q.id]];
 
-      let arr = [...answers[q.id]];
+          const isChemical = q.id === "chemical";
 
-      const isChemical =
-        q.id === "chemical";
+          const isVirgin = val === "virgen";
 
-      const isVirgin =
-        val === "virgen";
+          const selected = arr.includes(val);
 
-      const selected =
-        arr.includes(val);
-
-      /* toggle off */
-      if(selected){
-
-        arr = arr.filter(x => x !== val);
-
-      }else{
-
-        /* =========================
+          /* toggle off */
+          if (selected) {
+            arr = arr.filter((x) => x !== val);
+          } else {
+            /* =========================
            HISTORIAL QUIMICO LOGICA
         ========================= */
 
-        if(isChemical){
+            if (isChemical) {
+              // si selecciona "sin procesos"
+              if (isVirgin) {
+                arr = ["virgen"];
+              } else {
+                // quitar virgen
+                arr = arr.filter((x) => x !== "virgen");
 
-          // si selecciona "sin procesos"
-          if(isVirgin){
-            arr = ["virgen"];
-          }
-
-          else{
-
-            // quitar virgen
-            arr = arr.filter(x => x !== "virgen");
-
-            if(arr.length < (q.max || 2)){
-              arr.push(val);
+                if (arr.length < (q.max || 2)) {
+                  arr.push(val);
+                }
+              }
+            } else {
+              if (arr.length < (q.max || 2)) {
+                arr.push(val);
+              }
             }
           }
 
-        }else{
-
-          if(arr.length < (q.max || 2)){
-            arr.push(val);
-          }
-
-        }
-
-      }
-
-      answers[q.id] = arr;
-
-    }
-
-    /* =========================
+          answers[q.id] = arr;
+        } else {
+          /* =========================
        SINGLE
     ========================= */
+          answers[q.id] = [val];
+        }
 
-    else{
-      answers[q.id] = [val];
-    }
+        render();
+      };
+    });
 
-    render();
-  };
+    document.getElementById("backBtn")?.addEventListener("click", () => {
+      if (step > 0) {
+        step--;
+        render();
+      }
+    });
 
-});
+    document.getElementById("nextBtn")?.addEventListener("click", () => {
+      const current = currentSteps()[step];
 
-document.getElementById("backBtn")
-  ?.addEventListener("click", ()=>{
+      if (!current) {
+        try {
+          renderResults();
+        } catch (err) {
+          console.error(err);
+        }
+        return;
+      }
 
-    if(step > 0){
-      step--;
+      const selectedNow = answers[current.id] || [];
+
+      const count = selectedNow.length;
+
+      if (current.multi && count < 1) {
+        alert("Selecciona al menos una opción.");
+
+        return;
+      }
+
+      if (!current.multi && count !== 1) {
+        alert("Selecciona una opción.");
+
+        return;
+      }
+
+      step++;
+
+      if (step >= currentSteps().length) {
+        renderResults();
+        return;
+      }
+
       render();
-    }
+    });
+  }
 
-  });
-
-document.getElementById("nextBtn")
-  ?.addEventListener("click", ()=>{
-
-    const current =
-      currentSteps()[step];
-
-    if(!current){
-
-      try {
-
-  renderResults();
-
-} catch(err) {
-
-  console.error(err);
-
-}
-      return;
-
-    }
-
-    const selectedNow =
-      answers[current.id] || [];
-
-    const count =
-      selectedNow.length;
-
-    if(
-      current.multi &&
-      count < 1
-    ){
-
-      alert(
-        "Selecciona al menos una opción."
-      );
-
-      return;
-
-    }
-
-    if(
-      !current.multi &&
-      count !== 1
-    ){
-
-      alert(
-        "Selecciona una opción."
-      );
-
-      return;
-
-    }
-
-    step++;
-
-    if(
-      step >= currentSteps().length
-    ){
-
-      renderResults();
-      return;
-
-    }
-
-    render();
-
-  });
-}
-
-/* =========================
+  /* =========================
    LOGICA NUEVA REAL
 ========================= */
 
-function has(val){
-  const all = Object.values(answers).flat().map(slug);
-  return all.includes(slug(val));
-}
+  function has(val) {
+    const all = Object.values(answers).flat().map(slug);
+    return all.includes(slug(val));
+  }
 
-function pick(text){
-  return products.find(p =>
-    slug(p.name).includes(slug(text))
-  );
-}
+  function pick(text) {
+    return products.find((p) => slug(p.name).includes(slug(text)));
+  }
 
-function add(list,item){
-  if(!item) return;
-  if(list.find(x=>x.id === item.id)) return;
-  list.push(item);
-}
+  function add(list, item) {
+    if (!item) return;
+    if (list.find((x) => x.id === item.id)) return;
+    list.push(item);
+  }
 
-function buildRecommendations(){
+  function buildRecommendations() {
+    const all = Object.values(answers).flat().map(slug);
 
-    const all =
-    Object.values(answers)
-      .flat()
-      .map(slug);
+    const has = (v) => all.includes(slug(v));
 
-  const has = (v)=>
-    all.includes(slug(v));
+    const usesHeat = !has("sincalor");
 
-  const usesHeat =
-  !has("sincalor");
+    const rec = [];
 
+    const pick = (text) => {
+      const search = slug(text).replace(/[-\s]/g, "");
 
+      const allMatches = products.filter((p) => {
+        const name = slug(p.name).replace(/[-\s]/g, "");
 
-  const rec = [];
+        return name.includes(search);
+      });
 
+      /* cliente final = chico */
+      if (mode === "client") {
+        return (
+          allMatches.find((p) =>
+            /250ml|200ml|150ml|125ml|100ml|80g|52g/i.test(p.name),
+          ) || allMatches[0]
+        );
+      }
 
+      /* salón = grande */
+      return (
+        allMatches.find((p) => /500ml|1000ml|750ml|500g/i.test(p.name)) ||
+        allMatches[0]
+      );
+    };
 
-  const pick = (text)=>{
+    const add = (item, custom = "") => {
+      if (!item) return;
+      if (rec.find((x) => x.id === item.id)) return;
 
-const search =
-  slug(text)
-    .replace(/[-\s]/g,"");
+      rec.push({
+        ...item,
+        extra: custom || item.extra || "",
+      });
+    };
 
-const allMatches =
-  products.filter(p => {
-
-    const name =
-      slug(p.name)
-        .replace(/[-\s]/g,"");
-
-    return name.includes(search);
-
-  });
-
-    /* cliente final = chico */
-    if(mode === "client"){
-      return allMatches.find(p =>
-        /250ml|200ml|150ml|125ml|100ml|80g|52g/i.test(p.name)
-      ) || allMatches[0];
-    }
-
-    /* salón = grande */
-    return allMatches.find(p =>
-      /500ml|1000ml|750ml|500g/i.test(p.name)
-    ) || allMatches[0];
-  };
-
-  const add = (item, custom="")=>{
-
-    if(!item) return;
-    if(rec.find(x=>x.id === item.id)) return;
-
-    rec.push({
-      ...item,
-      extra: custom || item.extra || ""
-    });
-  };
-
-/* ======================
+    /* ======================
    PERFIL CAPILAR
 ====================== */
 
-const wantsStraight =
-  has("quiero_lacio");
+    const wantsStraight = has("quiero_lacio");
 
-const keepShape =
-  has("mantener_forma");
+    const keepShape = has("mantener_forma");
 
-const texturedHair =
-  has("rizado") ||
-  has("ondulado") ||
-  has("afro");
+    const texturedHair = has("rizado") || has("ondulado") || has("afro");
 
-const hasAlaciado =
-  has("alaciado");
+    const hasAlaciado = has("alaciado");
 
-const hasTinte =
-  has("tinte");
+    const hasTinte = has("tinte");
 
-const hasColor =
-  has("diseno_color");
+    const hasColor = has("diseno_color");
 
-const hasBleach =
-  has("decoloracion_global");
+    const hasBleach = has("decoloracion_global");
 
-/* ======================
+    /* ======================
    FINALE-X
 ====================== */
 
-if(
-
-  usesHeat &&
-
-  !keepShape &&
-
-  (
-    wantsStraight ||
-    hasAlaciado
-  )
-
-){
-
-  add(
-    pick("Finale-X"),
-    "Ayuda a mantener un acabado más lacio y controlado."
-  );
-
-}
-/* ======================
+    if (usesHeat && !keepShape && (wantsStraight || hasAlaciado)) {
+      add(
+        pick("Finale-X"),
+        "Ayuda a mantener un acabado más lacio y controlado.",
+      );
+    }
+    /* ======================
    CURLY
 ====================== */
 
-if(
+    if (texturedHair && keepShape && !wantsStraight) {
+      add(
+        pick("Xtyling Curly"),
+        "Ayuda a definir y mantener la forma natural.",
+      );
+    }
 
-  texturedHair &&
-  keepShape &&
-
-  !wantsStraight
-
-){
-
-  add(
-    pick("Xtyling Curly"),
-    "Ayuda a definir y mantener la forma natural."
-  );
-
-}
-
-/* ======================
+    /* ======================
    GOJI
 ====================== */
 
-if(
+    if (hasTinte || hasColor || (hasAlaciado && !keepShape)) {
+      add(
+        pick("Shampoo Di Goji"),
+        "Protección para cabello procesado químicamente.",
+      );
 
-  hasTinte ||
-  hasColor ||
+      add(pick("Maschera Di Goji"), "Ayuda a mantener brillo y suavidad.");
+    }
 
-  (
-    hasAlaciado &&
-    !keepShape
-  )
-
-){
-
-  add(
-    pick("Shampoo Di Goji"),
-    "Protección para cabello procesado químicamente."
-  );
-
-  add(
-    pick("Maschera Di Goji"),
-    "Ayuda a mantener brillo y suavidad."
-  );
-
-}
-
-/* ======================
+    /* ======================
    IALURONICO
 ====================== */
 
-if(
-  hasBleach ||
-  has("quiebre") ||
-  has("elastico") ||
-  has("meta_reparar")
-){
+    if (hasBleach || has("quiebre") || has("elastico") || has("meta_reparar")) {
+      add(pick("Shampoo Ialuronico"), "Reconstrucción e hidratación profunda.");
 
-  add(
-    pick("Shampoo Ialuronico"),
-    "Reconstrucción e hidratación profunda."
-  );
+      add(
+        pick("Maschera Ialuronico"),
+        "Apoyo intensivo para fibra sensibilizada.",
+      );
+    }
 
-  add(
-    pick("Maschera Ialuronico"),
-    "Apoyo intensivo para fibra sensibilizada."
-  );
-
-}
-
-/* ======================
+    /* ======================
    HIDRATACION BASE
 ====================== */
 
-if(
+    if (texturedHair && keepShape && !hasBleach && !wantsStraight) {
+      add(pick("Shampoo Di Argan"));
 
-  texturedHair &&
-  keepShape &&
+      add(pick("Maschera Di Argan"));
+    }
 
-  !hasBleach &&
-  !wantsStraight
-
-){
-
-  add(
-    pick("Shampoo Di Argan")
-  );
-
-  add(
-    pick("Maschera Di Argan")
-  );
-
-}
-
-/* ======================
+    /* ======================
    DEFAULT
 ====================== */
 
-if(rec.length < 2){
+    if (rec.length < 2) {
+      add(pick("Shampoo Di Argan"));
 
-  add(pick("Shampoo Di Argan"));
-
-  add(pick("Maschera Di Argan"));
-
-}
-  /* ======================
+      add(pick("Maschera Di Argan"));
+    }
+    /* ======================
      CRECIMIENTO
   ====================== */
 
-  if(
-    has("caida") ||
-    has("meta_crecer")
-  ){
-
-    if(hasAlaciado){
-      add(pick("Lozione Abbondanza"));
-    }else{
-      add(
-        pick("Shampoo Abbondanza"),
-        "Usar 2 veces por semana."
-      );
+    if (has("caida") || has("meta_crecer")) {
+      if (hasAlaciado) {
+        add(pick("Lozione Abbondanza"));
+      } else {
+        add(pick("Shampoo Abbondanza"), "Usar 2 veces por semana.");
+      }
     }
-  }
 
-  /* ======================
+    /* ======================
      FRIZZ
   ====================== */
 
-if(has("meta_frizz")){
+    if (has("meta_frizz")) {
+      if (keepShape && texturedHair) {
+        add(pick("Fluido Di Argan"));
+      } else if (has("sincalor")) {
+        add(pick("Fluido Di Argan"));
+      } else {
+        add(pick("Liss Di Lino"));
+      }
+    }
 
-  if(
-    keepShape &&
-    texturedHair
-  ){
-
-    add(
-      pick("Fluido Di Argan")
-    );
-
-  }
-
-  else if(has("sincalor")){
-
-    add(
-      pick("Fluido Di Argan")
-    );
-
-  }
-
-  else{
-
-    add(
-      pick("Liss Di Lino")
-    );
-
-  }
-
-}
-
-  /* ======================
+    /* ======================
      RIZOS
   ====================== */
 
-if(
+    if (!wantsStraight && (has("meta_rizos") || (texturedHair && keepShape))) {
+      add(pick("Xtyling Curly"));
+    }
 
-  !wantsStraight &&
-
-  (
-    has("meta_rizos") ||
-
-    (
-      texturedHair &&
-      keepShape
-    )
-  )
-
-){
-
-  add(
-    pick("Xtyling Curly")
-  );
-
-}
-
-/* ======================
+    /* ======================
    CALOR
 ====================== */
 
-if(usesHeat){
+    if (usesHeat) {
+      add(pick("Liquid Silk"));
 
-  add(
-    pick("Liquid Silk")
-  );
-
-  if(
-    has("decoloracion_global") ||
-    has("quiebre")
-  ){
-
-    add(
-      pick("Finale Ialuronico")
-    );
-
-  }
-
-}
-
-/* ======================
+      if (has("decoloracion_global") || has("quiebre")) {
+        add(pick("Finale Ialuronico"));
+      }
+    } else {
+      /* ======================
    REPARACION SIN CALOR
 ====================== */
+      if (has("decoloracion_global") || has("quiebre")) {
+        add(pick("Refill Ialuronico"));
+      }
+    }
 
-else{
-
-  if(
-    has("decoloracion_global") ||
-    has("quiebre")
-  ){
-
-    add(
-      pick("Refill Ialuronico")
-    );
-
-  }
-
-}
-
-  /* ======================
+    /* ======================
      ELASTICIDAD
   ====================== */
 
-  if(has("elastico")){
-    add(pick("Pozione Booster"));
-  }
+    if (has("elastico")) {
+      add(pick("Pozione Booster"));
+    }
 
-  if(has("quiebre")){
-    add(pick("Refill Ialuronico"));
-  }
+    if (has("quiebre")) {
+      add(pick("Refill Ialuronico"));
+    }
 
-  /* ======================
+    /* ======================
      LARGO
   ====================== */
 
-  if(
-    has("largo") ||
-    has("xlargo")
-  ){
-    add(pick("Bifasico"));
-  }
+    if (has("largo") || has("xlargo")) {
+      add(pick("Bifasico"));
+    }
 
-  /* ======================
+    /* ======================
      LAVADO
   ====================== */
 
-  if(has("lavadodiario")){
+    if (has("lavadodiario")) {
+      rec.forEach((x) => {
+        if (x.type?.toLowerCase().includes("shampoo")) {
+          x.extra = "Uso frecuente / apto para rutina constante.";
+        }
+      });
+    }
 
-    rec.forEach(x=>{
-      if(
-        x.type?.toLowerCase().includes("shampoo")
-      ){
-        x.extra =
-          "Uso frecuente / apto para rutina constante.";
-      }
-    });
-  }
+    if (has("lavado1x")) {
+      add(pick("Maschera"));
+    }
 
-  if(has("lavado1x")){
-    add(pick("Maschera"));
-  }
-
-  /* ======================
+    /* ======================
      MIN 4
   ====================== */
 
-  const backup = [
-    pick("Bifasico"),
-    pick("Fluido"),
-    pick("Ricostruttore"),
-    pick("Pozione 10")
-  ];
+    const backup = [
+      pick("Bifasico"),
+      pick("Fluido"),
+      pick("Ricostruttore"),
+      pick("Pozione 10"),
+    ];
 
-  backup.forEach(x=>{
-    if(rec.length < 4) add(x);
-  });
+    backup.forEach((x) => {
+      if (rec.length < 4) add(x);
+    });
 
-  return rec.slice(0,8);
-}
-
-function buildDiagnosisText(){
-
-  const all =
-    Object.values(answers)
-      .flat()
-      .map(slug);
-
-  const has = (v)=>
-    all.includes(slug(v));
-
-  const usesHeat =
-    !has("sincalor");
-
-  let health = 100;
-
-let damage = 0;
-let hydration = 100;
-let frizz = 0;
-let heatRisk = 0;
-let scalp = 100;
-
-  const priorities = [];
-  const reasons = [];
-  const tips = [];
-  const notes = [];
-
-  if(has("decoloracion_global")){
-    damage += 28;
-hydration -= 20;
-frizz += 12;
-health -= 22;
-    notes.push("procesos decolorantes previos");
+    return rec.slice(0, 8);
   }
 
-  if(has("tinte")){
-    damage += 10;
-hydration -= 6;
-health -= 8;
-    notes.push("cabello procesado con color");
-  }
+  function buildDiagnosisText() {
+    const all = Object.values(answers).flat().map(slug);
 
-  if(has("quiebre")){
-    damage += 22;
-hydration -= 10;
-health -= 18;
-    notes.push("quiebre visible");
-  }
+    const has = (v) => all.includes(slug(v));
 
-  if(has("reseco")){
-    hydration -= 35;
-    frizz += 15;
-    notes.push("resequedad marcada");
-  }
+    const usesHeat = !has("sincalor");
 
-  if(has("frizz")){
-    frizz += 18;
-health -= 6;
-    notes.push("cutícula abierta y frizz");
-  }
+    let health = 100;
 
- if(has("caloralto")){
+    let damage = 0;
+    let hydration = 100;
+    let frizz = 0;
+    let heatRisk = 0;
+    let scalp = 100;
 
-  heatRisk += 40;
-  damage += 14;
-  hydration -= 10;
-  health -= 18;
+    const priorities = [];
+    const reasons = [];
+    const tips = [];
+    const notes = [];
 
-}
+    if (has("decoloracion_global")) {
+      damage += 28;
+      hydration -= 20;
+      frizz += 12;
+      health -= 22;
+      notes.push("procesos decolorantes previos");
+    }
 
-else if(has("calormedio")){
+    if (has("tinte")) {
+      damage += 10;
+      hydration -= 6;
+      health -= 8;
+      notes.push("cabello procesado con color");
+    }
 
-  heatRisk += 24;
-  damage += 8;
-  hydration -= 5;
-  health -= 10;
+    if (has("quiebre")) {
+      damage += 22;
+      hydration -= 10;
+      health -= 18;
+      notes.push("quiebre visible");
+    }
 
-}
+    if (has("reseco")) {
+      hydration -= 35;
+      frizz += 15;
+      notes.push("resequedad marcada");
+    }
 
-else if(has("calorbajo")){
+    if (has("frizz")) {
+      frizz += 18;
+      health -= 6;
+      notes.push("cutícula abierta y frizz");
+    }
 
-  heatRisk += 10;
-  damage += 3;
-  health -= 3;
+    if (has("caloralto")) {
+      heatRisk += 40;
+      damage += 14;
+      hydration -= 10;
+      health -= 18;
+    } else if (has("calormedio")) {
+      heatRisk += 24;
+      damage += 8;
+      hydration -= 5;
+      health -= 10;
+    } else if (has("calorbajo")) {
+      heatRisk += 10;
+      damage += 3;
+      health -= 3;
+    }
 
-}
+    if (has("caida")) {
+      scalp -= 14;
+      health -= 10;
+      notes.push("debilidad capilar");
+    }
 
-  if(has("caida")){
-    scalp -= 14;
-health -= 10;
-    notes.push("debilidad capilar");
-  }
+    if (
+      !has("quiero_lacio") &&
+      (has("rizado") || has("ondulado") || has("afro"))
+    ) {
+      hydration -= 4;
+      frizz += 5;
+      priorities.push("Definir forma natural");
+    }
 
-if(
+    damage = Math.min(100, damage);
+    hydration = Math.max(0, hydration);
+    frizz = Math.min(100, frizz);
+    heatRisk = Math.min(100, heatRisk);
+    scalp = Math.max(0, scalp);
 
-  !has("quiero_lacio") &&
+    if (damage > 55) {
+      priorities.push("Reconstruir fibra interna");
+      reasons.push("Se detecta desgaste estructural");
+      tips.push("Usa mascarilla 2 veces por semana");
+    }
 
-  (
-    has("rizado") ||
-    has("ondulado") ||
-    has("afro")
-  )
+    if (hydration < 55) {
+      priorities.push("Recuperar hidratación");
+      reasons.push("El cabello necesita nutrición profunda");
+      tips.push("Aplica leave-in en medios y puntas");
+    }
 
-){
-    hydration -= 4;
-frizz += 5;
-    priorities.push("Definir forma natural");
-  }
+    if (frizz > 45) {
+      priorities.push("Controlar frizz");
+      reasons.push("La cutícula necesita sellado");
+      tips.push("Evita secado agresivo con toalla");
+    }
 
-  damage = Math.min(100, damage);
-  hydration = Math.max(0, hydration);
-  frizz = Math.min(100, frizz);
-  heatRisk = Math.min(100, heatRisk);
-  scalp = Math.max(0, scalp);
+    if (heatRisk > 40) {
+      priorities.push("Proteger del calor");
+      reasons.push("El uso térmico acelera daño acumulado");
+      tips.push("Siempre usa protector térmico");
+    }
 
-  if(damage > 55){
-    priorities.push("Reconstruir fibra interna");
-    reasons.push("Se detecta desgaste estructural");
-    tips.push("Usa mascarilla 2 veces por semana");
-  }
+    if (scalp < 70) {
+      priorities.push("Fortalecer raíz");
+      reasons.push("Señales de debilitamiento capilar");
+      tips.push("Masajea cuero cabelludo 3 min diarios con Abbondanza ");
+    }
 
-  if(hydration < 55){
-    priorities.push("Recuperar hidratación");
-    reasons.push("El cabello necesita nutrición profunda");
-    tips.push("Aplica leave-in en medios y puntas");
-  }
-
-  if(frizz > 45){
-    priorities.push("Controlar frizz");
-    reasons.push("La cutícula necesita sellado");
-    tips.push("Evita secado agresivo con toalla");
-  }
-
-  if(heatRisk > 40){
-    priorities.push("Proteger del calor");
-    reasons.push("El uso térmico acelera daño acumulado");
-    tips.push("Siempre usa protector térmico");
-  }
-
-  if(scalp < 70){
-    priorities.push("Fortalecer raíz");
-    reasons.push("Señales de debilitamiento capilar");
-    tips.push("Masajea cuero cabelludo 3 min diarios con Abbondanza ");
-  }
-
-
-  if(!usesHeat){
-  heatRisk = 0;
-}
+    if (!usesHeat) {
+      heatRisk = 0;
+    }
 
     /* ======================
    NORMALIZAR
 ====================== */
 
-damage =
-  Math.max(
-    0,
-    Math.min(100, damage)
-  );
+    damage = Math.max(0, Math.min(100, damage));
 
-hydration =
-  Math.max(
-    0,
-    Math.min(100, hydration)
-  );
+    hydration = Math.max(0, Math.min(100, hydration));
 
-frizz =
-  Math.max(
-    0,
-    Math.min(100, frizz)
-  );
+    frizz = Math.max(0, Math.min(100, frizz));
 
-heatRisk =
-  Math.max(
-    0,
-    Math.min(100, heatRisk)
-  );
+    heatRisk = Math.max(0, Math.min(100, heatRisk));
 
-scalp =
-  Math.max(
-    0,
-    Math.min(100, scalp)
-  );
+    scalp = Math.max(0, Math.min(100, scalp));
 
-health =
-  Math.round(
-
-    (
+    health = Math.round(
       (100 - damage) * 0.4 +
-
-      hydration * 0.3 +
-
-      (100 - frizz) * 0.15 +
-
-      scalp * 0.15
-
-    )
-
-  );
-
-health =
-  Math.max(
-    35,
-    Math.min(100, health)
-  );
-
-  const finalPriorities =
-  [...new Set(priorities)];
-
-const finalReasons =
-  [...new Set(reasons)];
-
-const finalTips =
-  [...new Set(tips)];
-
-if(!finalPriorities.length){
-  finalPriorities.push(
-    "Mantener hidratación equilibrada",
-    "Preservar brillo natural",
-    "Prevenir daño futuro"
-  );
-}
-
-if(!finalReasons.length){
-  finalReasons.push(
-    "Tu cabello muestra buena condición general",
-    "La rutina propuesta ayuda a conservar resultados",
-    "La prevención mantiene salud capilar a largo plazo"
-  );
-}
-
-if(!finalTips.length){
-
-  if(usesHeat){
-
-    finalTips.push(
-      "Usa protector térmico antes de calor"
+        hydration * 0.3 +
+        (100 - frizz) * 0.15 +
+        scalp * 0.15,
     );
 
+    health = Math.max(35, Math.min(100, health));
+
+    const finalPriorities = [...new Set(priorities)];
+
+    const finalReasons = [...new Set(reasons)];
+
+    const finalTips = [...new Set(tips)];
+
+    if (!finalPriorities.length) {
+      finalPriorities.push(
+        "Mantener hidratación equilibrada",
+        "Preservar brillo natural",
+        "Prevenir daño futuro",
+      );
+    }
+
+    if (!finalReasons.length) {
+      finalReasons.push(
+        "Tu cabello muestra buena condición general",
+        "La rutina propuesta ayuda a conservar resultados",
+        "La prevención mantiene salud capilar a largo plazo",
+      );
+    }
+
+    if (!finalTips.length) {
+      if (usesHeat) {
+        finalTips.push("Usa protector térmico antes de calor");
+      }
+
+      finalTips.push(
+        "Recorta puntas regularmente",
+        "Aplica mascarilla semanalmente",
+      );
+    }
+
+    health = Math.round(health);
+
+    damage = Math.round(damage);
+
+    hydration = Math.round(hydration);
+
+    frizz = Math.round(frizz);
+
+    heatRisk = Math.round(heatRisk);
+
+    scalp = Math.round(scalp);
+
+    return {
+      summary: notes.length
+        ? "Detectamos " + notes.slice(0, 3).join(", ") + "."
+        : "Detectamos una base capilar saludable con mantenimiento recomendado.",
+
+      health,
+      damage,
+      hydration,
+      frizz,
+      heatRisk,
+
+      priorities: finalPriorities.slice(0, 4),
+      reasons: finalReasons.slice(0, 4),
+      tips: finalTips.slice(0, 3),
+    };
   }
 
-  finalTips.push(
-    "Recorta puntas regularmente",
-    "Aplica mascarilla semanalmente"
-  );
-}
+  function scoreColor(num, reverse = false) {
+    let value = reverse ? 100 - num : num;
 
-health =
-  Math.round(health);
+    if (value >= 75) {
+      return "text-emerald-300";
+    }
 
-damage =
-  Math.round(damage);
+    if (value >= 50) {
+      return "text-yellow-300";
+    }
 
-hydration =
-  Math.round(hydration);
-
-frizz =
-  Math.round(frizz);
-
-heatRisk =
-  Math.round(heatRisk);
-
-scalp =
-  Math.round(scalp);
-
-return {
-  summary:
-    notes.length
-      ? "Detectamos " + notes.slice(0,3).join(", ") + "."
-      : "Detectamos una base capilar saludable con mantenimiento recomendado.",
-
-  health,
-  damage,
-  hydration,
-  frizz,
-  heatRisk,
-
-  priorities: finalPriorities.slice(0,4),
-  reasons: finalReasons.slice(0,4),
-  tips: finalTips.slice(0,3)
-};
-
-  
-}
-
-function scoreColor(num, reverse = false){
-
-  let value = reverse ? (100 - num) : num;
-
-  if(value >= 75){
-    return "text-emerald-300";
+    return "text-rose-300";
   }
 
-  if(value >= 50){
-    return "text-yellow-300";
-  }
+  function getHeroBanner() {
+    const all = Object.values(answers).flat().map(slug);
 
-  return "text-rose-300";
-}
+    const has = (v) => all.includes(slug(v));
 
-function getHeroBanner(){
-
-  const all =
-    Object.values(answers)
-      .flat()
-      .map(slug);
-
-  const has = (v)=>
-    all.includes(slug(v));
-
-  /* ======================
+    /* ======================
      GOJI
      COLOR / TINTE
   ====================== */
 
-  if(
-    has("tinte") ||
-    has("diseno_color")
-  ){
-    return {
-      image: "/images/products/goji/goji-banner.jpg",
-      title: "Color protegido y brillo intenso",
-      subtitle:
-        "Detectamos necesidades de protección para cabello procesado químicamente."
-    };
-  }
+    if (has("tinte") || has("diseno_color")) {
+      return {
+        image: "/images/products/goji/goji-banner.jpg",
+        title: "Color protegido y brillo intenso",
+        subtitle:
+          "Detectamos necesidades de protección para cabello procesado químicamente.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      IALURONICO
      DECOLORACION / QUIEBRE
   ====================== */
 
-  if(
-    has("decoloracion_global") ||
-    has("quiebre") ||
-    has("elastico")
-  ){
-    return {
-      image: "/images/products/ialuronico/ialuronico-banner.jpg",
-      title: "Reconstrucción y recuperación profunda",
-      subtitle:
-        "Tu cabello necesita hidratación intensiva y apoyo para recuperar fuerza y elasticidad."
-    };
-  }
+    if (has("decoloracion_global") || has("quiebre") || has("elastico")) {
+      return {
+        image: "/images/products/ialuronico/ialuronico-banner.jpg",
+        title: "Reconstrucción y recuperación profunda",
+        subtitle:
+          "Tu cabello necesita hidratación intensiva y apoyo para recuperar fuerza y elasticidad.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      CURLY / XTYLING
   ====================== */
 
-  if(
-    (
-      has("rizado") ||
-      has("ondulado") ||
-      has("afro")
-    ) &&
-    !has("quiero_lacio")
-  ){
-    return {
-      image: "/images/products/xtyling/xtyling-banner.jpg",
-      title: "Definición, hidratación y control",
-      subtitle:
-        "Seleccionamos una rutina ideal para mantener la forma natural y controlar frizz."
-    };
-  }
+    if (
+      (has("rizado") || has("ondulado") || has("afro")) &&
+      !has("quiero_lacio")
+    ) {
+      return {
+        image: "/images/products/xtyling/xtyling-banner.jpg",
+        title: "Definición, hidratación y control",
+        subtitle:
+          "Seleccionamos una rutina ideal para mantener la forma natural y controlar frizz.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      ALACIADO / CONTROL
   ====================== */
 
-  if(
-    has("quiero_lacio") ||
-    has("alaciado")
-  ){
-    return {
-      image: "/images/products/argan/argan-banner.jpg",
-      title: "Cabello más suave y disciplinado",
-      subtitle:
-        "Detectamos una necesidad de control, brillo y reducción de frizz."
-    };
-  }
+    if (has("quiero_lacio") || has("alaciado")) {
+      return {
+        image: "/images/products/argan/argan-banner.jpg",
+        title: "Cabello más suave y disciplinado",
+        subtitle:
+          "Detectamos una necesidad de control, brillo y reducción de frizz.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      CRECIMIENTO
   ====================== */
 
-  if(
-    has("caida") ||
-    has("meta_crecer")
-  ){
-    return {
-      image: "/images/products/abbondanza/abbondanza-banner.jpg",
-      title: "Fortalecimiento desde la raíz",
-      subtitle:
-        "Tu perfil muestra señales de debilitamiento capilar y necesidad de fortalecimiento."
-    };
-  }
+    if (has("caida") || has("meta_crecer")) {
+      return {
+        image: "/images/products/abbondanza/abbondanza-banner.jpg",
+        title: "Fortalecimiento desde la raíz",
+        subtitle:
+          "Tu perfil muestra señales de debilitamiento capilar y necesidad de fortalecimiento.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      RUBIOS / MATIZ
   ====================== */
 
-  if(
-    has("rubio") ||
-    has("platino")
-  ){
-    return {
-      image: "/images/products/platino/platino-banner.jpg",
-      title: "Matiz y protección del tono",
-      subtitle:
-        "Seleccionamos productos para mantener luminosidad y neutralizar reflejos no deseados."
-    };
-  }
+    if (has("rubio") || has("platino")) {
+      return {
+        image: "/images/products/platino/platino-banner.jpg",
+        title: "Matiz y protección del tono",
+        subtitle:
+          "Seleccionamos productos para mantener luminosidad y neutralizar reflejos no deseados.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      CUERO CABELLUDO
   ====================== */
 
-  if(
-    has("graso") ||
-    has("sensibilidad")
-  ){
-    return {
-      image: "/images/products/agave/agave-banner.jpg",
-      title: "Equilibrio y frescura capilar",
-      subtitle:
-        "Detectamos necesidades de balance y cuidado del cuero cabelludo."
-    };
-  }
+    if (has("graso") || has("sensibilidad")) {
+      return {
+        image: "/images/products/agave/agave-banner.jpg",
+        title: "Equilibrio y frescura capilar",
+        subtitle:
+          "Detectamos necesidades de balance y cuidado del cuero cabelludo.",
+      };
+    }
 
-  /* ======================
+    /* ======================
      DEFAULT
   ====================== */
 
-  return {
-    image: "/images/products/argan/argan-banner.jpg",
-    title: "Cabello más sano y equilibrado",
-    subtitle:
-      "Seleccionamos una rutina enfocada en brillo, hidratación y mantenimiento saludable."
-  };
+    return {
+      image: "/images/products/argan/argan-banner.jpg",
+      title: "Cabello más sano y equilibrado",
+      subtitle:
+        "Seleccionamos una rutina enfocada en brillo, hidratación y mantenimiento saludable.",
+    };
+  }
 
-}
+  function renderResults() {
+    const picks = buildRecommendations();
+    const report = buildDiagnosisText();
 
-function renderResults(){
+    const hero = getHeroBanner();
 
-  const picks = buildRecommendations();
-  const report = buildDiagnosisText();
+    const grouped = [];
 
-  const hero = getHeroBanner();
+    picks.forEach((p) => {
+      const base = p.name.replace(/\s\d+(ml|g)$/i, "").trim();
 
-  const grouped = [];
+      let found = grouped.find((x) => x.base === base);
 
-  picks.forEach(p => {
+      if (!found) {
+        found = {
+          base,
+          items: [],
+        };
+        grouped.push(found);
+      }
 
-    const base =
-      p.name.replace(/\s\d+(ml|g)$/i,"").trim();
+      const variants = products.filter(
+        (prod) => prod.name.replace(/\s\d+(ml|g)$/i, "").trim() === base,
+      );
 
-    let found =
-      grouped.find(x => x.base === base);
+      found.items = variants;
+    });
 
-    if(!found){
-      found = {
-        base,
-        items:[]
-      };
-      grouped.push(found);
-    }
-
-    const variants = products.filter(prod =>
-      prod.name.replace(/\s\d+(ml|g)$/i,"").trim() === base
-    );
-
-    found.items = variants;
-  });
-
-  app.innerHTML = `
+    app.innerHTML = `
 
 <!-- HERO -->
-<div class="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/3">
+<div class="bg-white/3 border border-white/10 rounded-[2.5rem] overflow-hidden">
 
-  <div class="relative isolate min-h-[480px] overflow-hidden md:min-h-[560px]">
+  <div class="isolate relative min-h-[480px] md:min-h-[560px] overflow-hidden">
 
     <!-- BG -->
     <img
       src="${hero.image}"
-      class="absolute inset-0 h-full w-full object-cover"
+      class="absolute inset-0 w-full h-full object-cover"
     />
 
     <!-- OVERLAYS -->
-    <div class="absolute inset-0 bg-black/55"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.92),rgba(0,0,0,.45))]"></div>
+    <div
+  class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.12),transparent_35%)] mix-blend-screen"
+></div>
 
-    <div class="
-      absolute inset-0
-      bg-[linear-gradient(to_right,rgba(0,0,0,.88),rgba(0,0,0,.45),rgba(0,0,0,.15))]
-    "></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,.88),rgba(0,0,0,.45),rgba(0,0,0,.15))]"></div>
 
-    <div class="
-      absolute inset-0
-      bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.12),transparent_35%)]
-    "></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.12),transparent_35%)]"></div>
 
     <!-- CONTENT -->
-    <div class="relative z-10 flex min-h-[480px] items-end p-7 md:min-h-[560px] md:p-14">
+    <div class="z-10 relative flex items-end p-7 md:p-14 min-h-[480px] md:min-h-[560px]">
 
-      <div class="max-w-3xl">
+      <div class="max-w-4xl">
 
-        <div class="
-          inline-flex
-          items-center
-          gap-2
-          rounded-full
-          border
-          border-white/10
-          bg-white/[0.05]
-          px-5
-          py-2
-          text-sm
-          text-white/75
-          backdrop-blur-xl
-        ">
+        <div class="inline-flex items-center gap-2 bg-white/[0.05] backdrop-blur-xl px-5 py-2 border border-white/10 rounded-full text-white/75 text-sm">
           ✨ Diagnóstico Inteligente AVYNA
         </div>
 
-        <h3 class="
-          mt-6
-          text-4xl
-          font-bold
-          leading-[0.95]
-          tracking-[-0.04em]
-          text-white
-          md:text-7xl
-        ">
+        <h3 class="mt-6 font-medium text-white text-4xl md:text-7xl leading-[0.95] tracking-[-0.04em]">
           ${hero.title}
         </h3>
 
-        <p class="
-          mt-6
-          max-w-2xl
-          text-base
-          leading-relaxed
-          text-white/72
-          md:text-xl
-        ">
+        <p class="mt-6 max-w-2xl text-white/72 text-base md:text-xl leading-relaxed">
           ${hero.subtitle}
         </p>
 
-        <p class="
-          mt-5
-          max-w-2xl
-          text-sm
-          leading-relaxed
-          text-white/48
-          md:text-base
-        ">
+        <p class="mt-5 max-w-2xl text-white/48 text-sm md:text-base leading-relaxed">
           ${report.summary}
         </p>
 
         <!-- QUICK TAGS -->
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 mt-8">
 
-          ${report.priorities.slice(0,3).map(x => `
-            <div class="
-              rounded-full
-              border
-              border-white/10
-              bg-white/[0.05]
-              px-4
-              py-2
-              text-sm
-              text-white/75
-              backdrop-blur-xl
-            ">
+          ${report.priorities
+            .slice(0, 3)
+            .map(
+              (x) => `
+            <div class="bg-white/[0.04] backdrop-blur-2xl backdrop-blur-xl px-4 py-2 border border-white/10 border-white/8 rounded-full text-white/75 text-sm">
               ${x}
             </div>
-          `).join("")}
+          `,
+            )
+            .join("")}
 
         </div>
 
@@ -1887,81 +1431,93 @@ function renderResults(){
 </div>
 
 <!-- SCORES -->
-<div class="mx-auto mt-8 max-w-5xl grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<div class="gap-4 grid sm:grid-cols-2 lg:grid-cols-4 mx-auto mt-8 max-w-5xl">
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-5 text-center">
-    <p class="text-xs text-white/35">Salud capilar</p>
+  <div class="bg-white/4 p-5 border border-white/10 rounded-3xl text-center">
+    <p class="text-white/35 text-xs">Salud capilar</p>
     <p class="mt-2 text-3xl font-bold ${scoreColor(report.health)}">
       ${report.health}%
     </p>
   </div>
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-5 text-center">
-    <p class="text-xs text-white/35">Daño</p>
-    <p class="mt-2 text-3xl font-bold ${scoreColor(report.damage,true)}">
+  <div class="bg-white/4 p-5 border border-white/10 rounded-3xl text-center">
+    <p class="text-white/35 text-xs">Daño</p>
+    <p class="mt-2 text-3xl font-bold ${scoreColor(report.damage, true)}">
       ${report.damage}%
     </p>
   </div>
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-5 text-center">
-    <p class="text-xs text-white/35">Hidratación</p>
+  <div class="bg-white/4 p-5 border border-white/10 rounded-3xl text-center">
+    <p class="text-white/35 text-xs">Hidratación</p>
     <p class="mt-2 text-3xl font-bold ${scoreColor(report.hydration)}">
       ${report.hydration}%
     </p>
   </div>
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-5 text-center">
-    <p class="text-xs text-white/35">Control frizz</p>
-    <p class="mt-2 text-3xl font-bold ${scoreColor(100-report.frizz)}">
-      ${100-report.frizz}%
+  <div class="bg-white/4 p-5 border border-white/10 rounded-3xl text-center">
+    <p class="text-white/35 text-xs">Control frizz</p>
+    <p class="mt-2 text-3xl font-bold ${scoreColor(100 - report.frizz)}">
+      ${100 - report.frizz}%
     </p>
   </div>
 
 </div>
 
 <!-- GRID -->
-<div class="mt-8 grid gap-6 lg:grid-cols-2">
+<div class="gap-6 grid lg:grid-cols-2 mt-8">
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-6">
-    <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+  <div class="bg-white/4 p-6 border border-white/10 rounded-3xl">
+    <p class="text-white/35 text-xs uppercase tracking-[0.35em]">
       Prioridades
     </p>
 
-    <div class="mt-5 space-y-3">
-      ${report.priorities.map(x => `
+    <div class="space-y-3 mt-5">
+      ${report.priorities
+        .map(
+          (x) => `
         <div class="text-white/75">• ${x}</div>
-      `).join("")}
+      `,
+        )
+        .join("")}
     </div>
   </div>
 
-  <div class="rounded-3xl border border-white/10 bg-white/4 p-6">
-    <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+  <div class="bg-white/4 p-6 border border-white/10 rounded-3xl">
+    <p class="text-white/35 text-xs uppercase tracking-[0.35em]">
       ¿Por qué estos productos?
     </p>
 
-    <div class="mt-5 space-y-3">
-      ${report.reasons.map(x => `
+    <div class="space-y-3 mt-5">
+      ${report.reasons
+        .map(
+          (x) => `
         <div class="text-white/75">• ${x}</div>
-      `).join("")}
+      `,
+        )
+        .join("")}
     </div>
   </div>
 
 </div>
 
 <!-- TIPS -->
-<div class="mt-6 rounded-3xl border border-white/10 bg-white/4 p-6">
+<div class="bg-white/4 mt-6 p-6 border border-white/10 rounded-3xl">
 
-  <p class="text-xs uppercase tracking-[0.35em] text-white/35">
+  <p class="text-white/35 text-xs uppercase tracking-[0.35em]">
     Recomendaciones clave
   </p>
 
-  <div class="mt-5 grid gap-4 md:grid-cols-3">
+  <div class="gap-4 grid md:grid-cols-3 mt-5">
 
-    ${report.tips.map(x => `
-      <div class="rounded-2xl bg-black/25 p-4 text-sm text-white/75">
+    ${report.tips
+      .map(
+        (x) => `
+      <div class="bg-black/25 p-4 rounded-2xl text-white/75 text-sm">
         ${x}
       </div>
-    `).join("")}
+    `,
+      )
+      .join("")}
 
   </div>
 
@@ -1969,63 +1525,59 @@ function renderResults(){
 
 <!-- PRODUCTS -->
 <div class="mt-14 text-center">
-  <h4 class="text-3xl font-semibold">
+  <h4 class="font-semibold text-3xl">
     Rutina recomendada
   </h4>
 </div>
 
-<div class="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+<div class="gap-6 grid sm:grid-cols-2 xl:grid-cols-4 mt-8">
 
-${grouped.map((group,i)=>{
+${grouped
+  .map((group, i) => {
+    const variants = group.items;
 
-  const variants = group.items;
+    let selected =
+      variants.find((v) => /500ml/i.test(v.name)) ||
+      variants.find((v) => /250ml/i.test(v.name)) ||
+      variants[0];
 
-  let selected =
-    variants.find(v => /500ml/i.test(v.name)) ||
-    variants.find(v => /250ml/i.test(v.name)) ||
-    variants[0];
+    return `
+<div class="overflow-hidden resultCard variantCard" data-card="${i}">
 
-  return `
-<div class="resultCard variantCard overflow-hidden" data-card="${i}">
-
-<div class="aspect-square bg-zinc-900 p-6">
+<div class="bg-zinc-900 p-6 aspect-square">
 <img
 src="${selected.image}"
-class="mainImg h-full w-full object-contain"
+class="w-full h-full object-contain mainImg"
 />
 </div>
 
 <div class="p-6">
 
-<p class="family text-[11px] uppercase tracking-[0.35em] text-white/35">
+<p class="text-[11px] text-white/35 uppercase tracking-[0.35em] family">
 ${selected.family}
 </p>
 
-<h4 class="mt-2 text-xl font-semibold">
+<h4 class="mt-2 font-normal tracking-[-0.04em]">
 ${group.base}
 </h4>
 
-<p class="desc mt-4 text-sm leading-relaxed text-white/55">
+<p class="mt-4 text-white/55 text-sm leading-relaxed desc">
 ${selected.description}
 </p>
 
-<p class="extra mt-3 text-xs text-emerald-300">
+<p class="mt-3 text-emerald-300 text-xs extra">
 ${selected.extra || ""}
 </p>
 
-<div class="mt-5 flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2 mt-5">
 
-${variants.map(v=>{
+${variants
+  .map((v) => {
+    const size = (v.name.match(/\d+(ml|g)/i) || ["Único"])[0];
 
-const size =
-(v.name.match(/\d+(ml|g)/i)||["Único"])[0];
+    const active = v.id === selected.id ? "variantActive" : "";
 
-const active =
-v.id === selected.id
-? "variantActive"
-: "";
-
-return `
+    return `
 <button
 class="variantBtn ${active}"
 data-parent="${i}"
@@ -2034,24 +1586,24 @@ data-id="${v.id}"
 ${size}
 </button>
 `;
-
-}).join("")}
+  })
+  .join("")}
 
 </div>
 </div>
 </div>
 `;
-
-}).join("")}
+  })
+  .join("")}
 
 </div>
 
 <!-- CTA -->
-<div class="mt-10 grid gap-4 md:grid-cols-2">
+<div class="gap-4 grid md:grid-cols-2 mt-10">
 
 <button
 id="restartBtn"
-class="h-14 rounded-2xl border border-white/10 transition hover:bg-white hover:text-black"
+class="hover:bg-white border border-white/10 rounded-2xl h-14 hover:text-black transition"
 >
 Hacer de nuevo
 </button>
@@ -2059,7 +1611,7 @@ Hacer de nuevo
 <a
 target="_blank"
 href="https://wa.me/528445069238"
-class="flex h-14 items-center justify-center rounded-2xl bg-white font-semibold text-black transition hover:scale-[1.02]"
+class="flex justify-center items-center bg-white rounded-2xl h-14 font-semibold text-black hover:scale-[1.02] transition"
 >
 Solicitar asesoría
 </a>
@@ -2067,9 +1619,9 @@ Solicitar asesoría
 </div>
 
 <!-- NOTE -->
-<div class="mx-auto mt-6 max-w-3xl rounded-3xl border border-white/10 bg-white/[0.035] px-5 py-4 text-center">
+<div class="bg-white/[0.035] mx-auto mt-6 px-5 py-4 border border-white/10 rounded-3xl max-w-3xl text-center">
 
-<p class="text-sm leading-relaxed text-white/48">
+<p class="text-white/48 text-sm leading-relaxed">
 Esta rutina fue seleccionada como una
 <span class="font-medium text-white/75">
 recomendación personalizada inicial
@@ -2080,49 +1632,37 @@ Un diagnóstico presencial en salón puede optimizar aún más tus resultados.
 </div>
 `;
 
-document.querySelectorAll(".variantBtn").forEach(btn=>{
+    document.querySelectorAll(".variantBtn").forEach((btn) => {
+      btn.onclick = () => {
+        const id = Number(btn.dataset.id);
+        const parent = btn.dataset.parent;
 
-btn.onclick = ()=>{
+        const product = products.find((x) => x.id === id);
 
-const id = Number(btn.dataset.id);
-const parent = btn.dataset.parent;
+        const card = document.querySelector('[data-card="' + parent + '"]');
 
-const product =
-products.find(x=>x.id===id);
+        card.querySelector(".mainImg").src = product.image;
 
-const card =
-document.querySelector('[data-card="'+parent+'"]');
+        card.querySelector(".family").innerHTML = product.family;
 
-card.querySelector(".mainImg").src =
-product.image;
+        card.querySelector(".desc").innerHTML = product.description;
 
-card.querySelector(".family").innerHTML =
-product.family;
+        card.querySelector(".extra").innerHTML = product.extra || "";
 
-card.querySelector(".desc").innerHTML =
-product.description;
+        card
+          .querySelectorAll(".variantBtn")
+          .forEach((x) => x.classList.remove("variantActive"));
 
-card.querySelector(".extra").innerHTML =
-product.extra || "";
+        btn.classList.add("variantActive");
+      };
+    });
 
-card.querySelectorAll(".variantBtn")
-.forEach(x=>x.classList.remove("variantActive"));
+    document.getElementById("restartBtn").onclick = () => {
+      step = 0;
+      answers = {};
+      render();
+    };
+  }
 
-btn.classList.add("variantActive");
-
-};
-
-});
-
-document.getElementById("restartBtn").onclick = ()=>{
-step = 0;
-answers = {};
-render();
-};
-
-
-
-}
-
-render();
+  render();
 </script>

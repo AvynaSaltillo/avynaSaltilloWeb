@@ -13,135 +13,117 @@ import Footer from "../../components/shared/Footer.astro";
 import GrowOnBoarding from "../../components/grow/GrowOnBoarding.astro";
 import GrowTestimonials from "../../components/grow/GrowTestimonials.astro";
 
-
 import {
   Sparkles,
   CreditCard,
   Package,
   MessageCircle,
-  ShieldCheck
+  ShieldCheck,
 } from "lucide-react";
-
 ---
 
 <Layout
   title="AVYNA Saltillo | Conviértete en socio AVYNA"
   description="Beneficios exclusivos para socios, salones y profesionales afiliados."
 >
+  <meta name="robots" content="noindex,nofollow" />
 
-<meta name="robots" content="noindex,nofollow" />
+  <!-- LOADER SIEMPRE -->
+  <div
+    id="gateLoader"
+    class="z-9999 fixed inset-0 flex justify-center items-center bg-black text-white"
+  >
+    <div class="text-center">
+      <div
+        class="flex justify-center items-center backdrop-blur-xl mx-auto mb-1 p-4 rounded-3xl w-90 h-25"
+      >
+        <img
+          src="/images/logo-avyna-white.png"
+          alt="AVYNA"
+          class="w-auto h-50 object-contain"
+        />
+      </div>
 
-<!-- LOADER SIEMPRE -->
-<div
-  id="gateLoader"
-  class="fixed inset-0 z-9999 flex items-center justify-center bg-black text-white"
->
-  <div class="text-center">
+      <div
+        class="mx-auto border-2 border-white/10 border-t-white rounded-full w-12 h-12 animate-spin"
+      >
+      </div>
 
-        <div class="mx-auto mb-1 flex h-25 w-90 items-center justify-center rounded-3xl p-4 backdrop-blur-xl">
-  <img
-    src="/images/logo-avyna-white.png"
-    alt="AVYNA"
-    class="h-50 w-auto object-contain"
-  />
-</div>
-
-    <div class="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-white"></div>
-
-    <p
-      id="loaderText"
-      class="mt-5 text-sm text-white/55"
-    >
-      Validando acceso...
-    </p>
-
+      <p id="loaderText" class="mt-5 text-white/55 text-sm">
+        Validando acceso...
+      </p>
+    </div>
   </div>
-</div>
 
-<!-- PAGE -->
-<div id="protectedPage" class="opacity-0 pointer-events-none">
+  <!-- PAGE -->
+  <div id="protectedPage" class="opacity-0 pointer-events-none">
+    <Navbar />
 
-  <Navbar />
+    <main class="bg-black overflow-hidden text-white">
+      <!-- HERO -->
+      <Hero />
 
-  <main class="overflow-hidden bg-black text-white">
+      <GrowOnBoarding />
 
-    <!-- HERO -->
-    <Hero />
+      <!-- CONTENT -->
+      <About />
 
-    <GrowOnBoarding />
+      <GrowTestimonials />
+      <CreditInfo />
+      <ClubPreferred />
 
-    <!-- CONTENT -->
-    <About />
+      <Experiences />
+    </main>
 
-    <GrowTestimonials />
-    <CreditInfo />
-    <ClubPreferred />
+    <Footer />
+  </div>
 
-    <Experiences />
+  <script is:inline>
+    const KEY = "avyna_grow_access";
+    const EXP = "avyna_grow_expire";
 
-  </main>
+    const loader = document.getElementById("gateLoader");
+    const loaderText = document.getElementById("loaderText");
+    const page = document.getElementById("protectedPage");
 
-  <Footer />
+    function redirectLogin() {
+      localStorage.removeItem(KEY);
+      localStorage.removeItem(EXP);
 
-</div>
+      loaderText.textContent = "Redirigiendo...";
 
-<script is:inline>
-const KEY = "avyna_grow_access";
-const EXP = "avyna_grow_expire";
+      setTimeout(() => {
+        window.location.pathname = "/grow/login";
+      }, 900);
+    }
 
-const loader = document.getElementById("gateLoader");
-const loaderText = document.getElementById("loaderText");
-const page = document.getElementById("protectedPage");
+    function showPage() {
+      loaderText.textContent = "Acceso válido";
 
-function redirectLogin() {
-  localStorage.removeItem(KEY);
-  localStorage.removeItem(EXP);
+      setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.transition = "opacity .35s ease";
 
-  loaderText.textContent = "Redirigiendo...";
+        page.classList.remove("opacity-0");
+        page.classList.remove("pointer-events-none");
+        page.classList.add("opacity-100");
 
-  setTimeout(() => {
-    window.location.pathname = "/grow/login";
-  }, 900);
-}
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 350);
+      }, 700);
+    }
 
-function showPage() {
-
-  loaderText.textContent = "Acceso válido";
-
-  setTimeout(() => {
-
-    loader.style.opacity = "0";
-    loader.style.transition = "opacity .35s ease";
-
-    page.classList.remove("opacity-0");
-    page.classList.remove("pointer-events-none");
-    page.classList.add("opacity-100");
+    /* VALIDAR */
+    const access = localStorage.getItem(KEY);
+    const expire = Number(localStorage.getItem(EXP) || 0);
 
     setTimeout(() => {
-      loader.style.display = "none";
-    }, 350);
-
-  }, 700);
-}
-
-/* VALIDAR */
-const access = localStorage.getItem(KEY);
-const expire = Number(
-  localStorage.getItem(EXP) || 0
-);
-
-setTimeout(() => {
-
-  if (
-    access !== "true" ||
-    Date.now() > expire
-  ) {
-    redirectLogin();
-  } else {
-    showPage();
-  }
-
-}, 900);
-</script>
-
+      if (access !== "true" || Date.now() > expire) {
+        redirectLogin();
+      } else {
+        showPage();
+      }
+    }, 900);
+  </script>
 </Layout>

@@ -7,58 +7,66 @@ import {
   GraduationCap,
   MapPin,
   CalendarDays,
-  Star
+  Star,
 } from "lucide-react";
 ---
 
-<section id="experiences" class="relative overflow-hidden bg-black px-6 py-24 text-white">
-
+<section
+  id="experiences"
+  class="relative bg-black px-6 py-15 overflow-hidden text-white"
+>
   <!-- BG -->
-  <div class="pointer-events-none absolute inset-0">
-    <div class="absolute top-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
+  <div class="absolute inset-0 pointer-events-none">
+    <div
+      class="top-0 right-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"
+    >
+    </div>
+    <div
+      class="bottom-0 left-0 absolute bg-white/5 blur-3xl rounded-full w-80 h-80"
+    >
+    </div>
   </div>
 
   <div class="relative mx-auto max-w-7xl">
-
     <!-- HEADER -->
     <div class="mx-auto mb-16 max-w-4xl text-center">
-
-      <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+      <div
+        class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl mb-5 px-4 py-2 border border-white/10 rounded-full text-sm"
+      >
         <Sparkles size={15} />
         Experiencias AVYNA
       </div>
 
-      <h2 class="text-4xl font-bold tracking-tight md:text-6xl">
+      <h2 class="font-medium text-4xl md:text-6xl tracking-tight">
         Eventos, viajes y crecimiento profesional
       </h2>
 
-      <p class="mt-6 text-lg leading-relaxed text-white/65">
-        Más que productos: formamos comunidad, reconocemos resultados
-        y creamos experiencias únicas para nuestros clientes.
+      <p class="mt-6 text-white/65 text-lg leading-relaxed">
+        Más que productos: formamos comunidad, reconocemos resultados y creamos
+        experiencias únicas para nuestros clientes.
       </p>
-
     </div>
 
     <!-- GRID -->
-    <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-
+    <div class="gap-7 grid md:grid-cols-2 xl:grid-cols-3">
       <!-- PLAYA -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+      <article
+        class="bg-white/5 hover:bg-white/10 hover:shadow-2xl backdrop-blur-xl p-8 border border-white/10 rounded-[2.5rem] transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white shadow-xl mb-6 rounded-2xl w-14 h-14 text-black"
+        >
           <Plane size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Viajes a la Playa
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Viajes a la Playa</h3>
 
-        <p class="mb-5 leading-relaxed text-white/65">
-          Incentivos exclusivos para clientes destacados
-          con experiencias inolvidables en destinos premium.
+        <p class="mb-5 text-white/65 leading-relaxed">
+          Incentivos exclusivos para clientes destacados con experiencias
+          inolvidables en destinos premium.
         </p>
 
-        <div class="space-y-2 text-sm text-white/70">
+        <div class="space-y-2 text-white/70 text-sm">
           <p>• Cancún</p>
           <p>• Punta de Mita</p>
           <p>• Puerto Vallarta</p>
@@ -67,21 +75,23 @@ import {
       </article>
 
       <!-- TOTAL LOOK -->
-      <article class="rounded-[2.5rem] bg-white p-8 text-black shadow-2xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,255,255,.08)]">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white shadow-xl">
+      <article
+        class="bg-white shadow-2xl hover:shadow-[0_25px_60px_rgba(255,255,255,.08)] p-8 rounded-[2.5rem] text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-black shadow-xl mb-6 rounded-2xl w-14 h-14 text-white"
+        >
           <Sparkles size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Total Look
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Total Look</h3>
 
-        <p class="mb-5 leading-relaxed text-zinc-600">
-          Eventos de imagen, tendencias y transformación profesional
-          en ciudades clave del país.
+        <p class="mb-5 text-zinc-600 leading-relaxed">
+          Eventos de imagen, tendencias y transformación profesional en ciudades
+          clave del país.
         </p>
 
-        <div class="space-y-2 text-sm text-zinc-700">
+        <div class="space-y-2 text-zinc-700 text-sm">
           <p>• Guadalajara</p>
           <p>• Monterrey</p>
           <p>• Lanzamientos y tendencias</p>
@@ -90,21 +100,23 @@ import {
       </article>
 
       <!-- LOCALES -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+      <article
+        class="bg-white/5 hover:bg-white/10 hover:shadow-2xl backdrop-blur-xl p-8 border border-white/10 rounded-[2.5rem] transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white shadow-xl mb-6 rounded-2xl w-14 h-14 text-black"
+        >
           <Heart size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Eventos Locales
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Eventos Locales</h3>
 
-        <p class="mb-5 leading-relaxed text-white/65">
-          Convivencias y experiencias especiales
-          pensadas para nuestra comunidad.
+        <p class="mb-5 text-white/65 leading-relaxed">
+          Convivencias y experiencias especiales pensadas para nuestra
+          comunidad.
         </p>
 
-        <div class="space-y-2 text-sm text-white/70">
+        <div class="space-y-2 text-white/70 text-sm">
           <p>• Posada AVYNA</p>
           <p>• 14 de Febrero</p>
           <p>• Una Noche Para Ti AVYNA</p>
@@ -113,21 +125,23 @@ import {
       </article>
 
       <!-- ONLINE -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+      <article
+        class="bg-white/5 hover:bg-white/10 hover:shadow-2xl backdrop-blur-xl p-8 border border-white/10 rounded-[2.5rem] transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white shadow-xl mb-6 rounded-2xl w-14 h-14 text-black"
+        >
           <GraduationCap size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Capacitaciones Online
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Capacitaciones Online</h3>
 
-        <p class="mb-5 leading-relaxed text-white/65">
-          Aprende desde cualquier lugar con sesiones digitales
-          enfocadas en ventas, técnica y producto.
+        <p class="mb-5 text-white/65 leading-relaxed">
+          Aprende desde cualquier lugar con sesiones digitales enfocadas en
+          ventas, técnica y producto.
         </p>
 
-        <div class="space-y-2 text-sm text-white/70">
+        <div class="space-y-2 text-white/70 text-sm">
           <p>• Zoom / Streaming</p>
           <p>• Técnicas actuales</p>
           <p>• Ventas inteligentes</p>
@@ -136,21 +150,22 @@ import {
       </article>
 
       <!-- PRESENCIAL -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-white/10 hover:shadow-2xl">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+      <article
+        class="bg-white/5 hover:bg-white/10 hover:shadow-2xl backdrop-blur-xl p-8 border border-white/10 rounded-[2.5rem] transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white shadow-xl mb-6 rounded-2xl w-14 h-14 text-black"
+        >
           <MapPin size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Capacitaciones Presenciales
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Capacitaciones Presenciales</h3>
 
-        <p class="mb-5 leading-relaxed text-white/65">
-          Formación práctica con demostraciones reales
-          y atención personalizada.
+        <p class="mb-5 text-white/65 leading-relaxed">
+          Formación práctica con demostraciones reales y atención personalizada.
         </p>
 
-        <div class="space-y-2 text-sm text-white/70">
+        <div class="space-y-2 text-white/70 text-sm">
           <p>• Saltillo</p>
           <p>• Monterrey</p>
           <p>• Técnicas en vivo</p>
@@ -159,30 +174,22 @@ import {
       </article>
 
       <!-- VIP -->
-      <article class="rounded-[2.5rem] border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 shadow-2xl backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(255,255,255,.06)]">
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+      <article
+        class="bg-linear-to-br from-white/10 to-white/5 shadow-2xl hover:shadow-[0_25px_60px_rgba(255,255,255,.06)] backdrop-blur-xl p-8 border border-white/10 rounded-[2.5rem] transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white shadow-xl mb-6 rounded-2xl w-14 h-14 text-black"
+        >
           <Star size={22} />
         </div>
 
-        <h3 class="mb-3 text-2xl font-bold">
-          Próximos Eventos VIP
-        </h3>
+        <h3 class="mb-3 font-medium text-2xl">Próximos Eventos VIP</h3>
 
-        <p class="mb-6 leading-relaxed text-white/65">
-          Mantente cerca de AVYNA para enterarte primero
-          de experiencias, lanzamientos y oportunidades exclusivas.
+        <p class="mb-6 text-white/65 leading-relaxed">
+          Mantente cerca de AVYNA para enterarte primero de experiencias,
+          lanzamientos y oportunidades exclusivas.
         </p>
-
-        <a
-          href="#contacto"
-          class="inline-flex h-12 items-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition duration-300 hover:scale-105"
-        >
-          <CalendarDays size={18} />
-          Quiero enterarme
-        </a>
       </article>
-
     </div>
-
   </div>
 </section>

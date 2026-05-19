@@ -60,15 +60,15 @@ const familyColors: Record<string, string> = {
 };
 ---
 
-<section class="bg-black px-4 py-28 text-white sm:px-6">
+<section class="bg-black px-4 sm:px-6 py-28 text-white">
 
   <div class="mx-auto max-w-7xl">
 
     <!-- TOP -->
     <div class="mb-10">
 
-      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
-        Catálogo Profesional
+      <h1 class="font-medium text-4xl sm:text-6xl tracking-tight">
+        Catálogo Profesional AVYNA
       </h1>
 
       <p class="mt-4 max-w-2xl text-white/60 text-lg">
@@ -76,14 +76,14 @@ const familyColors: Record<string, string> = {
         premium AVYNA.
       </p>
 
-      <div class="mt-6 inline-flex flex-wrap items-center gap-3">
+      <div class="inline-flex flex-wrap items-center gap-3 mt-6">
 
-  <div class="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300">
+  <div class="bg-emerald-400/20 px-4 py-2 border border-emerald-400/20 rounded-full font-semibold text-emerald-200 text-sm">
     Ganancia estimada del 30%
   </div>
 
-  <p class="text-sm text-white/45">
-    Calculada sobre precio público sugerido.
+  <p class="text-white/45 text-sm">
+    Calculada sobre precio público sugerido.*
   </p>
 
 </div>
@@ -91,32 +91,32 @@ const familyColors: Record<string, string> = {
     </div>
 
 <!-- SEARCH -->
-<div class="sticky top-18 z-30 mb-5">
+<div class="top-18 z-30 sticky mb-5">
 
-  <div class="rounded-3xl border border-white/10 bg-black/80 p-3 backdrop-blur-2xl">
+  <div class="bg-black/80 backdrop-blur-2xl p-3 border border-white/10 rounded-3xl">
 
-    <div class="grid gap-3 md:grid-cols-[1fr_auto]">
+    <div class="gap-3 grid md:grid-cols-[1fr_auto]">
 
       <!-- INPUT -->
       <div class="relative">
 
   <Search
     size={18}
-    className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white/35"
+    className="top-1/2 left-5 absolute text-white/35 -translate-y-1/2 pointer-events-none"
   />
 
   <input
     id="searchInput"
     type="text"
     placeholder="Buscar producto..."
-    class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 pl-14 pr-14 outline-none transition focus:border-white/30"
+    class="bg-white/5 pr-14 pl-14 border border-white/10 focus:border-white/30 rounded-2xl outline-none w-full h-14 transition"
   />
 
   <!-- BOTÓN LIMPIAR -->
   <button
     id="clearSearch"
     type="button"
-    class="absolute right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-white/5 text-white/50 transition hover:bg-white hover:text-black"
+    class="hidden top-1/2 right-3 absolute justify-center items-center bg-white/5 hover:bg-white rounded-xl w-9 h-9 text-white/50 hover:text-black transition -translate-y-1/2"
     aria-label="Limpiar búsqueda"
   >
     ✕
@@ -128,7 +128,7 @@ const familyColors: Record<string, string> = {
       <a
         href="/catalogos/catalogo_avyna_2025.pdf"
         download
-        class="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-white px-6 font-semibold text-black transition hover:scale-[1.02]"
+        class="inline-flex justify-center items-center gap-2 bg-white px-6 rounded-2xl h-14 font-semibold text-black hover:scale-[1.02] transition"
       >
         <Download size={18} />
         Descargar catálogo
@@ -141,18 +141,18 @@ const familyColors: Record<string, string> = {
 </div>
 
         <!-- DEBAJO DEL BLOQUE DEL BUSCADOR -->
-<div class="mt-4 mb-6 flex flex-wrap items-center gap-3 px-1">
+<div class="flex flex-wrap items-center gap-3 mt-4 mb-6 px-1">
 
   <div
     id="searchResults"
-    class="text-sm font-medium tracking-wide text-white/55 transition-all duration-300"
+    class="font-medium text-[16px] text-white/55 tracking-wide transition-all duration-300"
   >
     Mostrando catálogo completo
   </div>
 
   <div
     id="searchFamilies"
-    class="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-white/40"
+    class="bg-white/5 px-4 py-1.5 border border-white/10 rounded-full font-semibold text-white/40 text-xs uppercase tracking-[0.22em]"
   >
     Todas las líneas
   </div>
@@ -169,7 +169,7 @@ const familyColors: Record<string, string> = {
 
         return (
           <div
-  class="rounded-4xl border overflow-hidden"
+  class="border rounded-4xl overflow-hidden"
   style={`border-color:${color}30;background:linear-gradient(180deg,${color}08,rgba(255,255,255,.02));`}
 >
 
@@ -184,7 +184,7 @@ const familyColors: Record<string, string> = {
               <div class="flex items-center gap-4">
 
                 <div
-  class="flex h-12 w-12 items-center justify-center rounded-2xl text-black shadow-xl"
+  class="flex justify-center items-center shadow-xl rounded-2xl w-12 h-12 text-black"
   style={`background:${color};`}
 >
   <Icon size={20} />
@@ -192,20 +192,20 @@ const familyColors: Record<string, string> = {
 
                 <div>
                   <h2
-  class="text-xl font-bold sm:text-2xl"
+  class="font-semibold text-xl sm:text-2xl"
   style={`color:${color};`}
 >
   {family}
 </h2>
 
-                  <p class="text-sm text-white/45">
+                  <p class="text-white/45 text-sm">
                     {items.length} productos disponibles
                   </p>
                 </div>
 
               </div>
 
-              <div class="toggle-icon text-white/55">
+              <div class="text-white/55 toggle-icon">
                 {i === 0 ? <ChevronUp size={22} /> : <ChevronDown size={22} />}
               </div>
 
@@ -217,11 +217,11 @@ const familyColors: Record<string, string> = {
               class={`${i === 0 ? "block" : "hidden"} px-4 pb-5 sm:px-6`}
             >
 
-              <div class="grid grid-cols-2 gap-3 pt-2 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+              <div class="gap-3 sm:gap-6 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-2">
 
                 {items.map((item) => (
                   <article
-  class="product-card group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+  class="group flex flex-col hover:shadow-2xl border rounded-3xl h-full overflow-hidden transition hover:-translate-y-1 duration-300 cursor-pointer product-card"
   style={`border-color:${color}25;background:linear-gradient(145deg,rgba(255,255,255,.04),${color}10);`}
   data-name={item.name}
   data-family={item.family}
@@ -235,7 +235,7 @@ const familyColors: Record<string, string> = {
 >
 
   <!-- IMG -->
-  <div class="relative aspect-square overflow-hidden bg-linear-to-br from-zinc-900 via-black to-zinc-900">
+  <div class="relative bg-linear-to-br from-zinc-900 via-black to-zinc-900 aspect-square overflow-hidden">
 
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_55%)]"></div>
 
@@ -243,11 +243,11 @@ const familyColors: Record<string, string> = {
       src={item.image}
       alt={item.name}
       loading="lazy"
-      class="relative z-10 mx-auto mt-6 h-[72%] w-auto object-contain drop-shadow-[0_30px_35px_rgba(0,0,0,.6)] transition duration-700 group-hover:scale-110 group-hover:-translate-y-2"
+      class="z-10 relative drop-shadow-[0_30px_35px_rgba(0,0,0,.6)] mx-auto mt-6 w-auto h-[72%] object-contain group-hover:scale-110 transition group-hover:-translate-y-2 duration-700"
     />
 
     {item.tag && (
-      <span class="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black shadow-xl sm:text-xs">
+      <span class="top-3 left-3 absolute bg-white shadow-xl px-3 py-1 rounded-full font-semibold text-[10px] text-black sm:text-xs">
         {item.tag}
       </span>
     )}
@@ -256,41 +256,41 @@ const familyColors: Record<string, string> = {
 
   <!-- BODY -->
 
-<div class="flex flex-1 flex-col p-4 sm:p-6">
+<div class="flex flex-col flex-1 p-4 sm:p-6">
 
-  <p class="mb-2 text-[10px] uppercase tracking-[0.25em] text-white/30 sm:text-[11px]">
+  <p class="mb-2 text-[10px] text-white/30 sm:text-[11px] uppercase tracking-[0.25em]">
     {item.type}
   </p>
 
-  <h3 class="line-clamp-2 min-h-12 text-sm font-semibold leading-snug sm:min-h-14 sm:text-xl">
+  <h3 class="min-h-12 sm:min-h-14 font-medium text-sm sm:text-xl line-clamp-2 leading-snug">
     {item.name}
   </h3>
 
 <div
-  class="rounded-2xl border p-3"
+  class="p-3 border rounded-2xl"
   style={`border-color:${color}25;background:${color}10;`}
 >
 
   {item.pricePublic > 0 ? (
-    <p class="text-xs text-white/40 line-through">
+    <p class="text-white/40 text-xs line-through">
       Precio Público ${item.pricePublic}
     </p>
   ) : (
-    <p class="text-xs text-white/30">
+    <p class="text-white/30 text-xs">
       Uso Profesional
     </p>
   )}
 
-  <p class="mt-1 text-xl font-bold">
+  <p class="mt-1 font-bold text-xl">
     ${item.priceSalon || 0}
   </p>
 
-  <p class="text-[11px] uppercase text-white/40">
+  <p class="text-[11px] text-white/40 uppercase">
     Precio Salón
   </p>
 
   <p
-    class="mt-2 text-xs font-medium"
+    class="mt-2 font-medium text-xs"
     style={`color:${color};`}
   >
     Ganancia ${item.saving || 0}
@@ -302,7 +302,7 @@ const familyColors: Record<string, string> = {
   <div class="mt-auto pt-4">
 
     <button
-  class="h-11 w-full rounded-2xl font-semibold text-black transition hover:scale-[1.02]"
+  class="rounded-2xl w-full h-11 font-semibold text-black hover:scale-[1.02] transition"
   style={`background:${color};`}
 >
   Ver detalles
@@ -329,16 +329,16 @@ const familyColors: Record<string, string> = {
 
 <div
   id="productModal"
-  class="fixed inset-0 z-999 hidden items-center justify-center bg-black/80 p-3 backdrop-blur-md"
+  class="hidden z-999 fixed inset-0 justify-center items-center bg-black/80 backdrop-blur-md p-3"
 >
 
   <div
-    class="relative my-auto w-full max-w-xl overflow-hidden rounded-4xl border border-white/10 bg-black text-white shadow-2xl"
+    class="relative bg-black shadow-2xl my-auto border border-white/10 rounded-4xl w-full max-w-xl overflow-hidden text-white"
   >
 
     <button
       id="closeModal"
-      class="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-xl transition hover:bg-white hover:text-black"
+      class="top-4 right-4 z-20 absolute flex justify-center items-center bg-white/10 hover:bg-white rounded-full w-11 h-11 hover:text-black text-xl transition"
     >
       ✕
     </button>
@@ -348,7 +348,7 @@ const familyColors: Record<string, string> = {
         id="modalImage"
         src=""
         alt=""
-        class="h-72 w-full object-contain"
+        class="w-full h-72 object-contain"
       />
     </div>
 
@@ -356,12 +356,12 @@ const familyColors: Record<string, string> = {
 
       <p
         id="modalFamily"
-        class="text-xs uppercase tracking-[0.25em] text-white/35"
+        class="text-white/35 text-xs uppercase tracking-[0.25em]"
       ></p>
 
       <h3
         id="modalTitle"
-        class="mt-2 text-3xl font-bold"
+        class="mt-2 font-semibold text-3xl"
       ></h3>
 
       <p
@@ -371,36 +371,36 @@ const familyColors: Record<string, string> = {
 
       <p
         id="modalDesc"
-        class="mt-5 text-sm leading-relaxed text-white/75"
+        class="mt-5 text-white/75 text-sm leading-relaxed"
       ></p>
 
       <p
         id="modalExtra"
-        class="mt-3 text-sm leading-relaxed text-white/45"
+        class="mt-3 text-white/45 text-sm leading-relaxed"
       ></p>
 
-      <div class="mt-6 grid grid-cols-3 gap-3">
+      <div class="gap-3 grid grid-cols-3 mt-6">
 
-<div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-  <p class="text-xs text-white/40">Público</p>
+<div class="bg-white/5 p-3 border border-white/10 rounded-2xl text-center">
+  <p class="text-white/40 text-xs">Público</p>
 
   <p id="pricePublic" class="mt-1 font-semibold"></p>
 
   <p
     id="noPublicPrice"
-    class="mt-1 hidden text-xs text-white/35"
+    class="hidden mt-1 text-white/35 text-xs"
   >
     Profesional
   </p>
 </div>
 
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-          <p class="text-xs text-white/40">Salón</p>
+        <div class="bg-white/5 p-3 border border-white/10 rounded-2xl text-center">
+          <p class="text-white/40 text-xs">Salón</p>
           <p id="priceSalon" class="mt-1 font-semibold text-emerald-400"></p>
         </div>
 
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-          <p class="text-xs text-white/40">Ganancia</p>
+        <div class="bg-white/5 p-3 border border-white/10 rounded-2xl text-center">
+          <p class="text-white/40 text-xs">Ganancia</p>
           <p id="priceSaving" class="mt-1 font-semibold"></p>
         </div>
 

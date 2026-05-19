@@ -42,112 +42,135 @@ const {
   >
   </div>
 
-  <div class="absolute inset-0 backdrop-blur-[1px]"></div>
-
   <!-- MAIN CARD -->
   <div
-    class="relative bg-black/80 hover:bg-black/88 shadow-[0_30px_100px_rgba(0,0,0,.6)] backdrop-blur-3xl border border-white/10 hover:border-white/15 rounded-[2rem] overflow-hidden transition-all duration-500"
+    class="group relative bg-black/85 hover:bg-black/90 shadow-[0_30px_100px_rgba(0,0,0,.65)] backdrop-blur-3xl border border-white/10 hover:border-white/15 rounded-[2.2rem] overflow-hidden transition-all duration-500"
   >
     <!-- IMAGE -->
-    <div class="relative h-[260px] overflow-hidden">
+    <div class="relative h-[360px] overflow-hidden">
       <img
         id="promoImage"
         src={items[0]?.image}
         alt=""
-        class="w-full h-full object-cover scale-[1] hover:scale-[1.04] transition-all duration-700 ease-out"
+        class="w-full h-full object-cover group-hover:scale-[1.025] transition-transform duration-700 ease-out"
       />
 
-      <!-- DARK -->
+      <!-- DARK OVERLAY -->
       <div
-        class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.96),rgba(0,0,0,.38))]"
+        class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.96),rgba(0,0,0,.62),rgba(0,0,0,.18))]"
       >
       </div>
 
-      <!-- TOP GLOW -->
+      <!-- TOP LEFT DARK -->
       <div
-        class="top-0 absolute inset-x-0 bg-gradient-to-b from-black/60 to-transparent h-24"
+        class="z-10 absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,.78),transparent_55%)]"
       >
       </div>
 
-      <!-- CLOSE -->
-      <button
-        id="promoClose"
-        type="button"
-        aria-label="Cerrar popup"
-        class="top-4 right-4 z-50 absolute flex justify-center items-center bg-black/55 hover:bg-white backdrop-blur-xl border border-white/10 hover:border-white/20 rounded-full w-10 h-10 text-white/80 hover:text-black transition-all duration-300"
+      <!-- CINEMATIC GLOW -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(177,45,11,.18),transparent_60%)] blur-2xl"
       >
-        ✕
-      </button>
+      </div>
 
-      <!-- CONTENT -->
-      <div class="bottom-0 absolute inset-x-0 px-5 pt-16 pb-5">
-        <!-- BADGES -->
-        <div class="flex items-center gap-2">
-          <div
-            id="promoBadge"
-            class="inline-flex items-center items-start gap-2 bg-white/[0.05] backdrop-blur-xl px-3 py-1.5 border border-white/10 rounded-full font-medium text-[10px] text-white/60 uppercase tracking-[0.24em]"
-          >
-            AVYNA FEATURED
-          </div>
+      <!-- TOP FADE -->
+      <div
+        class="top-0 absolute inset-x-0 bg-gradient-to-b from-black/75 to-transparent h-32"
+      >
+      </div>
+    </div>
 
-          <div
-            id="promoStatus"
-            class="inline-flex items-center gap-2 text-[11px] text-white/28"
-          >
-            <span
-              class="bg-[#B12D0B]/80 shadow-[0_0_14px_rgba(177,45,11,.9)] rounded-full w-2 h-2"
-            ></span>
+    <!-- CLOSE -->
+    <button
+      id="promoClose"
+      type="button"
+      aria-label="Cerrar popup"
+      class="top-4 right-4 z-50 absolute flex justify-center items-center bg-black/55 hover:bg-white backdrop-blur-xl border border-white/10 hover:border-white/20 rounded-full w-11 h-11 text-white/80 hover:text-black transition-all duration-300"
+    >
+      ✕
+    </button>
 
-            Trending
-          </div>
+    <!-- CONTENT -->
+    <div class="z-20 absolute inset-0 flex flex-col justify-between p-5">
+      <!-- TOP -->
+      <div class="flex items-center gap-3">
+        <!-- BADGE -->
+        <div
+          id="promoBadge"
+          class="inline-flex items-center gap-2 bg-black/35 backdrop-blur-xl px-2.5 py-1 border border-white/10 rounded-full font-semibold text-[10px] text-white/60 uppercase tracking-[0.16em]"
+        >
+          AVYNA FEATURED
         </div>
 
+        <!-- STATUS -->
+        <div
+          id="promoStatus"
+          class="hidden sm:flex items-center gap-1.5 text-[10px] text-white/38 uppercase tracking-[0.14em]"
+        >
+          <span
+            class="bg-[#B12D0B] shadow-[0_0_12px_rgba(177,45,11,.9)] rounded-full w-1.5 h-1.5"
+          ></span>
+
+          Trending
+        </div>
+      </div>
+
+      <!-- BOTTOM -->
+      <div>
         <!-- TITLE -->
         <h3
           id="promoTitle"
-          class="mt-4 max-w-[85%] text-[1.65rem] text-white sm:text-[1.8rem] leading-[0.98] tracking-[-0.05em]"
+          class="mt-16 max-w-[92%] text-[1.55rem] text-white sm:text-[2.2rem] leading-[0.9] tracking-[-0.07em]"
           style="
-            font-family:
-              'Clash Display',
-              'Satoshi',
-              sans-serif;
-          "
+          font-family:
+            'Clash Display',
+            'Satoshi',
+            sans-serif;
+        "
         >
           {items[0]?.title}
         </h3>
 
+        <!-- ACCENT -->
+        <div class="bg-[#B12D0B] mt-3 rounded-full w-12 h-[2px]"></div>
+
         <!-- SUBTITLE -->
         <p
           id="promoSubtitle"
-          class="mt-3 max-w-[95%] text-white/55 text-sm leading-[1.7]"
+          class="mt-2 max-w-[92%] text-[1rem] text-white/58 leading-[1.15]"
           style="
-            font-family:
-              'Plus Jakarta Sans',
-              sans-serif;
-          "
+          font-family:
+            'Satoshi',
+            'Plus Jakarta Sans',
+            sans-serif;
+        "
         >
           {items[0]?.subtitle}
         </p>
-      </div>
-    </div>
 
-    <!-- CTA -->
-    <div class="p-4 pt-3">
-      <a
-        id="promoButton"
-        href={items[0]?.buttonHref}
-        class="group flex justify-between items-center bg-white/[0.025] hover:bg-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,.04)] backdrop-blur-xl px-5 border border-white/10 hover:border-white/20 rounded-2xl h-12 font-medium text-white text-sm transition-all duration-300"
-      >
-        <span>
-          {items[0]?.buttonText}
-        </span>
-
-        <span
-          class="transition-transform group-hover:translate-x-1 duration-300"
+        <!-- CTA -->
+        <a
+          id="promoButton"
+          href={items[0]?.buttonHref}
+          class="group/button relative flex justify-between items-center bg-white/[0.03] hover:bg-white/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,.04)] backdrop-blur-xl mt-3 px-5 border border-white/10 hover:border-white/20 rounded-[1.4rem] h-14 overflow-hidden font-medium text-white text-sm transition-all duration-300"
         >
-          →
-        </span>
-      </a>
+          <!-- SHINE -->
+          <div
+            class="absolute inset-0 bg-[linear-gradient(120deg,transparent,rgba(255,255,255,.05),transparent)] opacity-0 group-hover/button:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+
+          <span class="z-10 relative">
+            {items[0]?.buttonText}
+          </span>
+
+          <span
+            class="z-10 relative transition-transform group-hover/button:translate-x-1 duration-300"
+          >
+            →
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -204,7 +227,7 @@ const {
 
     status.innerHTML = `
     <span
-      class="bg-[#B12D0B] shadow-[0_0_14px_rgba(177,45,11,.9)] rounded-full w-2 h-2"
+      class="bg-[#B12D0B] shadow-[0_0_12px_rgba(177,45,11,.9)] rounded-full w-1.5 h-1.5"
     ></span>
 
     ${item.status || "Trending"}

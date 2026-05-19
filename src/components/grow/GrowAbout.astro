@@ -7,165 +7,170 @@ import {
   MapPin,
   Scissors,
   BadgeCheck,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 ---
 
-<section id="nosotros" class="bg-black px-6 py-24 text-white">
+<section id="nosotros" class="bg-black px-6 py-15 text-white">
   <div class="mx-auto max-w-7xl">
-
     <!-- TOP -->
-    <div class="mb-18 grid items-center gap-14 lg:grid-cols-2">
-
+    <div class="items-center gap-14 grid lg:grid-cols-2 mb-18">
       <!-- LEFT -->
       <div>
-
-        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+        <div
+          class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl mb-4 px-4 py-2 border border-white/10 rounded-full text-sm"
+        >
           <TrendingUp size={16} className="shrink-0" />
           Sobre AVYNA Grow
         </div>
 
-        <h2 class="max-w-3xl text-4xl font-bold tracking-tight leading-tight md:text-6xl">
-          Impulsamos negocios de belleza con estructura real
+        <h2 class="max-w-3xl font-medium text-4xl md:text-6xl tracking-tight">
+          Impulsamos
+          <p class="block">negocios</p>
+          <p class="block">de belleza con estructura real</p>
         </h2>
-
       </div>
 
       <!-- RIGHT -->
       <div>
-
-        <p class="text-lg leading-relaxed text-white/65">
-          AVYNA Grow es la oportunidad comercial para salones,
-          estilistas y negocios que desean trabajar una marca premium
-          con acompañamiento cercano en Saltillo, Coahuila.
+        <p class="text-white/65 text-lg leading-relaxed">
+          AVYNA Grow es la oportunidad comercial para salones, estilistas y
+          negocios que desean trabajar una marca premium con acompañamiento
+          cercano en Saltillo, Coahuila.
         </p>
 
-        <p class="mt-5 text-lg leading-relaxed text-white/65">
+        <p class="mt-5 text-white/65 text-lg leading-relaxed">
           No buscamos vender por vender. Priorizamos relaciones sanas,
           crecimiento progresivo y clientes que quieran construir algo sólido.
         </p>
 
-        <p class="mt-5 text-lg leading-relaxed text-white/65">
-          Nuestro enfoque combina atención humana, respuesta rápida
-          y herramientas para ayudarte a crecer con orden.
+        <p class="mt-5 text-white/65 text-lg leading-relaxed">
+          Nuestro enfoque combina atención humana, respuesta rápida y
+          herramientas para ayudarte a crecer con orden.
         </p>
-
       </div>
-
     </div>
 
     <!-- GRID -->
-    <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-
+    <div class="gap-7 grid md:grid-cols-2 xl:grid-cols-3">
       <!-- CARD -->
-      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group bg-white/5 hover:bg-white p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <MapPin size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Cobertura Local
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Cobertura Local</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Atención enfocada en Saltillo, Coahuila,
-          con seguimiento directo y entregas ágiles.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Atención enfocada en Saltillo, Coahuila, con seguimiento directo y
+          entregas ágiles.
         </p>
-
       </div>
 
       <!-- CARD -->
-      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group bg-white/5 hover:bg-white p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <Scissors size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Perfil Profesional
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Perfil Profesional</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Ideal para salones, estilistas, barberías
-          y negocios enfocados en imagen.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Ideal para salones, estilistas, barberías y negocios enfocados en
+          imagen.
         </p>
-
       </div>
 
       <!-- CARD -->
-      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group bg-white/5 hover:bg-white p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <Users size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Atención Cercana
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Atención Cercana</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Recomendaciones según tu negocio,
-          nivel de compra y tipo de cliente.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Recomendaciones según tu negocio, nivel de compra y tipo de cliente.
         </p>
-
       </div>
 
       <!-- CARD -->
-      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group bg-white/5 hover:bg-white p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <ShieldCheck size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Operación Formal
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Operación Formal</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Pedidos ordenados, seguimiento claro
-          y crecimiento comercial responsable.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Pedidos ordenados, seguimiento claro y crecimiento comercial
+          responsable.
         </p>
-
       </div>
 
       <!-- CARD -->
-      <div class="group rounded-4xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group bg-white/5 hover:bg-white p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <BadgeCheck size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Venta Inteligente
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Venta Inteligente</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Impulsamos recompra, recomendación
-          y relaciones duraderas con clientes.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Impulsamos recompra, recomendación y relaciones duraderas con
+          clientes.
         </p>
-
       </div>
 
       <!-- CARD PREMIUM -->
-      <div class="group rounded-4xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black">
-
-        <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black transition group-hover:bg-black group-hover:text-white">
+      <div
+        class="group hover:bg-white bg-linear-to-br from-white/10 to-white/5 p-8 border border-white/10 rounded-4xl hover:text-black transition hover:-translate-y-1 duration-300"
+      >
+        <div
+          class="flex justify-center items-center bg-white group-hover:bg-black mb-6 rounded-2xl w-14 h-14 text-black group-hover:text-white transition"
+        >
           <Sparkles size={22} />
         </div>
 
-        <h3 class="mb-3 text-xl font-semibold">
-          Escalable Contigo
-        </h3>
+        <h3 class="mb-2 font-normal text-xl">Escalable Contigo</h3>
 
-        <p class="leading-relaxed text-white/65 transition group-hover:text-black/70">
-          Desde tus primeras compras hasta niveles superiores,
-          AVYNA Grow evoluciona contigo.
+        <p
+          class="text-white/65 group-hover:text-black/70 leading-relaxed transition"
+        >
+          Desde tus primeras compras hasta niveles superiores, AVYNA Grow
+          evoluciona contigo.
         </p>
-
       </div>
-
     </div>
-
   </div>
 </section>

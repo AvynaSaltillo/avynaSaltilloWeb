@@ -23,30 +23,30 @@ const families = [
 
 <section
   id="catalogo"
-  class="min-h-screen overflow-hidden bg-black px-4 pb-24 pt-30 text-white sm:px-6 md:pt-36"
+  class="bg-black px-4 sm:px-6 pt-30 md:pt-36 pb-24 min-h-screen overflow-hidden text-white"
 >
 
   <div class="mx-auto max-w-7xl">
 
     <!-- HERO -->
-    <div class="mb-14 grid items-center gap-14 lg:grid-cols-2 lg:gap-24">
+    <div class="items-center gap-14 lg:gap-24 grid lg:grid-cols-2 mb-14">
 
       <!-- LEFT -->
       <div>
 
-        <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-5 py-2 text-sm backdrop-blur-xl">
+        <div class="inline-flex items-center gap-2 bg-white/4 backdrop-blur-xl mb-7 px-5 py-2 border border-white/10 rounded-full text-sm">
           <Sparkles size={15} className="shrink-0" />
           Catálogo Profesional
         </div>
 
-        <h1 class="max-w-3xl text-5xl font-bold leading-[0.88] tracking-[-0.04em] sm:text-6xl md:text-8xl">
+        <h1 class="max-w-3xl font-medium text-4xl sm:text-5xl md:text-6xl leading-[0.88] tracking-[-0.04em]">
           Línea completa
           <span class="block text-zinc-500">
             AVYNA
           </span>
         </h1>
 
-        <p class="mt-7 max-w-xl text-base leading-relaxed text-white/60 md:text-lg">
+        <p class="mt-7 max-w-xl text-white/60 text-base md:text-lg leading-relaxed">
           Productos italianos profesionales para salón,
           tratamientos premium y líneas especializadas
           para transformar la apariencia del cabello.
@@ -64,12 +64,12 @@ const families = [
             id="searchInput"
             type="text"
             placeholder="Buscar producto..."
-            class="h-16 w-full rounded-full border border-white/[0.08] bg-white/3 pl-14 pr-6 outline-none transition placeholder:text-white/30 focus:border-white/20"
+            class="bg-white/3 pr-6 pl-14 border border-white/[0.08] focus:border-white/20 rounded-full outline-none w-full h-16 placeholder:text-white/30 transition"
           />
 
           <Search
             size={18}
-            className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white/35"
+            className="top-1/2 left-5 absolute text-white/35 -translate-y-1/2 pointer-events-none"
           />
 
         </div>
@@ -78,7 +78,7 @@ const families = [
         <a
           href="/catalogos/catalogo_avyna_2025.pdf"
           download
-          class="flex h-14 items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-white/3 font-medium transition hover:bg-white hover:text-black"
+          class="flex justify-center items-center gap-2 bg-white/3 hover:bg-white border border-white/[0.08] rounded-full h-14 font-medium hover:text-black transition"
         >
           <Download size={16} />
           Descargar catálogo PDF
@@ -89,11 +89,11 @@ const families = [
     </div>
 
     <!-- FILTERS -->
-    <div class="sticky top-18 z-20 mb-12">
+    <div class="top-18 z-20 sticky mb-12">
 
-      <div class="overflow-x-auto rounded-full border border-white/[0.08] bg-white/3 p-3 backdrop-blur-xl no-scrollbar">
+      <div class="bg-white/3 backdrop-blur-xl p-3 border border-white/[0.08] rounded-full overflow-x-auto no-scrollbar">
 
-        <div class="flex min-w-max gap-3">
+        <div class="flex gap-3 min-w-max">
 
           {families.map((family, i) => (
             <button
@@ -117,37 +117,37 @@ const families = [
     <!-- GRID -->
     <div
       id="catalogGrid"
-      class="grid grid-cols-2 gap-4 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4"
+      class="gap-4 sm:gap-8 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
 
       {products.map((item) => (
 
         <article
-          class="product-card group relative cursor-pointer overflow-hidden rounded-4xl border border-white/[0.06] bg-white/[0.025] transition duration-500 hover:-translate-y-1 hover:border-white/12 hover:bg-white/[0.045]"
+          class="group relative bg-white/[0.025] hover:bg-white/[0.045] border border-white/[0.06] hover:border-white/12 rounded-4xl overflow-hidden transition hover:-translate-y-1 duration-500 cursor-pointer product-card"
           data-family={item.family}
           data-name={item.name.toLowerCase()}
           data-product={JSON.stringify(item)}
         >
 
           <!-- IMAGE -->
-          <div class="relative aspect-square overflow-hidden bg-linear-to-br from-[#111111] via-black to-black">
+          <div class="relative bg-linear-to-br from-[#111111] via-black to-black aspect-square overflow-hidden">
 
             <!-- soft glow -->
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_55%)]"></div>
 
-            <div class="absolute left-1/2 top-[46%] h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/6 blur-3xl sm:h-48 sm:w-48"></div>
+            <div class="top-[46%] left-1/2 absolute bg-white/6 blur-3xl rounded-full w-32 sm:w-48 h-32 sm:h-48 -translate-x-1/2 -translate-y-1/2"></div>
 
-            <div class="absolute bottom-5 left-1/2 h-5 w-24 -translate-x-1/2 rounded-full bg-black/70 blur-xl sm:w-32"></div>
+            <div class="bottom-5 left-1/2 absolute bg-black/70 blur-xl rounded-full w-24 sm:w-32 h-5 -translate-x-1/2"></div>
 
             <img
               src={item.image}
               alt={item.name}
               loading="lazy"
-              class="relative z-10 mx-auto mt-6 h-[78%] w-auto object-contain drop-shadow-[0_30px_35px_rgba(0,0,0,.55)] transition duration-700 group-hover:-translate-y-1 group-hover:scale-105"
+              class="z-10 relative drop-shadow-[0_30px_35px_rgba(0,0,0,.55)] mx-auto mt-6 w-auto h-[78%] object-contain group-hover:scale-105 transition group-hover:-translate-y-1 duration-700"
             />
 
             {item.tag && (
-              <span class="absolute left-3 top-3 z-20 rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black shadow-xl sm:text-xs">
+              <span class="top-3 left-3 z-20 absolute bg-white shadow-xl px-3 py-1 rounded-full font-semibold text-[10px] text-black sm:text-xs">
                 {item.tag}
               </span>
             )}
@@ -157,20 +157,20 @@ const families = [
           <!-- CONTENT -->
           <div class="p-4 sm:p-6">
 
-            <p class="mb-2 text-[10px] uppercase tracking-[0.25em] text-white/30 sm:text-[11px]">
+            <p class="mb-2 text-[10px] text-white/30 sm:text-[11px] uppercase tracking-[0.25em]">
               {item.family}
             </p>
 
-            <h3 class="line-clamp-2 text-sm font-semibold leading-snug sm:text-xl">
+            <h3 class="font-medium text-sm sm:text-xl line-clamp-2 leading-tight">
               {item.name}
             </h3>
 
-            <p class="mt-1 line-clamp-1 text-xs text-white/45 sm:text-sm">
+            <p class="mt-1 text-white/45 text-xs sm:text-sm line-clamp-1">
               {item.type}
             </p>
 
             <button
-              class="mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-medium text-black transition hover:scale-[1.02] sm:mt-6 sm:h-11"
+              class="flex justify-center items-center gap-2 bg-white mt-5 sm:mt-6 rounded-full w-full h-10 sm:h-11 font-medium text-black text-sm hover:scale-[1.02] transition"
             >
               Ver producto
               <ArrowUpRight size={15} />
@@ -189,18 +189,18 @@ const families = [
   <!-- MODAL -->
   <div
     id="productModal"
-    class="fixed inset-0 z-999 hidden items-end justify-center overflow-y-auto bg-black/75 p-2 backdrop-blur-md sm:p-4 md:items-center"
+    class="hidden z-999 fixed inset-0 justify-center items-end md:items-center bg-black/75 backdrop-blur-md p-2 sm:p-4 overflow-y-auto"
   >
 
     <div
       id="modalBox"
-      class="relative flex max-h-[92vh] w-full max-w-md flex-col overflow-hidden rounded-[2.5rem] border border-white/[0.08] bg-black text-white shadow-2xl"
+      class="relative flex flex-col bg-black shadow-2xl border border-white/[0.08] rounded-[2.5rem] w-full max-w-md max-h-[92vh] overflow-hidden text-white"
     >
 
       <div class="overflow-y-auto">
 
         <!-- IMAGE -->
-        <div class="relative overflow-hidden bg-[#0b0b0b]">
+        <div class="relative bg-[#0b0b0b] overflow-hidden">
 
           <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_55%)]"></div>
 
@@ -208,7 +208,7 @@ const families = [
             id="modalImage"
             src=""
             alt=""
-            class="relative z-10 h-56 w-full object-contain sm:h-72"
+            class="z-10 relative w-full h-56 sm:h-72 object-contain"
           />
 
         </div>
@@ -218,37 +218,37 @@ const families = [
 
           <button
             id="closeModal"
-            class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.05] transition hover:bg-white hover:text-black"
+            class="top-4 right-4 absolute flex justify-center items-center bg-white/[0.05] hover:bg-white rounded-full w-10 h-10 hover:text-black transition"
           >
             <X size={18} />
           </button>
 
           <p
             id="modalFamily"
-            class="mb-3 text-xs uppercase tracking-[0.35em] text-white/30"
+            class="mb-3 text-white/30 text-xs uppercase tracking-[0.35em]"
           ></p>
 
           <h3
             id="modalTitle"
-            class="text-3xl font-bold leading-tight sm:text-4xl"
+            class="font-medium text-3xl sm:text-3xl leading-tight"
           ></h3>
 
-          <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/3 px-4 py-2 text-sm text-white/70">
+          <div class="inline-flex items-center gap-2 bg-white/3 mt-4 px-4 py-2 border border-white/[0.08] rounded-full text-white/70 text-sm">
             <Layers3 size={15} />
             <span id="modalType"></span>
           </div>
 
           <!-- DESC -->
-          <div class="mt-6 rounded-4xl border border-white/[0.08] bg-white/3 p-5">
+          <div class="bg-white/3 mt-6 p-5 border border-white/[0.08] rounded-4xl">
 
-            <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
+            <div class="flex items-center gap-2 mb-3 font-semibold text-sm">
               <Package size={16} />
               Descripción
             </div>
 
             <p
               id="modalDesc"
-              class="text-sm leading-relaxed text-white/70"
+              class="text-white/70 text-sm leading-relaxed"
             ></p>
 
           </div>
@@ -256,27 +256,27 @@ const families = [
           <!-- EXTRA -->
           <div
             id="extraWrap"
-            class="mt-4 hidden rounded-4xl border border-white/[0.08] bg-white/3 p-5"
+            class="hidden bg-white/3 mt-4 p-5 border border-white/[0.08] rounded-4xl"
           >
 
-            <div class="mb-3 flex items-center gap-2 text-sm font-semibold">
+            <div class="flex items-center gap-2 mb-3 font-semibold text-sm">
               <ShieldCheck size={16} />
               Información Extra
             </div>
 
             <p
               id="modalExtra"
-              class="text-sm leading-relaxed text-white/70"
+              class="text-white/70 text-sm leading-relaxed"
             ></p>
 
           </div>
 
           <!-- BENEFITS -->
-          <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="gap-3 grid grid-cols-2 mt-4">
 
-            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/3 p-4 text-sm">
+            <div class="bg-white/3 p-4 border border-white/[0.08] rounded-[1.5rem] text-sm">
 
-              <div class="mb-2 flex items-center gap-2 font-semibold">
+              <div class="flex items-center gap-2 mb-2 font-semibold">
                 <Star size={15} />
                 Calidad
               </div>
@@ -285,9 +285,9 @@ const families = [
 
             </div>
 
-            <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/3 p-4 text-sm">
+            <div class="bg-white/3 p-4 border border-white/[0.08] rounded-[1.5rem] text-sm">
 
-              <div class="mb-2 flex items-center gap-2 font-semibold">
+              <div class="flex items-center gap-2 mb-2 font-semibold">
                 <Sparkles size={15} />
                 Línea
               </div>
@@ -303,7 +303,7 @@ const families = [
 
             <button
               id="closeBottom"
-              class="h-12 w-full rounded-full border border-white/[0.08] transition hover:bg-white hover:text-black"
+              class="hover:bg-white border border-white/[0.08] rounded-full w-full h-12 hover:text-black transition"
             >
               Cerrar
             </button>

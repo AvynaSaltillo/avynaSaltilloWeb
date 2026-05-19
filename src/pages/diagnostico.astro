@@ -10,58 +10,117 @@ import Diagnostic from "../components/public/DiagnosticBasic.astro";
   title="Diagnóstico Capilar AVYNA | Recomendación Inteligente"
   description="Descubre la rutina ideal AVYNA según tipo de cabello, daño, frizz, hidratación y objetivos. Diagnóstico premium para salón o cliente final."
 >
-
   <!-- NAVBAR -->
   <Navbar />
 
   <!-- PAGE -->
-  <main class="min-h-screen bg-black text-white">
-
-
-    <!-- DIAGNOSTIC COMPONENT -->
+  <main class="bg-black min-h-screen text-white">
+    <!-- DIAGNOSTIC -->
     <Diagnostic />
 
     <!-- CTA FOOTER -->
     <section class="px-6 pb-24">
-
-      <div class="mx-auto max-w-6xl rounded-4xl border border-white/10 bg-white/3 p-8 text-center md:p-14">
-
-        <p class="text-sm uppercase tracking-[0.35em] text-white/35">
-          Asesoría personalizada
-        </p>
-
-        <h2 class="mt-4 text-4xl font-bold md:text-6xl">
-          ¿Quieres ayuda directa?
-        </h2>
-
-        <p class="mx-auto mt-5 max-w-2xl text-white/60">
-          Nuestro equipo puede ayudarte a elegir la línea correcta
-          según historial químico, tipo de cabello y objetivos reales.
-        </p>
-
-        <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-
-          <a
-            href="https://wa.me/528445069238"
-            target="_blank"
-            class="inline-flex h-14 items-center justify-center rounded-2xl bg-white px-8 font-semibold text-black transition hover:scale-105"
-          >
-            WhatsApp
-          </a>
-
-          <a
-            href="/catalogo"
-            class="inline-flex h-14 items-center justify-center rounded-2xl border border-white/10 px-8 transition hover:bg-white hover:text-black"
-          >
-            Ver Catálogo
-          </a>
-
+      <div
+        class="relative bg-white/[0.03] backdrop-blur-2xl mx-auto p-8 md:p-14 border border-white/10 rounded-[2.5rem] max-w-6xl overflow-hidden text-center"
+      >
+        <!-- glow -->
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.08),transparent_45%)] pointer-events-none"
+        >
         </div>
 
+        <!-- content -->
+        <div class="z-10 relative">
+          <!-- LABEL -->
+          <p
+            class="text-[11px] text-white/35 uppercase tracking-[0.35em]"
+          >
+            Asesoría personalizada
+          </p>
+
+          <!-- TITLE -->
+          <h2
+            class="mt-5 font-normal text-4xl md:text-6xl leading-[0.92] tracking-[-0.06em]"
+            style="
+              font-family:
+                'Clash Display',
+                'Satoshi',
+                sans-serif;
+            "
+          >
+            ¿Quieres ayuda directa?
+          </h2>
+
+          <!-- TEXT -->
+          <p
+            class="mx-auto mt-6 max-w-2xl text-[1rem] text-white/58 leading-[1.8]"
+            style="
+              font-family:
+                'Satoshi',
+                'Plus Jakarta Sans',
+                sans-serif;
+            "
+          >
+            Nuestro equipo puede ayudarte a elegir la línea correcta según
+            historial químico, tipo de cabello y objetivos reales.
+          </p>
+
+          <!-- BUTTONS -->
+          <div
+            class="flex sm:flex-row flex-col justify-center gap-4 mt-10"
+          >
+            <!-- WHATSAPP -->
+            <button
+              id="whatsappBtn"
+              type="button"
+              class="inline-flex justify-center items-center gap-3 bg-white hover:bg-white/95 px-8 rounded-2xl h-14 font-semibold text-black hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+            >
+              <!-- icon -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                fill="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  d="M19.11 17.21c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.91 1.12-.17.19-.33.22-.62.07-.29-.15-1.21-.44-2.31-1.4-.86-.77-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.33.44-.49.15-.17.19-.29.29-.49.1-.19.05-.37-.02-.52-.07-.15-.64-1.55-.88-2.12-.23-.55-.47-.48-.64-.49h-.55c-.19 0-.49.07-.74.37-.26.29-.98.96-.98 2.34s1 2.71 1.14 2.9c.15.19 1.95 2.98 4.73 4.18.66.29 1.18.46 1.58.59.66.21 1.27.18 1.75.11.53-.08 1.7-.69 1.94-1.35.24-.66.24-1.22.17-1.35-.07-.12-.26-.19-.55-.33z"
+                ></path>
+                <path
+                  d="M16.03 3C8.84 3 3 8.74 3 15.83c0 2.5.73 4.94 2.1 7.04L3 29l6.31-2.05c2.02 1.09 4.29 1.66 6.62 1.66h.01c7.19 0 13.03-5.74 13.03-12.83C28.97 8.74 23.13 3 16.03 3zm0 23.35h-.01c-2.06 0-4.08-.56-5.84-1.61l-.42-.25-3.75 1.22 1.22-3.65-.27-.44a10.24 10.24 0 0 1-1.58-5.49c0-5.66 4.69-10.27 10.46-10.27 5.77 0 10.46 4.61 10.46 10.27 0 5.67-4.69 10.28-10.47 10.28z"
+                ></path>
+              </svg>
+
+              WhatsApp
+            </button>
+
+            <!-- CATALOG -->
+            <a
+              href="/catalogo"
+              class="inline-flex justify-center items-center bg-white/[0.03] hover:bg-white/[0.06] backdrop-blur-xl px-8 border border-white/10 hover:border-white/20 rounded-2xl h-14 font-medium text-white transition-all duration-300"
+            >
+              Ver Catálogo
+            </a>
+          </div>
+        </div>
       </div>
-
     </section>
-
   </main>
-
 </Layout>
+
+<script is:inline>
+  document.getElementById("whatsappBtn")?.addEventListener("click", () => {
+    const phone = "528445399548";
+
+    const message = "Hola AVYNA, me gustaría recibir asesoría personalizada.";
+
+    const encoded = encodeURIComponent(message);
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const url = isMobile
+      ? `whatsapp://send?phone=${phone}&text=${encoded}`
+      : `https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`;
+
+    window.open(url, "_blank");
+  });
+</script>

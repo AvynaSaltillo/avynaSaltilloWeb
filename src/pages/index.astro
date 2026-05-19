@@ -24,7 +24,7 @@ const promoItems = [
   {
     title: "Línea GOJI",
     subtitle: "Protección antioxidante y brillo intenso para cabello tratado.",
-    image: "/images/avyna/avyna-banner-2.jpg",
+    image: "/images/avyna/promo/promoCard-goji.png",
     buttonText: "Descubrir línea",
     buttonHref: "/catalogo",
   },
@@ -32,7 +32,7 @@ const promoItems = [
   {
     title: "Pozione Duo",
     subtitle: "El tratamiento profesional favorito para cabello procesado.",
-    image: "/images/products/tratamientos/pozione-duo-banner.webp",
+    image: "/images/avyna/promo/promoCard-pozione-duo.png",
     buttonText: "Ver tratamiento",
     buttonHref: "/catalogo",
   },
@@ -67,7 +67,7 @@ const promoItems = [
     title: "Diagnóstico inteligente",
     subtitle:
       "Descubre la rutina ideal según las necesidades reales de tu cabello.",
-    image: "/images/avyna/avyna-banner-2.jpg",
+    image: "/images/avyna/products-float.png",
     buttonText: "Comenzar",
     buttonHref: "/diagnostico",
   },
@@ -103,30 +103,20 @@ const promoItems = [
       <DiagnosticTeaser />
     </section>
 
+    <!-- MAP -->
+    <section id="salones" class="relative reveal">
+      <SalonMap />
+    </section>
+
     <!-- GROW SECTION -->
     <section id="grow" class="relative px-6 py-24 overflow-hidden">
       <!-- BG -->
-      <div
-        class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(177,45,11,.10),transparent_30%)] pointer-events-none"
-      >
-      </div>
-
-      <div
-        class="bottom-[-180px] left-1/2 absolute bg-[#B12D0B]/10 blur-[160px] rounded-full w-[80%] h-[320px] -translate-x-1/2 pointer-events-none"
-      >
-      </div>
 
       <div class="z-10 relative mx-auto max-w-7xl">
         <!-- CARD -->
         <div
           class="relative bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.8rem] overflow-hidden"
         >
-          <!-- INNER GLOW -->
-          <div
-            class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(177,45,11,.12),transparent_35%)] pointer-events-none"
-          >
-          </div>
-
           <div
             class="lg:items-center gap-16 grid lg:grid-cols-[1.15fr_.85fr] p-8 md:p-14"
           >
@@ -262,11 +252,6 @@ const promoItems = [
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- MAP -->
-    <section id="salones" class="relative reveal">
-      <SalonMap />
     </section>
 
     <!-- FAQ -->

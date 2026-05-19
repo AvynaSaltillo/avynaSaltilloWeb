@@ -7,199 +7,186 @@ import {
   Truck,
   CreditCard,
   Clock3,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 ---
 
-<section class="relative overflow-hidden bg-black px-6 pt-36 pb-24 text-white">
-
+<section class="relative bg-black px-6 pt-36 pb-24 overflow-hidden text-white">
   <!-- BG IMAGE -->
   <img
     src="/images/banner.png"
-    class="absolute inset-0 h-full w-full object-contain opacity-70"
+    class="absolute inset-0 opacity-70 w-full h-full object-contain"
     alt="AVYNA Grow"
   />
 
   <div class="absolute inset-0 bg-black/55"></div>
 
   <!-- LIGHTS -->
-  <div class="pointer-events-none absolute inset-0">
-    <div class="absolute top-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.08),transparent_35%)]"></div>
+  <div class="absolute inset-0 pointer-events-none">
+    <div
+      class="top-0 right-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"
+    >
+    </div>
+    <div
+      class="bottom-0 left-0 absolute bg-white/5 blur-3xl rounded-full w-80 h-80"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.08),transparent_35%)]"
+    >
+    </div>
   </div>
 
   <!-- CONTENT -->
-  <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-
+  <div
+    class="z-10 relative items-center gap-16 grid lg:grid-cols-2 mx-auto max-w-7xl"
+  >
     <!-- LEFT -->
     <div>
-
       <!-- BADGE -->
-      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm backdrop-blur-xl">
+      <div
+        class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl mb-6 px-4 py-2 border border-white/10 rounded-full text-sm"
+      >
         <TrendingUp size={16} className="shrink-0" />
         AVYNA GROW • Oportunidad Comercial
       </div>
 
       <!-- TITLE -->
-      <h1 class="max-w-3xl text-5xl font-bold tracking-tight md:text-7xl">
+      <h1 class="max-w-3xl font-medium text-5xl md:text-7xl tracking-tight">
         Haz crecer tu salón con una marca premium
       </h1>
 
       <!-- TEXT -->
-      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-white/65 md:text-xl">
-        Más de 200 salones activos en Saltillo, Coahuila ya trabajan con el equipo liderado por
-        Ángeles Encinas López. Atención rápida, productos italianos y
-        condiciones diseñadas para crecer contigo.
+      <p class="mt-7 max-w-2xl text-white/65 text-lg md:text-xl">
+        Más de 200 salones activos en Saltillo, Coahuila ya trabajan con el
+        equipo liderado por Ángeles Encinas López. Atención rápida, productos
+        italianos y condiciones diseñadas para crecer contigo.
       </p>
 
       <!-- CTA -->
-      <div class="mt-10 flex flex-wrap gap-4">
-
+      <div class="flex flex-wrap gap-4 mt-10">
         <a
           href="/grow/catalogo"
-          class="inline-flex h-14 items-center gap-2 rounded-full bg-white px-7 font-semibold text-black shadow-2xl transition hover:scale-105"
+          class="inline-flex items-center gap-2 bg-white shadow-2xl px-7 rounded-full h-14 font-semibold text-black hover:scale-105 transition"
         >
           Ver precios salón
           <ArrowRight size={18} />
         </a>
-
       </div>
 
       <!-- STATS -->
-      <div class="mt-14 grid max-w-2xl grid-cols-3 gap-6">
-
+      <div class="gap-6 grid grid-cols-3 mt-14 max-w-2xl">
         <div>
-          <h3 class="text-3xl font-bold md:text-4xl">+200</h3>
-          <p class="mt-2 text-sm text-white/45">
-            Salones activos
-          </p>
+          <h3 class="font-medium text-3xl md:text-4xl">+200</h3>
+          <p class="mt-2 text-white/45 text-sm">Salones activos</p>
         </div>
 
         <div>
-          <h3 class="text-3xl font-bold md:text-4xl">&lt;30 min</h3>
-          <p class="mt-2 text-sm text-white/45">
-            Respuesta promedio
-          </p>
+          <h3 class="font-medium text-3xl md:text-4xl">&lt; 30 min</h3>
+          <p class="mt-2 text-white/45 text-sm">Respuesta promedio</p>
         </div>
 
         <div>
-          <h3 class="text-3xl font-bold md:text-4xl">15 días</h3>
-          <p class="mt-2 text-sm text-white/45">
-            Crédito inicial
-          </p>
+          <h3 class="font-medium text-3xl md:text-4xl">15 días</h3>
+          <p class="mt-2 text-white/45 text-sm">Crédito inicial</p>
         </div>
-
       </div>
-
     </div>
 
     <!-- RIGHT -->
     <div class="relative">
-
       <!-- MAIN PANEL -->
-      <div class="relative flex min-h-155 flex-col justify-end overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl">
-
+      <div
+        class="relative flex flex-col justify-end shadow-2xl border border-white/10 rounded-[2.5rem] min-h-155 overflow-hidden"
+      >
         <!-- IMAGE -->
         <img
           src="/images/avyna/avyna-products-2.jpg"
           alt="AVYNA Beauty"
-          class="absolute inset-0 h-full w-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover"
         />
 
         <div class="absolute inset-0 bg-black/50"></div>
 
         <!-- CARDS -->
-        <div class="relative z-10 p-7">
-
-          <div class="grid gap-5">
-
-            <div class="flex items-center gap-4 rounded-3xl bg-white p-5 text-black shadow-xl">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-black text-white">
+        <div class="z-10 relative p-7">
+          <div class="gap-5 grid">
+            <div
+              class="flex items-center gap-4 bg-white shadow-xl p-5 rounded-3xl text-black"
+            >
+              <div
+                class="flex justify-center items-center bg-black rounded-2xl w-12 h-12 text-white"
+              >
                 <Truck size={20} />
               </div>
 
               <div>
-                <p class="text-sm text-zinc-500">
-                  Entrega local
-                </p>
+                <p class="text-zinc-500 text-sm">Entrega local</p>
 
-                <h3 class="font-semibold">
-                  Rápida y confiable
-                </h3>
+                <h3 class="font-normal">Rápida y confiable</h3>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 rounded-3xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+            <div
+              class="flex items-center gap-4 bg-black/40 backdrop-blur-xl p-5 border border-white/10 rounded-3xl"
+            >
+              <div
+                class="flex justify-center items-center bg-white rounded-2xl w-12 h-12 text-black"
+              >
                 <CreditCard size={20} />
               </div>
 
               <div>
-                <p class="text-sm text-white/60">
-                  Crédito disponible
-                </p>
+                <p class="text-white/60 text-sm">Crédito disponible</p>
 
-                <h3 class="font-semibold">
-                  Flujo inteligente
-                </h3>
+                <h3 class="font-normal">Flujo inteligente</h3>
               </div>
             </div>
 
-            <div class="flex items-center gap-4 rounded-3xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl">
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+            <div
+              class="flex items-center gap-4 bg-black/40 backdrop-blur-xl p-5 border border-white/10 rounded-3xl"
+            >
+              <div
+                class="flex justify-center items-center bg-white rounded-2xl w-12 h-12 text-black"
+              >
                 <BadgeCheck size={20} />
               </div>
 
               <div>
-                <p class="text-sm text-white/60">
-                  Marca premium
-                </p>
+                <p class="text-white/60 text-sm">Marca premium</p>
 
-                <h3 class="font-semibold">
-                  Calidad italiana real
-                </h3>
+                <h3 class="font-normal">Calidad italiana real</h3>
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       <!-- FLOAT TOP -->
-      <div class="absolute -top-5 -right-5 hidden items-center gap-3 rounded-3xl bg-white px-5 py-4 text-black shadow-2xl md:flex">
+      <div
+        class="hidden -top-5 -right-5 absolute md:flex items-center gap-3 bg-white shadow-2xl px-5 py-4 rounded-3xl text-black"
+      >
         <Clock3 size={18} />
 
         <div>
-          <p class="text-xs text-zinc-500">
-            Atención
-          </p>
+          <p class="text-zinc-500 text-xs">Atención</p>
 
-          <p class="font-semibold">
-            Menos de 30 min.
-          </p>
+          <p class="font-semibold">Menos de 30 min.</p>
         </div>
       </div>
 
       <!-- FLOAT BOTTOM -->
-      <div class="absolute bottom-145 left-7 z-20 hidden items-center gap-3 rounded-3xl border border-white/10 bg-black/55 px-5 py-4 text-white shadow-2xl backdrop-blur-xl md:flex">
+      <div
+        class="hidden bottom-145 left-7 z-20 absolute md:flex items-center gap-3 bg-black/55 shadow-2xl backdrop-blur-xl px-5 py-4 border border-white/10 rounded-3xl text-white"
+      >
         <Sparkles size={18} />
 
         <div>
-          <p class="text-xs text-white/45">
-            Programa exclusivo
-          </p>
+          <p class="text-white/45 text-xs">Programa de crecimiento</p>
 
-          <p class="font-semibold leading-tight">
-            AVYNA GROW
-          </p>
+          <p class="font-semibold leading-tight">AVYNA GROW</p>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </section>

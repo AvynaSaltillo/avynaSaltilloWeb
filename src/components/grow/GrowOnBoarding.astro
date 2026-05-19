@@ -43,38 +43,38 @@ const steps = [
 
 <section
   id="como-funciona"
-  class="relative overflow-hidden bg-black px-6 py-24 text-white"
+  class="relative bg-black px-6 py-15 overflow-hidden text-white"
 >
 
   <!-- BG -->
-  <div class="pointer-events-none absolute inset-0">
+  <div class="absolute inset-0 pointer-events-none">
 
-    <div class="absolute left-0 top-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="top-0 left-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"></div>
 
-    <div class="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="right-0 bottom-0 absolute bg-white/5 blur-3xl rounded-full w-96 h-96"></div>
 
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_35%)]"></div>
 
   </div>
 
-  <div class="relative z-10 mx-auto max-w-7xl">
+  <div class="z-10 relative mx-auto max-w-7xl">
 
     <!-- HEADER -->
     <div class="mx-auto max-w-4xl text-center">
 
-      <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm backdrop-blur-xl">
+      <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl px-5 py-2 border border-white/10 rounded-full font-semibold text-sm">
         <Sparkles size={15} />
         Cómo comenzar
       </div>
 
-      <h2 class="mt-6 text-4xl font-bold tracking-tight md:text-6xl">
+      <h2 class="mt-6 font-medium text-4xl md:text-6xl">
         Empieza a trabajar
         <span class="block text-zinc-400">
           con AVYNA Grow
         </span>
       </h2>
 
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
+      <p class="mx-auto mt-3 max-w-2xl text-white/60 text-lg leading-relaxed">
         Un proceso cercano, profesional y diseñado para ayudarte
         a crecer con estructura real.
       </p>
@@ -82,7 +82,7 @@ const steps = [
     </div>
 
     <!-- STEPS -->
-    <div class="relative mt-18 grid gap-6 lg:grid-cols-4">
+    <div class="relative gap-6 grid lg:grid-cols-4 mt-13">
 
       {steps.map((item, i) => {
 
@@ -94,32 +94,32 @@ const steps = [
 
             {/* line desktop */}
             {i !== steps.length - 1 && (
-              <div class="absolute left-[calc(100%-1rem)] top-16 hidden h-px w-[calc(100%-2rem)] bg-white/10 lg:block"></div>
+              <div class="hidden lg:block top-16 left-[calc(100%-1rem)] absolute bg-white/10 w-[calc(100%-2rem)] h-px"></div>
             )}
 
-            <article class="group relative h-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-7 backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/8">
+            <article class="group relative bg-white/5 hover:bg-white/8 backdrop-blur-2xl p-7 border border-white/10 hover:border-white/20 rounded-[2.5rem] h-full overflow-hidden transition hover:-translate-y-1 duration-300">
 
               <!-- glow -->
-              <div class="absolute right-0 top-0 h-40 w-40 rounded-full bg-white/5 blur-3xl opacity-0 transition duration-500 group-hover:opacity-100"></div>
+              <div class="top-0 right-0 absolute bg-white/5 opacity-0 group-hover:opacity-100 blur-3xl rounded-full w-40 h-40 transition duration-500"></div>
 
               <!-- step -->
-              <div class="mb-6 flex items-center justify-between">
+              <div class="flex justify-between items-center mb-6">
 
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
+                <div class="flex justify-center items-center bg-white shadow-xl rounded-2xl w-14 h-14 text-black">
                   <Icon size={22} />
                 </div>
 
-                <span class="text-sm font-semibold tracking-[0.25em] text-white/25">
+                <span class="font-semibold text-white/30 text-sm tracking-[0.25em]">
                   {item.step}
                 </span>
 
               </div>
 
-              <h3 class="text-2xl font-bold">
+              <h3 class="font-normal text-2xl">
                 {item.title}
               </h3>
 
-              <p class="mt-4 leading-relaxed text-white/60">
+              <p class="mt-2 text-white/60 leading-relaxed">
                 {item.text}
               </p>
 
