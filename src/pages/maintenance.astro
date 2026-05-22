@@ -1,0 +1,191 @@
+---
+// src/pages/maintenance.astro
+
+import Layout from "../layouts/PublicLayout.astro";
+---
+
+<Layout
+  title="AVYNA Saltillo | Mantenimiento"
+  description="Estamos realizando mejoras para ofrecer una mejor experiencia AVYNA."
+  image="/images/seo/og-home.jpg"
+  url="https://avynasaltillo.beauty/maintenance"
+>
+  <main
+    class="relative flex justify-center items-center bg-black min-h-screen overflow-hidden text-white"
+  >
+    <!-- BACKGROUND -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- top glow -->
+      <div
+        class="top-[-18rem] left-1/2 absolute bg-white/[0.05] blur-3xl rounded-full w-[40rem] h-[40rem] -translate-x-1/2"
+      >
+      </div>
+
+      <!-- left glow -->
+      <div
+        class="top-1/3 left-[-10rem] absolute bg-white/[0.03] blur-3xl rounded-full w-[24rem] h-[24rem]"
+      >
+      </div>
+
+      <!-- right glow -->
+      <div
+        class="right-[-6rem] bottom-[-8rem] absolute bg-zinc-300/[0.03] blur-3xl rounded-full w-[22rem] h-[22rem]"
+      >
+      </div>
+
+      <!-- noise -->
+      <div
+        class="absolute inset-0 bg-[url('/images/noise.png')] opacity-[0.018] mix-blend-screen"
+      >
+      </div>
+
+      <!-- vignette -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(0,0,0,.65))]"
+      >
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <section
+      class="z-10 relative flex flex-col items-center mx-auto px-6 w-full max-w-6xl text-center"
+    >
+      <!-- LOGO -->
+      <div
+        class="flex justify-center items-center mb-10"
+      >
+        <img
+          src="/images/logo-avyna-white.png"
+          alt="AVYNA"
+          class="w-auto h-10 md:h-12 object-contain"
+        />
+      </div>
+
+      <!-- LABEL -->
+      <p
+        class="text-[11px] text-white/35 uppercase tracking-[0.42em]"
+      >
+        Actualización en progreso
+      </p>
+
+      <!-- TITLE -->
+      <h1
+        class="mt-7 max-w-5xl font-normal text-5xl md:text-8xl leading-[0.88] tracking-[-0.08em]"
+        style="
+          font-family:
+            'Clash Display',
+            'Satoshi',
+            sans-serif;
+        "
+      >
+        Estamos realizando
+        <br />
+        mejoras para ti
+      </h1>
+
+      <!-- TEXT -->
+      <p
+        class="mx-auto mt-8 max-w-2xl text-[1rem] text-white/58 md:text-[1.08rem] leading-[1.9]"
+        style="
+          font-family:
+            'Satoshi',
+            'Plus Jakarta Sans',
+            sans-serif;
+        "
+      >
+        Estamos optimizando la experiencia AVYNA para ofrecer un acceso más
+        rápido, elegante y estable.
+      </p>
+
+      <!-- STATUS -->
+      <div class="mt-12 w-full max-w-md">
+        <!-- bar -->
+        <div
+          class="relative bg-white/8 rounded-full h-2 overflow-hidden"
+        >
+          <!-- progress -->
+          <div
+            class="left-0 absolute inset-y-0 bg-[linear-gradient(to_right,#fff,rgba(255,255,255,.72))] shadow-[0_0_18px_rgba(255,255,255,.18)] rounded-full w-[72%]"
+          >
+          </div>
+        </div>
+
+        <!-- labels -->
+        <div
+          class="flex justify-between items-center mt-3 text-[12px] text-white/28 uppercase tracking-[0.22em]"
+        >
+          <span> Actualizando </span>
+
+          <span> 72% </span>
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div
+        class="flex sm:flex-row flex-col gap-4 mt-12"
+      >
+        <!-- WHATSAPP -->
+        <button
+          id="supportBtn"
+          type="button"
+          class="inline-flex justify-center items-center gap-3 bg-white hover:bg-white/95 px-8 rounded-2xl h-14 font-semibold text-black hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+        >
+          <!-- icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            fill="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              d="M19.11 17.21c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.91 1.12-.17.19-.33.22-.62.07-.29-.15-1.21-.44-2.31-1.4-.86-.77-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.33.44-.49.15-.17.19-.29.29-.49.1-.19.05-.37-.02-.52-.07-.15-.64-1.55-.88-2.12-.23-.55-.47-.48-.64-.49h-.55c-.19 0-.49.07-.74.37-.26.29-.98.96-.98 2.34s1 2.71 1.14 2.9c.15.19 1.95 2.98 4.73 4.18.66.29 1.18.46 1.58.59.66.21 1.27.18 1.75.11.53-.08 1.7-.69 1.94-1.35.24-.66.24-1.22.17-1.35-.07-.12-.26-.19-.55-.33z"
+            ></path>
+            <path
+              d="M16.03 3C8.84 3 3 8.74 3 15.83c0 2.5.73 4.94 2.1 7.04L3 29l6.31-2.05c2.02 1.09 4.29 1.66 6.62 1.66h.01c7.19 0 13.03-5.74 13.03-12.83C28.97 8.74 23.13 3 16.03 3zm0 23.35h-.01c-2.06 0-4.08-.56-5.84-1.61l-.42-.25-3.75 1.22 1.22-3.65-.27-.44a10.24 10.24 0 0 1-1.58-5.49c0-5.66 4.69-10.27 10.46-10.27 5.77 0 10.46 4.61 10.46 10.27 0 5.67-4.69 10.28-10.47 10.28z"
+            ></path>
+          </svg>
+
+          Contactar soporte
+        </button>
+
+        <!-- REFRESH -->
+        <button
+          onclick="window.location.reload()"
+          class="inline-flex justify-center items-center bg-white/[0.03] hover:bg-white/[0.06] backdrop-blur-xl px-8 border border-white/10 hover:border-white/20 rounded-2xl h-14 font-medium text-white transition-all duration-300"
+        >
+          Reintentar
+        </button>
+      </div>
+
+      <!-- FOOT -->
+      <div
+        class="flex items-center gap-3 mt-16 text-[12px] text-white/28 uppercase tracking-[0.25em]"
+      >
+        <span class="bg-white/10 w-10 h-[1px]"></span>
+
+        AVYNA Saltillo
+
+        <span class="bg-white/10 w-10 h-[1px]"></span>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  document.getElementById("supportBtn")?.addEventListener("click", () => {
+    const phone = "528445399548";
+
+    const message =
+      "Hola AVYNA, veo que el sitio está en mantenimiento y necesito ayuda.";
+
+    const encoded = encodeURIComponent(message);
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const url = isMobile
+      ? `whatsapp://send?phone=${phone}&text=${encoded}`
+      : `https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`;
+
+    window.open(url, "_blank");
+  });
+</script>
