@@ -6,9 +6,9 @@ export const onRequest = defineMiddleware(
     const path =
       url.pathname;
 
-    /* =========================
-       PREVIEW ACCESS
-    ========================= */
+    // =========================
+    // PREVIEW ACCESS
+    // =========================
 
     if (
       url.searchParams.get("preview")
@@ -28,74 +28,86 @@ export const onRequest = defineMiddleware(
     const preview =
       cookies.get("preview");
 
-    /* =========================
-       MODES
-    ========================= */
-
-    const comingSoon =
-      true;
+    // =========================
+    // MODES
+    // =========================
 
     const maintenance =
       false;
 
-    /* =========================
-       ALLOWED PATHS
-    ========================= */
+    const comingSoon =
+      true;
 
-    const allowedPaths = [
+    // =========================
+    // STATIC FILES
+    // =========================
 
-      "/coming-soon",
-
-      "/maintenance",
+    const staticPaths = [
 
       "/images",
-
       "/fonts",
-
       "/favicon",
 
     ];
 
-    const isAllowed =
-      allowedPaths.some(route =>
+    const isStatic =
+      staticPaths.some(route =>
         path.startsWith(route)
       );
 
-    /* =========================
-       MAINTENANCE MODE
-    ========================= */
+    // =========================
+    // MAINTENANCE MODE
+    // =========================
 
     if (
       maintenance &&
-      !preview &&
-      !isAllowed
+      !preview
     ) {
 
-      return redirect(
-        "/maintenance"
-      );
+      // dejar entrar SOLO maintenance
+      if (
+        path !== "/maintenance" &&
+        !isStatic
+      ) {
+
+        return redirect(
+          "/maintenance"
+        );
+
+      }
+
+      return next();
 
     }
 
-    /* =========================
-       COMING SOON MODE
-    ========================= */
+    // =========================
+    // COMING SOON MODE
+    // =========================
 
     if (
       comingSoon &&
-      !preview &&
-      !isAllowed
+      !preview
     ) {
 
-      return redirect(
-        "/coming-soon"
-      );
+      // dejar entrar SOLO coming soon
+      if (
+        path !== "/coming-soon" &&
+        !isStatic
+      ) {
+
+        return redirect(
+          "/coming-soon"
+        );
+
+      }
+
+      return next();
 
     }
 
-    /* =========================
-       PROTECTED ROUTES
-    ========================= */
+    // =========================
+    // PROTECTED ROUTES
+    // =========================
 
     const protectedRoutes = [
       "/portal",
@@ -107,7 +119,6 @@ export const onRequest = defineMiddleware(
         path.startsWith(route)
       );
 
-    // aquí luego pondrás auth real
     if (needsAuth) {
 
       return next();
