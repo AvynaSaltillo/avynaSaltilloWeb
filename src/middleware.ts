@@ -3,16 +3,13 @@ import { defineMiddleware } from "astro:middleware";
 export const onRequest = defineMiddleware(
   async ({ url, redirect, cookies }, next) => {
 
-    const path =
-      url.pathname;
+    const path = url.pathname;
 
     // =========================
     // PREVIEW ACCESS
     // =========================
 
-    if (
-      url.searchParams.get("preview")
-    ) {
+    if (url.searchParams.get("preview")) {
 
       cookies.set(
         "preview",
@@ -32,22 +29,16 @@ export const onRequest = defineMiddleware(
     // MODES
     // =========================
 
-    const maintenance =
-      false;
-
-    const comingSoon =
-      true;
+    const maintenance = false;
 
     // =========================
     // STATIC FILES
     // =========================
 
     const staticPaths = [
-
       "/images",
       "/fonts",
       "/favicon",
-
     ];
 
     const isStatic =
@@ -64,7 +55,6 @@ export const onRequest = defineMiddleware(
       !preview
     ) {
 
-      // dejar entrar SOLO maintenance
       if (
         path !== "/maintenance" &&
         !isStatic
@@ -72,31 +62,6 @@ export const onRequest = defineMiddleware(
 
         return redirect(
           "/maintenance"
-        );
-
-      }
-
-      return next();
-
-    }
-
-    // =========================
-    // COMING SOON MODE
-    // =========================
-
-    if (
-      comingSoon &&
-      !preview
-    ) {
-
-      // dejar entrar SOLO coming soon
-      if (
-        path !== "/coming-soon" &&
-        !isStatic
-      ) {
-
-        return redirect(
-          "/coming-soon"
         );
 
       }
