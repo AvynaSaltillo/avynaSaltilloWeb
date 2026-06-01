@@ -109,40 +109,4 @@ export const salons: Salon[] = [
   lat: 25.42409057964763,
   lng: -100.95813480781234,
 },
-
-{
-  id: 3,
-  name: "MVM Salón",
-  owner: "David Zapata",
-  address: "Pavo Real 120",
-  colony: "Las Maravillas",
-  city: "Saltillo",
-  state: "Coahuila",
-  phone: "528443001150",
-  featured: true,
-  level: "partner",
-  approved: true,
-  stockLevel: 7000,
-  quizApproved: true,
-  image: "/images/salons/mvm.jpg",
-  mapsUrl:
-    "https://maps.google.com/?q=25.42409057964763,-100.95813480781234",
-  instagram:
-    "https://instagram.com/mvmsalon",
-  specialties: [
-    "Cabello procesado",
-    "Hidratación",
-    "Coloración"
-  ],
-  services: [
-    "Diagnóstico capilar",
-    "Aplicación AVYNA",
-    "Venta de productos"
-  ],
-  horario:
-    "Mediante cita previa",
-  lat: 25.42409057964763,
-  lng: -100.95813480781234,
-},
- 
 ];
