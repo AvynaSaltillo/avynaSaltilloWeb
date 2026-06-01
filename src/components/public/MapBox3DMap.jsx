@@ -353,30 +353,217 @@ function showPopup(salon) {
     popupRef.current = null;
   }
 
+  const isSelect =
+    salon.level === "select";
+
   const popup = new mapboxgl.Popup({
-    offset: 18,
-    closeOnClick: false
+    offset: 22,
+    closeButton: false,
+    closeOnClick: false,
+    className: "avyna-popup"
   });
 
   popup
     .setLngLat([salon.lng, salon.lat])
     .setHTML(`
-      <div style="min-width:210px">
-        <div style="
-          font-weight:700;
-          font-size:15px;
-          color:#111;
-        ">
-          ${salon.name}
+      <div
+        style="
+          min-width:260px;
+          padding:0;
+          overflow:hidden;
+
+          background:
+            linear-gradient(
+              180deg,
+              rgba(17,17,17,.98),
+              rgba(10,10,10,.98)
+            );
+
+          border:
+            1px solid rgba(255,255,255,.08);
+
+          border-radius:22px;
+
+          box-shadow:
+            0 20px 60px rgba(0,0,0,.45);
+
+          color:white;
+
+          backdrop-filter:blur(18px);
+        "
+      >
+        <!-- TOP -->
+        <div
+          style="
+            padding:18px 18px 14px 18px;
+          "
+        >
+          <!-- BADGE -->
+          <div
+            style="
+              display:inline-flex;
+              align-items:center;
+              gap:7px;
+
+              padding:7px 11px;
+
+              border-radius:999px;
+
+              font-size:11px;
+              font-weight:600;
+              letter-spacing:.02em;
+
+              ${
+                isSelect
+                  ? `
+                    background:rgba(139,92,246,.12);
+                    border:1px solid rgba(139,92,246,.22);
+                    color:#d8b4fe;
+                  `
+                  : `
+                    background:rgba(255,255,255,.06);
+                    border:1px solid rgba(255,255,255,.08);
+                    color:rgba(255,255,255,.72);
+                  `
+              }
+            "
+          >
+            ${
+              isSelect
+                ? "✦ AVYNA Select"
+                : "✧ AVYNA Partner"
+            }
+          </div>
+
+          <!-- NAME -->
+          <div
+            style="
+              margin-top:14px;
+
+              font-size:19px;
+              font-weight:700;
+
+              line-height:1.15;
+
+              color:white;
+            "
+          >
+            ${salon.name}
+          </div>
+
+          ${
+            salon.owner
+              ? `
+                <div
+                  style="
+                    margin-top:10px;
+
+                    display:flex;
+                    align-items:center;
+                    gap:7px;
+
+                    font-size:13px;
+
+                    color:rgba(255,255,255,.52);
+                  "
+                >
+                  Dirigido por ${salon.owner}
+                </div>
+              `
+              : ""
+          }
+
+          <!-- ADDRESS -->
+          <div
+            style="
+              margin-top:12px;
+
+              font-size:13px;
+
+              line-height:1.5;
+
+              color:rgba(255,255,255,.68);
+            "
+          >
+            ${salon.address}
+          </div>
+
         </div>
 
-        <div style="
-          margin-top:6px;
-          font-size:13px;
-          color:#555;
-          line-height:1.45;
-        ">
-          ${salon.address}
+        <!-- FOOTER -->
+        <div
+          style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            gap:12px;
+
+            padding:16px 18px;
+
+            border-top:
+              1px solid rgba(255,255,255,.06);
+
+            background:
+              linear-gradient(
+                180deg,
+                rgba(255,255,255,.02),
+                rgba(255,255,255,.01)
+              );
+          "
+        >
+          <div
+            style="
+              font-size:11px;
+              letter-spacing:.18em;
+              text-transform:uppercase;
+
+              color:rgba(255,255,255,.28);
+            "
+          >
+            AVYNA Saltillo
+          </div>
+
+          ${
+            salon.mapsUrl
+              ? `
+                <a
+                  href="${salon.mapsUrl}"
+                  target="_blank"
+
+                  style="
+                    display:inline-flex;
+                    align-items:center;
+                    justify-content:center;
+
+                    gap:7px;
+
+                    padding:10px 14px;
+
+                    border-radius:999px;
+
+                    background:linear-gradient(
+  180deg,
+  #ffffff,
+  #f3f3f3
+);
+
+box-shadow:
+  0 8px 30px rgba(255,255,255,.12);
+
+                    color:black;
+
+                    text-decoration:none;
+
+                    font-size:12px;
+                    font-weight:600;
+                  "
+                >
+                  Abrir Maps
+                </a>
+              `
+              : ""
+          }
         </div>
       </div>
     `)
@@ -389,6 +576,8 @@ function showPopup(salon) {
     resetMap();
   });
 }
+
+
 
     /* ===================== */
     /* MAIN ACTION */
@@ -529,9 +718,9 @@ function showPopup(salon) {
   }, [salons]);
 
   return (
-    <div
-      id="mapbox3d"
-      className="h-155 w-full min-h-155 rounded-[1.7rem] overflow-hidden"
-    />
-  );
+  <div
+    id="mapbox3d"
+    className="rounded-[1.7rem] w-full h-full min-h-[720px] overflow-hidden"
+  />
+);
 }

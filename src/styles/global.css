@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+.mapboxgl-popup-content{
+  background:transparent !important;
+  padding:0 !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+
+.mapboxgl-popup-tip{
+  display:none !important;
+}
+
 /* =========================
    CLASH DISPLAY
 ========================= */
