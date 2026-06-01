@@ -5,6 +5,17 @@ export const onRequest = defineMiddleware(
 
     const path = url.pathname;
 
+  // REDIRECT LEGACY COMING SOON
+
+if (
+  path === "/coming-soon" ||
+  path === "/coming-soon/"
+) {
+  return redirect(
+    "https://avynasaltillo.beauty/"
+  );
+}
+
     // =========================
     // PREVIEW ACCESS
     // =========================
