@@ -9,10 +9,11 @@ import {
   Sparkles
 } from "lucide-react";
 
-import { 
+import {
   FaInstagram,
   FaWhatsapp,
- } from "react-icons/fa";
+  FaFacebookF
+} from "react-icons/fa";
 
 import { salons } from "../../data/salons.js";
 
@@ -328,18 +329,34 @@ import Mapbox3DMap from "./MapBox3DMap.jsx";
 
                       <!-- INSTAGRAM -->
                       {
-                        salon.instagram && (
-                          <a
-                            href={salon.instagram}
-                            target="_blank"
-                            class="inline-flex items-center gap-1.5 hover:bg-white px-3 border border-white/10 rounded-full h-9 sm:h-10 text-[12px] hover:text-black sm:text-sm transition"
-                          >
-                            <FaInstagram size={15} />
+  salon.instagram && (
+    <a
+      href={salon.instagram}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-1.5 hover:bg-white px-3 border border-white/10 rounded-full h-9 sm:h-10 text-[12px] hover:text-black sm:text-sm transition"
+    >
+      <FaInstagram size={15} />
 
-                            Instagram
-                          </a>
-                        )
-                      }
+      Instagram
+    </a>
+  )
+}
+
+{
+  salon.facebook && (
+    <a
+      href={salon.facebook}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-1.5 hover:bg-white px-3 border border-white/10 rounded-full h-9 sm:h-10 text-[12px] hover:text-black sm:text-sm transition"
+    >
+      <FaFacebookF size={14} />
+
+      Facebook
+    </a>
+  )
+}
                     </div>
                   </div>
                 </div>

@@ -30,6 +30,8 @@ export interface Salon {
 
   instagram?: string;
 
+  facebook?: string;
+
   specialties?: string[];
 
   services?: string[];
@@ -203,7 +205,7 @@ export const salons: Salon[] = [
   image: "/images/salons/debani.jpg",
   mapsUrl:
     "https://maps.google.com/?q=25.428963978763253,-100.92419799946278",
-  instagram:
+  facebook:
     "https://www.facebook.com/debanitukitukituki.lopez/",
   specialties: [
     "Diseño de color",
