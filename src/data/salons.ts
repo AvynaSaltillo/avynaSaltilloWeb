@@ -79,7 +79,7 @@ export const salons: Salon[] = [
 
 // Maribel Reyes Pérez - Marybell Estética
 {
-  id: 3,
+  id: 2,
   name: "Marybell Estética",
   owner: "Maribel Reyes Pérez",
   address: "Av. Nogales 685",
@@ -115,7 +115,7 @@ export const salons: Salon[] = [
 
 // David Zapata - MVM Salón
 {
-  id: 2,
+  id: 3,
   name: "MVM Salón",
   owner: "David Zapata",
   address: "Pavo Real 120",
