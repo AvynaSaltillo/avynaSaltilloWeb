@@ -136,8 +136,18 @@ import Mapbox3DMap from "./MapBox3DMap.jsx";
             id="salonList"
             class="space-y-4 pt-2 pr-2 md:pr-6 pb-2 pl-2 w-full max-h-[720px] overflow-x-visible overflow-y-scroll"
           >
-            {
-              salons.map((salon, i) => (
+           {
+  [...salons]
+    .sort((a, b) => {
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+
+      if (a.level === "select" && b.level !== "select") return -1;
+      if (a.level !== "select" && b.level === "select") return 1;
+
+      return (b.stockLevel || 0) - (a.stockLevel || 0);
+    })
+    .map((salon, i) => (
                 <div
                   class={`
                     salon-card
@@ -287,15 +297,32 @@ import Mapbox3DMap from "./MapBox3DMap.jsx";
                       <!-- WHATSAPP -->
                       {
                         salon.phone && (
-                          <a
-                            href={`https://wa.me/${salon.phone}`}
-                            target="_blank"
-                            class="inline-flex items-center gap-1.5 hover:bg-white px-3 border border-white/10 rounded-full h-9 sm:h-10 text-[12px] hover:text-black sm:text-sm transition"
-                          >
-                            <FaWhatsapp size={15} />
+                          <button
+  type="button"
+  onclick={`
+    const phone='${String(salon.phone).replace(/\D/g, "")}';
 
-                            Contactar
-                          </a>
+    const text='${encodeURIComponent(
+      `Hola, encontré ${salon.name} en AVYNA Saltillo y me gustaría recibir información sobre sus servicios.`
+    )}';
+
+    const isMobile =
+      /Android|iPhone|iPad|iPod/i.test(
+        navigator.userAgent
+      );
+
+    const url = isMobile
+      ? 'whatsapp://send?phone=' + phone + '&text=' + text
+      : 'https://web.whatsapp.com/send?phone=' + phone + '&text=' + text;
+
+    window.open(url, '_blank');
+  `}
+  class="inline-flex items-center gap-1.5 hover:bg-white px-3 border border-white/10 rounded-full h-9 sm:h-10 text-[12px] hover:text-black sm:text-sm transition hover:cursor-pointer"
+>
+  <FaWhatsapp size={15} />
+
+  Contactar
+</button>
                         )
                       }
 

@@ -50,11 +50,11 @@ export const salons: Salon[] = [
   colony: "Real de Peña",
   city: "Saltillo",
   state: "Coahuila",
-  phone: "8448701029",
-  featured: true,
+  phone: "528448701029",
+  featured: false,
   level: "select",
   approved: true,
-  stockLevel: 8500,
+  stockLevel: 30000,
   quizApproved: true,
   image: "/images/salons/beauty-style.jpg",
   mapsUrl:
@@ -87,7 +87,7 @@ export const salons: Salon[] = [
   city: "Saltillo",
   state: "Coahuila",
   phone: "528441397999",
-  featured: true,
+  featured: false,
   level: "select",
   approved: true,
   stockLevel: 7000,
@@ -123,7 +123,7 @@ export const salons: Salon[] = [
   city: "Saltillo",
   state: "Coahuila",
   phone: "528443001150",
-  featured: true,
+  featured: false,
   level: "partner",
   approved: true,
   stockLevel: 7000,
@@ -147,5 +147,77 @@ export const salons: Salon[] = [
     "Mediante cita previa",
   lat: 25.42409057964763,
   lng: -100.95813480781234,
+},
+
+// Jorge Ventura - Hair -Salon Jorge Ventura
+{
+  id: 4,
+  name: "Hair -Salon Jorge Ventura",
+  owner: "Jorge Ventura",
+  address: "Hidalgo 2415",
+  colony: "República Norte, 25280",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "52⁠8441276955",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 8500,
+  quizApproved: true,
+  image: "/images/salons/jorgeventura.jpeg",
+  mapsUrl:
+    "https://maps.google.com/?q=25.44194467987081,-100.98844649043895",
+  instagram:
+    "https://www.instagram.com/hair_salon_jv",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Viernes: 9:00 AM - 7:00 PM, Sábado: 9:00 AM - 6:00 PM",
+  lat: 25.44194467987081,
+  lng:  -100.98844649043895,
+},
+
+// Debani López - Atelier de Estilo
+{
+  id: 5,
+  name: "Atelier de Estilo",
+  owner: "Debani López",
+  address: "Blvrd Mirasierra 65",
+  colony: "Cd Mirasierra, 25016",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "52⁠8445053192",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 5000,
+  quizApproved: true,
+  image: "/images/salons/debani.jpg",
+  mapsUrl:
+    "https://maps.google.com/?q=25.428963978763253,-100.92419799946278",
+  instagram:
+    "https://www.facebook.com/debanitukitukituki.lopez/",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 10:00 AM - 12:00 PM y 2:00 PM - 8:00 PM",
+  lat: 25.428963978763253,
+  lng:  -100.92419799946278,
 },
 ];
