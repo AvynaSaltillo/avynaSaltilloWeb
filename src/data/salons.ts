@@ -41,6 +41,7 @@ export interface Salon {
 }
 
 export const salons: Salon[] = [
+  // Diana Cepeda Carrizales - Beauty Style
 {
   id: 1,
   name: "Beauty Style",
@@ -75,6 +76,44 @@ export const salons: Salon[] = [
   lat: 25.4710530257737,
   lng: -100.97634111762014,
 },
+
+// Maribel Reyes Pérez - Marybell Estética
+{
+  id: 3,
+  name: "Marybell Estética",
+  owner: "Maribel Reyes Pérez",
+  address: "Av. Nogales 685",
+  colony: "Los Nogales II",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "528441397999",
+  featured: true,
+  level: "select",
+  approved: true,
+  stockLevel: 7000,
+  quizApproved: true,
+  image: "/images/salons/marybell.png",
+  mapsUrl:
+    "https://maps.google.com/?q=25.39867160420586,-100.96855508858582",
+  instagram:
+    "https://www.instagram.com/marybell_estetica/",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a sábado: 10:00 AM - 8:00 PM",
+  lat: 25.39867160420586,
+  lng: -100.96855508858582,
+},
+
+// David Zapata - MVM Salón
 {
   id: 2,
   name: "MVM Salón",
@@ -108,40 +147,5 @@ export const salons: Salon[] = [
     "Mediante cita previa",
   lat: 25.42409057964763,
   lng: -100.95813480781234,
-},
-{
-  
-  id: 3,
-  name: "Marybell Estética",
-  owner: "Maribel Reyes Pérez",
-  address: "Av. Nogales 685",
-  colony: "Los Nogales II",
-  city: "Saltillo",
-  state: "Coahuila",
-  phone: "528441397999",
-  featured: true,
-  level: "select",
-  approved: true,
-  stockLevel: 7000,
-  quizApproved: true,
-  image: "/images/salons/marybell.png",
-  mapsUrl:
-    "https://maps.google.com/?q=25.39867160420586,-100.96855508858582",
-  instagram:
-    "https://www.instagram.com/marybell_estetica/",
-  specialties: [
-    "Diseño de color",
-    "Tratamientos capilares",
-    "Cortes de cabello"
-  ],
-  services: [
-    "Diagnóstico capilar",
-    "Aplicación AVYNA",
-    "Venta de productos"
-  ],
-  horario:
-    "Lunes a sábado: 10:00 AM - 8:00 PM",
-  lat: 25.39867160420586,
-  lng: -100.96855508858582,
 },
 ];
