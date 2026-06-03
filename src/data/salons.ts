@@ -90,7 +90,7 @@ export const salons: Salon[] = [
   featured: false,
   level: "select",
   approved: true,
-  stockLevel: 7000,
+  stockLevel: 45000,
   quizApproved: true,
   image: "/images/salons/marybell.png",
   mapsUrl:
