@@ -222,4 +222,77 @@ export const salons: Salon[] = [
   lat: 25.428963978763253,
   lng:  -100.92419799946278,
 },
+
+// Martha Cardoso - Estética Geminesse
+{
+  id: 5,
+  name: "Estética Geminesse",
+  owner: "Martha Eugenia Cardoso Aguirre",
+  address: "Xicoténcatl 396",
+  colony: "Zona Centro, 25000",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "52⁠8443470627",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 4500,
+  quizApproved: true,
+  image: "/images/salons/martha.JPG",
+  mapsUrl:
+    "https://maps.google.com/?q=25.421013678090144,-101.00723595974875",
+  instagram:
+    "https://www.instagram.com/esteticageminesse/",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 9:00 AM - 8:00 PM",
+  lat: 25.421013678090144,
+  lng:  -101.00723595974875,
+},
+
+  // Querén González - Scrunchies Ponchis
+{
+  id: 6,
+  name: "Scrunchies Ponchis",
+  owner: "Querén González",
+  address: "U. de Zacatecas 148",
+  colony: "Villa Universidad, 25069",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "52⁠8448816047",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 4500,
+  quizApproved: true,
+  image: "/images/salons/queren.jpeg",
+  mapsUrl:
+    "https://maps.google.com/?q=25.388605072946252,-100.99096454871277",
+  instagram:
+    "https://www.instagram.com/scrunchiesponchis/",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 9:00 AM - 8:00 PM",
+  lat: 25.388605072946252,
+  lng:  -100.99096454871277,
+},
+
 ];
