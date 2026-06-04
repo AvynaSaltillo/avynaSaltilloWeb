@@ -295,4 +295,109 @@ export const salons: Salon[] = [
   lng:  -100.99096454871277,
 },
 
+// Mitzy Esmeralda Martínez Bocanegra - Harmony Salon
+{
+  id: 7,
+  name: "Harmony Salon",
+  owner: "Mitzy Esmeralda Martínez Bocanegra",
+  address: "C. 10 526",
+  colony: "Cd Mirasierra, 25016",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "528445900210",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 4500,
+  quizApproved: true,
+  image: "/images/salons/mitzy.jpg",
+  mapsUrl:
+    "https://maps.google.com/?q=25.424904557543904,-100.923834671396",
+  facebook:
+    "https://www.facebook.com/mitzyboc/",
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 10:00 AM - 2:00 PM y 4:00 PM - 8:00 PM",
+  lat: 25.424904557543904,
+  lng:  -100.923834671396,
+},
+
+// Jaqueline Farías Cepeda - El Salón
+{
+  id: 8,
+  name: "El Salón",
+  owner: "Jaqueline Farías Cepeda",
+  address: "C. Guillermo Purcell 443",
+  colony: "Zona Centro, 25000",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "528444566558",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 25000,
+  quizApproved: true,
+  image: "/images/salons/jaqueline.png",
+  mapsUrl:
+    "https://maps.google.com/?q=25.428133809273813,-101.00618721927572", 
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 11:30 AM - 8:00 PM",
+  lat: 25.428133809273813,
+  lng:  -101.00618721927572,
+},
+
+// Marisol Perales - Queens Hair Extensions Studio
+{
+  id: 9,
+  name: "Queens Hair Extensions Studio",
+  owner: "Marisol perales",
+  address: "Calle Mariano Abasolo 962",
+  colony: "Zona Centro, 25000",
+  city: "Saltillo",
+  state: "Coahuila",
+  phone: "528443803931",
+  featured: false,
+  level: "select",
+  approved: true,
+  stockLevel: 15000,
+  quizApproved: true,
+  image: "/images/salons/marisol.png",
+  facebook:
+    "https://www.facebook.com/profile.php?id=61552366684593#",
+  mapsUrl:
+    "https://maps.google.com/?q=25.424983545241577,-100.98907693993637", 
+  specialties: [
+    "Diseño de color",
+    "Tratamientos capilares",
+    "Cortes de cabello"
+  ],
+  services: [
+    "Diagnóstico capilar",
+    "Aplicación AVYNA",
+    "Venta de productos"
+  ],
+  horario:
+    "Lunes a Sábado 10:00 AM - 6:00 PM",
+  lat: 25.424983545241577,
+  lng:  -100.98907693993637,
+},
 ];
